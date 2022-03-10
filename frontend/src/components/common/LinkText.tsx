@@ -17,19 +17,19 @@ interface Props extends StyleProps {
     to: string;
 }
 
-export const LinkButton = ({ text, to }: Props) => {
+export const LinkText = ({ text, to }: Props) => {
     return (
         <Link
             to={{
                 pathname: `${to}`,
             }}
         >
-            <Wrapper>{text}</Wrapper>
+            {text}
         </Link>
     );
 };
 
-LinkButton.defaultProps = {
+LinkText.defaultProps = {
     text: "버튼",
     to: "/",
 };
