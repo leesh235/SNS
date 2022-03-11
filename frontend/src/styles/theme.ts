@@ -59,6 +59,7 @@ const color = {
     lightGray: "#dadde1",
     seaBule: "#1877f2",
     lightGreen: "#42b72a",
+    darkGray: "#1c1e21",
 };
 
 const fontSizes: string[] = [];

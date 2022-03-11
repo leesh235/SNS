@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 const Wrapper = styled.div<StyleProps>`
     border: none;
     border-radius: 6px;
-    font-size: 17px;
-    line-height: 48px;
     padding: 0 16px;
     background-color: ${(props) => props.theme.color.lightGreen};
+    line-height: 48px;
+    font-size: 17px;
+    font-weight: 700;
+    color: ${(props) => props.theme.color.white};
 `;
 
 interface StyleProps {}

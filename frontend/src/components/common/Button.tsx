@@ -6,9 +6,11 @@ const Wrapper = styled.button<StyleProps>`
     padding: 0 16px;
     border: none;
     border-radius: 6px;
-    font-size: 20px;
-    line-height: 48px;
     background-color: ${(props) => props.theme.color.seaBule};
+    line-height: 48px;
+    font-size: 20px;
+    font-weight: 700;
+    color: ${(props) => props.theme.color.white};
 `;
 
 interface StyleProps {}

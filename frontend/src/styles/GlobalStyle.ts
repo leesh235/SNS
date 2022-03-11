@@ -9,6 +9,21 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         box-sizing: border-box;
+        background-color: white;
+    }
+    main{
+        background-color: rgb(240, 242, 245);
+    }
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+    button{
+        cursor: pointer;
+        outline: none;
+    }
+    input{
+        outline: none;
     }
 `;
 
