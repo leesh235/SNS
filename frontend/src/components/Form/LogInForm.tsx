@@ -42,8 +42,11 @@ export const LogInForm = () => {
         <Wrapper>
             <BoxWrapper>
                 <FormWrapper>
-                    <Input padding={"14px 16px"} />
-                    <Input padding={"14px 16px"} />
+                    <Input
+                        padding={"14px 16px"}
+                        placeholder={"이메일 또는 전화번호"}
+                    />
+                    <Input padding={"14px 16px"} placeholder={"비밀번호"} />
                     <Button text="로그인" />
                     <LinkText
                         to={routes.forget}
@@ -51,7 +54,7 @@ export const LogInForm = () => {
                     />
                     <Line />
                 </FormWrapper>
-                <LinkButton text="새 계정 만들기" />
+                <LinkButton to={routes.forget} text="새 계정 만들기" />
             </BoxWrapper>
             <LinkText to={routes.forget} text={"페이지 만들기."} fw={600} />
         </Wrapper>
