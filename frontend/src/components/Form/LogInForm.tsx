@@ -5,6 +5,7 @@ import { LinkButton } from "../common/LinkButton";
 import { Line } from "../common/Line";
 import { LinkText } from "../common/LinkText";
 import { routes } from "../../utils/routes";
+import theme from "../../styles/theme";
 
 const Wrapper = styled.section`
     width: 396px;
@@ -35,6 +36,7 @@ const FormWrapper = styled.form`
     > :nth-child(n) {
         margin: 6px 0px;
     }
+    margin: 0 0 20px 0;
 `;
 
 export const LogInForm = () => {
@@ -46,11 +48,16 @@ export const LogInForm = () => {
                         padding={"14px 16px"}
                         placeholder={"이메일 또는 전화번호"}
                     />
-                    <Input padding={"14px 16px"} placeholder={"비밀번호"} />
+                    <Input
+                        padding={"14px 16px"}
+                        placeholder={"비밀번호"}
+                        type={"password"}
+                    />
                     <Button text="로그인" />
                     <LinkText
                         to={routes.forget}
                         text={"비밀번호를 잊으셨나요?"}
+                        color={theme.color.seaBule}
                     />
                     <Line />
                 </FormWrapper>

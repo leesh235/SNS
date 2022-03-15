@@ -14,6 +14,7 @@ const Text1 = styled.div`
 
 const Text2 = styled.div`
     font-size: 15px;
+    color: ${(props) => props.theme.color.lightBlack};
     margin: 0 0 24px 0;
 `;
 

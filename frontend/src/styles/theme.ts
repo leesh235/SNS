@@ -60,6 +60,8 @@ const color = {
     seaBule: "#1877f2",
     lightGreen: "#42b72a",
     darkGray: "#1c1e21",
+    black: "#000000",
+    lightBlack: "#606770",
 };
 
 const fontSizes: string[] = [];
