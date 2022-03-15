@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: white;
     }
     main{
-        background-color: rgb(240, 242, 245);
+        background-color: rgb(233, 235, 238);
     }
     a{
         text-decoration: none;

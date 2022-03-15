@@ -62,6 +62,7 @@ const color = {
     darkGray: "#1c1e21",
     black: "#000000",
     lightBlack: "#606770",
+    gray: "rgb(233, 235, 238)",
 };
 
 const fontSizes: string[] = [];

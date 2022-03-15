@@ -1,7 +1,6 @@
 import styled from "../styles/theme-components";
 import { LogInForm } from "../components/form/LogInForm";
 import { LogInList } from "../components/LogInList";
-import { LogInFooter } from "../components/footer/LogInFooter";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -22,15 +21,12 @@ const FlexWrapper = styled.div`
 
 const Home = () => {
     return (
-        <>
-            <Wrapper>
-                <FlexWrapper>
-                    <LogInList />
-                    <LogInForm />
-                </FlexWrapper>
-            </Wrapper>
-            <LogInFooter />
-        </>
+        <Wrapper>
+            <FlexWrapper>
+                <LogInList />
+                <LogInForm />
+            </FlexWrapper>
+        </Wrapper>
     );
 };
 

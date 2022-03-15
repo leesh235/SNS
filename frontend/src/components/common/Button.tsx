@@ -1,30 +1,64 @@
+import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
 
 const Wrapper = styled.button<StyleProps>`
-    width: 364px;
-    height: 48px;
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
     padding: 0 16px;
     border: none;
     border-radius: 6px;
-    background-color: ${(props) => props.theme.color.seaBule};
-    line-height: 48px;
-    font-size: 20px;
-    font-weight: 700;
-    color: ${(props) => props.theme.color.white};
+    background-color: ${(props) => props.color};
+    font-size: ${(props) => props.fs};
+    font-weight: ${(props) => props.fw};
+    color: ${(props) => props.fc};
 `;
 
-interface StyleProps {}
+interface StyleProps {
+    width?: string;
+    height?: string;
+    fs?: string;
+    fw?: number;
+    fc?: string;
+    color?: string;
+}
 
 interface Props extends StyleProps {
     text: string;
     type: "submit" | "button" | "reset";
 }
 
-export const Button = ({ text, type }: Props) => {
-    return <Wrapper type={type}>{text}</Wrapper>;
+export const Button = ({
+    text,
+    type,
+    width,
+    height,
+    fs,
+    fw,
+    fc,
+    color,
+}: Props) => {
+    return (
+        <Wrapper
+            type={type}
+            width={width}
+            height={height}
+            fs={fs}
+            fw={fw}
+            fc={fc}
+            color={color}
+        >
+            {text}
+        </Wrapper>
+    );
 };
 
 Button.defaultProps = {
     text: "버튼",
     type: "submit",
+    width: "364px",
+    height: "48px",
+    fs: "20px",
+    fw: 700,
+    color: theme.color.seaBule,
+    fc: theme.color.white,
 };
