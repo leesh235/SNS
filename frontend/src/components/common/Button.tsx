@@ -25,6 +25,7 @@ interface StyleProps {
 interface Props extends StyleProps {
     text: string;
     type: "submit" | "button" | "reset";
+    onClcik?: () => void;
 }
 
 export const Button = ({
@@ -36,6 +37,7 @@ export const Button = ({
     fw,
     fc,
     color,
+    onClcik,
 }: Props) => {
     return (
         <Wrapper
@@ -46,6 +48,7 @@ export const Button = ({
             fw={fw}
             fc={fc}
             color={color}
+            onClick={onClcik}
         >
             {text}
         </Wrapper>

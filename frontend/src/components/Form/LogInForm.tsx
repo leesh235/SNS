@@ -1,7 +1,8 @@
 import styled from "../../styles/theme-components";
+import { useState } from "react";
 import { Input } from "../common/Input";
 import { Button } from "../common/Button";
-import { LinkButton } from "../common/LinkButton";
+import { Join } from "../modal/Join";
 import { Line } from "../common/Line";
 import { LinkText } from "../common/LinkText";
 import { routes } from "../../utils/routes";
@@ -40,6 +41,16 @@ const FormWrapper = styled.form`
 `;
 
 export const LogInForm = () => {
+    const [open, setOpen] = useState<boolean>(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <Wrapper>
             <BoxWrapper>
@@ -61,7 +72,16 @@ export const LogInForm = () => {
                     />
                     <Line />
                 </FormWrapper>
-                <LinkButton to={routes.forget} text="새 계정 만들기" />
+                <Button
+                    text={"새 계정 만들기"}
+                    width={"144px"}
+                    height={"48px"}
+                    color={theme.color.lightGreen}
+                    fs={"17px"}
+                    type={"button"}
+                    onClcik={handleOpen}
+                />
+                {open && <Join onClose={handleClose} />}
             </BoxWrapper>
             <LinkText to={routes.forget} text={"페이지 만들기."} fw={600} />
         </Wrapper>
