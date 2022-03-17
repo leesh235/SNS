@@ -1,4 +1,5 @@
 import styled from "../../styles/theme-components";
+import { Text } from "../common/Text";
 
 const Wrapper = styled.article`
   width: 590px;
@@ -10,23 +11,89 @@ const Wrapper = styled.article`
 
 const TopWrapper = styled.div`
   width: calc(100% - 32px);
-  padding: 12px 16px;
+  height: 40px;
+  padding: 12px 16px 10px 16px;
+  display: grid;
+  grid-template-columns: 40px auto 36px;
+  grid-template-rows: repeat(2, 20px);
+  column-gap: 10px;
+  align-items: center;
+  > :nth-child(1) {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+  }
+  > :nth-child(4) {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 2;
+  }
+`;
+
+const FlexWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const ContentsWrapper = styled.div`
   width: 100%;
+  padding: 4px 0px 16px 0px;
 `;
 
 const BottomWrapper = styled.div`
   width: 100%;
+  height: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+  border-top: 1px solid ${(props) => props.theme.color.lightGray};
+`;
+
+const Icon = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: blueviolet;
 `;
 
 export const PostCard = () => {
   return (
     <Wrapper>
-      <TopWrapper>TopWrapper</TopWrapper>
-      <ContentsWrapper>ContentsWrapper</ContentsWrapper>
-      <BottomWrapper>BottomWrapper</BottomWrapper>
+      <TopWrapper>
+        <Icon />
+        <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} />
+        <FlexWrapper>
+          <Text
+            text={"시간"}
+            fs={"12px"}
+            lh={"16px"}
+            tag={"span"}
+            width={"auto"}
+          />
+          <Text
+            text={"시간"}
+            fs={"12px"}
+            lh={"16px"}
+            tag={"span"}
+            width={"auto"}
+          />
+        </FlexWrapper>
+        <Text text={"목차"} fs={"12px"} lh={"16px"} />
+      </TopWrapper>
+      <ContentsWrapper>
+        <Text
+          text={"ContentsWrapper"}
+          fs={"15px"}
+          fw={600}
+          lh={"20px"}
+          margin={"0 16px"}
+        />
+      </ContentsWrapper>
+      <BottomWrapper>
+        <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} width={"auto"} />
+        <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} width={"auto"} />
+        <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} width={"auto"} />
+      </BottomWrapper>
     </Wrapper>
   );
 };
