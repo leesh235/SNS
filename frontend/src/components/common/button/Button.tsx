@@ -1,5 +1,5 @@
-import theme from "../../styles/theme";
-import styled from "../../styles/theme-components";
+import theme from "../../../styles/theme";
+import styled from "../../../styles/theme-components";
 
 const Wrapper = styled.button<StyleProps>`
   width: ${(props) => props.width};

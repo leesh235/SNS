@@ -1,7 +1,7 @@
 import styled from "../../styles/theme-components";
 import { BoxShadow } from "../styles/BoxShadow";
 import { Text } from "../common/Text";
-import { Button } from "../common/Button";
+import { Button } from "../common/button/Button";
 import theme from "../../styles/theme";
 
 const Wrapper = styled.section`

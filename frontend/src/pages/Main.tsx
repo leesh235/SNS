@@ -7,8 +7,13 @@ const Wrapper = styled.main`
   background-color: ${(props) => props.theme.color.gray};
   width: 100%;
   display: grid;
-  grid-template-columns: 280px auto 280px;
-  justify-items: start;
+  grid-template-columns: minmax(auto, 360px) auto minmax(auto, 360px);
+  > :nth-child(2) {
+    justify-items: center;
+  }
+  > :nth-child(1):nth-child(3) {
+    justify-items: start;
+  }
 `;
 
 const Main = () => {
