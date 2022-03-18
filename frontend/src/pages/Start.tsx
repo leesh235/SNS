@@ -6,8 +6,12 @@ const Wrapper = styled.main`
   background-color: ${(props) => props.theme.color.gray};
   width: 100%;
   display: grid;
-  grid-template-columns: 280px 2fr 1fr;
-  justify-items: start;
+  grid-template-columns: minmax(auto, 360px) auto minmax(auto, 360px);
+  padding-top: 56px;
+  > :nth-child(2) {
+    justify-items: center;
+    grid-column: 2 / span 1;
+  }
 `;
 
 const Start = () => {

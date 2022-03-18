@@ -1,12 +1,14 @@
 import styled from "../../styles/theme-components";
 import { Text } from "../common/Text";
+import { Button2 } from "../common/button/Button2";
 
 const Wrapper = styled.article`
-  width: 590px;
+  width: 100%;
+  max-width: 590px;
   height: auto;
   border-radius: 8px;
   background-color: ${(props) => props.theme.color.white};
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 4px 8px rgb(0 0 0 / 10%);
 `;
 
 const TopWrapper = styled.div`
@@ -40,12 +42,13 @@ const ContentsWrapper = styled.div`
 `;
 
 const BottomWrapper = styled.div`
-  width: 100%;
+  width: calc(100% - 20px);
   height: 40px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-items: center;
+  margin: 0 10px;
   border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
@@ -90,9 +93,9 @@ export const PostCard = () => {
         />
       </ContentsWrapper>
       <BottomWrapper>
-        <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} width={"auto"} />
-        <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} width={"auto"} />
-        <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} width={"auto"} />
+        <Button2 text={"좋아요"} />
+        <Button2 text={"댓글 달기"} />
+        <Button2 text={"공유하기"} />
       </BottomWrapper>
     </Wrapper>
   );

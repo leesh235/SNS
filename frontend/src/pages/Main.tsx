@@ -8,11 +8,10 @@ const Wrapper = styled.main`
   width: 100%;
   display: grid;
   grid-template-columns: minmax(auto, 360px) auto minmax(auto, 360px);
+  padding-top: 56px;
   > :nth-child(2) {
     justify-items: center;
-  }
-  > :nth-child(1):nth-child(3) {
-    justify-items: start;
+    grid-column: 2 / span 1;
   }
 `;
 

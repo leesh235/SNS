@@ -62,6 +62,7 @@ export const Welcome = () => {
         lh={"28px"}
         margin={"28px 0 32px 0"}
         text={"이성호님, Facebook에 오신 것을 환영합니다!"}
+        width={"auto"}
       />
       <BoxShadow width={"510px"}>
         <GridWrapper>
