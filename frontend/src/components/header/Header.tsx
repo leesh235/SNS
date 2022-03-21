@@ -1,4 +1,6 @@
 import styled from "../../styles/theme-components";
+import theme from "../../styles/theme";
+import { useState } from "react";
 import { SearchInput } from "../common/input/SearchInput";
 import { IconButton } from "../common/button/IconButton";
 import { Text } from "../common/Text";
@@ -109,10 +111,10 @@ const Div = styled.div`
   justify-content: center;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div<{ color: string }>`
   width: auto;
   height: 200%;
-  border-bottom: 3px solid ${(props) => props.theme.color.seaBule};
+  border-bottom: 3px solid ${(props) => props.color};
 `;
 
 const data = [
@@ -130,6 +132,12 @@ const data = [
 const rightData = [<AppIcon />, <MessageIcon />, <BellIcon />, <ArrowDIcon />];
 
 export const Header = () => {
+  const [click, setClick] = useState<number>(0);
+
+  const handleOnClick = ({ id }: { id: number }) => {
+    setClick(id);
+  };
+
   return (
     <Wrapper>
       <LeftWrapper>
@@ -138,11 +146,31 @@ export const Header = () => {
       </LeftWrapper>
       <CenterWrapper>
         {data.map((val, idx) => {
-          return (
-            <ButtonWrapper key={idx}>
-              <IconButton>{val}</IconButton>
-            </ButtonWrapper>
-          );
+          if (idx === click) {
+            return (
+              <ButtonWrapper
+                color={theme.color.seaBule}
+                key={idx}
+                onClick={() => {
+                  handleOnClick({ id: idx });
+                }}
+              >
+                <IconButton>{val}</IconButton>
+              </ButtonWrapper>
+            );
+          } else {
+            return (
+              <ButtonWrapper
+                color={theme.color.white}
+                key={idx}
+                onClick={() => {
+                  handleOnClick({ id: idx });
+                }}
+              >
+                <IconButton>{val}</IconButton>
+              </ButtonWrapper>
+            );
+          }
         })}
       </CenterWrapper>
       <RightWrapper>
