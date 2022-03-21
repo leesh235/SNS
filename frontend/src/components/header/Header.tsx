@@ -1,6 +1,16 @@
 import styled from "../../styles/theme-components";
 import { SearchInput } from "../common/input/SearchInput";
 import { IconButton } from "../common/button/IconButton";
+import { Text } from "../common/Text";
+import { BagicUser } from "../../assets/icon/BagicUser";
+import { LogoIcon } from "../../assets/icon/LogoIcon";
+import { AppIcon } from "../../assets/icon/AppIcon";
+import { ArrowDIcon } from "../../assets/icon/ArrowDIcon";
+import { BellIcon } from "../../assets/icon/BellIcon";
+import { FriendIcon } from "../../assets/icon/FriendIcon";
+import { GroubIcon } from "../../assets/icon/GroubIcon";
+import { HomeIcon } from "../../assets/icon/HomeIcon";
+import { MessageIcon } from "../../assets/icon/MessageIcon";
 
 const Wrapper = styled.header`
   position: fixed;
@@ -31,7 +41,10 @@ const CenterWrapper = styled.ul`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 0px;
+  > :nth-child(n + 2) {
+    margin-left: 8px;
+  }
+  padding-top: 3px;
 `;
 
 const RightWrapper = styled.div`
@@ -39,14 +52,55 @@ const RightWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: end;
+  > :nth-child(n) {
+    margin-right: 8px;
+  }
 `;
 
-const Icon = styled.div`
+const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background-color: blueviolet;
+  background-color: ${(props) => props.theme.color.gray};
   margin: 0px;
+  :hover {
+    background-color: ${(props) => props.theme.color.lightGray};
+  }
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LongIcon = styled.div`
+  width: 88px;
+  height: 36px;
+  border-radius: 18px;
+  background-color: ${(props) => props.theme.color.gray};
+  margin: 0px;
+  :hover {
+    background-color: ${(props) => props.theme.color.lightGray};
+  }
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LongIcon2 = styled.div`
+  width: 95px;
+  height: 36px;
+  border-radius: 18px;
+  background-color: ${(props) => props.theme.color.white};
+  margin: 0px;
+  :hover {
+    background-color: ${(props) => props.theme.color.lightGray};
+  }
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Div = styled.div`
@@ -55,31 +109,66 @@ const Div = styled.div`
   justify-content: center;
 `;
 
+const ButtonWrapper = styled.div`
+  width: auto;
+  height: 200%;
+  border-bottom: 3px solid ${(props) => props.theme.color.seaBule};
+`;
+
 const data = [
   <Div>
-    <Icon />
+    <HomeIcon />
   </Div>,
   <Div>
-    <Icon />
+    <FriendIcon />
   </Div>,
   <Div>
-    <Icon />
+    <GroubIcon />
   </Div>,
 ];
+
+const rightData = [<AppIcon />, <MessageIcon />, <BellIcon />, <ArrowDIcon />];
 
 export const Header = () => {
   return (
     <Wrapper>
       <LeftWrapper>
-        <Icon />
+        <LogoIcon />
         <SearchInput placeholder={"Facebook 검색"} />
       </LeftWrapper>
       <CenterWrapper>
         {data.map((val, idx) => {
-          return <IconButton>{val}</IconButton>;
+          return (
+            <ButtonWrapper key={idx}>
+              <IconButton>{val}</IconButton>
+            </ButtonWrapper>
+          );
         })}
       </CenterWrapper>
-      <RightWrapper>RightWrapper</RightWrapper>
+      <RightWrapper>
+        <LongIcon>
+          <Text
+            text={"친구 찾기"}
+            fs={"15px"}
+            fw={600}
+            lh={"20px"}
+            width={"auto"}
+          />
+        </LongIcon>
+        <LongIcon2>
+          <BagicUser />
+          <Text
+            text={"이성호"}
+            fs={"15px"}
+            fw={600}
+            lh={"20px"}
+            width={"auto"}
+          />
+        </LongIcon2>
+        {rightData.map((val, idx) => {
+          return <IconWrapper key={idx}>{val}</IconWrapper>;
+        })}
+      </RightWrapper>
     </Wrapper>
   );
 };
