@@ -93,9 +93,9 @@ export const PostCard = () => {
         />
       </ContentsWrapper>
       <BottomWrapper>
-        <Button2 text={"좋아요"} />
-        <Button2 text={"댓글 달기"} />
-        <Button2 text={"공유하기"} />
+        <Button2 text={"좋아요"} width={"100%"} />
+        <Button2 text={"댓글 달기"} width={"100%"} />
+        <Button2 text={"공유하기"} width={"100%"} />
       </BottomWrapper>
     </Wrapper>
   );

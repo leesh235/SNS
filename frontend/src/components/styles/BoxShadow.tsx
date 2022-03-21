@@ -6,21 +6,22 @@ const Wrapper = styled.div<StyleProps>`
   border-radius: 8px;
   background-color: ${(props) => props.theme.color.white};
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
-  padding: 8px;
+  padding: ${(props) => props.padding};
 `;
 
 interface StyleProps {
   width?: string;
   height?: string;
+  padding?: string;
 }
 
 interface Props extends StyleProps {
   children: React.ReactNode;
 }
 
-export const BoxShadow = ({ children, width, height }: Props) => {
+export const BoxShadow = ({ children, width, height, padding }: Props) => {
   return (
-    <Wrapper width={width} height={height}>
+    <Wrapper width={width} height={height} padding={padding}>
       {children}
     </Wrapper>
   );
@@ -29,4 +30,5 @@ export const BoxShadow = ({ children, width, height }: Props) => {
 BoxShadow.defaultProps = {
   width: "100%",
   height: "auto",
+  padding: "8px",
 };
