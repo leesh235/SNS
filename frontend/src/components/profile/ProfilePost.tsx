@@ -1,10 +1,10 @@
 import styled from "../../styles/theme-components";
 import { IntroduceCard } from "../card/IntroduceCard";
-import { ImageCard } from "../card/ImageCard";
-import { FriendCard } from "../card/FriendCard";
 import { WritePostCard } from "../card/WritePostCard";
 import { PostFlexCard } from "../card/PostFlexCard";
 import { WritePost } from "../modal/WritePost";
+import { BoxShadow } from "../styles/BoxShadow";
+import { Text } from "../common/Text";
 
 const Wrapper = styled.section`
     width: 908px;
@@ -33,13 +33,42 @@ const RightWrapper = styled.section`
     }
 `;
 
+const FlexWrapper = styled.div`
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0;
+`;
+
 export const ProfilePost = () => {
     return (
         <Wrapper>
             <LeftWrapper>
                 <IntroduceCard />
-                <ImageCard />
-                <FriendCard />
+                <BoxShadow>
+                    <FlexWrapper>
+                        <Text
+                            text={"사진"}
+                            fs={"20px"}
+                            fw={700}
+                            lh={"24px"}
+                            width={"auto"}
+                        />
+                    </FlexWrapper>
+                </BoxShadow>
+                <BoxShadow>
+                    <FlexWrapper>
+                        <Text
+                            text={"친구"}
+                            fs={"20px"}
+                            fw={700}
+                            lh={"24px"}
+                            width={"auto"}
+                        />
+                    </FlexWrapper>
+                </BoxShadow>
             </LeftWrapper>
             <RightWrapper>
                 <WritePostCard />
