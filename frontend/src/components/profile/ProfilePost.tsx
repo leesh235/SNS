@@ -19,12 +19,18 @@ const LeftWrapper = styled.section`
     width: 360px;
     display: flex;
     flex-direction: column;
+    > :nth-child(n) {
+        margin-bottom: 15px;
+    }
 `;
 
 const RightWrapper = styled.section`
     width: 500px;
     display: flex;
     flex-direction: column;
+    > :nth-child(1) {
+        margin-bottom: 15px;
+    }
 `;
 
 export const ProfilePost = () => {
