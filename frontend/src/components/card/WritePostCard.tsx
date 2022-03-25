@@ -3,6 +3,7 @@ import { IconButton } from "../common/button/IconButton";
 import { BoxShadow } from "../styles/BoxShadow";
 import { Text } from "../common/Text";
 import theme from "../../styles/theme";
+import { InputButton } from "../common/button/InputButton";
 
 const FlexWrapper = styled.div`
     width: calc(100% - 32px);
@@ -10,9 +11,12 @@ const FlexWrapper = styled.div`
     padding: 12px 16px 10px 16px;
 `;
 
-const TempoInpout = styled.div`
+const TopInpout = styled.div`
     width: 100%;
-    height: 40px;
+    height: auto;
+    > :nth-child(1) {
+        margin-bottom: 10px;
+    }
 `;
 
 const ButtonWrapper = styled.div`
@@ -29,7 +33,9 @@ export const WritePostCard = () => {
     return (
         <BoxShadow padding={"0px"} tag={"article"}>
             <FlexWrapper>
-                <TempoInpout></TempoInpout>
+                <TopInpout>
+                    <InputButton text={"무슨 생각을 하고 계신가요?"} />
+                </TopInpout>
                 <ButtonWrapper>
                     <IconButton height={"35px"}>
                         <Text

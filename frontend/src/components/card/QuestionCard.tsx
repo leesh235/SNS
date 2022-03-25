@@ -7,12 +7,12 @@ const FlexWrapper = styled.div`
     height: auto;
 `;
 
-export const ImageCard = () => {
+export const QuestionCard = () => {
     return (
-        <BoxShadow tag={"article"}>
+        <BoxShadow tag={"article"} padding={"0"}>
             <FlexWrapper>
                 <Text
-                    text={"사진"}
+                    text={"질문"}
                     fs={"20px"}
                     fw={700}
                     lh={"24px"}

@@ -1,62 +1,61 @@
 import theme from "../../../styles/theme";
 import styled from "../../../styles/theme-components";
+import { Text } from "../Text";
 
 const Wrapper = styled.button<StyleProps>`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     width: ${(props) => props.width};
     height: ${(props) => props.height};
-    padding: 0 16px;
-    border: none;
-    border-radius: 6px;
-    background-color: ${(props) => props.color};
+    padding: ${(props) => props.padding};
+    border: 0;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.color.gray};
     :hover {
-        background-color: ${(props) => props.hover && props.theme.color.gray};
+        background-color: ${(props) =>
+            props.hover && props.theme.color.lightGray};
     }
 `;
 
 interface StyleProps {
     width?: string;
     height?: string;
-    color?: string;
+    padding?: string;
     hover?: boolean;
 }
 
 interface Props extends StyleProps {
-    children: React.ReactNode;
-    type: "submit" | "button" | "reset";
+    text: string;
     onClick?: () => void;
 }
 
-export const IconButton = ({
-    children,
-    type,
+export const InputButton = ({
+    text,
     width,
     height,
-    color,
     hover,
+    padding,
     onClick,
 }: Props) => {
     return (
         <Wrapper
-            type={type}
             width={width}
             height={height}
-            color={color}
+            padding={padding}
             hover={hover}
             onClick={onClick}
         >
-            {children}
+            <Text
+                text={text}
+                fs={"17px"}
+                margin={"0 0 0 20px"}
+                fc={theme.color.lightBlack}
+            />
         </Wrapper>
     );
 };
 
-IconButton.defaultProps = {
-    type: "button",
-    width: "112px",
-    height: "50px",
-    color: theme.color.white,
+InputButton.defaultProps = {
+    width: "100%",
+    height: "40px",
+    padding: "0px",
     hover: true,
 };

@@ -7,12 +7,12 @@ const FlexWrapper = styled.div`
     height: auto;
 `;
 
-export const ImageCard = () => {
+export const VideoCard = () => {
     return (
         <BoxShadow tag={"article"}>
             <FlexWrapper>
                 <Text
-                    text={"사진"}
+                    text={"동영상"}
                     fs={"20px"}
                     fw={700}
                     lh={"24px"}
