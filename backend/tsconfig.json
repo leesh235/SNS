@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es5" /* 사용할 특정 ECMAScript 버전 설정*/,
+    "module": "commonjs" /* 모듈을 위한 코드 생성 설정 */,
+    "strict": true /* 타입-체킹 옵션 활성화 여부 */,
+    "esModuleInterop": true /* import 에러가 나서 추가 */,
+    "moduleResolution": "node" /* 모듈 해석 방법 설정 */,
+    "skipLibCheck": true /* 정의 파일의 타입 확인을 건너 뛸 지 여부 */
+  }
+}
