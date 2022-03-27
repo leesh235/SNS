@@ -64,7 +64,7 @@ export const Input2 = ({
 };
 
 Input2.defaultProps = {
-    width: "330px",
-    height: "22px",
+    width: "100%",
+    height: "40px",
     padding: "0px",
 };
