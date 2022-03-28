@@ -1,21 +1,15 @@
-import auth from "./api/auth.controller";
-import user from "./api/user.controller";
-import post from "./api/post.controller";
-import posts from "./api/posts.controller";
-import comment from "./api/comment.controller";
-import chatting from "./api/chatting.controller";
-
 import express from "express";
+import "./config/env";
+import loaders from "./loaders";
 
-const app = express();
+async function startServer() {
+    const app: express.Application = express();
 
-app.use("/auth", auth);
-app.use("/user", user);
-app.use("/post", post);
-app.use("/posts", posts);
-app.use("/comment", comment);
-app.use("/chatting", chatting);
+    await loaders({ expressApp: app });
 
-app.listen("5000", () => {
-    console.log(`start server`);
-});
+    app.listen(process.env.PORT, () => {
+        console.log(`start server: ${process.env.PORT}`);
+    });
+}
+
+startServer();
