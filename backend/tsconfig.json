@@ -7,7 +7,9 @@
         "moduleResolution": "node" /* 모듈 해석 방법 설정 */,
         "skipLibCheck": true /* 정의 파일의 타입 확인을 건너 뛸 지 여부 */,
         "outDir": "dist" /*컴파일 된 js 파일 경로*/,
-        "experimentalDecorators": true /*ES7의 decorators 지원 여부*/
+        "experimentalDecorators": true /*ES7의 decorators 지원 여부*/,
+        "emitDecoratorMetadata": true /*decorator를 위한 타입 메타데이터를 내보내는 것에 대한 지원 여부*/,
+        "strictPropertyInitialization": false /*클래스 값 초기화 확인 여부*/
     },
     "include": ["src/**/*"] /* 컴파일 할 ts 파일 경로 */,
     "exclude": ["node_modules"] /*컴파일 제외 파일*/

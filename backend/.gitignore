@@ -5,8 +5,7 @@ build/
 tmp/
 temp/
 
-dist
+dist/
 
-#.env
 .env.dev
 .env.prod
