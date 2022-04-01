@@ -13,8 +13,7 @@ import chatting from "../api/chatting.controller";
 import { corsOptions } from "../config/cors";
 
 export default async ({ app }: { app: express.Application }) => {
-  //   app.use(cors(corsOptions));
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(morgan("dev"));
