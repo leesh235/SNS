@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import { baseRoutes } from "../config/route";
 //routes
 import auth from "../api/auth.controller";
@@ -12,15 +13,18 @@ import chatting from "../api/chatting.controller";
 import { corsOptions } from "../config/cors";
 
 export default async ({ app }: { app: express.Application }) => {
-    app.use(`${baseRoutes.auth}`, auth);
-    app.use(`${baseRoutes.user}`, user);
-    app.use(`${baseRoutes.post}`, post);
-    app.use(`${baseRoutes.posts}`, posts);
-    app.use(`${baseRoutes.comment}`, comment);
-    app.use(`${baseRoutes.chatting}`, chatting);
+  //   app.use(cors(corsOptions));
+  app.use(cors());
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(morgan("dev"));
 
-    app.use(cors(corsOptions));
-    app.use(express.json());
+  app.use(`${baseRoutes.auth}`, auth);
+  app.use(`${baseRoutes.user}`, user);
+  app.use(`${baseRoutes.post}`, post);
+  app.use(`${baseRoutes.posts}`, posts);
+  app.use(`${baseRoutes.comment}`, comment);
+  app.use(`${baseRoutes.chatting}`, chatting);
 
-    return app;
+  return app;
 };
