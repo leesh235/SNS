@@ -1,17 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
 import { User } from "./User.entity";
 
 @Entity("user_info")
 export class UserInfo {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    school: string;
+  @Column()
+  school: string;
 
-    @Column()
-    job: string;
+  @Column()
+  job: string;
 
-    //     @OneToMany((type) => User, (user) => user.userInfo)
-    //     user!: User;
+  @OneToOne((type) => User, (user) => user.userInfo, { onDelete: "CASCADE" })
+  @JoinColumn()
+  user: User;
 }

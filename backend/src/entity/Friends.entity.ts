@@ -1,13 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
+import { User } from "./User.entity";
 
 @Entity("friends")
 export class Friends {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: "int", nullable: false })
-    friend1: number;
+  @Column({ type: "varchar", nullable: false })
+  friend2: string;
 
-    @Column({ type: "int", nullable: false })
-    friend2: number;
+  @ManyToOne((type) => User, (user) => user.friends)
+  @JoinColumn({ name: "friend1", referencedColumnName: "email" })
+  user: User;
 }

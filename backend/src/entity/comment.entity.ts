@@ -1,35 +1,47 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-    UpdateDateColumn,
-    DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  JoinColumn,
+  ManyToOne,
 } from "typeorm";
+import { Post } from "./Post.entity";
+import { User } from "./User.entity";
 
 @Entity("comment")
 export class Comment {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ type: "int", nullable: false })
-    postId!: number;
+  @Column({ type: "int" })
+  commentId: number;
 
-    @Column({ type: "int", nullable: false })
-    userId!: number;
+  @Column({ type: "varchar", nullable: false })
+  contents!: string;
 
-    @Column({ type: "int" })
-    commentId: number;
+  @CreateDateColumn({ type: "timestamp", name: "create_date" })
+  createdAt: Date | undefined;
 
-    @Column({ type: "varchar", nullable: false })
-    contents!: string;
+  @UpdateDateColumn({ type: "timestamp", name: "update_date" })
+  updatedAt: Date | undefined;
 
-    @CreateDateColumn({ type: "timestamp", name: "create_date" })
-    createdAt: Date | undefined;
+  @DeleteDateColumn({ type: "timestamp", name: "delete_date" })
+  deletedAt: Date | undefined;
 
-    @UpdateDateColumn({ type: "timestamp", name: "update_date" })
-    updatedAt: Date | undefined;
+  @ManyToOne((type) => Post, (post) => post.comment, {
+    nullable: false,
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "postId", referencedColumnName: "id" })
+  post: Post;
 
-    @DeleteDateColumn({ type: "timestamp", name: "delete_date" })
-    deletedAt: Date | undefined;
+  @ManyToOne((type) => User, (user) => user.comment, {
+    nullable: false,
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "writer", referencedColumnName: "nickName" })
+  user: User;
 }
