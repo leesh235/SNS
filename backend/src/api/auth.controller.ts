@@ -1,47 +1,72 @@
 import express from "express";
-const router = express.Router();
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
-import { exist } from "../config/message";
+import { Join, Login } from "../types/auth.type";
+import { exist, incorrect } from "../config/message";
+import {
+    hashPassword,
+    generateToken,
+    comparePassword,
+} from "../services/auth.service";
+import { routes } from "../config/route";
 
+const router = express.Router();
 const userRepository = dataSource.getRepository(User);
 
-router.post("/login", async (req, res) => {
+router.post(routes.auth.login, async (req, res) => {
     try {
+        const bodys: Login = req.body;
+
         const user = new User();
-        user.email = req.body.email;
-        user.password = req.body.password;
-        const users = await userRepository.find({
+        user.email = bodys.email;
+        user.password = bodys.password;
+
+        const users = await userRepository.findOne({
             where: {
                 deletedAt: undefined,
             },
         });
-        if (users) {
-            res.status(200).send("token");
-        } else {
+
+        if (!users) {
             res.status(403).send({ message: `${exist.NOT_EXIST_ACCOUNT}` });
         }
+
+        if (users && !comparePassword(user.password, users.password)) {
+            res.status(404).send({
+                message: `${incorrect.INCORRECT_PASSWORD}`,
+            });
+        }
+
+        res.status(200).send(generateToken(user.email));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
 });
 
-router.post("/join", async (req, res) => {
+router.post(routes.auth.join, async (req, res) => {
     try {
+        const bodys: Join = req.body;
+
         const user = new User();
-        user.email = req.body.email;
-        user.password = req.body.password;
-        user.birth = req.body.birth;
-        user.gender = req.body.gender;
-        user.nickName = req.body.nickName;
+        user.email = bodys.email;
+        user.password = hashPassword(bodys.password);
+        user.birth = bodys.birth;
+        user.gender = bodys.gender;
+        user.nickName = bodys.nickName;
 
         const users = await userRepository.find();
         if (users) {
             res.status(409).send({ message: `${exist.EXIST_ACCOUNT}` });
-        } else {
-            await dataSource.manager.save(user);
-            res.status(200).send(users);
         }
+
+        if (bodys.password !== bodys.confirmPassword) {
+            res.status(404).send({
+                message: `${incorrect.INCORRECT_PASSWORD}`,
+            });
+        }
+
+        await dataSource.manager.save(user);
+        res.status(200).send(users);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

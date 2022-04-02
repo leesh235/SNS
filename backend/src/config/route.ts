@@ -7,6 +7,11 @@ export const baseRoutes = {
     chatting: "/chatting",
 };
 
-export const routes = {};
+export const routes = {
+    auth: {
+        login: "/login",
+        join: "/join",
+    },
+};
 
 export const entities: string = "src/entity/*.ts";

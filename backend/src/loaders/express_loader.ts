@@ -9,21 +9,23 @@ import post from "../api/post.controller";
 import posts from "../api/posts.controller";
 import comment from "../api/comment.controller";
 import chatting from "../api/chatting.controller";
-//config
+//middleware
 import { corsOptions } from "../config/cors";
+import passportOptions from "../config/passport";
 
 export default async ({ app }: { app: express.Application }) => {
-  app.use(cors(corsOptions));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-  app.use(morgan("dev"));
+    app.use(cors(corsOptions));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(morgan("dev"));
+    app.use(passportOptions);
 
-  app.use(`${baseRoutes.auth}`, auth);
-  app.use(`${baseRoutes.user}`, user);
-  app.use(`${baseRoutes.post}`, post);
-  app.use(`${baseRoutes.posts}`, posts);
-  app.use(`${baseRoutes.comment}`, comment);
-  app.use(`${baseRoutes.chatting}`, chatting);
+    app.use(`${baseRoutes.auth}`, auth);
+    app.use(`${baseRoutes.user}`, user);
+    app.use(`${baseRoutes.post}`, post);
+    app.use(`${baseRoutes.posts}`, posts);
+    app.use(`${baseRoutes.comment}`, comment);
+    app.use(`${baseRoutes.chatting}`, chatting);
 
-  return app;
+    return app;
 };

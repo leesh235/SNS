@@ -4,6 +4,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
 import { dataSource } from "./typeorm";
 import { User } from "../entity/User.entity";
+import { comparePassword } from "../services/auth.service";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -11,7 +12,7 @@ const LocalStrategyOptions: {
     usernameField: string;
     passwordField: string;
 } = {
-    usernameField: "id",
+    usernameField: "email",
     passwordField: "password",
 };
 
@@ -33,15 +34,11 @@ const localVerify: (
         });
 
         if (!user) {
-            return done(null, false, { message: "가입되지 않은 회원입니다." });
+            return done(null, false);
         }
 
-        const checkPassword = await bcrypt.compare(password, user.password);
-
-        if (!checkPassword) {
-            return done(null, false, {
-                message: "비밀번호가 일치하지 않습니다.",
-            });
+        if (!comparePassword(password, user.password)) {
+            return done(null, false);
         }
 
         return done(null, user);
@@ -54,7 +51,7 @@ const jwtVerify = async ({ payload, done }: { payload: any; done: any }) => {
     try {
         const user: any = await userRepository.find({
             where: {
-                email: payload.id,
+                email: payload.email,
             },
         });
 
@@ -68,7 +65,9 @@ const jwtVerify = async ({ payload, done }: { payload: any; done: any }) => {
     }
 };
 
+passport.use(new LocalStrategy(LocalStrategyOptions, localVerify));
+passport.use(new JWTStrategy(jwtStrategyOptions, jwtVerify));
+
 export default () => {
-    passport.use(new LocalStrategy(LocalStrategyOptions, localVerify));
-    passport.use(new JWTStrategy(jwtStrategyOptions, jwtVerify));
+    passport.initialize();
 };
