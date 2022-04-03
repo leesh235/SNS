@@ -47,7 +47,10 @@ router.post(routes.auth.join, async (req, res) => {
         user.gender = req.body.gender;
         user.nickName = req.body.nickName;
 
-        const users = await userRepository.find();
+        const users = await userRepository.findOne({
+            where: { email: user.email },
+        });
+
         if (users) {
             res.status(409).send({ message: `${exist.EXIST_ACCOUNT}` });
         }
@@ -57,9 +60,10 @@ router.post(routes.auth.join, async (req, res) => {
                 message: `${incorrect.INCORRECT_PASSWORD}`,
             });
         }
-        const result = await userRepository.save(user);
 
-        res.status(200).send(result);
+        await userRepository.save(user);
+
+        res.status(200).send(user);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
