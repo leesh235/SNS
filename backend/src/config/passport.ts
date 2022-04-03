@@ -1,7 +1,6 @@
 import passport from "passport";
 import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 import { Strategy as LocalStrategy } from "passport-local";
-import bcrypt from "bcrypt";
 import { dataSource } from "./typeorm";
 import { User } from "../entity/User.entity";
 import { comparePassword } from "../services/auth.service";
