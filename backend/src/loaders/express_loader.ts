@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import passport from "passport";
 import { baseRoutes } from "../config/route";
 //routes
 import auth from "../api/auth.controller";
@@ -11,14 +12,15 @@ import comment from "../api/comment.controller";
 import chatting from "../api/chatting.controller";
 //middleware
 import { corsOptions } from "../config/cors";
-import passportOptions from "../config/passport";
+import passportConfig from "../config/passport";
 
 export default async ({ app }: { app: express.Application }) => {
     app.use(cors(corsOptions));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morgan("dev"));
-    app.use(passportOptions);
+
+    passportConfig();
 
     app.use(`${baseRoutes.auth}`, auth);
     app.use(`${baseRoutes.user}`, user);

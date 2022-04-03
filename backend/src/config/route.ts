@@ -1,16 +1,19 @@
 export const baseRoutes = {
-    auth: "/auth",
-    user: "/user",
-    post: "/post",
-    posts: "/posts",
-    comment: "/comment",
-    chatting: "/chatting",
+    auth: "/api/auth",
+    user: "/api/user",
+    post: "/api/post",
+    posts: "/api/posts",
+    comment: "/api/comment",
+    chatting: "/api/chatting",
 };
 
 export const routes = {
     auth: {
         login: "/login",
         join: "/join",
+    },
+    user: {
+        profile: "/profile",
     },
 };
 

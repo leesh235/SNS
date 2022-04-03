@@ -4,6 +4,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { dataSource } from "./typeorm";
 import { User } from "../entity/User.entity";
 import { comparePassword } from "../services/auth.service";
+import { exist, incorrect } from "../config/message";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -26,20 +27,23 @@ const localVerify: (
     done: any
 ) => void = async (username, password, done) => {
     try {
-        const user: any = await userRepository.find({
+        const user = await userRepository.findOne({
             where: {
                 email: username,
+            },
+            select: {
+                email: true,
+                password: true,
             },
         });
 
         if (!user) {
-            return done(null, false);
+            return done(null, false, { message: exist.NOT_EXIST_ACCOUNT });
         }
 
-        if (!comparePassword(password, user.password)) {
-            return done(null, false);
+        if (!(await comparePassword(password, user.password))) {
+            return done(null, false, { message: incorrect.INCORRECT_PASSWORD });
         }
-
         return done(null, user);
     } catch (error) {
         return done(error);
@@ -64,9 +68,8 @@ const jwtVerify = async ({ payload, done }: { payload: any; done: any }) => {
     }
 };
 
-passport.use(new LocalStrategy(LocalStrategyOptions, localVerify));
-passport.use(new JWTStrategy(jwtStrategyOptions, jwtVerify));
-
 export default () => {
     passport.initialize();
+    passport.use("local", new LocalStrategy(LocalStrategyOptions, localVerify));
+    passport.use("jwt", new JWTStrategy(jwtStrategyOptions, jwtVerify));
 };
