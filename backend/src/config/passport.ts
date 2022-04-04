@@ -16,9 +16,9 @@ const LocalStrategyOptions: {
     passwordField: "password",
 };
 
-const jwtStrategyOptions: { jwtFromRequest: any; secretOrKey: any } = {
+const jwtStrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: `${process.env.JWT_SECRET}`,
 };
 
 const localVerify: (
@@ -50,11 +50,20 @@ const localVerify: (
     }
 };
 
-const jwtVerify = async ({ payload, done }: { payload: any; done: any }) => {
+const jwtVerify = async (payload: any, done: any) => {
     try {
-        const user: any = await userRepository.find({
-            where: {
-                email: payload.email,
+        const user = await userRepository.findOne({
+            where: [
+                {
+                    email: payload.email,
+                },
+                {
+                    deletedAt: undefined,
+                },
+            ],
+            select: {
+                email: true,
+                nickName: true,
             },
         });
 
@@ -68,8 +77,16 @@ const jwtVerify = async ({ payload, done }: { payload: any; done: any }) => {
     }
 };
 
-export default () => {
-    passport.initialize();
-    passport.use("local", new LocalStrategy(LocalStrategyOptions, localVerify));
-    passport.use("jwt", new JWTStrategy(jwtStrategyOptions, jwtVerify));
+export const authenticateJWT = (req: any, res: any, next: any) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (user) {
+            console.log(user);
+            req.user = user;
+        }
+        next();
+    })(req, res, next);
 };
+
+passport.use("local", new LocalStrategy(LocalStrategyOptions, localVerify));
+passport.use("jwt", new JWTStrategy(jwtStrategyOptions, jwtVerify));
+passport.initialize();
