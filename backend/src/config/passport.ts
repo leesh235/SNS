@@ -64,6 +64,9 @@ const jwtVerify = async (payload: any, done: any) => {
             select: {
                 email: true,
                 nickName: true,
+                gender: true,
+                birth: true,
+                createdAt: true,
             },
         });
 
