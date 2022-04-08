@@ -5,8 +5,8 @@ import { exist, incorrect } from "../config/message";
 import passport from "passport";
 import {
     hashPassword,
-    generateToken,
-    comparePassword,
+    generateAccessToken,
+    generateRefreshToken,
 } from "../services/auth.service";
 import { routes } from "../config/route";
 
@@ -29,8 +29,7 @@ router.post(routes.auth.login, async (req, res) => {
                     res.send(loginError);
                     return;
                 }
-                const token = generateToken(user.email);
-                res.status(200).send({ token });
+                res.status(200).send({ ...user });
             });
         })(req, res);
     } catch (error) {
@@ -45,7 +44,7 @@ router.post(routes.auth.join, async (req, res) => {
         user.password = await hashPassword(req.body.password);
         user.birth = req.body.birth;
         user.gender = req.body.gender;
-        user.nickName = req.body.nickName;
+        user.nickName = req.body.firstName + req.body.secondName;
 
         const users = await userRepository.findOne({
             where: { email: user.email },
@@ -55,15 +54,10 @@ router.post(routes.auth.join, async (req, res) => {
             res.status(409).send({ message: `${exist.EXIST_ACCOUNT}` });
         }
 
-        if (req.body.password !== req.body.confirmPassword) {
-            res.status(404).send({
-                message: `${incorrect.INCORRECT_PASSWORD}`,
-            });
-        }
-
         await userRepository.save(user);
+        const accessToken = generateAccessToken(user.email);
 
-        res.status(200).send(user);
+        res.status(200).send({ accessToken });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

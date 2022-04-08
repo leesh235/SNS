@@ -15,8 +15,16 @@ export const comparePassword = async (pw: string, userPw: string) => {
     return true;
 };
 
-export const generateToken = (email: string) => {
-    return jwt.sign({ email }, `${process.env.JWT_SECRET}`);
+export const generateAccessToken = (email: string) => {
+    return jwt.sign({ email }, `${process.env.JWT_SECRET}`, {
+        expiresIn: "30m",
+    });
+};
+
+export const generateRefreshToken = (email: string) => {
+    return jwt.sign({ email }, `${process.env.JWT_SECRET}`, {
+        expiresIn: "7d",
+    });
 };
 
 export const isAuthenticated = (req: any) => {

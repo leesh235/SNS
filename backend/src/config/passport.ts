@@ -3,7 +3,11 @@ import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 import { Strategy as LocalStrategy } from "passport-local";
 import { dataSource } from "./typeorm";
 import { User } from "../entity/User.entity";
-import { comparePassword } from "../services/auth.service";
+import {
+    comparePassword,
+    generateAccessToken,
+    generateRefreshToken,
+} from "../services/auth.service";
 import { exist, incorrect } from "../config/message";
 
 const userRepository = dataSource.getRepository(User);
@@ -44,7 +48,17 @@ const localVerify: (
         if (!(await comparePassword(password, user.password))) {
             return done(null, false, { message: incorrect.INCORRECT_PASSWORD });
         }
-        return done(null, user);
+        const accessToken = generateAccessToken(user.email);
+        // const refreshToken = generateRefreshToken(user.email);
+
+        // await dataSource
+        //     .createQueryBuilder()
+        //     .update(User)
+        //     .set({ nickName: "test", birth: "19960403" })
+        //     .where({ email: user.email })
+        //     .execute();
+
+        return done(null, { accessToken });
     } catch (error) {
         return done(error);
     }
