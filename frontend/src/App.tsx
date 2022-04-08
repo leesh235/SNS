@@ -2,8 +2,11 @@ import { LogInRoute } from "./components/routing/LogInRoute";
 import { LogOutRoute } from "./components/routing/LogOutRoute";
 
 const App = () => {
-    return <LogInRoute />;
-    // return <LogOutRoute />;
+    const isLogIn = () => {
+        return Boolean(localStorage.getItem("token")) || false;
+    };
+
+    return isLogIn() ? <LogInRoute /> : <LogOutRoute />;
 };
 
 export default App;

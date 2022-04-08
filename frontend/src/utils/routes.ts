@@ -7,4 +7,9 @@ export const routes = {
     profile: "/profile",
 };
 
-export const api = {};
+export const api = {
+    auth: {
+        login: "/auth/login",
+        join: "/auth/join",
+    },
+};
