@@ -1,4 +1,4 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useState } from "react";
 
 const Wrapper = styled.input<StyleProps>`

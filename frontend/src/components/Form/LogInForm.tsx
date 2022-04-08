@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import { useEffect, useState } from "react";
-import { Input } from "../common/Input";
+import { Input } from "../common/input/Input";
 import { Button } from "../common/button/Button";
 import { Join } from "../modal/Join";
 import { Line } from "../common/Line";
