@@ -4,6 +4,8 @@ import { Button } from "../common/button/Button";
 import { RequireInput } from "../common/input/RequireInput";
 import { useDispatch } from "react-redux";
 import { setJoin } from "../../modules/action/join";
+import { GenderBox } from "../join/GenderBox";
+import { BirthBox } from "../join/BirthBox";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -93,15 +95,26 @@ interface Props {
 export const Join = ({ onClose }: Props) => {
     const dispatch = useDispatch();
 
-    const handleJoin = async () => {
+    const handleJoin: React.FormEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault();
+        const {
+            firstName,
+            secondName,
+            email,
+            password,
+            gender,
+            year,
+            month,
+            day,
+        } = e.currentTarget;
         dispatch(
             setJoin({
-                firstName: "lee",
-                secondName: "seongho",
-                email: "wksehs23@naver.com",
-                password: "tjdgh235",
-                birth: "19960403",
-                gender: "male",
+                firstName: firstName.value,
+                secondName: secondName.value,
+                email: email.value,
+                password: password.value,
+                birth: year.value + month.value + day.value,
+                gender: gender.value,
             })
         );
         onClose();
@@ -117,31 +130,39 @@ export const Join = ({ onClose }: Props) => {
                     </FlexWrapper>
                     <SubTitle>빠르고 쉽습니다.</SubTitle>
                 </TopWrapper>
-                <FormWrapper>
+                <FormWrapper onSubmit={handleJoin}>
                     <FlexWrapper>
-                        <RequireInput placeholder={"성()"} width={"170px"} />
+                        <RequireInput
+                            placeholder={"성()"}
+                            width={"170px"}
+                            name={"firstName"}
+                            required={true}
+                        />
                         <RequireInput
                             placeholder={"이름(성은 제외)"}
                             width={"170px"}
+                            name={"secondName"}
+                            required={true}
                         />
                     </FlexWrapper>
-                    <RequireInput placeholder={"휴대폰 번호 또는 이메일"} />
-                    <RequireInput placeholder={"새 비밀번호"} />
+                    <RequireInput
+                        placeholder={"휴대폰 번호 또는 이메일"}
+                        name={"email"}
+                        required={true}
+                    />
+                    <RequireInput
+                        placeholder={"새 비밀번호"}
+                        name={"password"}
+                        required={true}
+                        type={"password"}
+                    />
                     <ColumnWrapper>
                         <Text>생일</Text>
-                        <FlexWrapper>
-                            <div>년</div>
-                            <div>월</div>
-                            <div>일</div>
-                        </FlexWrapper>
+                        <BirthBox />
                     </ColumnWrapper>
                     <ColumnWrapper>
                         <Text>성별</Text>
-                        <FlexWrapper>
-                            <div>여성</div>
-                            <div>남성</div>
-                            <div>직접 지정</div>
-                        </FlexWrapper>
+                        <GenderBox />
                     </ColumnWrapper>
                     <Contents>
                         가입하기 버튼을 클릭하면 Facebook의 약관, 데이터 정책 및
@@ -154,8 +175,6 @@ export const Join = ({ onClose }: Props) => {
                         height={"36px"}
                         color={theme.color.lightGreen}
                         fs={"17px"}
-                        type={"button"}
-                        onClick={handleJoin}
                     />
                 </FormWrapper>
             </BoxWrapper>

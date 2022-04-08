@@ -1,5 +1,5 @@
 import styled from "../../styles/theme-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../common/Input";
 import { Button } from "../common/button/Button";
 import { Join } from "../modal/Join";
@@ -7,8 +7,9 @@ import { Line } from "../common/Line";
 import { LinkText } from "../common/button/LinkText";
 import { routes } from "../../utils/routes";
 import theme from "../../styles/theme";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../../modules/action/login";
+import { authMessage } from "../../utils/message";
 
 const Wrapper = styled.section`
     width: 396px;
@@ -45,6 +46,9 @@ const FormWrapper = styled.form`
 export const LogInForm = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch();
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.login?.user
+    );
 
     const handleOpen = () => {
         setOpen(true);
@@ -54,30 +58,36 @@ export const LogInForm = () => {
         setOpen(false);
     };
 
-    const handleLogin = async () => {
-        dispatch(setLogin({ email: "test", password: "test1234" }));
+    const handleLogin: React.FormEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault();
+        const { email, password } = e.currentTarget;
+        dispatch(setLogin({ email: email.value, password: password.value }));
     };
+
+    useEffect(() => {
+        if (error !== null) {
+            alert(authMessage.login.login_error);
+        }
+    }, [loading]);
 
     return (
         <Wrapper>
             <BoxWrapper>
-                {/* <FormWrapper onSubmit={handleLogin}> */}
-                <FormWrapper>
+                <FormWrapper onSubmit={handleLogin}>
                     <Input
+                        name={"email"}
                         padding={"14px 16px"}
                         placeholder={"이메일 또는 전화번호"}
+                        required={true}
                     />
                     <Input
+                        name={"password"}
                         padding={"14px 16px"}
                         placeholder={"비밀번호"}
                         type={"password"}
+                        required={true}
                     />
-                    {/* <Button text="로그인" /> */}
-                    <Button
-                        text="로그인"
-                        type={"button"}
-                        onClick={handleLogin}
-                    />
+                    <Button text="로그인" />
                     <LinkText
                         to={routes.forget}
                         text={"비밀번호를 잊으셨나요?"}
