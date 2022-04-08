@@ -28,11 +28,21 @@ interface StyleProps {
 }
 
 interface Props extends StyleProps {
+    name?: string;
     type?: "email" | "number" | "password";
     placeholder?: string;
+    required?: boolean;
 }
 
-export const Input = ({ type, width, height, padding, placeholder }: Props) => {
+export const Input = ({
+    name,
+    required,
+    type,
+    width,
+    height,
+    padding,
+    placeholder,
+}: Props) => {
     const [focus, setForcus] = useState<boolean>(false);
 
     const handleOnFocus = () => {
@@ -45,6 +55,7 @@ export const Input = ({ type, width, height, padding, placeholder }: Props) => {
 
     return (
         <Wrapper
+            name={name}
             type={type}
             width={width}
             height={height}
@@ -53,6 +64,7 @@ export const Input = ({ type, width, height, padding, placeholder }: Props) => {
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
             focus={focus}
+            required={required}
         />
     );
 };
@@ -61,4 +73,5 @@ Input.defaultProps = {
     width: "330px",
     height: "22px",
     padding: "0px",
+    required: false,
 };

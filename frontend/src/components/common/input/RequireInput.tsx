@@ -30,9 +30,13 @@ interface StyleProps {
 interface Props extends StyleProps {
     type?: "email" | "number" | "password";
     placeholder?: string;
+    name?: string;
+    required?: boolean;
 }
 
 export const RequireInput = ({
+    name,
+    required,
     type,
     width,
     height,
@@ -59,6 +63,8 @@ export const RequireInput = ({
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
             focus={focus}
+            name={name}
+            required={required}
         />
     );
 };
@@ -67,4 +73,5 @@ RequireInput.defaultProps = {
     width: "375px",
     height: "16px",
     padding: "11px",
+    required: false,
 };
