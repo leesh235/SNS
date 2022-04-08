@@ -15,7 +15,7 @@ export const reducerUtils = {
         error: null,
     }),
     error: (error: any) => ({
-        loading: false,
+        loading: true,
         data: null,
         error,
     }),

@@ -2,7 +2,7 @@ import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR } from "../action/login";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
 const initialState = {
-    user: reducerUtils.initial({ token: undefined }),
+    user: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -11,7 +11,7 @@ const reducer = (state = initialState, action: any) => {
         case LOGIN:
             return {
                 ...state,
-                user: reducerUtils.loading(state.user),
+                user: reducerUtils.loading(state.user.data),
             };
         case LOGIN_SUCCESS:
             localStorage.setItem("token", data.accessToken);
