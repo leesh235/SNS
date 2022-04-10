@@ -1,13 +1,15 @@
 import multer from "multer";
 import { User } from "../entity/User.entity";
+import { existFile } from "../utils/fileFunction";
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, `${process.env.FILE_PATH}`);
+        const { email } = req.user as User;
+        existFile(req, file);
+        cb(null, `${process.env.FILE_PATH}/${email}`);
     },
     filename: (req, file, cb) => {
-        const { email } = req.user as User;
-        cb(null, email + "_" + req.body.mode + "_" + file.originalname);
+        cb(null, req.body.mode + "_" + file.originalname);
     },
 });
 

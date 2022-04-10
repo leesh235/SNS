@@ -6,3 +6,11 @@ export const exist = {
 export const incorrect = {
     INCORRECT_PASSWORD: "비밀번호가 다릅니다.",
 };
+
+export const success = {
+    SAVE_IMAGE: "이미지 저장 성공",
+};
+
+export const fail = {
+    SAVE_IMAGE: "이미지 저장 실패",
+};
