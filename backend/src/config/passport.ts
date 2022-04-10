@@ -3,11 +3,8 @@ import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 import { Strategy as LocalStrategy } from "passport-local";
 import { dataSource } from "./typeorm";
 import { User } from "../entity/User.entity";
-import {
-    comparePassword,
-    generateAccessToken,
-    generateRefreshToken,
-} from "../services/auth.service";
+import { generateAccessToken, generateRefreshToken } from "../utils/token";
+import { comparePassword } from "../utils/password";
 import { exist, incorrect } from "../config/message";
 
 const userRepository = dataSource.getRepository(User);

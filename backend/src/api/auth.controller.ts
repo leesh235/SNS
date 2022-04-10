@@ -3,11 +3,8 @@ import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
 import { exist, incorrect } from "../config/message";
 import passport from "passport";
-import {
-    hashPassword,
-    generateAccessToken,
-    generateRefreshToken,
-} from "../services/auth.service";
+import { generateAccessToken, generateRefreshToken } from "../utils/token";
+import { hashPassword } from "../utils/password";
 import { routes } from "../config/route";
 
 const router = express.Router();
