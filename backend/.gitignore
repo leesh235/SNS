@@ -9,3 +9,5 @@ dist/
 
 .env.dev
 .env.prod
+
+uploads/

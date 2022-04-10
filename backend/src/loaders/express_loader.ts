@@ -15,12 +15,12 @@ import "../config/passport";
 import { jwt_authenticate } from "../config/passport";
 
 export default async ({ app }: { app: express.Application }) => {
+    app.use(express.static(`${process.env.FILE_PATH}`));
+
     app.use(cors(corsOptions));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morgan("dev"));
-
-    app.use(express.static(`${process.env.FILE_PATH}`));
 
     app.use(`${baseRoutes.auth}`, auth);
     app.use(`${baseRoutes.user}`, jwt_authenticate, user);
