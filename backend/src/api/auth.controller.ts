@@ -1,14 +1,12 @@
 import express from "express";
-import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
-import { exist, incorrect } from "../config/message";
+import { exist } from "../config/message";
 import passport from "passport";
-import { generateAccessToken, generateRefreshToken } from "../utils/token";
 import { hashPassword } from "../utils/password";
 import { routes } from "../config/route";
+import { existUser, save } from "../services/auth.service";
 
 const router = express.Router();
-const userRepository = dataSource.getRepository(User);
 
 router.post(routes.auth.login, async (req, res) => {
     try {
@@ -43,18 +41,11 @@ router.post(routes.auth.join, async (req, res) => {
         user.gender = req.body.gender;
         user.nickName = req.body.firstName + req.body.secondName;
 
-        const users = await userRepository.findOne({
-            where: { email: user.email },
-        });
-
-        if (users) {
+        if (!existUser(user)) {
             res.status(409).send({ message: `${exist.EXIST_ACCOUNT}` });
         }
 
-        await userRepository.save(user);
-        const accessToken = generateAccessToken(user.email);
-
-        res.status(200).send({ accessToken });
+        res.status(200).send({ accessToken: save(user) });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
