@@ -12,6 +12,7 @@ import chatting from "../api/chatting.controller";
 //middleware
 import { corsOptions } from "../config/cors";
 import "../config/passport";
+import { jwt_authenticate } from "../config/passport";
 
 export default async ({ app }: { app: express.Application }) => {
     app.use(cors(corsOptions));
@@ -19,12 +20,14 @@ export default async ({ app }: { app: express.Application }) => {
     app.use(express.urlencoded({ extended: true }));
     app.use(morgan("dev"));
 
+    app.use(express.static(`${process.env.FILE_PATH}`));
+
     app.use(`${baseRoutes.auth}`, auth);
-    app.use(`${baseRoutes.user}`, user);
-    app.use(`${baseRoutes.post}`, post);
-    app.use(`${baseRoutes.posts}`, posts);
-    app.use(`${baseRoutes.comment}`, comment);
-    app.use(`${baseRoutes.chatting}`, chatting);
+    app.use(`${baseRoutes.user}`, jwt_authenticate, user);
+    app.use(`${baseRoutes.post}`, jwt_authenticate, post);
+    app.use(`${baseRoutes.posts}`, jwt_authenticate, posts);
+    app.use(`${baseRoutes.comment}`, jwt_authenticate, comment);
+    app.use(`${baseRoutes.chatting}`, jwt_authenticate, chatting);
 
     return app;
 };
