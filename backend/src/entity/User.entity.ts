@@ -38,6 +38,15 @@ export class User {
     @Column({ type: "varchar", nullable: false })
     birth!: string;
 
+    @Column({ type: "varchar" })
+    introduction: string;
+
+    @Column({ type: "varchar" })
+    coverImage: string;
+
+    @Column({ type: "varchar" })
+    profileImage: string;
+
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
     createdAt: Date | undefined;
 
