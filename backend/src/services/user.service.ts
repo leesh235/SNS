@@ -32,3 +32,24 @@ export const save_image = async (req: any) => {
         return false;
     }
 };
+
+export const save_introduce = async (req: any) => {
+    try {
+        const {
+            user,
+            body: { introtuce },
+        } = req;
+
+        await dataSource
+            .createQueryBuilder()
+            .update(User)
+            .set({ introduction: introtuce })
+            .where({ email: user.email })
+            .execute();
+
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
