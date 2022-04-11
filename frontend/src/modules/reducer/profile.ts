@@ -2,7 +2,7 @@ import { PROFILE, PROFILE_SUCCESS, PROFILE_ERROR } from "../action/profile";
 import { reducerUtils } from "../../utils/reducerUtils";
 
 const initialState = {
-    profile: reducerUtils.initial({}),
+    profile: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -10,10 +10,12 @@ const reducer = (state = initialState, action: any) => {
     switch (type) {
         case PROFILE:
             return {
-                profile: reducerUtils.loading(state.profile),
+                ...state,
+                profile: reducerUtils.loading(state.profile.data),
             };
         case PROFILE_SUCCESS:
             return {
+                ...state,
                 profile: reducerUtils.success(data),
             };
         case PROFILE_ERROR:
