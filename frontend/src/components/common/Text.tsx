@@ -6,7 +6,7 @@ const Wrapper = styled.div<StyleProps>`
     font-size: ${(props) => props.fs};
     font-weight: ${(props) => props.fw};
     line-height: ${(props) => props.lh};
-    text-align: left;
+    text-align: ${(props) => props.ta};
     color: ${(props) => props.fc};
     margin: ${(props) => props.margin};
 `;
@@ -18,6 +18,7 @@ interface StyleProps {
     fc?: string;
     width?: string;
     margin?: string;
+    ta?: "left" | "center" | "right";
 }
 
 interface Props extends StyleProps {
@@ -25,7 +26,17 @@ interface Props extends StyleProps {
     tag?: keyof JSX.IntrinsicElements;
 }
 
-export const Text = ({ text, fs, fw, lh, fc, width, margin, tag }: Props) => {
+export const Text = ({
+    text,
+    fs,
+    fw,
+    lh,
+    fc,
+    width,
+    margin,
+    tag,
+    ta,
+}: Props) => {
     return (
         <Wrapper
             as={tag}
@@ -33,6 +44,7 @@ export const Text = ({ text, fs, fw, lh, fc, width, margin, tag }: Props) => {
             fw={fw}
             lh={lh}
             fc={fc}
+            ta={ta}
             width={width}
             margin={margin}
         >
@@ -49,4 +61,5 @@ Text.defaultProps = {
     lh: "12px",
     margin: "0",
     fc: theme.color.black,
+    ta: "left",
 };

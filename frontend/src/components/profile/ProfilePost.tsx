@@ -2,9 +2,11 @@ import styled from "../../styles/theme-components";
 import { IntroduceCard } from "../card/IntroduceCard";
 import { WritePostCard } from "../card/WritePostCard";
 import { PostFlexCard } from "../card/PostFlexCard";
-import { WritePost } from "../modal/WritePost";
 import { BoxShadow } from "../styles/BoxShadow";
 import { Text } from "../common/Text";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfile } from "../../modules/action/profile";
+import { useEffect } from "react";
 
 const Wrapper = styled.section`
     width: 908px;
@@ -43,10 +45,22 @@ const FlexWrapper = styled.div`
 `;
 
 export const ProfilePost = () => {
+    const dispatch = useDispatch();
+
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.profile?.profile
+    );
+
+    useEffect(() => {
+        if (data === null) {
+            dispatch(setProfile());
+        }
+    }, [loading, data]);
+
     return (
         <Wrapper>
             <LeftWrapper>
-                <IntroduceCard />
+                <IntroduceCard introduction={data?.introduction || ""} />
                 <BoxShadow>
                     <FlexWrapper>
                         <Text

@@ -1,4 +1,12 @@
-import { PROFILE, PROFILE_SUCCESS, PROFILE_ERROR } from "../action/profile";
+import {
+    PROFILE,
+    PROFILE_SUCCESS,
+    PROFILE_ERROR,
+    INTRODUCE,
+    INTRODUCE_SUCCESS,
+    INTRODUCE_ERROR,
+} from "../action/profile";
+
 import { reducerUtils } from "../../utils/reducerUtils";
 
 const initialState = {
@@ -19,6 +27,24 @@ const reducer = (state = initialState, action: any) => {
                 profile: reducerUtils.success(data),
             };
         case PROFILE_ERROR:
+            return {
+                ...state,
+                profile: reducerUtils.error(data),
+            };
+        case INTRODUCE:
+            return {
+                ...state,
+                profile: reducerUtils.loading(state.profile.data),
+            };
+        case INTRODUCE_SUCCESS:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    data: reducerUtils.success(data).data,
+                },
+            };
+        case INTRODUCE_ERROR:
             return {
                 ...state,
                 profile: reducerUtils.error(data),
