@@ -9,6 +9,6 @@ export const corsOptions: cors.CorsOptions = {
         "X-Access-Token",
     ],
     credentials: true,
-    methods: "GET, PATCHM, POST, DELETE",
+    methods: "GET, PATCH, POST, DELETE, HEAD",
     origin: process.env.FE_URL,
 };
