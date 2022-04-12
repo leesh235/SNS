@@ -41,7 +41,11 @@ const reducer = (state = initialState, action: any) => {
                 ...state,
                 profile: {
                     ...state.profile,
-                    data: reducerUtils.success(data).data,
+                    data: {
+                        ...state.profile.data,
+                        introduction:
+                            reducerUtils.success(data).data.introduction,
+                    },
                 },
             };
         case INTRODUCE_ERROR:
