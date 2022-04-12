@@ -2,7 +2,11 @@ import express from "express";
 import { routes } from "../config/route";
 import { upload } from "../config/multer";
 import { fail, success } from "../config/message";
-import { save_image, save_introduce } from "../services/user.service";
+import {
+    save_image,
+    save_introduce,
+    find_user,
+} from "../services/user.service";
 
 const router = express.Router();
 
@@ -20,7 +24,7 @@ router.post(
     async (req, res) => {
         try {
             if (await save_image(req)) {
-                res.status(200).send({ message: `${success.SAVE_IMAGE}` });
+                res.status(200).send({ ...(await find_user(req)) });
             } else {
                 res.status(409).send({ message: `${fail.SAVE_IMAGE}` });
             }
@@ -33,7 +37,7 @@ router.post(
 router.post(routes.user.set_introduce, async (req, res) => {
     try {
         if (await save_introduce(req)) {
-            res.status(200).send({ message: `${success.SAVE_INTRODUCE}` });
+            res.status(200).send({ introduction: req.body.introduce });
         } else {
             res.status(409).send({ message: `${fail.SAVE_INTRODUCE}` });
         }
