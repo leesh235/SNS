@@ -5,6 +5,12 @@ import {
     INTRODUCE,
     INTRODUCE_SUCCESS,
     INTRODUCE_ERROR,
+    PROFILEIMAGE,
+    PROFILEIMAGE_SUCCESS,
+    PROFILEIMAGE_ERROR,
+    COVERIMAGE,
+    COVERIMAGE_SUCCESS,
+    COVERIMAGE_ERROR,
 } from "../action/profile";
 
 import { reducerUtils } from "../../utils/reducerUtils";
@@ -16,7 +22,7 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case PROFILE:
+        case PROFILE || INTRODUCE || PROFILEIMAGE || COVERIMAGE:
             return {
                 ...state,
                 profile: reducerUtils.loading(state.profile.data),
@@ -26,15 +32,13 @@ const reducer = (state = initialState, action: any) => {
                 ...state,
                 profile: reducerUtils.success(data),
             };
-        case PROFILE_ERROR:
+        case PROFILE_ERROR ||
+            INTRODUCE_ERROR ||
+            PROFILEIMAGE_ERROR ||
+            COVERIMAGE_ERROR:
             return {
                 ...state,
                 profile: reducerUtils.error(data),
-            };
-        case INTRODUCE:
-            return {
-                ...state,
-                profile: reducerUtils.loading(state.profile.data),
             };
         case INTRODUCE_SUCCESS:
             return {
@@ -48,10 +52,28 @@ const reducer = (state = initialState, action: any) => {
                     },
                 },
             };
-        case INTRODUCE_ERROR:
+        case PROFILEIMAGE_SUCCESS:
             return {
                 ...state,
-                profile: reducerUtils.error(data),
+                profile: {
+                    ...state.profile,
+                    data: {
+                        ...state.profile.data,
+                        profileImage:
+                            reducerUtils.success(data).data.profileImage,
+                    },
+                },
+            };
+        case COVERIMAGE_SUCCESS:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    data: {
+                        ...state.profile.data,
+                        coverImage: reducerUtils.success(data).data.coverImage,
+                    },
+                },
             };
         default:
             return state;

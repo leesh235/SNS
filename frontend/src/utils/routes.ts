@@ -16,5 +16,6 @@ export const api = {
     user: {
         profile: "/user/profile",
         introduce: "/user/introduce",
+        image: "/user/image",
     },
 };

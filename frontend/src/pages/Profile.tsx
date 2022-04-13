@@ -11,6 +11,7 @@ import { ProfileFriend } from "../components/profile/ProfileFriend";
 import { ProfileImage } from "../components/profile/ProfileImage";
 import { ProfileVideo } from "../components/profile/ProfileVideo";
 import { ProfileCheckIn } from "../components/profile/ProfileCheckIn";
+import { ProfileTop } from "../components/profile/ProfileTop";
 
 const Wrapper = styled.main`
     background-color: ${(props) => props.theme.color.gray};
@@ -19,12 +20,6 @@ const Wrapper = styled.main`
     flex-direction: column;
     align-items: center;
     margin-top: 56px;
-`;
-
-const Top = styled.section`
-    background-color: ${(props) => props.theme.color.white};
-    width: 100%;
-    height: 450px;
 `;
 
 const Center = styled.section`
@@ -82,7 +77,7 @@ const Profile = () => {
 
     return (
         <Wrapper>
-            <Top>ProfileTop</Top>
+            <ProfileTop />
             <Center>
                 <MenuWrapper>
                     {menuList.map((val, idx) => {

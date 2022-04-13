@@ -55,6 +55,7 @@ export const ProfilePost = () => {
         if (data === null) {
             dispatch(setProfile());
         }
+        console.log(data);
     }, [loading, data]);
 
     return (
