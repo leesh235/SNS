@@ -15,7 +15,7 @@ export const routes = {
     user: {
         profile: "/profile",
         set_image: "/image",
-        set_introduce: "/introtuce",
+        set_introduce: "/introduce",
     },
 };
 

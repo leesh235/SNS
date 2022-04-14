@@ -5,6 +5,18 @@ import { existFile } from "../utils/fileFunction";
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const { email } = req.user as User;
+        console.log(file);
+        existFile(req, file);
+        cb(null, `${process.env.FILE_PATH}/${email}`);
+    },
+    filename: (req, file, cb) => {
+        cb(null, req.body.mode + "_" + file.originalname);
+    },
+});
+
+let postStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const { email } = req.user as User;
         existFile(req, file);
         cb(null, `${process.env.FILE_PATH}/${email}`);
     },
@@ -14,3 +26,4 @@ let storage = multer.diskStorage({
 });
 
 export let upload = multer({ storage: storage });
+export let postUpload = multer({ storage: postStorage });
