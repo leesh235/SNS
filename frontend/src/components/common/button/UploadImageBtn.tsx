@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "../../../styles/theme-components";
 import { Text } from "../Text";
-import { UploadImageBtn } from "./UploadImageBtn";
 
 const Wrapper = styled.div`
   width: 328px;
@@ -55,50 +54,16 @@ const ViewInput = styled.label`
 `;
 
 interface Props {
-  closeFunc: any;
-  onClickSelect?: () => void;
-  getImage?: any;
+  onChange?: any;
 }
 
-export const SelectImageButton = ({
-  closeFunc,
-  onClickSelect,
-  getImage,
-}: Props) => {
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
-    const { files } = e.currentTarget;
-    console.log("onChange");
-    if (files !== null) {
-      //   let url = await URL.createObjectURL(files[0]);
-      //   console.log(url);
-      console.log(files[0]);
-      //   getImage(url);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", closeFunc);
-    return () => {
-      window.removeEventListener("click", closeFunc);
-    };
-  }, []);
-
+export const UploadImageBtn = ({ onChange }: Props) => {
   return (
-    <Wrapper>
-      <Button onClick={onClickSelect}>
-        <Text
-          text={"사진 선택"}
-          fs={"15px"}
-          fw={500}
-          lh={"20px"}
-          margin={"0 0 0 40px"}
-        />
-      </Button>
-      <UploadImageBtn onChange={onChange} />
-      {/* <ViewInput htmlFor="userimage" className="coverImage">
+    <>
+      <ViewInput htmlFor="userimage" className="coverImage">
         사진 업로드
       </ViewInput>
-      <Input type="file" id="userimage" onChange={onChange} /> */}
-    </Wrapper>
+      <Input type="file" id="userimage" onChange={onChange} />
+    </>
   );
 };
