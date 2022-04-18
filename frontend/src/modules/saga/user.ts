@@ -10,10 +10,12 @@ import {
 
 const profile = createPromise(PROFILE, getProfile);
 const introduce = createPromise(INTRODUCE, writeIntroduce);
-const image = createPromise(PROFILEIMAGE || COVERIMAGE, setUserImage);
+const profile_image = createPromise(PROFILEIMAGE, setUserImage);
+const cover_image = createPromise(COVERIMAGE, setUserImage);
 
 export function* userSaga() {
     yield takeEvery(PROFILE, profile);
     yield takeEvery(INTRODUCE, introduce);
-    yield takeEvery(PROFILEIMAGE || COVERIMAGE, image);
+    yield takeEvery(PROFILEIMAGE, profile_image);
+    yield takeEvery(COVERIMAGE, cover_image);
 }

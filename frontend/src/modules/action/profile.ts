@@ -36,7 +36,7 @@ export const setProfileImage = (data: any) => {
     };
 };
 
-export const setCoverImage = (data: UserImage) => {
+export const setCoverImage = (data: any) => {
     return {
         type: COVERIMAGE,
         data,
