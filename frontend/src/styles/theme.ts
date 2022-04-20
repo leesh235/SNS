@@ -65,6 +65,7 @@ const color = {
     gray: "rgb(233, 235, 238)",
     lightSeaBlue: "rgb(231, 243, 255)",
     darkSeaBlue: "rgb(221, 233, 245)",
+    gray1: "rgb(247, 248, 250)",
 };
 
 const fontSizes: string[] = [];
