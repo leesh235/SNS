@@ -1,8 +1,9 @@
 import styled from "../../styles/theme-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text } from "../common/Text";
 import theme from "../../styles/theme";
+import { obToUrl } from "../../utils/objToUrl";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -32,6 +33,10 @@ const Box = styled.form`
     padding-bottom: 10px;
     justify-content: space-around;
     align-items: center;
+    > input {
+        width: 0px;
+        height: 0px;
+    }
 `;
 
 const Top = styled.article`
@@ -85,19 +90,19 @@ const ImageContents = styled.article`
 
 const ImageBox = styled.div`
     width: 450px;
-    height: 221px;
+    height: auto;
+    min-height: 221px;
+    max-height: 400px;
     padding: 8px;
     border: 1px solid ${(props) => props.theme.color.gray};
     border-radius: 6px;
-    > input {
-        width: 0px;
-        height: 0px;
-    }
 `;
 
 const ImageBtn = styled.label`
     width: 450px;
-    height: 221px;
+    height: auto;
+    min-height: 221px;
+    max-height: 400px;
     background-color: ${(props) => props.theme.color.gray1};
     cursor: pointer;
     position: relative;
@@ -105,6 +110,17 @@ const ImageBtn = styled.label`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 6px;
+    overflow-y: auto;
+    overflow-x: hidden;
+`;
+
+const ImagePreview = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
 `;
 
 const CloseBtn = styled.div`
@@ -169,11 +185,7 @@ export const WritePost = ({ closeFunc }: Props) => {
         (state: any) => state?.profile?.profile
     );
 
-    const [formData, setFormData] = useState<{
-        contents: string;
-        image: Array<File>;
-    }>();
-
+    const [fileList, setFileList] = useState<Array<any>>([]);
     const [open, setOpen] = useState<boolean>(false);
 
     const handleOpen = () => {
@@ -181,20 +193,33 @@ export const WritePost = ({ closeFunc }: Props) => {
     };
 
     const handleClose = () => {
+        setFileList([]);
         setOpen(false);
     };
 
-    const handleTextOnChange: React.ChangeEventHandler = (e) => {
-        console.log(e.target);
-    };
-
     const handleImageOnChange: React.ChangeEventHandler = (e) => {
-        console.log(e.target);
+        const { files } = e?.target as HTMLInputElement;
+        if (files) {
+            const arr = Array.from(files);
+            setFileList((state) => state.concat(arr));
+        }
     };
 
-    const handleOnSubmit: React.FormEventHandler = (e) => {
-        console.log(e.target);
+    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+        e.preventDefault();
+        const { contents, imgOrvedio } = e.currentTarget;
+        console.log(contents.value);
+        console.log(imgOrvedio?.files);
     };
+
+    useEffect(() => {
+        document.body.style.cssText = `
+            overflow: hidden;
+        `;
+        return () => {
+            document.body.style.cssText = ``;
+        };
+    }, []);
 
     return (
         <Wrapper onClick={closeFunc}>
@@ -221,7 +246,7 @@ export const WritePost = ({ closeFunc }: Props) => {
                     />
                 </UserInfo>
                 <TextContents
-                    onChange={handleTextOnChange}
+                    name="contents"
                     required
                     defaultValue={""}
                     placeholder="무슨 생각을 하고 계신가요?"
@@ -230,25 +255,46 @@ export const WritePost = ({ closeFunc }: Props) => {
                     <ImageBox>
                         <ImageBtn htmlFor="imgOrvedio">
                             <CloseBtn onClick={handleClose}>X</CloseBtn>
-                            <Text
-                                text={"사진/동영상 추가"}
-                                fs={"17px"}
-                                fw={500}
-                                lh={"20px"}
-                                ta={"center"}
-                                width={"auto"}
-                            />
-                            <Text
-                                text={"또는 끌어서 놓습니다"}
-                                fs={"12px"}
-                                lh={"16px"}
-                                ta={"center"}
-                                width={"auto"}
-                            />
+                            {fileList.length === 0 ? (
+                                <>
+                                    <Text
+                                        text={"사진/동영상 추가"}
+                                        fs={"17px"}
+                                        fw={500}
+                                        lh={"20px"}
+                                        ta={"center"}
+                                        width={"auto"}
+                                    />
+                                    <Text
+                                        text={"또는 끌어서 놓습니다"}
+                                        fs={"12px"}
+                                        lh={"16px"}
+                                        ta={"center"}
+                                        width={"auto"}
+                                    />
+                                </>
+                            ) : (
+                                <ImagePreview>
+                                    {fileList.map((file, idx) => {
+                                        return (
+                                            <img
+                                                key={idx}
+                                                src={obToUrl(file)}
+                                            ></img>
+                                        );
+                                    })}
+                                </ImagePreview>
+                            )}
                         </ImageBtn>
-                        <input type="file" id="imgOrvedio" />
                     </ImageBox>
                 )}
+                <input
+                    type="file"
+                    id="imgOrvedio"
+                    required
+                    onChange={handleImageOnChange}
+                    multiple
+                />
                 <ImageContents>
                     <ClickBtn onClick={handleOpen}>
                         <Text
