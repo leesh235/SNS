@@ -55,22 +55,6 @@ export const save_introduce = async (req: any) => {
     }
 };
 
-export const findUser = async (req: any) => {
-    const user = await userRepository.findOne({
-        where: {
-            email: req.email,
-        },
-        select: {
-            nickName: true,
-        },
-    });
-    if (user) {
-        return user.nickName;
-    } else {
-        return "";
-    }
-};
-
 export const getUserImage = async (req: any) => {
     try {
         const {

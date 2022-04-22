@@ -18,9 +18,6 @@ export class Post {
     id!: number;
 
     @Column({ type: "varchar" })
-    writer!: string;
-
-    @Column({ type: "varchar" })
     contents: string;
 
     @Column({ type: "varchar" })
@@ -39,6 +36,6 @@ export class Post {
     comment: Comment;
 
     @ManyToOne((type) => User, (user) => user.post, { onDelete: "CASCADE" })
-    @JoinColumn({ name: "userId", referencedColumnName: "email" })
+    @JoinColumn({ name: "writer", referencedColumnName: "email" })
     user: User;
 }

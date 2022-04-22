@@ -1,25 +1,30 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
-import { findUser } from "./user.service";
+import { getImagePath } from "../utils/fileFunction";
 
 const postRepository = dataSource.getRepository(Post);
 
 export const find = async (id: number) => {
     try {
         const post = await postRepository.findOne({
+            relations: {
+                user: true,
+            },
             where: { id },
             select: {
-                updatedAt: false,
-                deletedAt: false,
-                id: false,
+                contents: true,
+                createdAt: true,
+                files: true,
+                user: {
+                    email: true,
+                    nickName: true,
+                },
             },
         });
-        const writer = await findUser(post);
-        //이미지 경로
-        let images: any[] = [];
 
-        let result = { ...post, writer, images };
         if (post) {
+            let images: string[] = getImagePath(post?.user?.email, post?.files);
+            let result = { ...post, writer: post?.user.nickName, images };
             return result;
         } else {
             return null;
@@ -39,7 +44,6 @@ export const save = async (req: any) => {
         post.contents = contents;
         post.files = date;
         post.user = email;
-        post.writer = await findUser(post);
 
         await postRepository.save(post);
         return true;

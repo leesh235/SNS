@@ -4,7 +4,6 @@ import { Post } from "../entity/Post.entity";
 import { postUpload } from "../config/multer";
 import { fail, success, exist } from "../config/message";
 import { routes } from "../config/route";
-import { findUser } from "../services/user.service";
 
 const router = express.Router();
 
