@@ -1,11 +1,10 @@
 import multer from "multer";
 import { User } from "../entity/User.entity";
-import { existFile } from "../utils/fileFunction";
+import { existFile, mikdirPosts } from "../utils/fileFunction";
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const { email } = req.user as User;
-        console.log(file);
         existFile(req, file);
         cb(null, `${process.env.FILE_PATH}/${email}`);
     },
@@ -17,11 +16,12 @@ let storage = multer.diskStorage({
 let postStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         const { email } = req.user as User;
-        existFile(req, file);
-        cb(null, `${process.env.FILE_PATH}/${email}`);
+        const { date } = req.body;
+        mikdirPosts(req);
+        cb(null, `${process.env.POST_PATH}/${email}/${date}`);
     },
     filename: (req, file, cb) => {
-        cb(null, req.body.mode + "_" + file.originalname);
+        cb(null, file.originalname);
     },
 });
 

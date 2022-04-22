@@ -29,3 +29,19 @@ export const getFilePath = (req: any) => {
 
     return `${process.env.BE_URL}/${email}/${filePath}`;
 };
+
+export const mikdirPosts = (req: any) => {
+    const { email } = req.user;
+    const { date } = req.body;
+    const userDir = `${process.env.POST_PATH}/${email}`;
+    const postDir = `${process.env.POST_PATH}/${email}/${date}`;
+    if (!fs.existsSync(userDir)) {
+        fs.mkdirSync(userDir);
+    }
+    if (fs.existsSync(postDir)) {
+        const files = fs.readdirSync(userDir);
+        console.log(files);
+    } else {
+        fs.mkdirSync(postDir);
+    }
+};
