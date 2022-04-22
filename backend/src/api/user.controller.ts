@@ -5,7 +5,7 @@ import { fail, success } from "../config/message";
 import {
     save_image,
     save_introduce,
-    find_user,
+    getUserImage,
 } from "../services/user.service";
 
 const router = express.Router();
@@ -24,7 +24,7 @@ router.post(
     async (req, res) => {
         try {
             if (await save_image(req)) {
-                res.status(200).send({ ...(await find_user(req)) });
+                res.status(200).send({ ...(await getUserImage(req)) });
             } else {
                 res.status(409).send({ message: `${fail.SAVE_IMAGE}` });
             }
