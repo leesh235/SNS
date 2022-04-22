@@ -16,6 +16,7 @@ export class Likes {
         type: "enum",
         nullable: false,
         enum: LikeStatus,
+        default: LikeStatus.UNLIKE,
     })
     status!: LikeStatus;
 }
