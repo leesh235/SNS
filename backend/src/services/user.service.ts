@@ -55,7 +55,23 @@ export const save_introduce = async (req: any) => {
     }
 };
 
-export const find_user = async (req: any) => {
+export const findUser = async (req: any) => {
+    const user = await userRepository.findOne({
+        where: {
+            email: req.email,
+        },
+        select: {
+            password: false,
+        },
+    });
+    if (user) {
+        return user;
+    } else {
+        return false;
+    }
+};
+
+export const getUserImage = async (req: any) => {
     try {
         const {
             user,
