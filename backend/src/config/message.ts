@@ -11,9 +11,11 @@ export const incorrect = {
 export const success = {
     SAVE_IMAGE: "이미지 저장 성공",
     SAVE_INTRODUCE: "자기소개 저장 성공",
+    SAVE_POST: "게시글 작성 성공",
 };
 
 export const fail = {
     SAVE_IMAGE: "이미지 저장 실패",
     SAVE_INTRODUCE: "자기소개 저장 실패",
+    SAVE_POST: "게시글 작성 실패",
 };

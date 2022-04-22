@@ -17,6 +17,27 @@ export const routes = {
         set_image: "/image",
         set_introduce: "/introduce",
     },
+    post: {
+        get: "/:postId",
+        write: "/write",
+        modify: "/modify",
+        delete: "/delete",
+        like: "/like",
+    },
+    posts: {
+        all_ist: "/",
+        like_list: "/like",
+        bookmark_list: "/bookmark",
+        my_list: "/:userId",
+        friends_list: "/friends",
+    },
+    comment: {
+        get: "/:postId",
+        write: "/write",
+        modify: "/modify",
+        delete: "/delete",
+        like: "/like",
+    },
 };
 
 export const entities: string = "src/entity/*.ts";
