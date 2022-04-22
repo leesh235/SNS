@@ -61,13 +61,13 @@ export const findUser = async (req: any) => {
             email: req.email,
         },
         select: {
-            password: false,
+            nickName: true,
         },
     });
     if (user) {
-        return user;
+        return user.nickName;
     } else {
-        return false;
+        return "";
     }
 };
 
