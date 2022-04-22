@@ -45,3 +45,15 @@ export const mikdirPosts = (req: any) => {
         fs.mkdirSync(postDir);
     }
 };
+
+export const getImagePath = (writer: string, post: string) => {
+    const postDir = `${process.env.POST_PATH}/${writer}/${post}`;
+    const basePath = `${process.env.BE_URL}/${writer}/${post}/`;
+
+    let arr: string[] = [];
+    const files = fs.readdirSync(postDir);
+    files.forEach((val, idx) => {
+        arr.push(`${basePath}${val}`);
+    });
+    return arr;
+};

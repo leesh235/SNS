@@ -1,13 +1,15 @@
 import express from "express";
-import { find } from "../services/post.service";
+import { find, save } from "../services/post.service";
 import { Post } from "../entity/Post.entity";
 import { postUpload } from "../config/multer";
 import { fail, success, exist } from "../config/message";
+import { routes } from "../config/route";
+import { findUser } from "../services/user.service";
 
 const router = express.Router();
 
 //해당 게시글
-router.get("/:postId", async (req, res) => {
+router.get(routes.post.get, async (req, res) => {
     try {
         const { postId } = req.params;
         const post = await find(Number(postId));
@@ -22,18 +24,20 @@ router.get("/:postId", async (req, res) => {
 });
 
 //게시글 작성
-router.post("/write", postUpload.array("streafiles", 20), async (req, res) => {
+router.post(routes.post.write, postUpload.array("images"), async (req, res) => {
     try {
-        const post = new Post();
-
-        res.status(200).send({ message: `` });
+        if (await save(req)) {
+            res.status(200).send({ message: success.SAVE_POST });
+        } else {
+            res.status(409).send({ message: fail.SAVE_POST });
+        }
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
 });
 
 //게시글 수정
-router.patch("/modify", async (req, res) => {
+router.patch(routes.post.modify, async (req, res) => {
     try {
         res.status(200).send({ message: `` });
     } catch (error) {
@@ -42,7 +46,7 @@ router.patch("/modify", async (req, res) => {
 });
 
 //게시글 삭제
-router.delete("/delete", async (req, res) => {
+router.delete(routes.post.delete, async (req, res) => {
     try {
         res.status(200).send({ message: `` });
     } catch (error) {
@@ -51,7 +55,7 @@ router.delete("/delete", async (req, res) => {
 });
 
 //좋아요 버튼
-router.post("/like", async (req, res) => {
+router.post(routes.post.like, async (req, res) => {
     try {
         res.status(200).send({ message: `` });
     } catch (error) {
