@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Text } from "../common/Text";
 import theme from "../../styles/theme";
 import { obToUrl } from "../../utils/objToUrl";
+import { setWritePost } from "../../modules/action/post";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -118,9 +119,9 @@ const ImageBtn = styled.label`
 const ImagePreview = styled.div`
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     border-radius: 6px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50%, auto));
 `;
 
 const CloseBtn = styled.div`
@@ -158,6 +159,11 @@ const Image = styled.img`
     background-color: gray;
 `;
 
+const SelectImage = styled.img`
+    width: 100%;
+    height: 100%;
+`;
+
 const EventBtn = styled.div`
     width: 36px;
     height: 36px;
@@ -177,9 +183,10 @@ const ClickBtn = styled.div`
 
 interface Props {
     closeFunc: any;
+    setClose: any;
 }
 
-export const WritePost = ({ closeFunc }: Props) => {
+export const WritePost = ({ closeFunc, setClose }: Props) => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
         (state: any) => state?.profile?.profile
@@ -207,9 +214,20 @@ export const WritePost = ({ closeFunc }: Props) => {
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        const { contents, imgOrvedio } = e.currentTarget;
-        console.log(contents.value);
-        console.log(imgOrvedio?.files);
+        const {
+            contents,
+            images: { files },
+        } = e.currentTarget;
+
+        const formData = new FormData();
+        formData.append("date", `${Date.now()}`);
+        formData.append("contents", contents.value);
+        for (let i = 0; i < files.length; i++) {
+            formData.append("images", files[i]);
+        }
+
+        dispatch(setWritePost(formData));
+        setClose(false);
     };
 
     useEffect(() => {
@@ -277,10 +295,10 @@ export const WritePost = ({ closeFunc }: Props) => {
                                 <ImagePreview>
                                     {fileList.map((file, idx) => {
                                         return (
-                                            <img
+                                            <SelectImage
                                                 key={idx}
                                                 src={obToUrl(file)}
-                                            ></img>
+                                            ></SelectImage>
                                         );
                                     })}
                                 </ImagePreview>
@@ -291,6 +309,7 @@ export const WritePost = ({ closeFunc }: Props) => {
                 <input
                     type="file"
                     id="imgOrvedio"
+                    name="images"
                     required
                     onChange={handleImageOnChange}
                     multiple

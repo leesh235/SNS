@@ -87,7 +87,7 @@ export const WritePostCard = () => {
                     </ButtonWrapper>
                 </FlexWrapper>
             </BoxShadow>
-            {open && <WritePost closeFunc={handleClose} />}
+            {open && <WritePost closeFunc={handleClose} setClose={setOpen} />}
         </>
     );
 };
