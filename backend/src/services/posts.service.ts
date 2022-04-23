@@ -14,19 +14,19 @@ export const findAll = async (req: any, mode?: PostMode) => {
         let where = {};
         let relations = {};
         if (mode === PostMode.MY) {
-            relations = { user: true };
+            relations = { user: true, likes: true };
             where = { deletedAt: undefined, user: { email } };
         } else if (mode === PostMode.LIKE) {
             relations = { user: true, likes: true };
             where = { deletedAt: undefined, likes: { userId: email } };
         } else if (mode === PostMode.BOOKMARK) {
-            relations = { user: true };
+            relations = { user: true, likes: true };
             where = { deletedAt: undefined };
         } else if (mode === PostMode.FRIENDS) {
-            relations = { user: true };
+            relations = { user: true, likes: true };
             where = { deletedAt: undefined };
         } else {
-            relations = { user: true };
+            relations = { user: true, likes: true };
             where = { deletedAt: undefined };
         }
 
@@ -40,6 +40,9 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 user: {
                     email: true,
                     nickName: true,
+                },
+                likes: {
+                    status: true,
                 },
             },
         });
