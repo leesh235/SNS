@@ -1,8 +1,10 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
+import { Likes } from "../entity/Likes.entity";
 import { getImagePath } from "../utils/fileFunction";
 
 const postRepository = dataSource.getRepository(Post);
+const likesRepository = dataSource.getRepository(Likes);
 
 export const find = async (id: number) => {
     try {
@@ -46,6 +48,39 @@ export const save = async (req: any) => {
         post.user = email;
 
         await postRepository.save(post);
+        return true;
+    } catch (error) {
+        return false;
+    }
+};
+
+export const setLike = async (req: any) => {
+    try {
+        const {
+            body: { postId },
+            user: { email },
+        } = req;
+        const likes = new Likes();
+        likes.user = email;
+        likes.post = postId;
+
+        const status = await likesRepository.findOne({
+            relations: { user: true, post: true },
+            where: {
+                user: {
+                    email,
+                },
+                post: { id: postId },
+            },
+        });
+        if (status) {
+            await likesRepository.delete({
+                user: { email },
+                post: { id: postId },
+            });
+        } else {
+            await likesRepository.save(likes);
+        }
         return true;
     } catch (error) {
         return false;

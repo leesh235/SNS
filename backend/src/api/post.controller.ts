@@ -1,5 +1,5 @@
 import express from "express";
-import { find, save } from "../services/post.service";
+import { find, save, setLike } from "../services/post.service";
 import { Post } from "../entity/Post.entity";
 import { postUpload } from "../config/multer";
 import { fail, success, exist } from "../config/message";
@@ -56,7 +56,11 @@ router.delete(routes.post.delete, async (req, res) => {
 //좋아요 버튼
 router.post(routes.post.like, async (req, res) => {
     try {
-        res.status(200).send({ message: `` });
+        if (await setLike(req)) {
+            res.status(200).send({ message: `${success.SAVE_LIKE}` });
+        } else {
+            res.status(404).send({ message: `${fail.SAVE_LIKE}` });
+        }
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
