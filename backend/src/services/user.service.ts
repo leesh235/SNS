@@ -86,8 +86,12 @@ export const getUserImage = async (req: any) => {
     }
 };
 
-export const getImages = () => {
+export const getImages = (req: any) => {
     try {
+        const {
+            user: { email },
+        } = req;
+        return getAllImage(email);
     } catch (error) {
         return [];
     }
@@ -95,10 +99,6 @@ export const getImages = () => {
 
 export const getFriendList = (req: any) => {
     try {
-        const {
-            user: { email },
-        } = req;
-        return getAllImage(email);
     } catch (error) {
         return [];
     }
