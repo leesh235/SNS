@@ -9,7 +9,7 @@ const router = express.Router();
 //전체 리스트
 router.get(routes.posts.all_ist, async (req, res) => {
     try {
-        const allList = await findAll();
+        const allList = await findAll(req);
         res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
@@ -19,7 +19,8 @@ router.get(routes.posts.all_ist, async (req, res) => {
 //내 게시글 리스트
 router.get(routes.posts.my_list, async (req, res) => {
     try {
-        res.status(200).send({ message: `` });
+        const allList = await findAll(req, "my");
+        res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -28,7 +29,8 @@ router.get(routes.posts.my_list, async (req, res) => {
 //좋아요 리스트
 router.get(routes.posts.like_list, async (req, res) => {
     try {
-        res.status(200).send({ message: `` });
+        const allList = await findAll(req, "like");
+        res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -37,7 +39,8 @@ router.get(routes.posts.like_list, async (req, res) => {
 //즐겨찾기 리스트
 router.get(routes.posts.bookmark_list, async (req, res) => {
     try {
-        res.status(200).send({ message: `` });
+        const allList = await findAll(req, "bookmark");
+        res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
