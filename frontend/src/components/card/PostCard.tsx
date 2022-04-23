@@ -42,6 +42,27 @@ const ContentsWrapper = styled.div`
     padding: 4px 0px 16px 0px;
 `;
 
+const ImagesWrapper = styled.div`
+    width: 100%;
+    height: auto;
+    overflow-x: auto;
+`;
+
+const ImageSlider = styled.div`
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    > :nth-child(n + 2) {
+        margin-left: 5px;
+    }
+`;
+
+const Image = styled.img`
+    width: 100%;
+    height: 400px;
+`;
+
 const BottomWrapper = styled.div`
     width: calc(100% - 20px);
     height: 40px;
@@ -60,15 +81,29 @@ const Icon = styled.div`
     background-color: blueviolet;
 `;
 
-export const PostCard = () => {
+interface Props {
+    post?: {
+        writer: string;
+        contents: string;
+        createdAt: string;
+        images: Array<String>;
+    };
+}
+
+export const PostCard = ({ post }: Props) => {
     return (
         <Wrapper>
             <TopWrapper>
                 <Icon />
-                <Text text={"제목"} fs={"15px"} fw={600} lh={"20px"} />
+                <Text
+                    text={`${post?.writer}`}
+                    fs={"15px"}
+                    fw={600}
+                    lh={"20px"}
+                />
                 <FlexWrapper>
                     <Text
-                        text={"시간"}
+                        text={`${post?.createdAt}`}
                         fs={"12px"}
                         lh={"16px"}
                         tag={"span"}
@@ -86,13 +121,20 @@ export const PostCard = () => {
             </TopWrapper>
             <ContentsWrapper>
                 <Text
-                    text={"ContentsWrapper"}
+                    text={`${post?.contents}`}
                     fs={"15px"}
                     fw={600}
                     lh={"20px"}
                     margin={"0 16px"}
                 />
             </ContentsWrapper>
+            <ImagesWrapper>
+                <ImageSlider>
+                    {post?.images.map((val, idx) => {
+                        return <Image key={idx} src={`${val}`} />;
+                    })}
+                </ImageSlider>
+            </ImagesWrapper>
             <BottomWrapper>
                 <Button2 text={"좋아요"} width={"100%"} />
                 <Button2 text={"댓글 달기"} width={"100%"} />
