@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { Comment } from "./comment.entity";
 import { User } from "./User.entity";
+import { Likes } from "./Likes.entity";
 
 @Entity("post")
 export class Post {
@@ -34,6 +35,9 @@ export class Post {
 
     @OneToMany((type) => Comment, (comment) => comment.post)
     comment: Comment;
+
+    @OneToMany((type) => Likes, (likes) => likes.post)
+    likes: Likes;
 
     @ManyToOne((type) => User, (user) => user.post, { onDelete: "CASCADE" })
     @JoinColumn({ name: "writer", referencedColumnName: "email" })

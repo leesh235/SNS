@@ -13,6 +13,7 @@ import { UserInfo } from "./User_Info.entity";
 import { Friends } from "./Friends.entity";
 import { Post } from "./Post.entity";
 import { Comment } from "./comment.entity";
+import { Likes } from "./Likes.entity";
 
 @Entity("user")
 export class User {
@@ -59,12 +60,12 @@ export class User {
     @OneToOne((type) => UserInfo, (userInfo) => userInfo.user)
     userInfo: UserInfo;
 
-    @OneToMany((type) => Friends, (friends) => friends.user)
-    friends: Friends;
-
     @OneToMany((type) => Post, (post) => post.user)
     post: Post;
 
     @OneToMany((type) => Post, (comment) => comment.user)
     comment: Comment;
+
+    @OneToMany((type) => Likes, (likes) => likes.user)
+    likes: Likes;
 }

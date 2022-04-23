@@ -1,16 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+} from "typeorm";
 import { LikeStatus } from "../config/enums";
+import { Post } from "./Post.entity";
+import { User } from "./User.entity";
 
 @Entity("likes")
 export class Likes {
     @PrimaryGeneratedColumn()
     id!: number;
-
-    @Column({ type: "int", nullable: false })
-    postId!: string;
-
-    @Column({ type: "int", nullable: false })
-    userId!: string;
 
     @Column({
         type: "enum",
@@ -19,4 +21,12 @@ export class Likes {
         default: LikeStatus.UNLIKE,
     })
     status!: LikeStatus;
+
+    @ManyToOne((type) => Post, (post) => post.likes, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "postId", referencedColumnName: "id" })
+    post: Post;
+
+    @ManyToOne((type) => User, (user) => user.likes, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "userId", referencedColumnName: "email" })
+    user: User;
 }
