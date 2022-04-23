@@ -3,6 +3,7 @@ import { findAll } from "../services/posts.service";
 import { Post } from "../entity/Post.entity";
 import { fail, success, exist } from "../config/message";
 import { routes } from "../config/route";
+import { PostMode } from "../config/enums";
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get(routes.posts.all_ist, async (req, res) => {
 //내 게시글 리스트
 router.get(routes.posts.my_list, async (req, res) => {
     try {
-        const allList = await findAll(req, "my");
+        const allList = await findAll(req, PostMode.MY);
         res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
@@ -29,7 +30,7 @@ router.get(routes.posts.my_list, async (req, res) => {
 //좋아요 리스트
 router.get(routes.posts.like_list, async (req, res) => {
     try {
-        const allList = await findAll(req, "like");
+        const allList = await findAll(req, PostMode.LIKE);
         res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
@@ -39,7 +40,7 @@ router.get(routes.posts.like_list, async (req, res) => {
 //즐겨찾기 리스트
 router.get(routes.posts.bookmark_list, async (req, res) => {
     try {
-        const allList = await findAll(req, "bookmark");
+        const allList = await findAll(req, PostMode.BOOKMARK);
         res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
@@ -49,7 +50,8 @@ router.get(routes.posts.bookmark_list, async (req, res) => {
 //친구 게시글 리스트
 router.get(routes.posts.friends_list, async (req, res) => {
     try {
-        res.status(200).send({ message: `` });
+        const allList = await findAll(req, PostMode.FRIENDS);
+        res.status(200).send(allList);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

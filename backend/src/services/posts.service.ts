@@ -1,31 +1,38 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
 import { getImagePath } from "../utils/fileFunction";
+import { PostMode } from "../config/enums";
 
 const postRepository = dataSource.getRepository(Post);
 
-export const findAll = async (req: any, mode?: "my" | "like" | "bookmark") => {
+export const findAll = async (req: any, mode?: PostMode) => {
     try {
         const {
             user: { email },
         } = req;
 
         let where = {};
-        if (mode === "my") {
+        let relations = {};
+        if (mode === PostMode.MY) {
+            relations = { user: true };
             where = { deletedAt: undefined, user: { email } };
-        } else if (mode === "like") {
+        } else if (mode === PostMode.LIKE) {
+            relations = { user: true, likes: true };
+            where = { deletedAt: undefined, likes: { userId: email } };
+        } else if (mode === PostMode.BOOKMARK) {
+            relations = { user: true };
             where = { deletedAt: undefined };
-        } else if (mode === "bookmark") {
+        } else if (mode === PostMode.FRIENDS) {
+            relations = { user: true };
             where = { deletedAt: undefined };
         } else {
+            relations = { user: true };
             where = { deletedAt: undefined };
         }
 
         const allList = await postRepository.find({
-            relations: {
-                user: true,
-            },
-            where: { deletedAt: undefined },
+            relations,
+            where,
             select: {
                 contents: true,
                 createdAt: true,
