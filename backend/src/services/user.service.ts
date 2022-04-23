@@ -1,6 +1,7 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
 import { getFilePath } from "../utils/fileFunction";
+import { getAllImage } from "../utils/fileFunction";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -82,5 +83,23 @@ export const getUserImage = async (req: any) => {
         return findUser;
     } catch (error) {
         return null;
+    }
+};
+
+export const getImages = () => {
+    try {
+    } catch (error) {
+        return [];
+    }
+};
+
+export const getFriendList = (req: any) => {
+    try {
+        const {
+            user: { email },
+        } = req;
+        return getAllImage(email);
+    } catch (error) {
+        return [];
     }
 };

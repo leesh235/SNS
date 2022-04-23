@@ -6,6 +6,7 @@ import {
     save_image,
     save_introduce,
     getUserImage,
+    getFriendList,
 } from "../services/user.service";
 
 const router = express.Router();
@@ -41,6 +42,22 @@ router.post(routes.user.set_introduce, async (req, res) => {
         } else {
             res.status(409).send({ message: `${fail.SAVE_INTRODUCE}` });
         }
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+router.get(routes.user.friends, async (req, res) => {
+    try {
+        res.status(200).send({ message: "" });
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+router.get(routes.user.images, async (req, res) => {
+    try {
+        res.status(200).send(getFriendList(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

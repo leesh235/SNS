@@ -57,3 +57,19 @@ export const getImagePath = (writer: string, post: string) => {
     });
     return arr;
 };
+
+export const getAllImage = (email: string) => {
+    const basePath = `${process.env.BE_URL}/${email}/`;
+    const userDir = `${process.env.POST_PATH}/${email}`;
+
+    let arr: string[] = [];
+    const files = fs.readdirSync(userDir);
+    files.forEach((val, idx) => {
+        const images = fs.readdirSync(`${userDir}/${val}`);
+        images.forEach((img, idx) => {
+            arr.push(`${basePath}${val}/${img}`);
+        });
+    });
+    console.log(arr);
+    return arr;
+};

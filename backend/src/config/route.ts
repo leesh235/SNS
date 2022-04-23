@@ -16,6 +16,8 @@ export const routes = {
         profile: "/profile",
         set_image: "/image",
         set_introduce: "/introduce",
+        friends: "/friends",
+        images: "/images",
     },
     post: {
         get: "/:postId",
