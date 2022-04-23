@@ -1,9 +1,11 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
-import { getFilePath } from "../utils/fileFunction";
-import { getAllImage } from "../utils/fileFunction";
+import { Friends } from "../entity/Friends.entity";
+import { getFilePath, getAllImage, getTermsImage } from "../utils/fileFunction";
+import { Like } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
+const friendsRepository = dataSource.getRepository(Friends);
 
 export const save_image = async (req: any) => {
     try {
@@ -97,8 +99,97 @@ export const getImages = (req: any) => {
     }
 };
 
-export const getFriendList = (req: any) => {
+export const getLatestImage = (req: any) => {
     try {
+        const {
+            user: { email },
+        } = req;
+        return getTermsImage(email);
+    } catch (error) {
+        return [];
+    }
+};
+
+export const setFriend = async (req: any, mode: "req" | "res") => {
+    try {
+        const {
+            body,
+            user: { email },
+        } = req;
+        const friends = new Friends();
+        friends.userOne = email;
+        friends.userTwo = body.email;
+
+        if (mode === "req") {
+            await friendsRepository.save(friends);
+        } else {
+            await dataSource
+                .createQueryBuilder()
+                .update(Friends)
+                .set({ status: true })
+                .where({ id: body.id })
+                .execute();
+        }
+        return true;
+    } catch (error) {
+        return false;
+    }
+};
+
+export const getFriendList = async (req: any, mode?: "await") => {
+    try {
+        const {
+            user: { email },
+        } = req;
+
+        let status = mode === "await" ? false : true;
+
+        const friends = await friendsRepository.find({
+            where: [
+                { userOne: email, status },
+                { userTwo: email, status },
+            ],
+        });
+        let result = [];
+        for (let i = 0; i < friends.length; i++) {
+            result.push(
+                friends[i].userOne === email
+                    ? friends[i].userTwo
+                    : friends[i].userOne
+            );
+        }
+        return result;
+    } catch (error) {
+        return [];
+    }
+};
+
+export const getPeople = async (req: any) => {
+    try {
+        const { name } = req.query;
+
+        let where = {};
+        if (name) {
+            where = {
+                deletedAt: undefined,
+                nickName: Like(`%${name}%`),
+            };
+        } else {
+            where = {
+                deletedAt: undefined,
+            };
+        }
+
+        const people = await userRepository.find({
+            where,
+            select: {
+                email: true,
+                nickName: true,
+                profileImage: true,
+            },
+        });
+
+        return people;
     } catch (error) {
         return [];
     }

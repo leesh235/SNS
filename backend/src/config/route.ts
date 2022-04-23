@@ -18,6 +18,11 @@ export const routes = {
         set_introduce: "/introduce",
         friends: "/friends",
         images: "/images",
+        latest_image: "/latest_image",
+        req_friend: "/send_friend",
+        res_friend: "/take_friend",
+        await_friend: "/await_friend",
+        people: "/people",
     },
     post: {
         get: "/:postId",

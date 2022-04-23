@@ -70,6 +70,22 @@ export const getAllImage = (email: string) => {
             arr.push(`${basePath}${val}/${img}`);
         });
     });
-    console.log(arr);
+    return arr;
+};
+
+export const getTermsImage = (email: string) => {
+    const basePath = `${process.env.BE_URL}/${email}/`;
+    const userDir = `${process.env.POST_PATH}/${email}`;
+
+    let arr: string[] = [];
+    const files = fs.readdirSync(userDir);
+    files.forEach((val, idx) => {
+        const images = fs.readdirSync(`${userDir}/${val}`);
+        images.forEach((img, cnt) => {
+            if (arr.length < 7) {
+                arr.push(`${basePath}${val}/${img}`);
+            }
+        });
+    });
     return arr;
 };
