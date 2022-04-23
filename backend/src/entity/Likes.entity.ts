@@ -18,9 +18,9 @@ export class Likes {
         type: "enum",
         nullable: false,
         enum: LikeStatus,
-        default: LikeStatus.UNLIKE,
+        default: LikeStatus.LIKE,
     })
-    status!: LikeStatus;
+    status: LikeStatus;
 
     @ManyToOne((type) => Post, (post) => post.likes, { onDelete: "CASCADE" })
     @JoinColumn({ name: "postId", referencedColumnName: "id" })
