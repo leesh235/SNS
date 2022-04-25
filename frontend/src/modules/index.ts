@@ -6,6 +6,7 @@ import join from "./reducer/join";
 import profile from "./reducer/profile";
 import post from "./reducer/post";
 import posts from "./reducer/posts";
+import image from "./reducer/image";
 //saga
 import { authSaga } from "./saga/auth";
 import { userSaga } from "./saga/user";
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
     profile,
     post,
     posts,
+    image,
 });
 
 export function* rootSaga() {
