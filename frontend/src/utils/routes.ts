@@ -17,6 +17,11 @@ export const api = {
         profile: "/user/profile",
         introduce: "/user/introduce",
         image: "/user/image",
+        latest_image: "/user/latest_image",
+        req_friend: "/user/send_friend",
+        res_friend: "/user/take_friend",
+        await_friend: "/user/await_friend",
+        people: "/user/people",
     },
     post: {
         get: "/post/:postId",

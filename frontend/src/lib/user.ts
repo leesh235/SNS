@@ -16,3 +16,8 @@ export const setUserImage = async (formData: any) => {
     const res = await backend.post(api.user.image, formData);
     return res.data;
 };
+
+export const getLatestImage = async () => {
+    const res = await backend.get(api.user.latest_image);
+    return res.data;
+};
