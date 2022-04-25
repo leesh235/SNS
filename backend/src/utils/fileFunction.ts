@@ -64,9 +64,9 @@ export const getAllImage = (email: string) => {
 
     let arr: string[] = [];
     const files = fs.readdirSync(userDir);
-    files.forEach((val, idx) => {
+    files.reverse().forEach((val, idx) => {
         const images = fs.readdirSync(`${userDir}/${val}`);
-        images.forEach((img, idx) => {
+        images.reverse().forEach((img, idx) => {
             arr.push(`${basePath}${val}/${img}`);
         });
     });
