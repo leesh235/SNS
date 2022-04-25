@@ -17,6 +17,7 @@ export const api = {
         profile: "/user/profile",
         introduce: "/user/introduce",
         image: "/user/image",
+        images: "/user/images",
         latest_image: "/user/latest_image",
         req_friend: "/user/send_friend",
         res_friend: "/user/take_friend",
@@ -34,7 +35,7 @@ export const api = {
         all_ist: "/posts/",
         like_list: "/posts/like",
         bookmark_list: "/posts/bookmark",
-        my_list: "/posts/:userId",
+        my_list: "/posts/my",
         friends_list: "/posts/friends",
     },
     comment: {
