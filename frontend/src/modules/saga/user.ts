@@ -20,7 +20,7 @@ const introduce = createPromise(INTRODUCE, writeIntroduce);
 const profile_image = createPromise(PROFILEIMAGE, setUserImage);
 const cover_image = createPromise(COVERIMAGE, setUserImage);
 const latest_image = createPromise(LATESTIMAGE, getLatestImage);
-const all_images = createPromise(ALLIMAGE, getAllImages());
+const all_images = createPromise(ALLIMAGE, getAllImages);
 
 export function* userSaga() {
     yield takeEvery(PROFILE, profile);
