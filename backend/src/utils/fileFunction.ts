@@ -79,10 +79,10 @@ export const getTermsImage = (email: string) => {
 
     let arr: string[] = [];
     const files = fs.readdirSync(userDir);
-    files.forEach((val, idx) => {
+    files.reverse().forEach((val, idx) => {
         const images = fs.readdirSync(`${userDir}/${val}`);
-        images.forEach((img, cnt) => {
-            if (arr.length < 7) {
+        images.reverse().forEach((img, cnt) => {
+            if (arr.length < 6) {
                 arr.push(`${basePath}${val}/${img}`);
             }
         });

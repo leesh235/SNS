@@ -35,7 +35,7 @@ export const routes = {
         all_ist: "/",
         like_list: "/like",
         bookmark_list: "/bookmark",
-        my_list: "/:userId",
+        my_list: "/my",
         friends_list: "/friends",
     },
     comment: {

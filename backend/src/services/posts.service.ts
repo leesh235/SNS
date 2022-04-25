@@ -45,6 +45,9 @@ export const findAll = async (req: any, mode?: PostMode) => {
                     status: true,
                 },
             },
+            order: {
+                createdAt: "desc",
+            },
         });
         let result: any[] = [];
         for (let i = 0; i < allList.length; i++) {
