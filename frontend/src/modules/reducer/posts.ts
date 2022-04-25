@@ -27,22 +27,22 @@ const reducer = (state = initialState, action: any) => {
         case ALLPOSTS:
             return {
                 ...state,
-                allPosts: reducerUtils.loading(state.allPosts),
+                allPosts: reducerUtils.loading(state.allPosts.data),
             };
         case MYPOSTS:
             return {
                 ...state,
-                myPosts: reducerUtils.loading(state.myPosts),
+                myPosts: reducerUtils.loading(state.myPosts.data),
             };
         case LIKEPOSTS:
             return {
                 ...state,
-                likePosts: reducerUtils.loading(state.likePosts),
+                likePosts: reducerUtils.loading(state.likePosts.data),
             };
         case FRIENDSPOSTS:
             return {
                 ...state,
-                friendsPosts: reducerUtils.loading(state.friendsPosts),
+                friendsPosts: reducerUtils.loading(state.friendsPosts.data),
             };
         case ALLPOSTS_SUCCESS:
             return {

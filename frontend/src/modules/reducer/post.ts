@@ -11,7 +11,7 @@ const reducer = (state = initialState, action: any) => {
         case WRITEPOST:
             return {
                 ...state,
-                writePost: reducerUtils.loading(state.writePost),
+                writePost: reducerUtils.loading(state.writePost.data),
             };
         case WRITEPOST_SUCCESS:
             return {
