@@ -1,5 +1,6 @@
 import styled from "../../styles/theme-components";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { PostCard } from "./PostCard";
 import { BoxShadow } from "../styles/BoxShadow";
 import { IconButton } from "../common/button/IconButton";
@@ -7,10 +8,17 @@ import { Text } from "../common/Text";
 import theme from "../../styles/theme";
 import { ListIcon, ListIconC } from "../../assets/icon/ListIcon";
 import { GridIcon, GridIconC } from "../../assets/icon/GridIcon";
-import { useDispatch, useSelector } from "react-redux";
-import { setMyPosts } from "../../modules/action/posts";
 
 const PostWrapper = styled.article`
+    display: flex;
+    flex-direction: column;
+    > :nth-child(n) {
+        margin-bottom: 15px;
+    }
+    margin-top: 15px;
+`;
+
+const PostGridWrapper = styled.article`
     display: flex;
     flex-direction: column;
     > :nth-child(n) {
@@ -43,9 +51,8 @@ const ButtonWrapper = styled.div<{ color: string }>`
 const menuList = ["리스트 보기", "그리드 보기"];
 
 export const PostFlexCard = () => {
-    const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
-        (state: any) => state.posts.myPosts
+        (state: any) => state?.posts?.myPosts
     );
 
     const [menu, setMenu] = useState<number>(0);
@@ -54,12 +61,7 @@ export const PostFlexCard = () => {
         setMenu(id);
     };
 
-    useEffect(() => {
-        if (data === null) {
-            dispatch(setMyPosts());
-        }
-        setPostList(data);
-    }, [loading]);
+    useEffect(() => {}, [loading, data]);
 
     return (
         <>
@@ -136,15 +138,15 @@ export const PostFlexCard = () => {
                     })}
                 </GridWrapper>
             </BoxShadow>
-            <PostWrapper>
-                {data !== null
-                    ? menu === 0
-                        ? postList?.map((val: any, idx: number) => {
-                              return <PostCard key={idx} post={val} />;
-                          })
-                        : "gridcards"
-                    : ""}
-            </PostWrapper>
+            {menu === 0 ? (
+                <PostWrapper>
+                    {data?.map((val: any, idx: number) => {
+                        return <PostCard key={idx} post={val} />;
+                    })}
+                </PostWrapper>
+            ) : (
+                <PostGridWrapper>gridcards</PostGridWrapper>
+            )}
         </>
     );
 };

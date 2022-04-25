@@ -129,7 +129,7 @@ const Profile = () => {
                     })}
                 </MenuWrapper>
             </Center>
-            {click === 0 && <ProfilePost />}
+            {click === 0 && <ProfilePost handleUrl={handleOnClick} />}
             {click === 1 && <ProfileInfo />}
             {click === 2 && <ProfileFriend />}
             {click === 3 && <ProfileImage />}

@@ -6,6 +6,7 @@ export const routes = {
     welcome: "/welcome/",
     profile: "/profile",
     friends: "/friends",
+    detail: "/detail",
 };
 
 export const api = {

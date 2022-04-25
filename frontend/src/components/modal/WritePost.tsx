@@ -1,10 +1,11 @@
 import styled from "../../styles/theme-components";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { batch, useDispatch, useSelector } from "react-redux";
 import { Text } from "../common/Text";
 import theme from "../../styles/theme";
 import { obToUrl } from "../../utils/objToUrl";
 import { setWritePost } from "../../modules/action/post";
+import { setMyPosts } from "../../modules/action/posts";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -220,13 +221,17 @@ export const WritePost = ({ closeFunc, setClose }: Props) => {
         } = e.currentTarget;
 
         const formData = new FormData();
-        formData.append("date", `${Date.now()}`);
         formData.append("contents", contents.value);
+        if (files) {
+            formData.append("date", `${Date.now()}`);
+        }
         for (let i = 0; i < files.length; i++) {
             formData.append("images", files[i]);
         }
 
         dispatch(setWritePost(formData));
+        dispatch(setMyPosts());
+
         setClose(false);
     };
 
@@ -310,7 +315,6 @@ export const WritePost = ({ closeFunc, setClose }: Props) => {
                     type="file"
                     id="imgOrvedio"
                     name="images"
-                    required
                     onChange={handleImageOnChange}
                     multiple
                 />

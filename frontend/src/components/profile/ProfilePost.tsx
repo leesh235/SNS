@@ -6,7 +6,11 @@ import { BoxShadow } from "../styles/BoxShadow";
 import { Text } from "../common/Text";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../../modules/action/profile";
+import { setLatestImage } from "../../modules/action/image";
+import { setMyPosts } from "../../modules/action/posts";
 import { useEffect } from "react";
+import { LatestImageCard } from "../card/LatestImageCard";
+import { batch } from "react-redux";
 
 const Wrapper = styled.section`
     width: 908px;
@@ -44,7 +48,11 @@ const FlexWrapper = styled.div`
     padding: 10px 0;
 `;
 
-export const ProfilePost = () => {
+interface Porps {
+    handleUrl: any;
+}
+
+export const ProfilePost = ({ handleUrl }: Porps) => {
     const dispatch = useDispatch();
 
     const { loading, data, error } = useSelector(
@@ -52,26 +60,18 @@ export const ProfilePost = () => {
     );
 
     useEffect(() => {
-        if (data === null) {
+        batch(() => {
             dispatch(setProfile());
-        }
-    }, [loading, data]);
+            dispatch(setLatestImage());
+            dispatch(setMyPosts());
+        });
+    }, []);
 
     return (
         <Wrapper>
             <LeftWrapper>
                 <IntroduceCard introduction={data?.introduction || ""} />
-                <BoxShadow>
-                    <FlexWrapper>
-                        <Text
-                            text={"사진"}
-                            fs={"20px"}
-                            fw={700}
-                            lh={"24px"}
-                            width={"auto"}
-                        />
-                    </FlexWrapper>
-                </BoxShadow>
+                <LatestImageCard handleUrl={handleUrl} />
                 <BoxShadow>
                     <FlexWrapper>
                         <Text
@@ -88,7 +88,6 @@ export const ProfilePost = () => {
                 <WritePostCard />
                 <PostFlexCard />
             </RightWrapper>
-            {/* <WritePost /> */}
         </Wrapper>
     );
 };
