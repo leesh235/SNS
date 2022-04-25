@@ -17,7 +17,7 @@ export const api = {
         profile: "/user/profile",
         introduce: "/user/introduce",
         image: "/user/image",
-        images: "/user/images",
+        all_image: "/user/all_image",
         latest_image: "/user/latest_image",
         req_friend: "/user/send_friend",
         res_friend: "/user/take_friend",

@@ -23,6 +23,6 @@ export const getLatestImage = async () => {
 };
 
 export const getAllImages = async () => {
-    const res = await backend.get(api.user.images);
+    const res = await backend.get(api.user.all_image);
     return res.data;
 };
