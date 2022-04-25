@@ -17,7 +17,7 @@ export const routes = {
         set_image: "/image",
         set_introduce: "/introduce",
         friends: "/friends",
-        images: "/images",
+        all_image: "/all_image",
         latest_image: "/latest_image",
         req_friend: "/send_friend",
         res_friend: "/take_friend",

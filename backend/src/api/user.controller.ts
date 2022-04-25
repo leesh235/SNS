@@ -54,7 +54,7 @@ router.post(routes.user.set_introduce, async (req, res) => {
 });
 
 //모든 이미지 목록
-router.get(routes.user.images, async (req, res) => {
+router.get(routes.user.all_image, async (req, res) => {
     try {
         res.status(200).send(await getImages(req));
     } catch (error) {
