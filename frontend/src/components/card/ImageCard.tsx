@@ -140,7 +140,7 @@ export const ImageCard = () => {
                         return (
                             <Link
                                 key={idx}
-                                to={{ pathname: `${routes.detail}` }}
+                                to={{ pathname: `${routes.detail}${0}` }}
                             >
                                 <Image src={val} />
                             </Link>
