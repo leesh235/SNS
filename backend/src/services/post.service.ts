@@ -19,6 +19,7 @@ export const find = async (id: number) => {
                 user: {
                     email: true,
                     nickName: true,
+                    profileImage: true,
                 },
             },
         });
@@ -28,7 +29,8 @@ export const find = async (id: number) => {
                 id: post.id,
                 contents: post.contents,
                 createdAt: post.createdAt,
-                writer: post?.user.nickName,
+                writer: post.user.nickName,
+                profileImage: post.user.profileImage,
                 images,
             };
             return result;
