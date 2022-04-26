@@ -1,11 +1,13 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
+import { Post } from "../entity/Post.entity";
 import { Friends } from "../entity/Friends.entity";
 import { getFilePath, getAllImage, getTermsImage } from "../utils/fileFunction";
-import { Like } from "typeorm";
+import { IsNull, Like, Not } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
 const friendsRepository = dataSource.getRepository(Friends);
+const postRepository = dataSource.getRepository(Post);
 
 export const save_image = async (req: any) => {
     try {
@@ -88,23 +90,48 @@ export const getUserImage = async (req: any) => {
     }
 };
 
-export const getImages = (req: any) => {
+export const getAllImages = async (req: any) => {
     try {
         const {
             user: { email },
         } = req;
-        return getAllImage(email);
+        const posts = await postRepository.find({
+            relations: { user: true },
+            where: {
+                user: { email },
+                deletedAt: undefined,
+                files: Not(IsNull()),
+            },
+            select: { id: true, files: true, user: {} },
+            order: {
+                createdAt: "desc",
+            },
+        });
+
+        return getAllImage(email, posts);
     } catch (error) {
         return [];
     }
 };
 
-export const getLatestImage = (req: any) => {
+export const getLatestImage = async (req: any) => {
     try {
         const {
             user: { email },
         } = req;
-        return getTermsImage(email);
+        const posts = await postRepository.find({
+            relations: { user: true },
+            where: {
+                user: { email },
+                deletedAt: undefined,
+                files: Not(IsNull()),
+            },
+            select: { id: true, files: true, user: {} },
+            order: {
+                createdAt: "desc",
+            },
+        });
+        return getTermsImage(email, posts);
     } catch (error) {
         return [];
     }

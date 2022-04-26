@@ -58,32 +58,41 @@ export const getImagePath = (writer: string, post: string) => {
     return arr;
 };
 
-export const getAllImage = (email: string) => {
+export const getAllImage = (
+    email: string,
+    posts: Array<{ id: number; files: string }>
+) => {
     const basePath = `${process.env.BE_URL}/${email}/`;
     const userDir = `${process.env.POST_PATH}/${email}`;
 
-    let arr: string[] = [];
+    let arr: Array<{ id: number; image: string }> = [];
     const files = fs.readdirSync(userDir);
     files.reverse().forEach((val, idx) => {
         const images = fs.readdirSync(`${userDir}/${val}`);
-        images.reverse().forEach((img, idx) => {
-            arr.push(`${basePath}${val}/${img}`);
+        images.reverse().forEach((img, cnt) => {
+            arr.push({ id: posts[idx].id, image: `${basePath}${val}/${img}` });
         });
     });
     return arr;
 };
 
-export const getTermsImage = (email: string) => {
+export const getTermsImage = (
+    email: string,
+    posts: Array<{ id: number; files: string }>
+) => {
     const basePath = `${process.env.BE_URL}/${email}/`;
     const userDir = `${process.env.POST_PATH}/${email}`;
 
-    let arr: string[] = [];
+    let arr: Array<{ id: number; image: string }> = [];
     const files = fs.readdirSync(userDir);
     files.reverse().forEach((val, idx) => {
         const images = fs.readdirSync(`${userDir}/${val}`);
         images.reverse().forEach((img, cnt) => {
             if (arr.length < 6) {
-                arr.push(`${basePath}${val}/${img}`);
+                arr.push({
+                    id: posts[idx].id,
+                    image: `${basePath}${val}/${img}`,
+                });
             }
         });
     });

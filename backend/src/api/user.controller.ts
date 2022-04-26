@@ -6,10 +6,10 @@ import {
     save_image,
     save_introduce,
     getUserImage,
-    getImages,
     getLatestImage,
     getFriendList,
     getPeople,
+    getAllImages,
 } from "../services/user.service";
 
 const router = express.Router();
@@ -56,7 +56,7 @@ router.post(routes.user.set_introduce, async (req, res) => {
 //모든 이미지 목록
 router.get(routes.user.all_image, async (req, res) => {
     try {
-        res.status(200).send(await getImages(req));
+        res.status(200).send(await getAllImages(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
