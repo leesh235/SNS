@@ -7,10 +7,12 @@ import {
     getPostFunc,
     likeFunc,
 } from "../../lib/post";
-import { WRITEPOST } from "../action/post";
+import { WRITEPOST, POSTDETAIL } from "../action/post";
 
 const write = createPromise(WRITEPOST, writePostFunc);
+const detail = createPromise(POSTDETAIL, getPostFunc);
 
 export function* postSaga() {
     yield takeEvery(WRITEPOST, write);
+    yield takeEvery(POSTDETAIL, detail);
 }
