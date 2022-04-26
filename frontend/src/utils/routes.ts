@@ -26,7 +26,7 @@ export const api = {
         people: "/user/people",
     },
     post: {
-        get: "/post/:postId",
+        get: "/post/",
         write: "/post/write",
         modify: "/post/modify",
         delete: "/post/delete",
