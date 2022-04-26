@@ -25,7 +25,7 @@ export const routes = {
         people: "/people",
     },
     post: {
-        get: "/:postId",
+        get: "/",
         write: "/write",
         modify: "/modify",
         delete: "/delete",

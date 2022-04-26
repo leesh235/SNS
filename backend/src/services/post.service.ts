@@ -9,11 +9,10 @@ const likesRepository = dataSource.getRepository(Likes);
 export const find = async (id: number) => {
     try {
         const post = await postRepository.findOne({
-            relations: {
-                user: true,
-            },
             where: { id },
+            relations: { user: true },
             select: {
+                id: true,
                 contents: true,
                 createdAt: true,
                 files: true,
@@ -23,10 +22,15 @@ export const find = async (id: number) => {
                 },
             },
         });
-
         if (post) {
             let images: string[] = getImagePath(post?.user?.email, post?.files);
-            let result = { ...post, writer: post?.user.nickName, images };
+            let result = {
+                id: post.id,
+                contents: post.contents,
+                createdAt: post.createdAt,
+                writer: post?.user.nickName,
+                images,
+            };
             return result;
         } else {
             return null;

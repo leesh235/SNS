@@ -10,10 +10,10 @@ const router = express.Router();
 //해당 게시글
 router.get(routes.post.get, async (req, res) => {
     try {
-        const { postId } = req.params;
+        const { postId } = req.query;
         const post = await find(Number(postId));
         if (post !== null) {
-            res.status(200).send({ ...post });
+            res.status(200).send(post);
         } else {
             res.status(404).send({ message: `${exist.NOT_EXIST_POST}` });
         }
