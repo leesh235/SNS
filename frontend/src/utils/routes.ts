@@ -7,6 +7,7 @@ export const routes = {
     profile: "/profile",
     friends: "/friends",
     detail: "/detail/",
+    userInfo: "/user/",
 };
 
 export const api = {

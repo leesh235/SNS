@@ -10,7 +10,6 @@ import {
 
 export const getPostFunc = async (formData: GetPost) => {
     const res = await backend.get(api.post.get, { params: formData });
-    console.log(res.data);
     return res.data;
 };
 
