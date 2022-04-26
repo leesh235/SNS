@@ -9,7 +9,8 @@ import {
 } from "../types/post";
 
 export const getPostFunc = async (formData: GetPost) => {
-    const res = await backend.get(api.post.get);
+    const res = await backend.get(api.post.get, { params: formData });
+    console.log(res.data);
     return res.data;
 };
 
