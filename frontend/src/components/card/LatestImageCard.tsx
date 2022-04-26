@@ -86,13 +86,13 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
                     </UrlBtn>
                 </FlexWrapper>
                 <ImageWrapper>
-                    {data?.map((val: string, idx: number) => {
+                    {data?.map((val: any, idx: number) => {
                         return (
                             <Link
-                                to={{ pathname: `${routes.detail}${0}` }}
+                                to={{ pathname: `${routes.detail}${val.id}` }}
                                 key={idx}
                             >
-                                <Image src={val} />
+                                <Image src={val.image} />
                             </Link>
                         );
                     })}

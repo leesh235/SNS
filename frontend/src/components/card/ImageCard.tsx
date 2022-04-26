@@ -136,13 +136,13 @@ export const ImageCard = () => {
                     })}
                 </MenuWrapper>
                 <ImageWrapper>
-                    {data?.map((val: string, idx: number) => {
+                    {data?.map((val: any, idx: number) => {
                         return (
                             <Link
                                 key={idx}
-                                to={{ pathname: `${routes.detail}${0}` }}
+                                to={{ pathname: `${routes.detail}${val.id}` }}
                             >
-                                <Image src={val} />
+                                <Image src={val.image} />
                             </Link>
                         );
                     })}
