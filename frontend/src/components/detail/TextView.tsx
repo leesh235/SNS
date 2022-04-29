@@ -5,7 +5,8 @@ import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
 import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
-import { Input3 } from "../common/input/Input3";
+import { CommentInput } from "../common/input/CommentInput";
+import { CommentBtn } from "../common/button/CommentBtn";
 
 const Wrapper = styled.section`
     width: 100%;
@@ -105,9 +106,14 @@ export const TextView = () => {
         (state: any) => state?.post?.postDetail
     );
 
-    useEffect(() => {
-        console.log(data);
-    }, [loading]);
+    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
+        e
+    ) => {
+        e.preventDefault();
+        console.log(e.currentTarget.comment.value);
+    };
+
+    useEffect(() => {}, [loading]);
 
     return (
         <Wrapper>
@@ -157,25 +163,16 @@ export const TextView = () => {
                 </PostView>
                 <OptionView>
                     <Button2 text={"좋아요"} width={"100%"} />
-                    <Button2 text={"댓글 달기"} width={"100%"} />
+                    <CommentBtn />
                     <Button2 text={"공유하기"} width={"100%"} />
                 </OptionView>
             </Middle>
             <Bottom>
-                <FlexWrapper>
-                    <Link
-                        to={{
-                            pathname: `${routes.userInfo}${data?.writer}`,
-                        }}
-                    >
-                        <Icon
-                            size={"32px"}
-                            margin={"0 6px 0 0"}
-                            src={data?.profileImage}
-                        />
-                    </Link>
-                    <Input3 placeholder={"댓글을 입력하세요..."} />
-                </FlexWrapper>
+                <CommentInput
+                    image={data?.profileImage}
+                    writer={data?.writer}
+                    onSubmit={handleOnSubmit}
+                />
             </Bottom>
         </Wrapper>
     );
