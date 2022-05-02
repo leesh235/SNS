@@ -135,6 +135,10 @@ export const PostCard = ({ post }: Props) => {
         if (openModal) setOpenModal(false);
     };
 
+    const handleDeleteBtn = () => {
+        console.log("delete");
+    };
+
     return (
         <>
             <Wrapper>
@@ -183,7 +187,10 @@ export const PostCard = ({ post }: Props) => {
                                 text={"게시물 수정"}
                                 onClick={handleModalOpen}
                             />
-                            <HoverBtn text={"게시물 삭제"} />
+                            <HoverBtn
+                                text={"게시물 삭제"}
+                                onClick={handleDeleteBtn}
+                            />
                         </CloseEventBtn>
                     )}
                 </TopWrapper>
@@ -216,6 +223,7 @@ export const PostCard = ({ post }: Props) => {
                 <WritePost
                     closeFunc={handleModalClose}
                     setClose={setOpenModal}
+                    post={post}
                 />
             )}
         </>

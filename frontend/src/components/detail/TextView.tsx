@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
 import { Link } from "react-router-dom";
@@ -8,6 +8,8 @@ import { routes } from "../../utils/routes";
 import { CommentInput } from "../common/input/CommentInput";
 import { CommentBtn } from "../common/button/CommentBtn";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
+import { CloseEventBtn } from "../common/button/CloseEventBtn";
+import { HoverBtn } from "../common/button/HoverBtn";
 
 const Wrapper = styled.section`
     width: 100%;
@@ -67,6 +69,7 @@ const UserInfo = styled.div`
         grid-column: 3 / span 1;
         grid-row: 1 / span 2;
     }
+    position: relative;
 `;
 
 const Contents = styled.div`
@@ -116,6 +119,8 @@ const Hover = styled.div`
 `;
 
 export const TextView = () => {
+    const [open, setOpen] = useState<boolean>(false);
+
     const { loading, data, error } = useSelector(
         (state: any) => state?.post?.postDetail
     );
@@ -125,6 +130,14 @@ export const TextView = () => {
     ) => {
         e.preventDefault();
         console.log(e.currentTarget.comment.value);
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     useEffect(() => {}, [loading]);
@@ -164,9 +177,21 @@ export const TextView = () => {
                                 width={"auto"}
                             />
                         </FlexWrapper>
-                        <Hover>
+                        <Hover onClick={handleOpen}>
                             <MoreIcon />
                         </Hover>
+                        {open && (
+                            <CloseEventBtn
+                                closeFunc={handleClose}
+                                width={"344px"}
+                                height={"auto"}
+                                top={"48px"}
+                                right={"0px"}
+                            >
+                                <HoverBtn text={"게시물 수정"} />
+                                <HoverBtn text={"게시물 삭제"} />
+                            </CloseEventBtn>
+                        )}
                     </UserInfo>
                     <Contents>
                         <Text

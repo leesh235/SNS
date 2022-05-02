@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import { useState, useEffect } from "react";
-import { batch, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Text } from "../common/Text";
 import theme from "../../styles/theme";
 import { obToUrl } from "../../utils/objToUrl";
@@ -185,15 +185,24 @@ const ClickBtn = styled.div`
 interface Props {
     closeFunc: any;
     setClose: any;
+    post?: {
+        postId: number;
+        userId: string;
+        writer: string;
+        contents: string;
+        createdAt: string;
+        images?: Array<String>;
+        profileImage?: string;
+    };
 }
 
-export const WritePost = ({ closeFunc, setClose }: Props) => {
+export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
         (state: any) => state?.profile?.profile
     );
 
-    const [fileList, setFileList] = useState<Array<any>>([]);
+    const [fileList, setFileList] = useState<Array<any>>(post?.images || []);
     const [open, setOpen] = useState<boolean>(false);
 
     const handleOpen = () => {
@@ -213,7 +222,9 @@ export const WritePost = ({ closeFunc, setClose }: Props) => {
         }
     };
 
-    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
+        e
+    ) => {
         e.preventDefault();
         const {
             contents,
@@ -229,33 +240,64 @@ export const WritePost = ({ closeFunc, setClose }: Props) => {
             formData.append("images", files[i]);
         }
 
-        dispatch(setWritePost(formData));
+        if (post?.postId) {
+            for (let i = 0; i < fileList.length; i++) {
+                if (typeof fileList[i] === "string")
+                    formData.append("urls", fileList[i]);
+            }
+            console.log("modify: ", formData.getAll("urls"));
+        } else {
+            dispatch(setWritePost(formData));
+        }
         dispatch(setMyPosts());
 
         setClose(false);
     };
 
+    const handleUrl = (url: any) => {
+        if (typeof url === "string") {
+            return url;
+        } else {
+            return obToUrl(url);
+        }
+    };
+
     useEffect(() => {
+        if (post?.images === fileList) {
+            handleOpen();
+            setFileList(post?.images);
+        }
         document.body.style.cssText = `
             overflow: hidden;
         `;
         return () => {
             document.body.style.cssText = ``;
         };
-    }, []);
+    }, [fileList]);
 
     return (
         <Wrapper onClick={closeFunc}>
             <Box onSubmit={handleOnSubmit}>
                 <Top>
-                    <Text
-                        text={"게시글 만들기"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        ta={"center"}
-                        width={"calc(100% - 120px)"}
-                    />
+                    {post?.postId ? (
+                        <Text
+                            text={"게시글 수정"}
+                            fs={"20px"}
+                            fw={700}
+                            lh={"24px"}
+                            ta={"center"}
+                            width={"calc(100% - 120px)"}
+                        />
+                    ) : (
+                        <Text
+                            text={"게시글 만들기"}
+                            fs={"20px"}
+                            fw={700}
+                            lh={"24px"}
+                            ta={"center"}
+                            width={"calc(100% - 120px)"}
+                        />
+                    )}
                     <EventBtn onClick={closeFunc}>X</EventBtn>
                 </Top>
                 <UserInfo>
@@ -271,7 +313,7 @@ export const WritePost = ({ closeFunc, setClose }: Props) => {
                 <TextContents
                     name="contents"
                     required
-                    defaultValue={""}
+                    defaultValue={post?.contents}
                     placeholder="무슨 생각을 하고 계신가요?"
                 />
                 {open && (
@@ -302,7 +344,7 @@ export const WritePost = ({ closeFunc, setClose }: Props) => {
                                         return (
                                             <SelectImage
                                                 key={idx}
-                                                src={obToUrl(file)}
+                                                src={handleUrl(file)}
                                             ></SelectImage>
                                         );
                                     })}
