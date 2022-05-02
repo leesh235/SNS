@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
 import { CommentInput } from "../common/input/CommentInput";
 import { CommentBtn } from "../common/button/CommentBtn";
+import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Wrapper = styled.section`
     width: 100%;
@@ -80,7 +81,7 @@ const OptionView = styled.div`
     width: 100%;
     height: 40px;
     margin-top: 6px;
-    border-top: 1px solid ${(props) => props.theme.color.lightGray};
+    border-top: 1px solid ${(props) => props.theme.color.gray1};
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
@@ -98,6 +99,19 @@ const Icon = styled.img<{ size: string; margin?: string }>`
     height: ${(props) => props.size};
     margin: ${(props) => props.margin};
     border-radius: 20px;
+    cursor: pointer;
+`;
+
+const Hover = styled.div`
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :hover {
+        background-color: ${(props) => props.theme.color.lightGray};
+    }
     cursor: pointer;
 `;
 
@@ -150,7 +164,9 @@ export const TextView = () => {
                                 width={"auto"}
                             />
                         </FlexWrapper>
-                        <Text text={"목차"} fs={"12px"} lh={"16px"} />
+                        <Hover>
+                            <MoreIcon />
+                        </Hover>
                     </UserInfo>
                     <Contents>
                         <Text

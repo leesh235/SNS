@@ -2,14 +2,13 @@ import styled from "../../styles/theme-components";
 import { Text } from "../common/Text";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { AddImageButton } from "../common/button/AddImageButton";
-import { SelectImageButton } from "../common/button/SelectImageButton";
 import { SetProfileImage } from "../modal/SetProfileImage";
 import { CustomImage } from "../modal/CustomImage";
 import { SelectImage } from "../modal/SelectImage";
 import theme from "../../styles/theme";
-import { base64ToImage } from "../../utils/base64Func";
 import { setCoverImage } from "../../modules/action/profile";
+import { CloseEventBtn } from "../common/button/CloseEventBtn";
+import { HoverBtn } from "../common/button/HoverBtn";
 
 const Wrapper = styled.section`
     background-color: ${(props) => props.theme.color.white};
@@ -145,6 +144,24 @@ const Input = styled.input`
     height: 0;
 `;
 
+const Label = styled.label`
+    display: inline-block;
+    width: calc(100% - 40px);
+    height: 20px;
+    border-radius: 6px;
+
+    background-color: ${(props) => props.theme.color.white};
+    :hover {
+        background-color: ${(props) => props.theme.color.gray};
+    }
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    padding: 8px 0 8px 40px;
+`;
+
 export const ProfileTop = () => {
     const dispatch = useDispatch();
 
@@ -269,7 +286,6 @@ export const ProfileTop = () => {
                     />
                     <ImageShadow>
                         <CoverImageButtonWrapper onClick={handleOpenCImg}>
-                            {" "}
                             <Text
                                 text={"커버 사진 추가"}
                                 fs={"15px"}
@@ -279,10 +295,25 @@ export const ProfileTop = () => {
                             />
                         </CoverImageButtonWrapper>
                         {cImgBtnopen && (
-                            <SelectImageButton
+                            <CloseEventBtn
                                 closeFunc={handleCloseCImg}
-                                onClickSelect={handleOpenCImgModal}
-                            ></SelectImageButton>
+                                width={"328px"}
+                                height={"auto"}
+                                bottom={"-72px"}
+                                right={"30px"}
+                                zIndenx={"9"}
+                            >
+                                <HoverBtn
+                                    text={"사진 선택"}
+                                    onClick={handleOpenCImgModal}
+                                />
+                                <Label
+                                    htmlFor="coverimage"
+                                    className="coverImage"
+                                >
+                                    사진 업로드
+                                </Label>
+                            </CloseEventBtn>
                         )}
                     </ImageShadow>
                 </Top>
@@ -294,10 +325,18 @@ export const ProfileTop = () => {
                         ></Image>
                     </UserImage>
                     {pImgBtnopen && (
-                        <AddImageButton
+                        <CloseEventBtn
                             closeFunc={handleClosePImg}
-                            onClick={handleOpenPImgModal}
-                        ></AddImageButton>
+                            width={"328px"}
+                            height={"auto"}
+                            bottom={"-66px"}
+                            left={"-88px"}
+                        >
+                            <HoverBtn
+                                text={"사진 추가"}
+                                onClick={handleOpenPImgModal}
+                            />
+                        </CloseEventBtn>
                     )}
                     <FlexWrapper>
                         <Text

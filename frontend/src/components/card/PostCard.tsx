@@ -1,7 +1,13 @@
 import styled from "../../styles/theme-components";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { routes } from "../../utils/routes";
 import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
+import { MoreIcon } from "../../assets/icon/MoreIcon";
 import { WritePost } from "../modal/WritePost";
+import { CloseEventBtn } from "../common/button/CloseEventBtn";
+import { HoverBtn } from "../common/button/HoverBtn";
 
 const Wrapper = styled.article`
     width: 100%;
@@ -29,6 +35,7 @@ const TopWrapper = styled.div`
         grid-column: 3 / span 1;
         grid-row: 1 / span 2;
     }
+    position: relative;
 `;
 
 const FlexWrapper = styled.div`
@@ -74,72 +81,143 @@ const BottomWrapper = styled.div`
     border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
-const Icon = styled.div`
-    width: 40px;
-    height: 40px;
+const Icon = styled.img<{ size: string; margin?: string }>`
+    width: ${(props) => props.size};
+    height: ${(props) => props.size};
+    margin: ${(props) => props.margin};
     border-radius: 20px;
-    background-color: blueviolet;
+    cursor: pointer;
+`;
+
+const Hover = styled.div`
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :hover {
+        background-color: ${(props) => props.theme.color.gray1};
+    }
+    cursor: pointer;
 `;
 
 interface Props {
     post?: {
+        postId: number;
+        userId: string;
         writer: string;
         contents: string;
         createdAt: string;
-        images: Array<String>;
+        images?: Array<String>;
+        profileImage?: string;
     };
 }
 
 export const PostCard = ({ post }: Props) => {
+    const [openBtn, setOpenBtn] = useState<boolean>(false);
+    const [openModal, setOpenModal] = useState<boolean>(false);
+
+    const handleBtnOpen = () => {
+        setOpenBtn(true);
+    };
+
+    const handleBtnClose = () => {
+        if (openBtn) setOpenBtn(false);
+    };
+
+    const handleModalOpen = () => {
+        setOpenModal(true);
+    };
+
+    const handleModalClose: React.MouseEventHandler = (e) => {
+        if (e.target !== e.currentTarget) return;
+        if (openModal) setOpenModal(false);
+    };
+
     return (
-        <Wrapper>
-            <TopWrapper>
-                <Icon />
-                <Text
-                    text={`${post?.writer}`}
-                    fs={"15px"}
-                    fw={600}
-                    lh={"20px"}
-                />
-                <FlexWrapper>
+        <>
+            <Wrapper>
+                <TopWrapper>
+                    <Link
+                        to={{
+                            pathname: `${routes.userInfo}${post?.writer}`,
+                        }}
+                    >
+                        <Icon size={"40px"} src={post?.profileImage} />
+                    </Link>
                     <Text
-                        text={`${post?.createdAt}`}
-                        fs={"12px"}
-                        lh={"16px"}
-                        tag={"span"}
-                        width={"auto"}
+                        text={`${post?.writer}`}
+                        fs={"15px"}
+                        fw={600}
+                        lh={"20px"}
                     />
+                    <FlexWrapper>
+                        <Text
+                            text={`${post?.createdAt}`}
+                            fs={"12px"}
+                            lh={"16px"}
+                            tag={"span"}
+                            width={"auto"}
+                        />
+                        <Text
+                            text={"시간"}
+                            fs={"12px"}
+                            lh={"16px"}
+                            tag={"span"}
+                            width={"auto"}
+                        />
+                    </FlexWrapper>
+                    <Hover onClick={handleBtnOpen}>
+                        <MoreIcon />
+                    </Hover>
+                    {openBtn && (
+                        <CloseEventBtn
+                            closeFunc={handleBtnClose}
+                            width={"344px"}
+                            height={"auto"}
+                            top={"57px"}
+                            right={"16px"}
+                        >
+                            <HoverBtn
+                                text={"게시물 수정"}
+                                onClick={handleModalOpen}
+                            />
+                            <HoverBtn text={"게시물 삭제"} />
+                        </CloseEventBtn>
+                    )}
+                </TopWrapper>
+                <ContentsWrapper>
                     <Text
-                        text={"시간"}
-                        fs={"12px"}
-                        lh={"16px"}
-                        tag={"span"}
-                        width={"auto"}
+                        text={`${post?.contents}`}
+                        fs={"15px"}
+                        fw={600}
+                        lh={"20px"}
+                        margin={"0 16px"}
                     />
-                </FlexWrapper>
-                <Text text={"목차"} fs={"12px"} lh={"16px"} />
-            </TopWrapper>
-            <ContentsWrapper>
-                <Text
-                    text={`${post?.contents}`}
-                    fs={"15px"}
-                    fw={600}
-                    lh={"20px"}
-                    margin={"0 16px"}
+                </ContentsWrapper>
+                <Link to={{ pathname: `${routes.detail}${post?.postId}` }}>
+                    <ImagesWrapper>
+                        <ImageSlider>
+                            {post?.images &&
+                                post?.images.map((val, idx) => {
+                                    return <Image key={idx} src={`${val}`} />;
+                                })}
+                        </ImageSlider>
+                    </ImagesWrapper>
+                </Link>
+                <BottomWrapper>
+                    <Button2 text={"좋아요"} width={"100%"} />
+                    <Button2 text={"댓글 달기"} width={"100%"} />
+                    <Button2 text={"공유하기"} width={"100%"} />
+                </BottomWrapper>
+            </Wrapper>
+            {openModal && (
+                <WritePost
+                    closeFunc={handleModalClose}
+                    setClose={setOpenModal}
                 />
-            </ContentsWrapper>
-            <ImagesWrapper>
-                <ImageSlider>
-                    {post?.images.map((val, idx) => {
-                        return <Image key={idx} src={`${val}`} />;
-                    })}
-                </ImageSlider>
-            </ImagesWrapper>
-            <BottomWrapper>
-                <Button2 text={"좋아요"} width={"100%"} />
-                <Button2 text={"댓글 달기"} width={"100%"} />
-                <Button2 text={"공유하기"} width={"100%"} />
-            </BottomWrapper>
-        </Wrapper>
+            )}
+        </>
     );
 };
