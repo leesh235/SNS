@@ -40,6 +40,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 user: {
                     email: true,
                     nickName: true,
+                    profileImage: true,
                 },
                 likes: {
                     status: true,
@@ -55,10 +56,17 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 contents,
                 createdAt,
                 files,
-                user: { email, nickName },
+                user: { email, nickName, profileImage },
             } = allList[i];
             let images: string[] = getImagePath(email, files);
-            result.push({ writer: nickName, contents, createdAt, images });
+            result.push({
+                id: email,
+                writer: nickName,
+                profileImage,
+                contents,
+                createdAt,
+                images,
+            });
         }
         return result;
     } catch (error) {
