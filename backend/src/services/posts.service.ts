@@ -34,6 +34,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
             relations,
             where,
             select: {
+                id: true,
                 contents: true,
                 createdAt: true,
                 files: true,
@@ -53,6 +54,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
         let result: any[] = [];
         for (let i = 0; i < allList.length; i++) {
             const {
+                id,
                 contents,
                 createdAt,
                 files,
@@ -60,7 +62,8 @@ export const findAll = async (req: any, mode?: PostMode) => {
             } = allList[i];
             let images: string[] = getImagePath(email, files);
             result.push({
-                id: email,
+                postId: id,
+                userId: email,
                 writer: nickName,
                 profileImage,
                 contents,
