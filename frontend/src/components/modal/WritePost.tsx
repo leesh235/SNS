@@ -6,6 +6,7 @@ import theme from "../../styles/theme";
 import { obToUrl } from "../../utils/objToUrl";
 import { setWritePost } from "../../modules/action/post";
 import { setMyPosts } from "../../modules/action/posts";
+import { ModifyPost } from "./ModifyPost";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -98,6 +99,9 @@ const ImageBox = styled.div`
     padding: 8px;
     border: 1px solid ${(props) => props.theme.color.gray};
     border-radius: 6px;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
 `;
 
 const ImageBtn = styled.label`
@@ -107,22 +111,26 @@ const ImageBtn = styled.label`
     max-height: 400px;
     background-color: ${(props) => props.theme.color.gray1};
     cursor: pointer;
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 6px;
-    overflow-y: auto;
-    overflow-x: hidden;
 `;
 
 const ImagePreview = styled.div`
     width: 100%;
-    height: 100%;
+    height: auto;
     border-radius: 6px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, auto));
+    position: relative;
+    :hover {
+        > div,
+        label {
+            opacity: 1;
+        }
+    }
 `;
 
 const CloseBtn = styled.div`
@@ -135,9 +143,47 @@ const CloseBtn = styled.div`
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 15px;
+    right: 15px;
     z-index: 9;
+    cursor: pointer;
+`;
+
+const ModifyBtn = styled.div`
+    display: none;
+    width: 110px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: ${(props) => props.theme.color.white};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 9;
+    cursor: pointer;
+    opacity: 0;
+    :hover {
+        opacity: 1;
+    }
+`;
+
+const Addbtn = styled.label`
+    display: none;
+    width: 178px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: ${(props) => props.theme.color.white};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+    left: 130px;
+    z-index: 9;
+    cursor: pointer;
+    opacity: 0;
 `;
 
 const Bottom = styled.button<{ bc?: string }>`
@@ -163,6 +209,7 @@ const Image = styled.img`
 const SelectImage = styled.img`
     width: 100%;
     height: 100%;
+    border-radius: 6px;
 `;
 
 const EventBtn = styled.div`
@@ -204,6 +251,15 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
 
     const [fileList, setFileList] = useState<Array<any>>(post?.images || []);
     const [open, setOpen] = useState<boolean>(false);
+    const [modal, setModal] = useState<boolean>(false);
+
+    const handleModalOpen = () => {
+        setModal(true);
+    };
+
+    const handleModalClose = () => {
+        setModal(false);
+    };
 
     const handleOpen = () => {
         setOpen(true);
@@ -269,6 +325,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         }
         document.body.style.cssText = `
             overflow: hidden;
+            padding-right: 17px;
         `;
         return () => {
             document.body.style.cssText = ``;
@@ -276,52 +333,52 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     }, [fileList]);
 
     return (
-        <Wrapper onClick={closeFunc}>
-            <Box onSubmit={handleOnSubmit}>
-                <Top>
-                    {post?.postId ? (
+        <>
+            <Wrapper onClick={closeFunc}>
+                <Box onSubmit={handleOnSubmit}>
+                    <Top>
+                        {post?.postId ? (
+                            <Text
+                                text={"게시글 수정"}
+                                fs={"20px"}
+                                fw={700}
+                                lh={"24px"}
+                                ta={"center"}
+                                width={"calc(100% - 120px)"}
+                            />
+                        ) : (
+                            <Text
+                                text={"게시글 만들기"}
+                                fs={"20px"}
+                                fw={700}
+                                lh={"24px"}
+                                ta={"center"}
+                                width={"calc(100% - 120px)"}
+                            />
+                        )}
+                        <EventBtn onClick={closeFunc}>X</EventBtn>
+                    </Top>
+                    <UserInfo>
+                        <Image src={data?.profileImage} />
                         <Text
-                            text={"게시글 수정"}
-                            fs={"20px"}
-                            fw={700}
-                            lh={"24px"}
-                            ta={"center"}
-                            width={"calc(100% - 120px)"}
+                            text={data?.nickName}
+                            fs={"15px"}
+                            fw={600}
+                            lh={"20px"}
+                            margin={"0 0 0 10px"}
                         />
-                    ) : (
-                        <Text
-                            text={"게시글 만들기"}
-                            fs={"20px"}
-                            fw={700}
-                            lh={"24px"}
-                            ta={"center"}
-                            width={"calc(100% - 120px)"}
-                        />
-                    )}
-                    <EventBtn onClick={closeFunc}>X</EventBtn>
-                </Top>
-                <UserInfo>
-                    <Image src={data?.profileImage} />
-                    <Text
-                        text={data?.nickName}
-                        fs={"15px"}
-                        fw={600}
-                        lh={"20px"}
-                        margin={"0 0 0 10px"}
+                    </UserInfo>
+                    <TextContents
+                        name="contents"
+                        required
+                        defaultValue={post?.contents}
+                        placeholder="무슨 생각을 하고 계신가요?"
                     />
-                </UserInfo>
-                <TextContents
-                    name="contents"
-                    required
-                    defaultValue={post?.contents}
-                    placeholder="무슨 생각을 하고 계신가요?"
-                />
-                {open && (
-                    <ImageBox>
-                        <ImageBtn htmlFor="imgOrvedio">
+                    {open && (
+                        <ImageBox>
                             <CloseBtn onClick={handleClose}>X</CloseBtn>
                             {fileList.length === 0 ? (
-                                <>
+                                <ImageBtn htmlFor="imgOrvedio">
                                     <Text
                                         text={"사진/동영상 추가"}
                                         fs={"17px"}
@@ -337,9 +394,27 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                                         ta={"center"}
                                         width={"auto"}
                                     />
-                                </>
+                                </ImageBtn>
                             ) : (
                                 <ImagePreview>
+                                    <ModifyBtn onClick={handleModalOpen}>
+                                        <Text
+                                            text={"모두 수정"}
+                                            fs={"15px"}
+                                            fw={600}
+                                            lh={"20px"}
+                                            ta={"center"}
+                                        />
+                                    </ModifyBtn>
+                                    <Addbtn htmlFor="imgOrvedio">
+                                        <Text
+                                            text={"사진 및 동영상 추가"}
+                                            fs={"15px"}
+                                            fw={600}
+                                            lh={"20px"}
+                                            ta={"center"}
+                                        />
+                                    </Addbtn>
                                     {fileList.map((file, idx) => {
                                         return (
                                             <SelectImage
@@ -350,38 +425,45 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                                     })}
                                 </ImagePreview>
                             )}
-                        </ImageBtn>
-                    </ImageBox>
-                )}
-                <input
-                    type="file"
-                    id="imgOrvedio"
-                    name="images"
-                    onChange={handleImageOnChange}
-                    multiple
-                />
-                <ImageContents>
-                    <ClickBtn onClick={handleOpen}>
+                        </ImageBox>
+                    )}
+                    <input
+                        type="file"
+                        id="imgOrvedio"
+                        name="images"
+                        onChange={handleImageOnChange}
+                        multiple
+                    />
+                    <ImageContents>
+                        <ClickBtn onClick={handleOpen}>
+                            <Text
+                                text={"사진 추가"}
+                                fs={"15px"}
+                                fw={600}
+                                lh={"20px"}
+                                ta={"center"}
+                            />
+                        </ClickBtn>
+                    </ImageContents>
+                    <Bottom bc={theme.color.gray}>
                         <Text
-                            text={"사진 추가"}
+                            text={"게시"}
                             fs={"15px"}
                             fw={600}
                             lh={"20px"}
                             ta={"center"}
+                            fc={theme.color.white}
                         />
-                    </ClickBtn>
-                </ImageContents>
-                <Bottom bc={theme.color.gray}>
-                    <Text
-                        text={"게시"}
-                        fs={"15px"}
-                        fw={600}
-                        lh={"20px"}
-                        ta={"center"}
-                        fc={theme.color.white}
-                    />
-                </Bottom>
-            </Box>
-        </Wrapper>
+                    </Bottom>
+                </Box>
+            </Wrapper>
+            {modal && (
+                <ModifyPost
+                    fileList={fileList}
+                    closeFunc={handleModalClose}
+                    handleUrl={handleUrl}
+                />
+            )}
+        </>
     );
 };
