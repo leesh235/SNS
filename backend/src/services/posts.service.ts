@@ -1,6 +1,5 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
-import { getImagePath } from "../utils/fileFunction";
 import { PostMode } from "../config/enums";
 
 const postRepository = dataSource.getRepository(Post);
@@ -14,19 +13,19 @@ export const findAll = async (req: any, mode?: PostMode) => {
         let where = {};
         let relations = {};
         if (mode === PostMode.MY) {
-            relations = { user: true, likes: true };
+            relations = { user: true, likes: true, fileUrl: true };
             where = { deletedAt: undefined, user: { email } };
         } else if (mode === PostMode.LIKE) {
-            relations = { user: true, likes: true };
+            relations = { user: true, likes: true, fileUrl: true };
             where = { deletedAt: undefined, likes: { userId: email } };
         } else if (mode === PostMode.BOOKMARK) {
-            relations = { user: true, likes: true };
+            relations = { user: true, likes: true, fileUrl: true };
             where = { deletedAt: undefined };
         } else if (mode === PostMode.FRIENDS) {
-            relations = { user: true, likes: true };
+            relations = { user: true, likes: true, fileUrl: true };
             where = { deletedAt: undefined };
         } else {
-            relations = { user: true, likes: true };
+            relations = { user: true, likes: true, fileUrl: true };
             where = { deletedAt: undefined };
         }
 
@@ -37,7 +36,6 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 id: true,
                 contents: true,
                 createdAt: true,
-                files: true,
                 user: {
                     email: true,
                     nickName: true,
@@ -46,21 +44,32 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 likes: {
                     status: true,
                 },
+                fileUrl: {
+                    fileUrl: true,
+                },
             },
             order: {
                 createdAt: "desc",
             },
         });
+
         let result: any[] = [];
-        for (let i = 0; i < allList.length; i++) {
+
+        allList.forEach((val, idx) => {
             const {
                 id,
                 contents,
                 createdAt,
-                files,
                 user: { email, nickName, profileImage },
-            } = allList[i];
-            let images: string[] = getImagePath(email, files);
+                likes: { status },
+                fileUrl,
+            } = val;
+
+            let images: string[] = [];
+            fileUrl.forEach((img, cnt) => {
+                images.push(img.fileUrl);
+            });
+
             result.push({
                 postId: id,
                 userId: email,
@@ -69,42 +78,10 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 contents,
                 createdAt,
                 images,
+                likeStatus: status,
             });
-        }
-        return result;
-    } catch (error) {
-        return [];
-    }
-};
-
-export const findFriendsAll = async (req: any) => {
-    try {
-        const allList = await postRepository.find({
-            relations: {
-                user: true,
-            },
-            where: { deletedAt: undefined },
-            select: {
-                contents: true,
-                createdAt: true,
-                files: true,
-                user: {
-                    email: true,
-                    nickName: true,
-                },
-            },
         });
-        let result: any[] = [];
-        for (let i = 0; i < allList.length; i++) {
-            const {
-                contents,
-                createdAt,
-                files,
-                user: { email, nickName },
-            } = allList[i];
-            let images: string[] = getImagePath(email, files);
-            result.push({ writer: nickName, contents, createdAt, images });
-        }
+
         return result;
     } catch (error) {
         return [];

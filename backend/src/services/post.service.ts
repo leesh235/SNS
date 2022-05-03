@@ -1,16 +1,17 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
 import { Likes } from "../entity/Likes.entity";
-import { getImagePath } from "../utils/fileFunction";
+import { FileUrl } from "../entity/file_url.entity";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
+const fileRepository = dataSource.getRepository(FileUrl);
 
 export const find = async (id: number) => {
     try {
         const post = await postRepository.findOne({
             where: { id },
-            relations: { user: true },
+            relations: { user: true, fileUrl: true },
             select: {
                 id: true,
                 contents: true,
@@ -21,10 +22,18 @@ export const find = async (id: number) => {
                     nickName: true,
                     profileImage: true,
                 },
+                fileUrl: {
+                    id: true,
+                    fileUrl: true,
+                },
             },
         });
+        console.log(post);
         if (post) {
-            let images: string[] = getImagePath(post?.user?.email, post?.files);
+            let images: any[] = [];
+            post.fileUrl.forEach((val, idx) => {
+                images.push({ id: val.id, url: val.fileUrl });
+            });
             let result = {
                 id: post.id,
                 contents: post.contents,
@@ -33,6 +42,7 @@ export const find = async (id: number) => {
                 profileImage: post.user.profileImage,
                 images,
             };
+            console.log(result);
             return result;
         } else {
             return null;
@@ -53,7 +63,35 @@ export const save = async (req: any) => {
         post.files = date;
         post.user = email;
 
-        await postRepository.save(post);
+        const result = await postRepository.save(post);
+
+        await dataSource
+            .createQueryBuilder()
+            .update(FileUrl)
+            .set({ post: { id: result.id } })
+            .where({ user: { email }, date })
+            .execute();
+
+        return result.id;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const modify = async (req: any) => {
+    try {
+        const {
+            user: { email },
+            body: { postId, contents },
+        } = req;
+
+        await dataSource
+            .createQueryBuilder()
+            .update(Post)
+            .set({ contents })
+            .where({ user: { email }, id: postId })
+            .execute();
+
         return true;
     } catch (error) {
         return false;
@@ -87,6 +125,34 @@ export const setLike = async (req: any) => {
         } else {
             await likesRepository.save(likes);
         }
+        return true;
+    } catch (error) {
+        return false;
+    }
+};
+
+export const save_file = async (req: any, fileName: string) => {
+    try {
+        const {
+            user: { email },
+            body: { date },
+        } = req;
+
+        const files = new FileUrl();
+        files.fileUrl = `${process.env.BE_URL}/${email}/${date}/${fileName}`;
+        files.user = email;
+        files.date = date;
+
+        const result = await fileRepository.save(files);
+
+        return result.id;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const modify_file = async (req: any, postId: number) => {
+    try {
         return true;
     } catch (error) {
         return false;

@@ -2,12 +2,13 @@ import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
 import { Post } from "../entity/Post.entity";
 import { Friends } from "../entity/Friends.entity";
-import { getFilePath, getAllImage, getTermsImage } from "../utils/fileFunction";
+import { FileUrl } from "../entity/file_url.entity";
+import { getFilePath } from "../utils/fileFunction";
 import { IsNull, Like, Not } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
 const friendsRepository = dataSource.getRepository(Friends);
-const postRepository = dataSource.getRepository(Post);
+const fileRepository = dataSource.getRepository(FileUrl);
 
 export const save_image = async (req: any) => {
     try {
@@ -95,20 +96,31 @@ export const getAllImages = async (req: any) => {
         const {
             user: { email },
         } = req;
-        const posts = await postRepository.find({
-            relations: { user: true },
+
+        const images = await fileRepository.find({
+            relations: { post: true, user: true },
             where: {
-                user: { email },
-                deletedAt: undefined,
-                files: Not(IsNull()),
+                user: {
+                    email: email,
+                },
             },
-            select: { id: true, files: true, user: {} },
-            order: {
-                createdAt: "desc",
+            select: {
+                post: {
+                    id: true,
+                },
+                user: {},
+                id: true,
+                fileUrl: true,
             },
         });
 
-        return getAllImage(email, posts);
+        let result: any[] = [];
+        images.forEach((val, idx) => {
+            const { id, post, fileUrl } = val;
+            result.push({ id, postId: post.id, url: fileUrl });
+        });
+
+        return result;
     } catch (error) {
         return [];
     }
@@ -119,19 +131,31 @@ export const getLatestImage = async (req: any) => {
         const {
             user: { email },
         } = req;
-        const posts = await postRepository.find({
-            relations: { user: true },
+
+        const images = await fileRepository.find({
+            relations: { post: true, user: true },
             where: {
-                user: { email },
-                deletedAt: undefined,
-                files: Not(IsNull()),
+                user: {
+                    email: email,
+                },
             },
-            select: { id: true, files: true, user: {} },
-            order: {
-                createdAt: "desc",
+            select: {
+                post: {
+                    id: true,
+                },
+                user: {},
+                id: true,
+                fileUrl: true,
             },
         });
-        return getTermsImage(email, posts);
+
+        let result: any[] = [];
+        images.forEach((val, idx) => {
+            const { id, post, fileUrl } = val;
+            result.push({ id, postId: post.id, url: fileUrl });
+        });
+
+        return result;
     } catch (error) {
         return [];
     }
