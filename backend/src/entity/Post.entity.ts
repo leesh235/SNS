@@ -12,6 +12,7 @@ import {
 import { Comment } from "./comment.entity";
 import { User } from "./User.entity";
 import { Likes } from "./Likes.entity";
+import { FileUrl } from "./file_url.entity";
 
 @Entity("post")
 export class Post {
@@ -38,6 +39,9 @@ export class Post {
 
     @OneToMany((type) => Likes, (likes) => likes.post)
     likes: Likes;
+
+    @OneToMany((type) => FileUrl, (fileUrl) => fileUrl.post)
+    fileUrl: FileUrl[];
 
     @ManyToOne((type) => User, (user) => user.post, { onDelete: "CASCADE" })
     @JoinColumn({ name: "writer", referencedColumnName: "email" })

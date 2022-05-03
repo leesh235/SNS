@@ -14,6 +14,7 @@ import { Friends } from "./Friends.entity";
 import { Post } from "./Post.entity";
 import { Comment } from "./comment.entity";
 import { Likes } from "./Likes.entity";
+import { FileUrl } from "./file_url.entity";
 
 @Entity("user")
 export class User {
@@ -61,11 +62,14 @@ export class User {
     userInfo: UserInfo;
 
     @OneToMany((type) => Post, (post) => post.user)
-    post: Post;
+    post: Post[];
 
     @OneToMany((type) => Post, (comment) => comment.user)
-    comment: Comment;
+    comment: Comment[];
 
     @OneToMany((type) => Likes, (likes) => likes.user)
-    likes: Likes;
+    likes: Likes[];
+
+    @OneToMany((type) => FileUrl, (fileUrl) => fileUrl.user)
+    fileUrl: FileUrl[];
 }
