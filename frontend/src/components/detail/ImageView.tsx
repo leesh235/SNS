@@ -63,7 +63,7 @@ export const ImageView = () => {
                 <LogoIcon />
             </Top>
             <Contents>
-                <Image src={data?.images[0]} />
+                <Image src={data?.images[0].url} />
             </Contents>
         </Wrapper>
     );

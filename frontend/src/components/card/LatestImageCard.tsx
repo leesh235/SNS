@@ -89,10 +89,12 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
                     {data?.map((val: any, idx: number) => {
                         return (
                             <Link
-                                to={{ pathname: `${routes.detail}${val.id}` }}
-                                key={idx}
+                                to={{
+                                    pathname: `${routes.detail}${val.postId}`,
+                                }}
+                                key={val.id}
                             >
-                                <Image src={val.image} />
+                                <Image src={val.url} />
                             </Link>
                         );
                     })}

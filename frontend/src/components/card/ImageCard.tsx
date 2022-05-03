@@ -139,10 +139,12 @@ export const ImageCard = () => {
                     {data?.map((val: any, idx: number) => {
                         return (
                             <Link
-                                key={idx}
-                                to={{ pathname: `${routes.detail}${val.id}` }}
+                                key={val.id}
+                                to={{
+                                    pathname: `${routes.detail}${val.postId}`,
+                                }}
                             >
-                                <Image src={val.image} />
+                                <Image src={val.url} />
                             </Link>
                         );
                     })}
