@@ -1,10 +1,9 @@
 import styled from "../../styles/theme-components";
 import theme from "../../styles/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchInput } from "../common/input/SearchInput";
 import { IconButton } from "../common/button/IconButton";
 import { Text } from "../common/Text";
-import { BagicUser } from "../../assets/icon/BagicUser";
 import { LogoIcon } from "../../assets/icon/LogoIcon";
 import { AppIcon } from "../../assets/icon/AppIcon";
 import { ArrowDIcon } from "../../assets/icon/ArrowDIcon";
@@ -13,6 +12,11 @@ import { FriendIcon } from "../../assets/icon/FriendIcon";
 import { GroubIcon } from "../../assets/icon/GroubIcon";
 import { HomeIcon } from "../../assets/icon/HomeIcon";
 import { MessageIcon } from "../../assets/icon/MessageIcon";
+import { useSelector, useDispatch } from "react-redux";
+import { setProfile } from "../../modules/action/profile";
+import { Avatar } from "../common/Image/Avatar";
+import { Link } from "react-router-dom";
+import { routes } from "../../utils/routes";
 
 const Wrapper = styled.header`
     position: fixed;
@@ -100,10 +104,13 @@ const LongIcon2 = styled.div`
         background-color: ${(props) => props.theme.color.lightGray};
     }
     cursor: pointer;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 38px auto;
     align-items: center;
-    justify-content: center;
+    > :nth-child(n) {
+        align-self: center;
+        justify-self: center;
+    }
 `;
 
 const Div = styled.div`
@@ -118,7 +125,7 @@ const ButtonWrapper = styled.div<{ color: string }>`
     border-bottom: 3px solid ${(props) => props.color};
 `;
 
-const data = [
+const list = [
     <Div>
         <HomeIcon />
     </Div>,
@@ -133,11 +140,20 @@ const data = [
 const rightData = [<AppIcon />, <MessageIcon />, <BellIcon />, <ArrowDIcon />];
 
 export const Header = () => {
+    const dispatch = useDispatch();
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.profile?.profile
+    );
+
     const [click, setClick] = useState<number>(0);
 
     const handleOnClick = ({ id }: { id: number }) => {
         setClick(id);
     };
+
+    useEffect(() => {
+        dispatch(setProfile());
+    }, []);
 
     return (
         <Wrapper>
@@ -146,7 +162,7 @@ export const Header = () => {
                 <SearchInput placeholder={"Facebook 검색"} />
             </LeftWrapper>
             <CenterWrapper>
-                {data.map((val, idx) => {
+                {list.map((val, idx) => {
                     if (idx === click) {
                         return (
                             <ButtonWrapper
@@ -184,16 +200,22 @@ export const Header = () => {
                         width={"auto"}
                     />
                 </LongIcon>
-                <LongIcon2>
-                    <BagicUser />
-                    <Text
-                        text={"이성호"}
-                        fs={"15px"}
-                        fw={600}
-                        lh={"20px"}
-                        width={"auto"}
-                    />
-                </LongIcon2>
+                <Link
+                    to={{
+                        pathname: `${routes.profile}`,
+                    }}
+                >
+                    <LongIcon2>
+                        <Avatar src={data?.profileImage} />
+                        <Text
+                            text={data?.nickName}
+                            fs={"15px"}
+                            fw={600}
+                            lh={"20px"}
+                            width={"50px"}
+                        />
+                    </LongIcon2>
+                </Link>
                 {rightData.map((val, idx) => {
                     return <IconWrapper key={idx}>{val}</IconWrapper>;
                 })}
