@@ -28,11 +28,11 @@ export const find = async (id: number) => {
                 },
             },
         });
-        console.log(post);
+
         if (post) {
             let images: any[] = [];
             post.fileUrl.forEach((val, idx) => {
-                images.push({ id: val.id, url: val.fileUrl });
+                images.push(val.fileUrl);
             });
             let result = {
                 id: post.id,
