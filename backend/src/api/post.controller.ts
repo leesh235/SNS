@@ -1,5 +1,5 @@
 import express from "express";
-import { find, save, setLike } from "../services/post.service";
+import { find, save, setLike, modify } from "../services/post.service";
 import { Post } from "../entity/Post.entity";
 import { postUpload } from "../config/multer";
 import { fail, success, exist } from "../config/message";
@@ -36,9 +36,13 @@ router.post(routes.post.write, postUpload.array("images"), async (req, res) => {
 });
 
 //게시글 수정
-router.patch(routes.post.modify, async (req, res) => {
+router.put(routes.post.modify, postUpload.array("images"), async (req, res) => {
     try {
-        res.status(200).send({ message: `` });
+        if (await modify(req)) {
+            res.status(200).send({ message: success.SAVE_POST });
+        } else {
+            res.status(404).send({ message: fail.SAVE_POST });
+        }
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

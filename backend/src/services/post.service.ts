@@ -2,6 +2,8 @@ import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
 import { Likes } from "../entity/Likes.entity";
 import { FileUrl } from "../entity/file_url.entity";
+import { deleteFile } from "../utils/fileFunction";
+import { In, IsNull } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
@@ -42,7 +44,7 @@ export const find = async (id: number) => {
                 profileImage: post.user.profileImage,
                 images,
             };
-            console.log(result);
+
             return result;
         } else {
             return null;
@@ -82,18 +84,31 @@ export const modify = async (req: any) => {
     try {
         const {
             user: { email },
-            body: { postId, contents },
+            body: { postId, contents, urls, date },
         } = req;
+        const id = JSON.parse(postId);
+        const images = JSON.parse(urls);
+
+        await postRepository.update({ id }, { contents });
+        deleteFile(req);
+
+        if (images.length !== 0) {
+            await fileRepository.delete({
+                user: { email },
+                fileUrl: In(images),
+            });
+        }
 
         await dataSource
             .createQueryBuilder()
-            .update(Post)
-            .set({ contents })
-            .where({ user: { email }, id: postId })
+            .update(FileUrl)
+            .set({ post: { id } })
+            .where({ user: { email }, date, post: { id: IsNull() } })
             .execute();
 
         return true;
     } catch (error) {
+        console.log(error);
         return false;
     }
 };
@@ -148,13 +163,5 @@ export const save_file = async (req: any, fileName: string) => {
         return result.id;
     } catch (error) {
         return null;
-    }
-};
-
-export const modify_file = async (req: any, postId: number) => {
-    try {
-        return true;
-    } catch (error) {
-        return false;
     }
 };

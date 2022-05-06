@@ -36,6 +36,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 id: true,
                 contents: true,
                 createdAt: true,
+                files: true,
                 user: {
                     email: true,
                     nickName: true,
@@ -60,6 +61,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 id,
                 contents,
                 createdAt,
+                files,
                 user: { email, nickName, profileImage },
                 likes: { status },
                 fileUrl,
@@ -78,6 +80,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 contents,
                 createdAt,
                 images,
+                files,
                 likeStatus: status,
             });
         });
