@@ -1,5 +1,5 @@
 export interface GetPost {
-    postId: string;
+    postId: number;
 }
 
 export interface WritePost {

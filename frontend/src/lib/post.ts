@@ -18,8 +18,8 @@ export const writePostFunc = async (formData: any) => {
     return res.data;
 };
 
-export const modifyPostFunc = async (formData: ModifyPost) => {
-    const res = await backend.post(api.post.modify, { ...formData });
+export const modifyPostFunc = async (formData: any) => {
+    const res = await backend.put(api.post.modify, formData);
     return res.data;
 };
 

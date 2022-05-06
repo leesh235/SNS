@@ -5,10 +5,14 @@ import {
     POSTDETAIL,
     POSTDETAIL_SUCCESS,
     POSTDETAIL_ERROR,
+    MODIFYPOST,
+    MODIFYPOST_SUCCESS,
+    MODIFYPOST_ERROR,
 } from "../action/post";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
 const initialState = {
+    modifyPost: reducerUtils.initial(null),
     writePost: reducerUtils.initial(null),
     postDetail: reducerUtils.initial(null),
 };
@@ -26,6 +30,11 @@ const reducer = (state = initialState, action: any) => {
                 ...state,
                 postDetail: reducerUtils.loading(state.postDetail.data),
             };
+        case MODIFYPOST:
+            return {
+                ...state,
+                postDetail: reducerUtils.loading(state.modifyPost.data),
+            };
         case WRITEPOST_SUCCESS:
             return {
                 ...state,
@@ -36,12 +45,22 @@ const reducer = (state = initialState, action: any) => {
                 ...state,
                 postDetail: reducerUtils.success(data),
             };
+        case MODIFYPOST_SUCCESS:
+            return {
+                ...state,
+                postDetail: reducerUtils.success(data),
+            };
         case WRITEPOST_ERROR:
             return {
                 ...state,
                 writePost: reducerUtils.error(data),
             };
         case POSTDETAIL_ERROR:
+            return {
+                ...state,
+                postDetail: reducerUtils.error(data),
+            };
+        case MODIFYPOST_ERROR:
             return {
                 ...state,
                 postDetail: reducerUtils.error(data),
