@@ -50,33 +50,45 @@ const Menu = styled.li`
     }
 `;
 
+const AvatarIcon = styled.img`
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    margin: 12px 18px 12px 0px;
+    cursor: pointer;
+`;
+
 const Icon = styled.div`
     width: 36px;
     height: 36px;
-    background-color: blueviolet;
     border-radius: 18px;
     margin: 12px 18px 12px 0px;
+    background-color: gray;
+    cursor: pointer;
 `;
 
 //이름, 저장됨: 새 페이지 / 더보기: 리스트 추가 / 나머지 컴포넌트 교체
-const data = ["친구찾기", "시작하기", "최신", "즐겨찾기", "저장됨", "더보기"];
-const url = [
-    routes.friends,
-    routes.welcome,
-    "최신",
-    "즐겨찾기",
-    "저장됨",
-    "더보기",
+const menuList = [
+    { name: "친구찾기", route: routes.friends },
+    { name: "시작하기", route: routes.welcome },
+    { name: "최신", route: "" },
+    { name: "즐겨찾기", route: "" },
+    { name: "저장됨", route: "" },
+    { name: "더보기", route: "" },
 ];
 
 export const SideMenu = () => {
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.profile?.profile
+    );
+
     return (
         <Wrapper>
             <Link to={{ pathname: `${routes.profile}` }}>
                 <Menu>
-                    <Icon />
+                    <AvatarIcon src={data?.profileImage} />
                     <Text
-                        text={"이름"}
+                        text={data?.nickName}
                         fs={"15px"}
                         fw={500}
                         lh={"20px"}
@@ -84,18 +96,20 @@ export const SideMenu = () => {
                     />
                 </Menu>
             </Link>
-            {data.map((val, idx) => {
+            {menuList.map((val, idx) => {
                 return (
-                    <Menu key={idx}>
-                        <Icon />
-                        <Text
-                            text={val}
-                            fs={"15px"}
-                            fw={500}
-                            lh={"20px"}
-                            width={"auto"}
-                        />
-                    </Menu>
+                    <Link key={idx} to={{ pathname: `${val.route}` }}>
+                        <Menu>
+                            <Icon />
+                            <Text
+                                text={val.name}
+                                fs={"15px"}
+                                fw={500}
+                                lh={"20px"}
+                                width={"auto"}
+                            />
+                        </Menu>
+                    </Link>
                 );
             })}
         </Wrapper>

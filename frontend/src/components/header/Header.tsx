@@ -137,6 +137,8 @@ const list = [
     </Div>,
 ];
 
+const routeOpt = [routes.home, routes.friends, ""];
+
 const rightData = [<AppIcon />, <MessageIcon />, <BellIcon />, <ArrowDIcon />];
 
 export const Header = () => {
@@ -166,8 +168,8 @@ export const Header = () => {
                     if (idx === click) {
                         return (
                             <ButtonWrapper
-                                color={theme.color.seaBule}
                                 key={idx}
+                                color={theme.color.seaBule}
                                 onClick={() => {
                                     handleOnClick({ id: idx });
                                 }}
@@ -177,15 +179,20 @@ export const Header = () => {
                         );
                     } else {
                         return (
-                            <ButtonWrapper
-                                color={theme.color.white}
+                            <Link
                                 key={idx}
-                                onClick={() => {
-                                    handleOnClick({ id: idx });
-                                }}
+                                to={{ pathname: `${routeOpt[idx]}` }}
                             >
-                                <IconButton>{val}</IconButton>
-                            </ButtonWrapper>
+                                <ButtonWrapper
+                                    color={theme.color.white}
+                                    key={idx}
+                                    onClick={() => {
+                                        handleOnClick({ id: idx });
+                                    }}
+                                >
+                                    <IconButton>{val}</IconButton>
+                                </ButtonWrapper>
+                            </Link>
                         );
                     }
                 })}
