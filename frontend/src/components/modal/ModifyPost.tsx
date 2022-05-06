@@ -111,12 +111,21 @@ const Bottom = styled.div`
 
 interface Props {
     closeFunc: any;
+    deleteFunc: any;
     fileList: Array<any>;
     handleUrl: any;
 }
 
-export const ModifyPost = ({ fileList, closeFunc, handleUrl }: Props) => {
+export const ModifyPost = ({
+    fileList,
+    closeFunc,
+    handleUrl,
+    deleteFunc,
+}: Props) => {
     useEffect(() => {
+        if (fileList.length === 0) {
+            closeFunc();
+        }
         document.body.style.cssText = `
             overflow: hidden;
             padding-right: 17px;
@@ -124,7 +133,7 @@ export const ModifyPost = ({ fileList, closeFunc, handleUrl }: Props) => {
         return () => {
             document.body.style.cssText = ``;
         };
-    }, []);
+    }, [fileList]);
 
     return (
         <Wrapper>
@@ -144,7 +153,13 @@ export const ModifyPost = ({ fileList, closeFunc, handleUrl }: Props) => {
                     {fileList?.map((val, idx) => {
                         return (
                             <ImageWrapper key={idx}>
-                                <DeleteBtn>X</DeleteBtn>
+                                <DeleteBtn
+                                    onClick={() => {
+                                        deleteFunc(idx);
+                                    }}
+                                >
+                                    X
+                                </DeleteBtn>
                                 <Image src={handleUrl(val)} />
                             </ImageWrapper>
                         );

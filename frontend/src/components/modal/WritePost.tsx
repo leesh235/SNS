@@ -7,6 +7,7 @@ import { obToUrl } from "../../utils/objToUrl";
 import { setWritePost } from "../../modules/action/post";
 import { setMyPosts } from "../../modules/action/posts";
 import { ModifyPost } from "./ModifyPost";
+import { setModifyPost } from "../../modules/action/post";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -240,6 +241,7 @@ interface Props {
         createdAt: string;
         images?: Array<String>;
         profileImage?: string;
+        files?: string;
     };
 }
 
@@ -248,8 +250,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.profile?.profile
     );
-
-    const [fileList, setFileList] = useState<Array<any>>(post?.images || []);
+    const [fileList, setFileList] = useState<any[]>(post?.images || []);
     const [open, setOpen] = useState<boolean>(false);
     const [modal, setModal] = useState<boolean>(false);
 
@@ -278,6 +279,16 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         }
     };
 
+    const handleDelete = (id: number) => {
+        if (fileList !== []) {
+            setFileList(
+                fileList.filter((val, idx) => {
+                    return idx !== id;
+                })
+            );
+        }
+    };
+
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
         e
     ) => {
@@ -290,18 +301,27 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         const formData = new FormData();
         formData.append("contents", contents.value);
         if (files) {
-            formData.append("date", `${Date.now()}`);
-        }
-        for (let i = 0; i < files.length; i++) {
-            formData.append("images", files[i]);
+            if (!post?.files) {
+                formData.append("date", `${Date.now()}`);
+            } else {
+                formData.append("date", post?.files);
+            }
+            for (let i = 0; i < files.length; i++) {
+                formData.append("images", files[i]);
+            }
         }
 
-        if (post?.postId) {
-            for (let i = 0; i < fileList.length; i++) {
-                if (typeof fileList[i] === "string")
-                    formData.append("urls", fileList[i]);
-            }
-            console.log("modify: ", formData.getAll("urls"));
+        if (post?.files) {
+            let result = [];
+            result = fileList.reduce((acc, img) => {
+                if (typeof img === "string") {
+                    return acc.filter((val: any) => val !== img);
+                } else return acc;
+            }, post?.images);
+            formData.append("postId", `${post?.postId}`);
+            formData.append("urls", JSON.stringify(result));
+
+            dispatch(setModifyPost(formData));
         } else {
             dispatch(setWritePost(formData));
         }
@@ -461,6 +481,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                 <ModifyPost
                     fileList={fileList}
                     closeFunc={handleModalClose}
+                    deleteFunc={handleDelete}
                     handleUrl={handleUrl}
                 />
             )}

@@ -21,7 +21,7 @@ const Detail = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (postId) dispatch(setPostDetail({ postId: postId }));
+        if (postId) dispatch(setPostDetail({ postId: Number(postId) }));
     }, []);
 
     return (
