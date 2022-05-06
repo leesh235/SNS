@@ -13,6 +13,7 @@ export const success = {
     SAVE_INTRODUCE: "자기소개 저장 성공",
     SAVE_POST: "게시글 작성 성공",
     SAVE_LIKE: "게시글 좋아요 성공",
+    DELETE_POST: "게시글 삭제 성공",
 };
 
 export const fail = {
@@ -20,4 +21,5 @@ export const fail = {
     SAVE_INTRODUCE: "자기소개 저장 실패",
     SAVE_POST: "게시글 작성 실패",
     SAVE_LIKE: "게시글 좋아요 실패",
+    DELETE_POST: "게시글 삭제 실패",
 };

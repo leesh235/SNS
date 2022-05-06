@@ -3,7 +3,7 @@ import { Post } from "../entity/Post.entity";
 import { Likes } from "../entity/Likes.entity";
 import { FileUrl } from "../entity/file_url.entity";
 import { deleteFile } from "../utils/fileFunction";
-import { In, IsNull } from "typeorm";
+import { DeleteDateColumn, In, IsNull } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
@@ -163,5 +163,25 @@ export const save_file = async (req: any, fileName: string) => {
         return result.id;
     } catch (error) {
         return null;
+    }
+};
+
+export const delete_post = async (req: any) => {
+    try {
+        const {
+            query: { postId },
+            user: { email },
+        } = req;
+        const id = Number(postId);
+
+        await postRepository.softDelete({
+            id,
+            user: { email },
+        });
+
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
     }
 };

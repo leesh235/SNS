@@ -1,6 +1,11 @@
 import express from "express";
-import { find, save, setLike, modify } from "../services/post.service";
-import { Post } from "../entity/Post.entity";
+import {
+    find,
+    save,
+    setLike,
+    modify,
+    delete_post,
+} from "../services/post.service";
 import { postUpload } from "../config/multer";
 import { fail, success, exist } from "../config/message";
 import { routes } from "../config/route";
@@ -51,7 +56,11 @@ router.put(routes.post.modify, postUpload.array("images"), async (req, res) => {
 //게시글 삭제
 router.delete(routes.post.delete, async (req, res) => {
     try {
-        res.status(200).send({ message: `` });
+        if (await delete_post(req)) {
+            res.status(200).send({ message: success.DELETE_POST });
+        } else {
+            res.status(404).send({ message: fail.DELETE_POST });
+        }
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
