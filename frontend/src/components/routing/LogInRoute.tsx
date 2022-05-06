@@ -5,6 +5,7 @@ import Main from "../../pages/Main";
 import Start from "../../pages/Start";
 import Profile from "../../pages/Profile";
 import Detail from "../../pages/Detail";
+import Friends from "../../pages/Friends";
 
 export const LogInRoute = () => {
     return (
@@ -19,6 +20,7 @@ export const LogInRoute = () => {
                     path={`${routes.userInfo}:email`}
                     element={<Profile />}
                 />
+                <Route path={`${routes.friends}`} element={<Friends />} />
             </Routes>
         </Router>
     );
