@@ -86,13 +86,13 @@ export const modify = async (req: any) => {
             user: { email },
             body: { postId, contents, urls, date },
         } = req;
-        const id = JSON.parse(postId);
+        const id = Number(postId);
         const images = JSON.parse(urls);
 
         await postRepository.update({ id }, { contents });
-        deleteFile(req);
 
         if (images.length !== 0) {
+            deleteFile(req);
             await fileRepository.delete({
                 user: { email },
                 fileUrl: In(images),

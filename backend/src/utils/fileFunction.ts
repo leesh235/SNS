@@ -33,7 +33,7 @@ export const getFilePath = (req: any) => {
 export const mikdirPosts = (req: any) => {
     const { email } = req.user;
     const { date } = req.body;
-    console.log(date);
+
     const userDir = `${process.env.POST_PATH}/${email}`;
     const postDir = `${process.env.POST_PATH}/${email}/${date}`;
     if (!fs.existsSync(userDir)) {
