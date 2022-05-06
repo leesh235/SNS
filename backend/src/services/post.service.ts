@@ -3,7 +3,7 @@ import { Post } from "../entity/Post.entity";
 import { Likes } from "../entity/Likes.entity";
 import { FileUrl } from "../entity/file_url.entity";
 import { deleteFile } from "../utils/fileFunction";
-import { DeleteDateColumn, In, IsNull } from "typeorm";
+import { In, IsNull } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
@@ -12,7 +12,7 @@ const fileRepository = dataSource.getRepository(FileUrl);
 export const find = async (id: number) => {
     try {
         const post = await postRepository.findOne({
-            where: { id },
+            where: { id, deletedAt: undefined },
             relations: { user: true, fileUrl: true },
             select: {
                 id: true,
@@ -34,7 +34,7 @@ export const find = async (id: number) => {
         if (post) {
             let images: any[] = [];
             post.fileUrl.forEach((val, idx) => {
-                images.push(val.fileUrl);
+                images.push({ id: val.id, url: val.fileUrl });
             });
             let result = {
                 id: post.id,
@@ -50,6 +50,7 @@ export const find = async (id: number) => {
             return null;
         }
     } catch (error) {
+        console.log(error);
         return null;
     }
 };
