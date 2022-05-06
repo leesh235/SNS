@@ -98,11 +98,9 @@ export const getAllImages = async (req: any) => {
         } = req;
 
         const images = await fileRepository.find({
-            relations: { post: true, user: true },
+            relations: { post: true },
             where: {
-                user: {
-                    email: email,
-                },
+                post: { deletedAt: undefined, user: { email } },
             },
             select: {
                 post: {
@@ -122,6 +120,7 @@ export const getAllImages = async (req: any) => {
 
         return result;
     } catch (error) {
+        console.log(error);
         return [];
     }
 };
@@ -133,19 +132,16 @@ export const getLatestImage = async (req: any) => {
         } = req;
 
         const images = await fileRepository.find({
-            relations: { post: true, user: true },
+            relations: { post: true },
             where: {
-                user: {
-                    email: email,
-                },
+                post: { deletedAt: undefined, user: { email } },
             },
             select: {
+                id: true,
+                fileUrl: true,
                 post: {
                     id: true,
                 },
-                user: {},
-                id: true,
-                fileUrl: true,
             },
         });
 
@@ -157,6 +153,7 @@ export const getLatestImage = async (req: any) => {
 
         return result;
     } catch (error) {
+        console.log(error);
         return [];
     }
 };
