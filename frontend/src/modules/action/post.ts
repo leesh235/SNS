@@ -1,4 +1,4 @@
-import { GetPost } from "../../types/post";
+import { GetPost, DeletePost } from "../../types/post";
 
 export const WRITEPOST = "post/WRITEPOST";
 export const WRITEPOST_SUCCESS = "post/WRITEPOST_SUCCESS";
@@ -11,6 +11,10 @@ export const POSTDETAIL_ERROR = "post/POSTDETAIL_ERROR";
 export const MODIFYPOST = "post/MODIFYPOST";
 export const MODIFYPOST_SUCCESS = "post/MODIFYPOST_SUCCESS";
 export const MODIFYPOST_ERROR = "post/MODIFYPOST_ERROR";
+
+export const DELETEPOST = "post/DELETEPOST";
+export const DELETEPOST_SUCCESS = "post/DELETEPOST_SUCCESS";
+export const DELETEPOST_ERROR = "post/DELETEPOST_ERROR";
 
 export const setWritePost = (data: any) => {
     return {
@@ -29,6 +33,13 @@ export const setPostDetail = (data: GetPost) => {
 export const setModifyPost = (data: any) => {
     return {
         type: MODIFYPOST,
+        data,
+    };
+};
+
+export const setDeletePost = (data: DeletePost) => {
+    return {
+        type: DELETEPOST,
         data,
     };
 };

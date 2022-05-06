@@ -8,6 +8,8 @@ import { MoreIcon } from "../../assets/icon/MoreIcon";
 import { WritePost } from "../modal/WritePost";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
+import { useDispatch } from "react-redux";
+import { setDeletePost } from "../../modules/action/post";
 
 const Wrapper = styled.article`
     width: 100%;
@@ -103,7 +105,7 @@ const Hover = styled.div`
 `;
 
 interface Props {
-    post?: {
+    post: {
         postId: number;
         userId: string;
         writer: string;
@@ -115,6 +117,7 @@ interface Props {
 }
 
 export const PostCard = ({ post }: Props) => {
+    const dispatch = useDispatch();
     const [openBtn, setOpenBtn] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -136,7 +139,13 @@ export const PostCard = ({ post }: Props) => {
     };
 
     const handleDeleteBtn = () => {
-        console.log("delete");
+        if (
+            window.confirm(
+                "휴지통으로 보내시겠습니까?(30일 후에 영구 삭제됩니다.)"
+            )
+        ) {
+            dispatch(setDeletePost({ postId: post?.postId }));
+        }
     };
 
     return (

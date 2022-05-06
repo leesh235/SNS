@@ -1,12 +1,6 @@
 import { backend } from "./axios";
 import { api } from "../utils/routes";
-import {
-    GetPost,
-    WritePost,
-    ModifyPost,
-    DeletePost,
-    Like,
-} from "../types/post";
+import { GetPost, Like, DeletePost } from "../types/post";
 
 export const getPostFunc = async (formData: GetPost) => {
     const res = await backend.get(api.post.get, { params: formData });
@@ -24,7 +18,7 @@ export const modifyPostFunc = async (formData: any) => {
 };
 
 export const deletePostFunc = async (formData: DeletePost) => {
-    const res = await backend.post(api.post.delete, { ...formData });
+    const res = await backend.delete(api.post.delete, { params: formData });
     return res.data;
 };
 
