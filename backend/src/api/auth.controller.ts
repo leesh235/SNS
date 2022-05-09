@@ -45,7 +45,7 @@ router.post(routes.auth.join, async (req, res) => {
             res.status(409).send({ message: `${exist.EXIST_ACCOUNT}` });
         }
 
-        res.status(200).send({ accessToken: save(user) });
+        res.status(200).send({ accessToken: await save(user) });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

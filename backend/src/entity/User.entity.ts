@@ -40,13 +40,13 @@ export class User {
     @Column({ type: "varchar", nullable: false })
     birth!: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     introduction: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     coverImage: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     profileImage: string;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })

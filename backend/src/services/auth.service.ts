@@ -22,10 +22,11 @@ export const existUser = async (user: User) => {
 
 export const save = async (user: User) => {
     try {
-        await userRepository.save(user);
-        const accessToken = generateAccessToken(user.email);
+        const result = await userRepository.save(user);
+        const accessToken = generateAccessToken(result.email);
         return accessToken;
     } catch (error) {
+        console.log(error);
         return false;
     }
 };
