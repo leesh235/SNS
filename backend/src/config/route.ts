@@ -5,6 +5,7 @@ export const baseRoutes = {
     posts: "/api/posts",
     comment: "/api/comment",
     chatting: "/api/chatting",
+    search: "/api/search",
 };
 
 export const routes = {
@@ -44,6 +45,12 @@ export const routes = {
         modify: "/modify",
         delete: "/delete",
         like: "/like",
+    },
+    search: {
+        all: "/all",
+        post: "/post",
+        people: "/people",
+        friend: "/friend",
     },
 };
 
