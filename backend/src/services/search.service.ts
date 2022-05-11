@@ -11,19 +11,20 @@ export const find = async (word: any, type: "all" | "post" | "people") => {
         const post = await postRepository.find({
             relations: { user: true },
             where: [
-                { contents: Like(`%${word}%`) },
-                { user: { nickName: Like(`%${word}%`) } },
+                { deletedAt: undefined, contents: Like(`%${word}%`) },
+                { deletedAt: undefined, user: { nickName: Like(`%${word}%`) } },
             ],
             select: {
-                user: { nickName: true, profileImage: true },
+                id: true,
+                user: { email: true, nickName: true, profileImage: true },
                 contents: true,
                 createdAt: true,
             },
         });
 
         const people = await userRepository.find({
-            where: { nickName: Like(`%${word}%`) },
-            select: { nickName: true, profileImage: true },
+            where: { deletedAt: undefined, nickName: Like(`%${word}%`) },
+            select: { email: true, nickName: true, profileImage: true },
         });
 
         let result = {};
