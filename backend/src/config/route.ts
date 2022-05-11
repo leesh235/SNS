@@ -6,6 +6,7 @@ export const baseRoutes = {
     comment: "/api/comment",
     chatting: "/api/chatting",
     search: "/api/search",
+    friends: "/api/friends",
 };
 
 export const routes = {

@@ -10,6 +10,7 @@ import posts from "../api/posts.controller";
 import comment from "../api/comment.controller";
 import chatting from "../api/chatting.controller";
 import search from "../api/search.controller";
+import friends from "../api/friend.controller";
 //middleware
 import { corsOptions } from "../config/cors";
 import "../config/passport";
@@ -31,6 +32,7 @@ export default async ({ app }: { app: express.Application }) => {
     app.use(`${baseRoutes.comment}`, jwt_authenticate, comment);
     app.use(`${baseRoutes.chatting}`, jwt_authenticate, chatting);
     app.use(`${baseRoutes.search}`, jwt_authenticate, search);
+    app.use(`${baseRoutes.friends}`, jwt_authenticate, friends);
 
     return app;
 };
