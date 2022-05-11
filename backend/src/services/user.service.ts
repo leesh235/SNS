@@ -1,13 +1,10 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
-import { Post } from "../entity/Post.entity";
-import { Friends } from "../entity/Friends.entity";
 import { FileUrl } from "../entity/file_url.entity";
 import { getFilePath } from "../utils/fileFunction";
-import { IsNull, Like, Not } from "typeorm";
+import { Like } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
-const friendsRepository = dataSource.getRepository(Friends);
 const fileRepository = dataSource.getRepository(FileUrl);
 
 export const save_image = async (req: any) => {
@@ -154,60 +151,6 @@ export const getLatestImage = async (req: any) => {
         return result;
     } catch (error) {
         console.log(error);
-        return [];
-    }
-};
-
-export const setFriend = async (req: any, mode: "req" | "res") => {
-    try {
-        const {
-            body,
-            user: { email },
-        } = req;
-        const friends = new Friends();
-        friends.userOne = email;
-        friends.userTwo = body.email;
-
-        if (mode === "req") {
-            await friendsRepository.save(friends);
-        } else {
-            await dataSource
-                .createQueryBuilder()
-                .update(Friends)
-                .set({ status: true })
-                .where({ id: body.id })
-                .execute();
-        }
-        return true;
-    } catch (error) {
-        return false;
-    }
-};
-
-export const getFriendList = async (req: any, mode?: "await") => {
-    try {
-        const {
-            user: { email },
-        } = req;
-
-        let status = mode === "await" ? false : true;
-
-        const friends = await friendsRepository.find({
-            where: [
-                { userOne: email, status },
-                { userTwo: email, status },
-            ],
-        });
-        let result = [];
-        for (let i = 0; i < friends.length; i++) {
-            result.push(
-                friends[i].userOne === email
-                    ? friends[i].userTwo
-                    : friends[i].userOne
-            );
-        }
-        return result;
-    } catch (error) {
         return [];
     }
 };

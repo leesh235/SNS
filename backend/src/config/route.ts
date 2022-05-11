@@ -20,9 +20,6 @@ export const routes = {
         friends: "/friends",
         all_image: "/all_image",
         latest_image: "/latest_image",
-        req_friend: "/send_friend",
-        res_friend: "/take_friend",
-        await_friend: "/await_friend",
         people: "/people",
     },
     post: {
@@ -51,6 +48,13 @@ export const routes = {
         post: "/post",
         people: "/people",
         friend: "/friend",
+    },
+    friend: {
+        request: "/request",
+        response: "/response",
+        request_list: "/request_list",
+        response_list: "/response_list",
+        friend_list: "/friend_list",
     },
 };
 

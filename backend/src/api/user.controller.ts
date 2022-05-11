@@ -7,7 +7,6 @@ import {
     save_introduce,
     getUserImage,
     getLatestImage,
-    getFriendList,
     getPeople,
     getAllImages,
 } from "../services/user.service";
@@ -66,33 +65,6 @@ router.get(routes.user.all_image, async (req, res) => {
 router.get(routes.user.latest_image, async (req, res) => {
     try {
         res.status(200).send(await getLatestImage(req));
-    } catch (error) {
-        res.status(500).send({ message: `${error}` });
-    }
-});
-
-//친구 목록
-router.get(routes.user.friends, async (req, res) => {
-    try {
-        res.status(200).send(await getFriendList(req));
-    } catch (error) {
-        res.status(500).send({ message: `${error}` });
-    }
-});
-
-//친구 요청
-router.post(routes.user.req_friend, async (req, res) => {
-    try {
-        res.status(200).send();
-    } catch (error) {
-        res.status(500).send({ message: `${error}` });
-    }
-});
-
-//친구 요청 리스트
-router.get(routes.user.await_friend, async (req, res) => {
-    try {
-        res.status(200).send(await getFriendList(req, "await"));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
