@@ -20,6 +20,7 @@ export const findAll = async (req: any) => {
                     email: true,
                     nickName: true,
                 },
+                post: {},
             },
             order: {
                 createdAt: "desc",
@@ -42,7 +43,7 @@ export const save = async (req: any) => {
 
         const comment = new Comment();
         comment.user = email;
-        comment.post.id = Number(postId);
+        comment.post = postId;
         comment.contents = contents;
 
         const result = await commentRepository.save(comment);
@@ -62,7 +63,7 @@ export const modify = async (req: any) => {
         } = req;
 
         const result = await commentRepository.update(
-            { id: Number(postId) },
+            { id: postId },
             { contents }
         );
         console.log(result);
@@ -80,7 +81,7 @@ export const delete_comment = async (req: any) => {
             body: { postId },
         } = req;
         const result = await commentRepository.softDelete({
-            id: Number(postId),
+            id: postId,
             user: { email },
         });
         console.log(result);
