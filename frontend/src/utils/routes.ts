@@ -59,5 +59,6 @@ export const api = {
         req_list: "/friends/request_list",
         res_list: "/friends/response_list",
         friends_list: "/friends/friend_list",
+        refuse: "/friends/refuse",
     },
 };

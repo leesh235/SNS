@@ -12,6 +12,11 @@ export const responseFriend = async (formData: any) => {
     return res.data;
 };
 
+export const refuseFriend = async (formData: any) => {
+    const res = await backend.post(api.friends.refuse, formData);
+    return res.data;
+};
+
 export const requestFriendList = async (formData: any) => {
     const res = await backend.get(api.friends.req_list, { params: formData });
     return res.data;

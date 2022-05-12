@@ -6,6 +6,10 @@ export const RESPONSE = "friends/RESPONSE";
 export const RESPONSE_SUCCESS = "friends/RESPONSE_SUCCESS";
 export const RESPONSE_ERROR = "friends/RESPONSE_ERROR";
 
+export const REFUSE = "friends/REFUSE";
+export const REFUSE_SUCCESS = "friends/REFUSE_SUCCESS";
+export const REFUSE_ERROR = "friends/REFUSE_ERROR";
+
 export const REQUESTLIST = "friends/REQUESTLIST";
 export const REQUESTLIST_SUCCESS = "friends/REQUESTLIST_SUCCESS";
 export const REQUESTLIST_ERROR = "friends/REQUESTLIST_ERROR";
@@ -32,6 +36,13 @@ export const setResponse = (data: any) => {
     };
 };
 
+export const setRefuse = (data: any) => {
+    return {
+        type: REFUSE,
+        data,
+    };
+};
+
 export const setRequestList = () => {
     return {
         type: REQUESTLIST,
@@ -44,9 +55,8 @@ export const setResponseList = () => {
     };
 };
 
-export const setFriendList = (data: any) => {
+export const setFriendList = () => {
     return {
         type: FRIENDSLIST,
-        data,
     };
 };

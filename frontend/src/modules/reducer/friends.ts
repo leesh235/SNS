@@ -14,6 +14,9 @@ import {
     FRIENDSLIST,
     FRIENDSLIST_SUCCESS,
     FRIENDSLIST_ERROR,
+    REFUSE,
+    REFUSE_SUCCESS,
+    REFUSE_ERROR,
 } from "../action/friends";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
@@ -23,6 +26,7 @@ const initialState = {
     req_list: reducerUtils.initial(null),
     res_list: reducerUtils.initial(null),
     friend_list: reducerUtils.initial(null),
+    refuse: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -36,6 +40,10 @@ const reducer = (state = initialState, action: any) => {
         case RESPONSE_SUCCESS:
         case RESPONSE_ERROR:
             return handleAsyncReducer(RESPONSE, "res", true)(state, action);
+        case REFUSE:
+        case REFUSE_SUCCESS:
+        case REFUSE_ERROR:
+            return handleAsyncReducer(REFUSE, "refuse", true)(state, action);
         case REQUESTLIST:
         case REQUESTLIST_SUCCESS:
         case REQUESTLIST_ERROR:
