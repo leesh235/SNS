@@ -65,7 +65,7 @@ router.get(routes.friend.friend_list, async (req, res) => {
 });
 
 //친구 home 목록
-router.get(routes.friend.simple, async (req, res) => {
+router.get(routes.friend.all, async (req, res) => {
     try {
         res.status(200).send(await findSimple(req));
     } catch (error) {

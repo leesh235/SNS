@@ -119,30 +119,32 @@ export const findSimple = async (req: any) => {
             relations: {
                 res_user: true,
             },
-            take: 5,
             where: { status: false, res_user: { email } },
             select: {
                 id: true,
+                createdAt: true,
                 res_user: { email: true, nickName: true, profileImage: true },
             },
             order: {
                 createdAt: "desc",
             },
+            take: 4,
         });
 
         const res_list = await friendsRepository.find({
             relations: {
                 req_user: true,
             },
-            take: 5,
             where: { status: false, req_user: { email } },
             select: {
                 id: true,
+                createdAt: true,
                 req_user: { email: true, nickName: true, profileImage: true },
             },
             order: {
                 createdAt: "desc",
             },
+            take: 4,
         });
 
         const req_frined = await friendsRepository.find({
@@ -152,11 +154,13 @@ export const findSimple = async (req: any) => {
             where: { status: true, res_user: { email } },
             select: {
                 id: true,
+                updatedAt: true,
                 res_user: { email: true, nickName: true, profileImage: true },
             },
             order: {
                 updatedAt: "desc",
             },
+            take: 2,
         });
 
         const res_frined = await friendsRepository.find({
@@ -166,26 +170,29 @@ export const findSimple = async (req: any) => {
             where: { status: true, req_user: { email } },
             select: {
                 id: true,
+                updatedAt: true,
                 req_user: { email: true, nickName: true, profileImage: true },
             },
             order: {
                 updatedAt: "desc",
             },
+            take: 2,
         });
 
-        let result: any[] = [];
+        let result;
 
-        result.push({
+        result = {
             request: modeFilter(req_list, "res_user"),
             response: modeFilter(res_list, "req_user"),
             friends: modeFilter(req_frined, "res_user").concat(
                 modeFilter(res_frined, "req_user")
             ),
-        });
-
+        };
+        console.log(result);
         return result;
     } catch (error) {
-        return [];
+        console.log(error);
+        return {};
     }
 };
 

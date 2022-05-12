@@ -140,6 +140,7 @@ export const getLatestImage = async (req: any) => {
                     id: true,
                 },
             },
+            take: 6,
         });
 
         let result: any[] = [];
