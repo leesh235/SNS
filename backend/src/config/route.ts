@@ -38,7 +38,7 @@ export const routes = {
         friends_list: "/friends",
     },
     comment: {
-        get: "/:postId",
+        get: "/",
         write: "/write",
         modify: "/modify",
         delete: "/delete",
