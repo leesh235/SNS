@@ -8,6 +8,7 @@ export const routes = {
     friends: "/friends",
     detail: "/detail/",
     userInfo: "/user/",
+    search: "/search",
 };
 
 export const api = {
@@ -46,5 +47,17 @@ export const api = {
         modify: "/comment/modify",
         delete: "/comment/delete",
         like: "/comment/like",
+    },
+    search: {
+        all: "/search/all",
+        post: "/search/post",
+        people: "/search/people",
+    },
+    friends: {
+        req: "/friends/request",
+        res: "/friends/response",
+        req_list: "/friends/request_list",
+        res_list: "/friends/response_list",
+        friends_list: "/friends/friend_list",
     },
 };
