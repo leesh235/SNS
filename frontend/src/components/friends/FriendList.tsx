@@ -1,5 +1,6 @@
 import styled from "../../styles/theme-components";
 import { Text } from "../common/Text";
+import { FriendCard } from "./FriendCard";
 import { useSelector } from "react-redux";
 
 const Wrapper = styled.article`
@@ -19,7 +20,7 @@ export const FriendList = () => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.friends?.friend_list
     );
-    console.log(data);
+
     return (
         <Wrapper>
             <Text
@@ -29,7 +30,12 @@ export const FriendList = () => {
                 lh={"24px"}
                 margin={"0 0 16px 0"}
             />
-            <CardWrapper></CardWrapper>
+            <CardWrapper>
+                {" "}
+                {data?.map((val: any, idx: number) => {
+                    return <FriendCard key={idx} user={val} type={"friend"} />;
+                })}
+            </CardWrapper>
         </Wrapper>
     );
 };

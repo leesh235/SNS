@@ -20,7 +20,7 @@ export const Response = () => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.friends?.res_list
     );
-    console.log(data);
+
     return (
         <Wrapper>
             <Text
@@ -32,7 +32,7 @@ export const Response = () => {
             />
             <CardWrapper>
                 {data?.map((val: any, idx: number) => {
-                    return <FriendCard key={idx} user={val} />;
+                    return <FriendCard key={idx} user={val} type={"res"} />;
                 })}
             </CardWrapper>
         </Wrapper>

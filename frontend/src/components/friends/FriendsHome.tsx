@@ -31,6 +31,17 @@ const CardWrapper = styled.div`
     flex-direction: row;
 `;
 
+const EventWrapper = styled.div`
+    width: auto;
+    font-size: 17px;
+    line-height: 20px;
+    color: ${(props) => props.theme.color.black};
+    :hover {
+        border-bottom: 1px solid ${(props) => props.theme.color.black};
+    }
+    cursor: pointer;
+`;
+
 interface Props {
     handleMenu: any;
 }
@@ -39,7 +50,7 @@ export const FriendsHome = ({ handleMenu }: Props) => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.friends?.all
     );
-    console.log(data);
+
     return (
         <Wrapper>
             <SectionWrapper>
@@ -51,17 +62,17 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                         lh={"24px"}
                         width={"auto"}
                     />
-                    <Text
-                        text={"모두 보기"}
-                        fs={"17px"}
-                        fw={400}
-                        lh={"20px"}
-                        width={"auto"}
-                    />
+                    <EventWrapper
+                        onClick={() => {
+                            handleMenu(1);
+                        }}
+                    >
+                        모두 보기
+                    </EventWrapper>
                 </FlexWrapper>
                 <CardWrapper>
                     {data?.request?.map((val: any, idx: number) => {
-                        return <FriendCard key={idx} user={val} />;
+                        return <FriendCard key={idx} user={val} type={"req"} />;
                     })}
                 </CardWrapper>
             </SectionWrapper>
@@ -74,17 +85,17 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                         lh={"24px"}
                         width={"auto"}
                     />
-                    <Text
-                        text={"모두 보기"}
-                        fs={"17px"}
-                        fw={400}
-                        lh={"20px"}
-                        width={"auto"}
-                    />
+                    <EventWrapper
+                        onClick={() => {
+                            handleMenu(2);
+                        }}
+                    >
+                        모두 보기
+                    </EventWrapper>
                 </FlexWrapper>
                 <CardWrapper>
                     {data?.response?.map((val: any, idx: number) => {
-                        return <FriendCard key={idx} user={val} />;
+                        return <FriendCard key={idx} user={val} type={"res"} />;
                     })}
                 </CardWrapper>
             </SectionWrapper>
@@ -97,17 +108,19 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                         lh={"24px"}
                         width={"auto"}
                     />
-                    <Text
-                        text={"모두 보기"}
-                        fs={"17px"}
-                        fw={400}
-                        lh={"20px"}
-                        width={"auto"}
-                    />
+                    <EventWrapper
+                        onClick={() => {
+                            handleMenu(3);
+                        }}
+                    >
+                        모두 보기
+                    </EventWrapper>
                 </FlexWrapper>
                 <CardWrapper>
                     {data?.friends?.map((val: any, idx: number) => {
-                        return <FriendCard key={idx} user={val} />;
+                        return (
+                            <FriendCard key={idx} user={val} type={"friend"} />
+                        );
                     })}
                 </CardWrapper>
             </SectionWrapper>
