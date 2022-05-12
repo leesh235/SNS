@@ -42,7 +42,7 @@ export const api = {
         friends_list: "/posts/friends",
     },
     comment: {
-        get: "/comment/:postId",
+        get: "/comment/",
         write: "/comment/write",
         modify: "/comment/modify",
         delete: "/comment/delete",
