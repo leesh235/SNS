@@ -109,10 +109,7 @@ export const findAll = async (
     }
 };
 
-export const findSimple = async (
-    req: any,
-    mode: "friend" | "request" | "response"
-) => {
+export const findSimple = async (req: any) => {
     try {
         const {
             user: { email },
@@ -181,8 +178,8 @@ export const findSimple = async (
         result.push({
             request: modeFilter(req_list, "res_user"),
             response: modeFilter(res_list, "req_user"),
-            friends: modeFilter(req_list, "res_user").concat(
-                modeFilter(res_list, "req_user")
+            friends: modeFilter(req_frined, "res_user").concat(
+                modeFilter(res_frined, "req_user")
             ),
         });
 

@@ -1,6 +1,12 @@
 import express from "express";
 import { routes } from "../config/route";
-import { request, response, findAll, refuse } from "../services/friend.service";
+import {
+    request,
+    response,
+    findAll,
+    refuse,
+    findSimple,
+} from "../services/friend.service";
 
 const router = express.Router();
 
@@ -61,7 +67,7 @@ router.get(routes.friend.friend_list, async (req, res) => {
 //친구 home 목록
 router.get(routes.friend.simple, async (req, res) => {
     try {
-        res.status(200).send(await findAll(req, "friend"));
+        res.status(200).send(await findSimple(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
