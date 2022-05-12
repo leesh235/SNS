@@ -75,7 +75,7 @@ const reducer = (state = initialState, action: any) => {
         case ALLLIST:
         case ALLLIST_SUCCESS:
         case ALLLIST_ERROR:
-            return handleAsyncReducer(FRIENDSLIST, "all", true)(state, action);
+            return handleAsyncReducer(ALLLIST, "all", true)(state, action);
         default:
             return state;
     }
