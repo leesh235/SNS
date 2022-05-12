@@ -7,6 +7,7 @@ import {
     responseFriendList,
     friendList,
     refuseFriend,
+    allFriendList,
 } from "../../lib/friends";
 import {
     REQUEST,
@@ -15,6 +16,7 @@ import {
     RESPONSELIST,
     FRIENDSLIST,
     REFUSE,
+    ALLLIST,
 } from "../action/friends";
 
 const request = createPromise(REQUEST, requestFriend);
@@ -23,6 +25,7 @@ const request_list = createPromise(REQUESTLIST, requestFriendList);
 const response_list = createPromise(RESPONSELIST, responseFriendList);
 const friend_list = createPromise(FRIENDSLIST, friendList);
 const refuse = createPromise(REFUSE, refuseFriend);
+const all_list = createPromise(ALLLIST, allFriendList);
 
 export function* friendsSaga() {
     yield takeEvery(REQUEST, request);
@@ -31,4 +34,5 @@ export function* friendsSaga() {
     yield takeEvery(RESPONSELIST, response_list);
     yield takeEvery(FRIENDSLIST, friend_list);
     yield takeEvery(REFUSE, refuse);
+    yield takeEvery(ALLLIST, all_list);
 }

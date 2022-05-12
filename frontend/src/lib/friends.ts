@@ -17,6 +17,11 @@ export const refuseFriend = async (formData: any) => {
     return res.data;
 };
 
+export const allFriendList = async (formData: any) => {
+    const res = await backend.get(api.friends.all, { params: formData });
+    return res.data;
+};
+
 export const requestFriendList = async (formData: any) => {
     const res = await backend.get(api.friends.req_list, { params: formData });
     return res.data;

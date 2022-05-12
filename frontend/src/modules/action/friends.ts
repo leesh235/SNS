@@ -22,6 +22,10 @@ export const FRIENDSLIST = "friends/FRIENDSLIST";
 export const FRIENDSLIST_SUCCESS = "friends/FRIENDSLIST_SUCCESS";
 export const FRIENDSLIST_ERROR = "friends/FRIENDSLIST_ERROR";
 
+export const ALLLIST = "friends/ALLLIST";
+export const ALLLIST_SUCCESS = "friends/ALLLIST_SUCCESS";
+export const ALLLIST_ERROR = "friends/ALLLIST_ERROR";
+
 export const setRequest = (data: any) => {
     return {
         type: REQUEST,
@@ -58,5 +62,11 @@ export const setResponseList = () => {
 export const setFriendList = () => {
     return {
         type: FRIENDSLIST,
+    };
+};
+
+export const setAllList = () => {
+    return {
+        type: ALLLIST,
     };
 };

@@ -60,5 +60,6 @@ export const api = {
         res_list: "/friends/response_list",
         friends_list: "/friends/friend_list",
         refuse: "/friends/refuse",
+        all: "/friends/all",
     },
 };
