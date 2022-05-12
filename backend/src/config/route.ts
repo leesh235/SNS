@@ -56,6 +56,8 @@ export const routes = {
         request_list: "/request_list",
         response_list: "/response_list",
         friend_list: "/friend_list",
+        refuse: "/refuse",
+        simple: "/simple",
     },
 };
 

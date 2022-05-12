@@ -72,4 +72,10 @@ export class User {
 
     @OneToMany((type) => FileUrl, (fileUrl) => fileUrl.user)
     fileUrl: FileUrl[];
+
+    @OneToMany((type) => Friends, (userOne) => userOne.req_user)
+    userOne: Friends[];
+
+    @OneToMany((type) => Friends, (userTwo) => userTwo.res_user)
+    userTwo: Friends[];
 }

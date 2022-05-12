@@ -1,6 +1,6 @@
 import express from "express";
 import { routes } from "../config/route";
-import { request, response, findAll } from "../services/friend.service";
+import { request, response, findAll, refuse } from "../services/friend.service";
 
 const router = express.Router();
 
@@ -17,6 +17,15 @@ router.post(routes.friend.request, async (req, res) => {
 router.post(routes.friend.response, async (req, res) => {
     try {
         res.status(200).send(await response(req));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//친구 거절
+router.post(routes.friend.refuse, async (req, res) => {
+    try {
+        res.status(200).send(await refuse(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -43,7 +52,16 @@ router.get(routes.friend.response_list, async (req, res) => {
 //친구 목록
 router.get(routes.friend.friend_list, async (req, res) => {
     try {
-        res.status(200).send(await findAll(req, "all"));
+        res.status(200).send(await findAll(req, "friend"));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//친구 home 목록
+router.get(routes.friend.simple, async (req, res) => {
+    try {
+        res.status(200).send(await findAll(req, "friend"));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
