@@ -26,3 +26,15 @@ export const likeFunc = async (formData: Like) => {
     const res = await backend.post(api.post.like, { ...formData });
     return res.data;
 };
+
+export const commentQuantityFunc = async (formData: any) => {
+    const res = await backend.get(api.post.comment_quantity, {
+        params: formData,
+    });
+    return res.data;
+};
+
+export const likeQuantityFunc = async (formData: any) => {
+    const res = await backend.get(api.post.like_quantity, { params: formData });
+    return res.data;
+};

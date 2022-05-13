@@ -11,6 +11,12 @@ import {
     DELETEPOST,
     DELETEPOST_SUCCESS,
     DELETEPOST_ERROR,
+    COMMENTQUANTITY,
+    COMMENTQUANTITY_ERROR,
+    COMMENTQUANTITY_SUCCESS,
+    LIKEQUANTITY,
+    LIKEQUANTITY_ERROR,
+    LIKEQUANTITY_SUCCESS,
 } from "../action/post";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
@@ -19,71 +25,62 @@ const initialState = {
     modifyPost: reducerUtils.initial(null),
     writePost: reducerUtils.initial(null),
     postDetail: reducerUtils.initial(null),
+    commentQuantity: reducerUtils.initial(null),
+    likeQuantity: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
+        case COMMENTQUANTITY:
+        case COMMENTQUANTITY_SUCCESS:
+        case COMMENTQUANTITY_ERROR:
+            return handleAsyncReducer(
+                COMMENTQUANTITY,
+                "commentQuantity",
+                true
+            )(state, action);
+        case LIKEQUANTITY:
+        case LIKEQUANTITY_SUCCESS:
+        case LIKEQUANTITY_ERROR:
+            return handleAsyncReducer(
+                LIKEQUANTITY,
+                "likeQuantity",
+                true
+            )(state, action);
         case WRITEPOST:
-            return {
-                ...state,
-                writePost: reducerUtils.loading(state.writePost.data),
-            };
-        case POSTDETAIL:
-            return {
-                ...state,
-                postDetail: reducerUtils.loading(state.postDetail.data),
-            };
-        case MODIFYPOST:
-            return {
-                ...state,
-                modifyPost: reducerUtils.loading(state.modifyPost.data),
-            };
-        case DELETEPOST:
-            return {
-                ...state,
-                deletePost: reducerUtils.loading(state.deletePost.data),
-            };
         case WRITEPOST_SUCCESS:
-            return {
-                ...state,
-                writePost: reducerUtils.success(data),
-            };
-        case POSTDETAIL_SUCCESS:
-            return {
-                ...state,
-                postDetail: reducerUtils.success(data),
-            };
-        case MODIFYPOST_SUCCESS:
-            return {
-                ...state,
-                modifyPost: reducerUtils.success(data),
-            };
-        case DELETEPOST_SUCCESS:
-            return {
-                ...state,
-                deletePost: reducerUtils.success(data),
-            };
         case WRITEPOST_ERROR:
-            return {
-                ...state,
-                writePost: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(
+                WRITEPOST,
+                "writePost",
+                true
+            )(state, action);
+        case POSTDETAIL:
+        case POSTDETAIL_SUCCESS:
         case POSTDETAIL_ERROR:
-            return {
-                ...state,
-                postDetail: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(
+                POSTDETAIL,
+                "postDetail",
+                true
+            )(state, action);
+        case MODIFYPOST:
+        case MODIFYPOST_SUCCESS:
         case MODIFYPOST_ERROR:
-            return {
-                ...state,
-                modifyPost: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(
+                MODIFYPOST,
+                "modifyPost",
+                true
+            )(state, action);
+
+        case DELETEPOST:
+        case DELETEPOST_SUCCESS:
         case DELETEPOST_ERROR:
-            return {
-                ...state,
-                deletePost: reducerUtils.success(data),
-            };
+            return handleAsyncReducer(
+                DELETEPOST,
+                "deletePost",
+                true
+            )(state, action);
         default:
             return state;
     }

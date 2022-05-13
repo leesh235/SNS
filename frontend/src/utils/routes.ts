@@ -33,6 +33,8 @@ export const api = {
         modify: "/post/modify",
         delete: "/post/delete",
         like: "/post/like",
+        comment_quantity: "/post/comment_count",
+        like_quantity: "/post/like_count",
     },
     posts: {
         all_ist: "/posts/",
