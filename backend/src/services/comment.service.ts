@@ -11,7 +11,7 @@ export const findAll = async (req: any) => {
 
         const result = await commentRepository.find({
             relations: { post: true, user: true },
-            where: { post: { id: Number(postId) } },
+            where: { deletedAt: undefined, post: { id: Number(postId) } },
             select: {
                 id: true,
                 createdAt: true,
@@ -19,6 +19,7 @@ export const findAll = async (req: any) => {
                 user: {
                     email: true,
                     nickName: true,
+                    profileImage: true,
                 },
                 post: {},
             },
@@ -26,7 +27,7 @@ export const findAll = async (req: any) => {
                 createdAt: "desc",
             },
         });
-        console.log(result);
+
         return result;
     } catch (error) {
         console.log(error);
@@ -46,8 +47,8 @@ export const save = async (req: any) => {
         comment.post = postId;
         comment.contents = contents;
 
-        const result = await commentRepository.save(comment);
-        console.log(result);
+        await commentRepository.save(comment);
+
         return true;
     } catch (error) {
         console.log(error);
@@ -59,11 +60,11 @@ export const modify = async (req: any) => {
     try {
         const {
             user: { email },
-            body: { postId, contents },
+            body: { id, contents },
         } = req;
 
         const result = await commentRepository.update(
-            { id: postId },
+            { id, user: { email } },
             { contents }
         );
         console.log(result);
@@ -78,13 +79,14 @@ export const delete_comment = async (req: any) => {
     try {
         const {
             user: { email },
-            body: { postId },
+            body: { id },
         } = req;
-        const result = await commentRepository.softDelete({
-            id: postId,
+
+        await commentRepository.softDelete({
+            id,
             user: { email },
         });
-        console.log(result);
+
         return true;
     } catch (error) {
         console.log(error);
