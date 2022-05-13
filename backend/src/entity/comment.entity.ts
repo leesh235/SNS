@@ -39,6 +39,6 @@ export class Comment {
         nullable: false,
         onDelete: "CASCADE",
     })
-    @JoinColumn({ name: "writer", referencedColumnName: "nickName" })
+    @JoinColumn({ name: "writer", referencedColumnName: "email" })
     user: User;
 }

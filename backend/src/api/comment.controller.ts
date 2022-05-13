@@ -37,7 +37,7 @@ router.put(routes.comment.modify, async (req, res) => {
 });
 
 //댓글 삭제
-router.delete(routes.comment.delete, async (req, res) => {
+router.post(routes.comment.delete, async (req, res) => {
     try {
         res.status(200).send(await delete_comment(req));
     } catch (error) {
