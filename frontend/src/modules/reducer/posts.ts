@@ -25,66 +25,33 @@ const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
         case ALLPOSTS:
-            return {
-                ...state,
-                allPosts: reducerUtils.loading(state.allPosts.data),
-            };
-        case MYPOSTS:
-            return {
-                ...state,
-                myPosts: reducerUtils.loading(state.myPosts.data),
-            };
-        case LIKEPOSTS:
-            return {
-                ...state,
-                likePosts: reducerUtils.loading(state.likePosts.data),
-            };
-        case FRIENDSPOSTS:
-            return {
-                ...state,
-                friendsPosts: reducerUtils.loading(state.friendsPosts.data),
-            };
         case ALLPOSTS_SUCCESS:
-            return {
-                ...state,
-                allPosts: reducerUtils.success(data),
-            };
-        case MYPOSTS_SUCCESS:
-            return {
-                ...state,
-                myPosts: reducerUtils.success(data),
-            };
-        case LIKEPOSTS_SUCCESS:
-            return {
-                ...state,
-                likePosts: reducerUtils.success(data),
-            };
-        case FRIENDSPOSTS_SUCCESS:
-            return {
-                ...state,
-                friendsPosts: reducerUtils.success(data),
-            };
         case ALLPOSTS_ERROR:
-            return {
-                ...state,
-                allPosts: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(
+                ALLPOSTS,
+                "allPosts",
+                true
+            )(state, action);
+        case MYPOSTS:
+        case MYPOSTS_SUCCESS:
         case MYPOSTS_ERROR:
-            return {
-                ...state,
-                myPosts: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(MYPOSTS, "myPosts", true)(state, action);
+        case LIKEPOSTS:
+        case LIKEPOSTS_SUCCESS:
         case LIKEPOSTS_ERROR:
-            return {
-                ...state,
-                likePosts: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(
+                LIKEPOSTS,
+                "likePosts",
+                true
+            )(state, action);
+        case FRIENDSPOSTS:
+        case FRIENDSPOSTS_SUCCESS:
         case FRIENDSPOSTS_ERROR:
-            return {
-                ...state,
-                friendsPosts: reducerUtils.error(data),
-            };
-
+            return handleAsyncReducer(
+                FRIENDSPOSTS,
+                "friendsPosts",
+                true
+            )(state, action);
         default:
             return state;
     }

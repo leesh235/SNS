@@ -1,8 +1,7 @@
 import { createPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
 import { loginFunc, joinFunc } from "../../lib/auth";
-import { LOGIN } from "../action/login";
-import { JOIN } from "../action/join";
+import { LOGIN, JOIN } from "../action/auth";
 
 const login = createPromise(LOGIN, loginFunc);
 const join = createPromise(JOIN, joinFunc);

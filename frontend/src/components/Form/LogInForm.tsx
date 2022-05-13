@@ -8,7 +8,7 @@ import { LinkText } from "../common/button/LinkText";
 import { routes } from "../../utils/routes";
 import theme from "../../styles/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { setLogin } from "../../modules/action/login";
+import { setLogin } from "../../modules/action/auth";
 import { authMessage } from "../../utils/message";
 
 const Wrapper = styled.section`
@@ -47,7 +47,7 @@ export const LogInForm = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
-        (state: any) => state?.login?.user
+        (state: any) => state?.auth?.user
     );
 
     const handleOpen = () => {
@@ -67,6 +67,10 @@ export const LogInForm = () => {
     useEffect(() => {
         if (error !== null) {
             alert(authMessage.login.login_error);
+        }
+        if (!error && data !== null) {
+            localStorage.setItem("token", data?.accessToken);
+            window.location.reload();
         }
     }, [loading]);
 

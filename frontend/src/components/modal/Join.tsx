@@ -2,10 +2,11 @@ import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
 import { Button } from "../common/button/Button";
 import { RequireInput } from "../common/input/RequireInput";
-import { useDispatch } from "react-redux";
-import { setJoin } from "../../modules/action/join";
+import { useDispatch, useSelector } from "react-redux";
+import { setJoin } from "../../modules/action/auth";
 import { GenderBox } from "../join/GenderBox";
 import { BirthBox } from "../join/BirthBox";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -95,6 +96,10 @@ interface Props {
 export const Join = ({ onClose }: Props) => {
     const dispatch = useDispatch();
 
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.auth?.user
+    );
+
     const handleJoin: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         const {
@@ -119,6 +124,13 @@ export const Join = ({ onClose }: Props) => {
         );
         onClose();
     };
+
+    useEffect(() => {
+        if (!error && data !== null) {
+            localStorage.setItem("token", data?.accessToken);
+            window.location.reload();
+        }
+    }, [loading]);
 
     return (
         <Wrapper>

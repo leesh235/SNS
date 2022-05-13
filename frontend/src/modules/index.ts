@@ -1,8 +1,7 @@
 import { combineReducers } from "redux";
 import { all } from "@redux-saga/core/effects";
 //reducer
-import login from "./reducer/login";
-import join from "./reducer/join";
+import auth from "./reducer/auth";
 import profile from "./reducer/profile";
 import post from "./reducer/post";
 import posts from "./reducer/posts";
@@ -20,8 +19,7 @@ import { friendsSaga } from "./saga/friends";
 import { commentSaga } from "./saga/comment";
 
 export const rootReducer = combineReducers({
-    login,
-    join,
+    auth,
     profile,
     post,
     posts,

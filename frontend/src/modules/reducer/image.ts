@@ -17,35 +17,21 @@ const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
         case LATESTIMAGE:
-            return {
-                ...state,
-                latestImage: reducerUtils.loading(state.latestImage.data),
-            };
-        case ALLIMAGE:
-            return {
-                ...state,
-                allImages: reducerUtils.loading(state.allImages.data),
-            };
         case LATESTIMAGE_SUCCESS:
-            return {
-                ...state,
-                latestImage: reducerUtils.success(data),
-            };
-        case ALLIMAGE_SUCCESS:
-            return {
-                ...state,
-                allImages: reducerUtils.success(data),
-            };
         case LATESTIMAGE_ERROR:
-            return {
-                ...state,
-                latestImage: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(
+                LATESTIMAGE,
+                "latestImage",
+                true
+            )(state, action);
+        case ALLIMAGE:
+        case ALLIMAGE_SUCCESS:
         case ALLIMAGE_ERROR:
-            return {
-                ...state,
-                allImages: reducerUtils.error(data),
-            };
+            return handleAsyncReducer(
+                ALLIMAGE,
+                "allImages",
+                true
+            )(state, action);
         default:
             return state;
     }
