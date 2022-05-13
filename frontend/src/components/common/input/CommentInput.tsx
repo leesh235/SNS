@@ -43,6 +43,7 @@ interface Props extends StyleProps {
     image: string;
     placeholder?: string;
     onSubmit?: any;
+    defaultValue?: string;
 }
 
 export const CommentInput = ({
@@ -52,6 +53,7 @@ export const CommentInput = ({
     writer,
     image,
     onSubmit,
+    defaultValue,
 }: Props) => {
     return (
         <Wrapper width={width} height={height} onSubmit={onSubmit}>
@@ -62,7 +64,11 @@ export const CommentInput = ({
             >
                 <Icon src={image} />
             </Link>
-            <Input id="comment" placeholder={placeholder} />
+            <Input
+                id="comment"
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+            />
         </Wrapper>
     );
 };
@@ -71,4 +77,5 @@ CommentInput.defaultProps = {
     width: "100%",
     height: "36px",
     placeholder: "댓글을 입력하세요...",
+    defaultValue: "",
 };

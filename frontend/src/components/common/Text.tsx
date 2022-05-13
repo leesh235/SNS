@@ -9,6 +9,7 @@ const Wrapper = styled.div<StyleProps>`
     text-align: ${(props) => props.ta};
     color: ${(props) => props.fc};
     margin: ${(props) => props.margin};
+    word-break: break-all;
 `;
 
 interface StyleProps {

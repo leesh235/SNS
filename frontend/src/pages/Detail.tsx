@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setPostDetail } from "../modules/action/post";
+import { setCommentList } from "../modules/action/comment";
 import { ImageView } from "../components/detail/ImageView";
 import { TextView } from "../components/detail/TextView";
 
@@ -21,7 +22,10 @@ const Detail = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (postId) dispatch(setPostDetail({ postId: Number(postId) }));
+        if (postId) {
+            dispatch(setPostDetail({ postId: Number(postId) }));
+            dispatch(setCommentList({ postId: Number(postId) }));
+        }
     }, []);
 
     return (

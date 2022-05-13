@@ -1,5 +1,6 @@
 import styled from "../../styles/theme-components";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
@@ -10,6 +11,8 @@ import { CommentBtn } from "../common/button/CommentBtn";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
+import { setWriteComment, setCommentList } from "../../modules/action/comment";
+import { CommentList } from "./CommentList";
 
 const Wrapper = styled.section`
     width: 100%;
@@ -119,6 +122,8 @@ const Hover = styled.div`
 `;
 
 export const TextView = () => {
+    const { postId } = useParams<{ postId: string }>();
+    const dispatch = useDispatch();
     const [open, setOpen] = useState<boolean>(false);
 
     const { loading, data, error } = useSelector(
@@ -129,7 +134,18 @@ export const TextView = () => {
         e
     ) => {
         e.preventDefault();
-        console.log(e.currentTarget.comment.value);
+        console.log(e.currentTarget?.comment?.value);
+
+        dispatch(
+            setWriteComment({
+                postId: data.id,
+                contents: e.currentTarget.comment.value,
+            })
+        );
+        setTimeout(() => {
+            dispatch(setCommentList({ postId: Number(postId) }));
+        }, 500);
+        e.currentTarget.comment.value = "";
     };
 
     const handleOpen = () => {
@@ -139,8 +155,6 @@ export const TextView = () => {
     const handleClose = () => {
         setOpen(false);
     };
-
-    useEffect(() => {}, [loading]);
 
     return (
         <Wrapper>
@@ -209,6 +223,7 @@ export const TextView = () => {
                 </OptionView>
             </Middle>
             <Bottom>
+                <CommentList />
                 <CommentInput
                     image={data?.profileImage}
                     writer={data?.writer}
