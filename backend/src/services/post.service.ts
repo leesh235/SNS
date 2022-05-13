@@ -186,3 +186,58 @@ export const delete_post = async (req: any) => {
         return false;
     }
 };
+
+export const findCommentCount = async (req: any) => {
+    try {
+        const {
+            query: { postId },
+        } = req;
+
+        const result = await postRepository.find({
+            relations: { comment: true },
+            where: {
+                id: Number(postId),
+                deletedAt: undefined,
+                comment: { deletedAt: undefined },
+            },
+            select: {
+                id: true,
+                comment: {
+                    id: true,
+                },
+            },
+        });
+        console.log(result);
+        return result.length;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
+
+export const findLikeCount = async (req: any) => {
+    try {
+        const {
+            query: { postId },
+        } = req;
+
+        const result = await postRepository.find({
+            relations: { likes: true },
+            where: {
+                id: Number(postId),
+                deletedAt: undefined,
+            },
+            select: {
+                id: true,
+                likes: {
+                    id: true,
+                },
+            },
+        });
+        console.log(result);
+        return result.length;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};

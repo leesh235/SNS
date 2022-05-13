@@ -5,6 +5,8 @@ import {
     setLike,
     modify,
     delete_post,
+    findCommentCount,
+    findLikeCount,
 } from "../services/post.service";
 import { postUpload } from "../config/multer";
 import { fail, success, exist } from "../config/message";
@@ -22,6 +24,24 @@ router.get(routes.post.get, async (req, res) => {
         } else {
             res.status(404).send({ message: `${exist.NOT_EXIST_POST}` });
         }
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//해당 게시글 댓글 수
+router.get(routes.post.commentCnt, async (req, res) => {
+    try {
+        res.status(200).send(await findCommentCount(req));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//해당 게시글 좋아요 수
+router.get(routes.post.likeCnt, async (req, res) => {
+    try {
+        res.status(200).send(await findLikeCount(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
