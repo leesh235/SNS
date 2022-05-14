@@ -52,14 +52,16 @@ export const setDeletePost = (data: DeletePost) => {
     };
 };
 
-export const setCommnetQuantity = () => {
+export const setCommnetQuantity = (data: any) => {
     return {
         type: COMMENTQUANTITY,
+        data,
     };
 };
 
-export const setLikeQuantity = () => {
+export const setLikeQuantity = (data: any) => {
     return {
         type: LIKEQUANTITY,
+        data,
     };
 };
