@@ -1,5 +1,5 @@
 import styled from "../../styles/theme-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
 import { Text } from "../common/Text";
@@ -8,8 +8,12 @@ import { MoreIcon } from "../../assets/icon/MoreIcon";
 import { WritePost } from "../modal/WritePost";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
-import { useDispatch } from "react-redux";
-import { setDeletePost } from "../../modules/action/post";
+import { batch, useDispatch } from "react-redux";
+import {
+    setDeletePost,
+    setCommnetQuantity,
+    setLikeQuantity,
+} from "../../modules/action/post";
 
 const Wrapper = styled.article`
     width: 100%;
@@ -147,6 +151,13 @@ export const PostCard = ({ post }: Props) => {
             dispatch(setDeletePost({ postId: post?.postId }));
         }
     };
+
+    useEffect(() => {
+        batch(() => {
+            dispatch(setCommnetQuantity({ postId: post.postId }));
+            // dispatch(setLikeQuantity({ postId: post.postId }));
+        });
+    }, []);
 
     return (
         <>
