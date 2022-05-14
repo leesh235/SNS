@@ -193,7 +193,7 @@ export const findCommentCount = async (req: any) => {
             query: { postId },
         } = req;
 
-        const result = await postRepository.find({
+        const result = await postRepository.findOne({
             relations: { comment: true },
             where: {
                 id: Number(postId),
@@ -207,8 +207,8 @@ export const findCommentCount = async (req: any) => {
                 },
             },
         });
-        console.log(result);
-        return result.length;
+        console.log(result?.comment);
+        return result?.comment;
     } catch (error) {
         console.log(error);
         return false;
