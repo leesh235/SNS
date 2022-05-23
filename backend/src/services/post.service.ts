@@ -1,12 +1,14 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
 import { Likes } from "../entity/Likes.entity";
+import { Comment } from "../entity/comment.entity";
 import { FileUrl } from "../entity/file_url.entity";
 import { deleteFile } from "../utils/fileFunction";
 import { In, IsNull } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
+const commentRepository = dataSource.getRepository(Comment);
 const fileRepository = dataSource.getRepository(FileUrl);
 
 export const find = async (id: number) => {
@@ -123,7 +125,9 @@ export const setLike = async (req: any) => {
         const likes = new Likes();
         likes.user = email;
         likes.post = postId;
-
+        likes.postName = postId;
+        likes.email = email;
+        console.log(postId, email);
         const status = await likesRepository.findOne({
             relations: { user: true, post: true },
             where: {
@@ -131,6 +135,11 @@ export const setLike = async (req: any) => {
                     email,
                 },
                 post: { id: postId },
+            },
+            select: {
+                id: true,
+                user: { email: true },
+                post: { id: true },
             },
         });
         if (status) {
@@ -141,8 +150,11 @@ export const setLike = async (req: any) => {
         } else {
             await likesRepository.save(likes);
         }
+        // return await findLikeCount(req);
+        // console.log(status);
         return true;
     } catch (error) {
+        console.log(error);
         return false;
     }
 };
@@ -193,22 +205,17 @@ export const findCommentCount = async (req: any) => {
             query: { postId },
         } = req;
 
-        const result = await postRepository.findOne({
-            relations: { comment: true },
+        const quantity = await commentRepository.count({
+            relations: { post: true },
             where: {
-                id: Number(postId),
-                deletedAt: undefined,
-                comment: { deletedAt: undefined },
-            },
-            select: {
-                id: true,
-                comment: {
-                    id: true,
+                post: {
+                    id: Number(postId),
+                    deletedAt: undefined,
                 },
             },
         });
-        console.log(result?.comment);
-        return result?.comment;
+
+        return { quantity };
     } catch (error) {
         console.log(error);
         return false;
@@ -219,23 +226,33 @@ export const findLikeCount = async (req: any) => {
     try {
         const {
             query: { postId },
+            user: { email },
         } = req;
 
-        const result = await postRepository.find({
-            relations: { likes: true },
+        const quantity = await likesRepository.count({
+            relations: { post: true },
             where: {
-                id: Number(postId),
-                deletedAt: undefined,
-            },
-            select: {
-                id: true,
-                likes: {
-                    id: true,
+                post: {
+                    id: Number(postId),
+                    deletedAt: undefined,
                 },
             },
         });
-        console.log(result);
-        return result.length;
+
+        const status = await likesRepository.find({
+            relations: { post: true, user: true },
+            where: {
+                post: { id: Number(postId), deletedAt: undefined },
+                user: { email },
+            },
+            select: {
+                id: true,
+                post: { id: true },
+                user: { email: true },
+            },
+        });
+
+        return { quantity, status: status.length !== 0 ? true : false };
     } catch (error) {
         console.log(error);
         return false;

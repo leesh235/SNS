@@ -29,8 +29,6 @@ export const routes = {
         modify: "/modify",
         delete: "/delete",
         like: "/like",
-        commentCnt: "/comment_count",
-        likeCnt: "/like_count",
     },
     posts: {
         all_ist: "/",

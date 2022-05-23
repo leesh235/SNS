@@ -29,24 +29,6 @@ router.get(routes.post.get, async (req, res) => {
     }
 });
 
-//해당 게시글 댓글 수
-router.get(routes.post.commentCnt, async (req, res) => {
-    try {
-        res.status(200).send(await findCommentCount(req));
-    } catch (error) {
-        res.status(500).send({ message: `${error}` });
-    }
-});
-
-//해당 게시글 좋아요 수
-router.get(routes.post.likeCnt, async (req, res) => {
-    try {
-        res.status(200).send(await findLikeCount(req));
-    } catch (error) {
-        res.status(500).send({ message: `${error}` });
-    }
-});
-
 //게시글 작성
 router.post(routes.post.write, postUpload.array("images"), async (req, res) => {
     try {

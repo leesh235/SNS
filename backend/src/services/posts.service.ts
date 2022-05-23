@@ -1,8 +1,10 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/Post.entity";
+import { Likes } from "../entity/Likes.entity";
 import { PostMode } from "../config/enums";
 
 const postRepository = dataSource.getRepository(Post);
+const likesRepository = dataSource.getRepository(Likes);
 
 export const findAll = async (req: any, mode?: PostMode) => {
     try {
@@ -13,23 +15,48 @@ export const findAll = async (req: any, mode?: PostMode) => {
         let where = {};
         let relations = {};
         if (mode === PostMode.MY) {
-            relations = { user: true, likes: true, fileUrl: true };
+            relations = {
+                user: true,
+                likes: true,
+                fileUrl: true,
+                comment: true,
+            };
             where = { deletedAt: undefined, user: { email } };
         } else if (mode === PostMode.LIKE) {
-            relations = { user: true, likes: true, fileUrl: true };
+            relations = {
+                user: true,
+                likes: true,
+                fileUrl: true,
+                comment: true,
+            };
             where = { deletedAt: undefined, likes: { userId: email } };
         } else if (mode === PostMode.BOOKMARK) {
-            relations = { user: true, likes: true, fileUrl: true };
+            relations = {
+                user: true,
+                likes: true,
+                fileUrl: true,
+                comment: true,
+            };
             where = { deletedAt: undefined };
         } else if (mode === PostMode.FRIENDS) {
-            relations = { user: true, likes: true, fileUrl: true };
+            relations = {
+                user: true,
+                likes: true,
+                fileUrl: true,
+                comment: true,
+            };
             where = { deletedAt: undefined };
         } else {
-            relations = { user: true, likes: true, fileUrl: true };
+            relations = {
+                user: true,
+                likes: true,
+                fileUrl: true,
+                comment: true,
+            };
             where = { deletedAt: undefined };
         }
 
-        const allList = await postRepository.find({
+        const allList: any = await postRepository.find({
             relations,
             where,
             select: {
@@ -42,8 +69,11 @@ export const findAll = async (req: any, mode?: PostMode) => {
                     nickName: true,
                     profileImage: true,
                 },
+                comment: {
+                    id: true,
+                },
                 likes: {
-                    status: true,
+                    id: true,
                 },
                 fileUrl: {
                     fileUrl: true,
@@ -54,39 +84,55 @@ export const findAll = async (req: any, mode?: PostMode) => {
             },
         });
 
-        let result: any[] = [];
+        const likesstatus: any = await likesRepository.find({
+            where: { email },
+            select: {
+                postName: true,
+            },
+        });
 
-        allList.forEach((val, idx) => {
+        let result: any[] = [];
+        console.log(likesstatus);
+        allList.forEach((val: any, idx: number) => {
             const {
                 id,
                 contents,
                 createdAt,
                 files,
-                user: { email, nickName, profileImage },
-                likes: { status },
+                user,
+                likes,
+                comment,
                 fileUrl,
             } = val;
 
             let images: string[] = [];
-            fileUrl.forEach((img, cnt) => {
+            fileUrl.forEach((img: any, cnt: number) => {
                 images.push(img.fileUrl);
+            });
+            let status: boolean = false;
+
+            likesstatus.forEach((val: any) => {
+                if (val.postName === id) status = true;
             });
 
             result.push({
                 postId: id,
-                userId: email,
-                writer: nickName,
-                profileImage,
+                userId: user.email,
+                writer: user.nickName,
+                profileImage: user.profileImage,
                 contents,
                 createdAt,
                 images,
                 files,
+                likequantity: likes.length,
+                commentquantity: comment.length,
                 likeStatus: status,
             });
         });
 
         return result;
     } catch (error) {
+        console.log(error);
         return [];
     }
 };
