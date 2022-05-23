@@ -16,13 +16,9 @@ export const DELETEPOST = "post/DELETEPOST";
 export const DELETEPOST_SUCCESS = "post/DELETEPOST_SUCCESS";
 export const DELETEPOST_ERROR = "post/DELETEPOST_ERROR";
 
-export const COMMENTQUANTITY = "post/COMMENTQUANTITY";
-export const COMMENTQUANTITY_SUCCESS = "post/COMMENTQUANTITY_SUCCESS";
-export const COMMENTQUANTITY_ERROR = "post/COMMENTQUANTITY_ERROR";
-
-export const LIKEQUANTITY = "post/LIKEQUANTITY";
-export const LIKEQUANTITY_SUCCESS = "post/LIKEQUANTITY_SUCCESS";
-export const LIKEQUANTITY_ERROR = "post/LIKEQUANTITY_ERROR";
+export const LIKE = "post/LIKE";
+export const LIKE_SUCCESS = "post/LIKE_SUCCESS";
+export const LIKE_ERROR = "post/LIKE_ERROR";
 
 export const setWritePost = (data: any) => {
     return {
@@ -52,16 +48,9 @@ export const setDeletePost = (data: DeletePost) => {
     };
 };
 
-export const setCommnetQuantity = (data: any) => {
+export const setLike = (data: any) => {
     return {
-        type: COMMENTQUANTITY,
-        data,
-    };
-};
-
-export const setLikeQuantity = (data: any) => {
-    return {
-        type: LIKEQUANTITY,
+        type: LIKE,
         data,
     };
 };

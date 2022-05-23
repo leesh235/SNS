@@ -37,9 +37,13 @@ export const PostList = () => {
 
     const [postList, setPostList] = useState<Array<any>>([]);
 
+    const getAllPosts = () => {
+        dispatch(setAllPosts());
+    };
+
     useEffect(() => {
         if (data === null) {
-            dispatch(setAllPosts());
+            getAllPosts();
         }
         setPostList(data);
     }, [loading]);
@@ -47,7 +51,7 @@ export const PostList = () => {
     return (
         <Wrapper>
             {postList?.map((val, idx) => {
-                return <PostCard key={idx} post={val} />;
+                return <PostCard key={idx} post={val} getPosts={getAllPosts} />;
             })}
         </Wrapper>
     );

@@ -11,12 +11,9 @@ import {
     DELETEPOST,
     DELETEPOST_SUCCESS,
     DELETEPOST_ERROR,
-    COMMENTQUANTITY,
-    COMMENTQUANTITY_ERROR,
-    COMMENTQUANTITY_SUCCESS,
-    LIKEQUANTITY,
-    LIKEQUANTITY_ERROR,
-    LIKEQUANTITY_SUCCESS,
+    LIKE,
+    LIKE_SUCCESS,
+    LIKE_ERROR,
 } from "../action/post";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
@@ -25,29 +22,12 @@ const initialState = {
     modifyPost: reducerUtils.initial(null),
     writePost: reducerUtils.initial(null),
     postDetail: reducerUtils.initial(null),
-    commentQuantity: reducerUtils.initial(null),
-    likeQuantity: reducerUtils.initial(null),
+    like: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case COMMENTQUANTITY:
-        case COMMENTQUANTITY_SUCCESS:
-        case COMMENTQUANTITY_ERROR:
-            return handleAsyncReducer(
-                COMMENTQUANTITY,
-                "commentQuantity",
-                true
-            )(state, action);
-        case LIKEQUANTITY:
-        case LIKEQUANTITY_SUCCESS:
-        case LIKEQUANTITY_ERROR:
-            return handleAsyncReducer(
-                LIKEQUANTITY,
-                "likeQuantity",
-                true
-            )(state, action);
         case WRITEPOST:
         case WRITEPOST_SUCCESS:
         case WRITEPOST_ERROR:
@@ -81,6 +61,10 @@ const reducer = (state = initialState, action: any) => {
                 "deletePost",
                 true
             )(state, action);
+        case LIKE:
+        case LIKE_SUCCESS:
+        case LIKE_ERROR:
+            return handleAsyncReducer(LIKE, "like", true)(state, action);
         default:
             return state;
     }

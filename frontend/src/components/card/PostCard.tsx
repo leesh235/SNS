@@ -8,12 +8,9 @@ import { MoreIcon } from "../../assets/icon/MoreIcon";
 import { WritePost } from "../modal/WritePost";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
-import { batch, useDispatch } from "react-redux";
-import {
-    setDeletePost,
-    setCommnetQuantity,
-    setLikeQuantity,
-} from "../../modules/action/post";
+import { useDispatch } from "react-redux";
+import { setDeletePost, setLike } from "../../modules/action/post";
+import theme from "../../styles/theme";
 
 const Wrapper = styled.article`
     width: 100%;
@@ -87,6 +84,16 @@ const BottomWrapper = styled.div`
     border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
+const Quantity = styled.div`
+    width: calc(100% - 20px);
+    height: 22px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+`;
+
 const Icon = styled.img<{ size: string; margin?: string }>`
     width: ${(props) => props.size};
     height: ${(props) => props.size};
@@ -109,6 +116,7 @@ const Hover = styled.div`
 `;
 
 interface Props {
+    getPosts?: any;
     post: {
         postId: number;
         userId: string;
@@ -117,14 +125,17 @@ interface Props {
         createdAt: string;
         images?: Array<String>;
         profileImage?: string;
+        likequantity: number;
+        commentquantity: number;
+        likeStatus: boolean;
     };
 }
 
-export const PostCard = ({ post }: Props) => {
+export const PostCard = ({ getPosts, post }: Props) => {
     const dispatch = useDispatch();
     const [openBtn, setOpenBtn] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
-
+    console.log(post.likeStatus);
     const handleBtnOpen = () => {
         setOpenBtn(true);
     };
@@ -152,12 +163,12 @@ export const PostCard = ({ post }: Props) => {
         }
     };
 
-    useEffect(() => {
-        batch(() => {
-            dispatch(setCommnetQuantity({ postId: post.postId }));
-            // dispatch(setLikeQuantity({ postId: post.postId }));
-        });
-    }, []);
+    const handleLike = () => {
+        dispatch(setLike({ postId: post.postId }));
+        getPosts();
+    };
+
+    useEffect(() => {}, []);
 
     return (
         <>
@@ -233,8 +244,29 @@ export const PostCard = ({ post }: Props) => {
                         </ImageSlider>
                     </ImagesWrapper>
                 </Link>
+                <Quantity>
+                    <Text
+                        text={`좋아요 ${post.likequantity}개`}
+                        fs={"15px"}
+                        lh={"20px"}
+                        margin={"0 16px"}
+                        width={"auto"}
+                    />
+                    <Text
+                        text={`댓글 ${post.commentquantity}개`}
+                        fs={"15px"}
+                        lh={"20px"}
+                        margin={"0 16px"}
+                        width={"auto"}
+                    />
+                </Quantity>
                 <BottomWrapper>
-                    <Button2 text={"좋아요"} width={"100%"} />
+                    <Button2
+                        text={"좋아요"}
+                        width={"100%"}
+                        onClick={handleLike}
+                        fc={post.likeStatus ? theme.color.seaBule : ""}
+                    />
                     <Button2 text={"댓글 달기"} width={"100%"} />
                     <Button2 text={"공유하기"} width={"100%"} />
                 </BottomWrapper>
