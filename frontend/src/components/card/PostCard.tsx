@@ -7,9 +7,12 @@ import { Button2 } from "../common/button/Button2";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 import { WritePost } from "../modal/WritePost";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
+import { CommentBtn } from "../common/button/CommentBtn";
+import { CommentInput } from "../common/input/CommentInput";
 import { HoverBtn } from "../common/button/HoverBtn";
 import { useDispatch } from "react-redux";
 import { setDeletePost, setLike } from "../../modules/action/post";
+import { setWriteComment, setCommentList } from "../../modules/action/comment";
 import theme from "../../styles/theme";
 
 const Wrapper = styled.article`
@@ -19,6 +22,12 @@ const Wrapper = styled.article`
     border-radius: 8px;
     background-color: ${(props) => props.theme.color.white};
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 4px 8px rgb(0 0 0 / 10%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > :nth-last-child(1) {
+        margin: 10px 0;
+    }
 `;
 
 const TopWrapper = styled.div`
@@ -82,6 +91,7 @@ const BottomWrapper = styled.div`
     justify-items: center;
     margin: 0 10px;
     border-top: 1px solid ${(props) => props.theme.color.lightGray};
+    border-bottom: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
 const Quantity = styled.div`
@@ -129,13 +139,17 @@ interface Props {
         commentquantity: number;
         likeStatus: boolean;
     };
+    user: {
+        email: string;
+        profileImage: string;
+    };
 }
 
-export const PostCard = ({ getPosts, post }: Props) => {
+export const PostCard = ({ getPosts, post, user }: Props) => {
     const dispatch = useDispatch();
     const [openBtn, setOpenBtn] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
-    console.log(post.likeStatus);
+
     const handleBtnOpen = () => {
         setOpenBtn(true);
     };
@@ -166,6 +180,24 @@ export const PostCard = ({ getPosts, post }: Props) => {
     const handleLike = () => {
         dispatch(setLike({ postId: post.postId }));
         getPosts();
+    };
+
+    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
+        e
+    ) => {
+        e.preventDefault();
+        console.log(e.currentTarget?.comment?.value);
+
+        dispatch(
+            setWriteComment({
+                postId: post.postId,
+                contents: e.currentTarget.comment.value,
+            })
+        );
+        // setTimeout(() => {
+        //     dispatch(setCommentList({ postId: Number(post.postId) }));
+        // }, 500);
+        e.currentTarget.comment.value = "";
     };
 
     useEffect(() => {}, []);
@@ -203,9 +235,13 @@ export const PostCard = ({ getPosts, post }: Props) => {
                             width={"auto"}
                         />
                     </FlexWrapper>
-                    <Hover onClick={handleBtnOpen}>
-                        <MoreIcon />
-                    </Hover>
+                    {post.userId === user.email ? (
+                        <Hover onClick={handleBtnOpen}>
+                            <MoreIcon />
+                        </Hover>
+                    ) : (
+                        <div></div>
+                    )}
                     {openBtn && (
                         <CloseEventBtn
                             closeFunc={handleBtnClose}
@@ -234,16 +270,16 @@ export const PostCard = ({ getPosts, post }: Props) => {
                         margin={"0 16px"}
                     />
                 </ContentsWrapper>
-                <Link to={{ pathname: `${routes.detail}${post?.postId}` }}>
-                    <ImagesWrapper>
+                <ImagesWrapper>
+                    <Link to={{ pathname: `${routes.detail}${post?.postId}` }}>
                         <ImageSlider>
                             {post?.images &&
                                 post?.images.map((val, idx) => {
                                     return <Image key={idx} src={`${val}`} />;
                                 })}
                         </ImageSlider>
-                    </ImagesWrapper>
-                </Link>
+                    </Link>
+                </ImagesWrapper>
                 <Quantity>
                     <Text
                         text={`좋아요 ${post.likequantity}개`}
@@ -267,9 +303,16 @@ export const PostCard = ({ getPosts, post }: Props) => {
                         onClick={handleLike}
                         fc={post.likeStatus ? theme.color.seaBule : ""}
                     />
-                    <Button2 text={"댓글 달기"} width={"100%"} />
+                    <CommentBtn />
                     <Button2 text={"공유하기"} width={"100%"} />
                 </BottomWrapper>
+
+                <CommentInput
+                    image={user.profileImage}
+                    writer={user.email}
+                    onSubmit={handleOnSubmit}
+                    width={"calc(100% - 20px)"}
+                />
             </Wrapper>
             {openModal && (
                 <WritePost

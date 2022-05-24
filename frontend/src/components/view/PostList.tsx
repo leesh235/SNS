@@ -35,6 +35,8 @@ export const PostList = () => {
         (state: any) => state.posts.allPosts
     );
 
+    const user = useSelector((state: any) => state.profile.profile);
+    console.log(user);
     const [postList, setPostList] = useState<Array<any>>([]);
 
     const getAllPosts = () => {
@@ -51,7 +53,14 @@ export const PostList = () => {
     return (
         <Wrapper>
             {postList?.map((val, idx) => {
-                return <PostCard key={idx} post={val} getPosts={getAllPosts} />;
+                return (
+                    <PostCard
+                        key={idx}
+                        post={val}
+                        user={user.data}
+                        getPosts={getAllPosts}
+                    />
+                );
             })}
         </Wrapper>
     );

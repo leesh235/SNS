@@ -51,7 +51,14 @@ const ButtonWrapper = styled.div<{ color: string }>`
 
 const menuList = ["리스트 보기", "그리드 보기"];
 
-export const PostFlexCard = () => {
+interface Props {
+    user: {
+        email: string;
+        profileImage: string;
+    };
+}
+
+export const PostFlexCard = ({ user }: Props) => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
         (state: any) => state?.posts?.myPosts
@@ -152,6 +159,7 @@ export const PostFlexCard = () => {
                                 key={idx}
                                 post={val}
                                 getPosts={getMyPosts}
+                                user={user}
                             />
                         );
                     })}

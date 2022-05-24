@@ -86,7 +86,7 @@ export const ProfilePost = ({ handleUrl }: Porps) => {
             </LeftWrapper>
             <RightWrapper>
                 <WritePostCard />
-                <PostFlexCard />
+                <PostFlexCard user={data} />
             </RightWrapper>
         </Wrapper>
     );
