@@ -72,9 +72,7 @@ const menuList = [
     { name: "친구찾기", route: routes.friends },
     { name: "시작하기", route: routes.welcome },
     { name: "최신", route: "" },
-    { name: "즐겨찾기", route: "" },
-    { name: "저장됨", route: "" },
-    { name: "더보기", route: "" },
+    { name: "좋아요", route: "" },
 ];
 
 export const SideMenu = () => {

@@ -12,7 +12,7 @@ import { CommentInput } from "../common/input/CommentInput";
 import { HoverBtn } from "../common/button/HoverBtn";
 import { useDispatch } from "react-redux";
 import { setDeletePost, setLike } from "../../modules/action/post";
-import { setWriteComment, setCommentList } from "../../modules/action/comment";
+import { setWriteComment } from "../../modules/action/comment";
 import theme from "../../styles/theme";
 
 const Wrapper = styled.article`

@@ -1,6 +1,6 @@
 import styled from "../styles/theme-components";
 import { SideMenu } from "../components/side/SideMenu";
-import { Welcome } from "../components/view/Welcome";
+import { Welcome } from "../components/start/Welcome";
 
 const Wrapper = styled.main`
     background-color: ${(props) => props.theme.color.gray};
