@@ -1,7 +1,7 @@
 import styled from "../../styles/theme-components";
-import { InfoCard } from "../card/InfoCard";
-import { QuestionCard } from "../card/QuestionCard";
-import { LikeCard } from "../card/LikeCard";
+import { InfoCard } from "./card/InfoCard";
+import { QuestionCard } from "./card/QuestionCard";
+import { LikeCard } from "./card/LikeCard";
 
 const Wrapper = styled.section`
     width: 908px;

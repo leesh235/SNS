@@ -1,10 +1,10 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
-import { BoxShadow } from "../styles/BoxShadow";
-import { Text } from "../common/Text";
-import theme from "../../styles/theme";
+import { BoxShadow } from "../../styles/BoxShadow";
+import { Text } from "../../common/Text";
+import theme from "../../../styles/theme";
 import { useSelector } from "react-redux";
-import { routes } from "../../utils/routes";
+import { routes } from "../../../utils/routes";
 
 const Wrapper = styled.article`
     width: calc(100% - 20px);

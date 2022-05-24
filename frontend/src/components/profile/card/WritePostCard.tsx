@@ -1,11 +1,11 @@
-import styled from "../../styles/theme-components";
-import { IconButton } from "../common/button/IconButton";
-import { BoxShadow } from "../styles/BoxShadow";
-import { Text } from "../common/Text";
-import theme from "../../styles/theme";
-import { InputButton } from "../common/button/InputButton";
+import styled from "../../../styles/theme-components";
+import { IconButton } from "../../common/button/IconButton";
+import { BoxShadow } from "../../styles/BoxShadow";
+import { Text } from "../../common/Text";
+import theme from "../../../styles/theme";
+import { InputButton } from "../../common/button/InputButton";
 import { useState } from "react";
-import { WritePost } from "../modal/WritePost";
+import { WritePost } from "../../modal/WritePost";
 
 const FlexWrapper = styled.div`
     width: calc(100% - 32px);

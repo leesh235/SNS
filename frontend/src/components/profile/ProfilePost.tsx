@@ -1,7 +1,7 @@
 import styled from "../../styles/theme-components";
-import { IntroduceCard } from "../card/IntroduceCard";
-import { WritePostCard } from "../card/WritePostCard";
-import { PostFlexCard } from "../card/PostFlexCard";
+import { IntroduceCard } from "./card/IntroduceCard";
+import { WritePostCard } from "./card/WritePostCard";
+import { PostFlexCard } from "./card/PostFlexCard";
 import { BoxShadow } from "../styles/BoxShadow";
 import { Text } from "../common/Text";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { setProfile } from "../../modules/action/profile";
 import { setLatestImage } from "../../modules/action/image";
 import { setMyPosts } from "../../modules/action/posts";
 import { useEffect } from "react";
-import { LatestImageCard } from "../card/LatestImageCard";
+import { LatestImageCard } from "./card/LatestImageCard";
 import { batch } from "react-redux";
 
 const Wrapper = styled.section`

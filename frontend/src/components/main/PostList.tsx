@@ -1,5 +1,5 @@
 import styled from "../../styles/theme-components";
-import { PostCard } from "../card/PostCard";
+import { PostCard } from "../profile/card/PostCard";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllPosts } from "../../modules/action/posts";

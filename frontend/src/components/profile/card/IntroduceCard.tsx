@@ -1,11 +1,11 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
-import { Text } from "../common/Text";
-import { Button2 } from "../common/button/Button2";
-import { BoxShadow } from "../styles/BoxShadow";
-import theme from "../../styles/theme";
+import { Text } from "../../common/Text";
+import { Button2 } from "../../common/button/Button2";
+import { BoxShadow } from "../../styles/BoxShadow";
+import theme from "../../../styles/theme";
 import { useDispatch } from "react-redux";
-import { setIntroduce } from "../../modules/action/profile";
+import { setIntroduce } from "../../../modules/action/profile";
 
 const Wrapper = styled.div`
     width: 100%;

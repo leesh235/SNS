@@ -1,6 +1,6 @@
-import styled from "../../styles/theme-components";
-import { BoxShadow } from "../styles/BoxShadow";
-import { Text } from "../common/Text";
+import styled from "../../../styles/theme-components";
+import { BoxShadow } from "../../styles/BoxShadow";
+import { Text } from "../../common/Text";
 
 const FlexWrapper = styled.div`
     width: 100%;

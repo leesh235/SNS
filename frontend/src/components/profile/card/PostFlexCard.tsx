@@ -1,14 +1,14 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "./PostCard";
-import { BoxShadow } from "../styles/BoxShadow";
-import { IconButton } from "../common/button/IconButton";
-import { Text } from "../common/Text";
-import theme from "../../styles/theme";
-import { ListIcon, ListIconC } from "../../assets/icon/ListIcon";
-import { GridIcon, GridIconC } from "../../assets/icon/GridIcon";
-import { setMyPosts } from "../../modules/action/posts";
+import { BoxShadow } from "../../styles/BoxShadow";
+import { IconButton } from "../../common/button/IconButton";
+import { Text } from "../../common/Text";
+import theme from "../../../styles/theme";
+import { ListIcon, ListIconC } from "../../../assets/icon/ListIcon";
+import { GridIcon, GridIconC } from "../../../assets/icon/GridIcon";
+import { setMyPosts } from "../../../modules/action/posts";
 
 const PostWrapper = styled.article`
     display: flex;

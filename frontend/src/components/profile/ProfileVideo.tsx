@@ -1,5 +1,5 @@
 import styled from "../../styles/theme-components";
-import { VideoCard } from "../card/VideoCard";
+import { VideoCard } from "./card/VideoCard";
 
 const Wrapper = styled.section`
     width: 908px;

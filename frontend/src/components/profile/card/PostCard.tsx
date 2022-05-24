@@ -1,19 +1,19 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { routes } from "../../utils/routes";
-import { Text } from "../common/Text";
-import { Button2 } from "../common/button/Button2";
-import { MoreIcon } from "../../assets/icon/MoreIcon";
-import { WritePost } from "../modal/WritePost";
-import { CloseEventBtn } from "../common/button/CloseEventBtn";
-import { CommentBtn } from "../common/button/CommentBtn";
-import { CommentInput } from "../common/input/CommentInput";
-import { HoverBtn } from "../common/button/HoverBtn";
+import { routes } from "../../../utils/routes";
+import { Text } from "../../common/Text";
+import { Button2 } from "../../common/button/Button2";
+import { MoreIcon } from "../../../assets/icon/MoreIcon";
+import { WritePost } from "../../modal/WritePost";
+import { CloseEventBtn } from "../../common/button/CloseEventBtn";
+import { CommentBtn } from "../../common/button/CommentBtn";
+import { CommentInput } from "../../common/input/CommentInput";
+import { HoverBtn } from "../../common/button/HoverBtn";
 import { useDispatch } from "react-redux";
-import { setDeletePost, setLike } from "../../modules/action/post";
-import { setWriteComment } from "../../modules/action/comment";
-import theme from "../../styles/theme";
+import { setDeletePost, setLike } from "../../../modules/action/post";
+import { setWriteComment } from "../../../modules/action/comment";
+import theme from "../../../styles/theme";
 
 const Wrapper = styled.article`
     width: 100%;

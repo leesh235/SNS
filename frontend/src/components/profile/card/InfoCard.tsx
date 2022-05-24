@@ -1,8 +1,8 @@
-import styled from "../../styles/theme-components";
-import { BoxShadow } from "../styles/BoxShadow";
-import { Text } from "../common/Text";
-import { IconButton } from "../common/button/IconButton";
-import theme from "../../styles/theme";
+import styled from "../../../styles/theme-components";
+import { BoxShadow } from "../../styles/BoxShadow";
+import { Text } from "../../common/Text";
+import { IconButton } from "../../common/button/IconButton";
+import theme from "../../../styles/theme";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
