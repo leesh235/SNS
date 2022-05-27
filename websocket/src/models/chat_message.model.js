@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 const chatSchema = new mongoose.Schema({
+    id: { type: Number, required: [true] },
     roomId: {
-        type: Number,
-        required: [true],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "chat",
     },
     writer: {
         type: String,
@@ -12,6 +13,11 @@ const chatSchema = new mongoose.Schema({
     message: {
         type: String,
         required: [true],
+    },
+    createdAt: {
+        type: Date,
+        required: [true],
+        default: Date.now(),
     },
 });
 
