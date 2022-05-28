@@ -11,7 +11,7 @@ const startApp = async () => {
 
     await loaders(app, server);
 
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`start chat server:${port}`);
     });
 };
