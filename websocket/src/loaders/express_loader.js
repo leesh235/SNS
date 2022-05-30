@@ -3,8 +3,8 @@ import cors from "cors";
 import morgan from "morgan";
 import { baseRoutes } from "../config/routes";
 //router
-import room from "../api/chat_room.controller";
-import message from "../api/chat_message.controller";
+import room from "../api/room.controller";
+import message from "../api/chat.controller";
 
 export default async (app) => {
     app.use(cors());
