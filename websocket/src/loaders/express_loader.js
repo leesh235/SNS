@@ -5,6 +5,7 @@ import { baseRoutes } from "../config/routes";
 //router
 import room from "../api/room.controller";
 import message from "../api/chat.controller";
+import user from "../api/user.controller";
 
 export default async (app) => {
     app.use(cors());
@@ -14,6 +15,7 @@ export default async (app) => {
 
     app.use(baseRoutes.room, room);
     app.use(baseRoutes.message, message);
+    app.use(baseRoutes.user, user);
 
     return app;
 };

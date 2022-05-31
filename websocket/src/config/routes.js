@@ -1,6 +1,7 @@
 export const baseRoutes = {
     room: "/chat/room",
     message: "/chat/message",
+    user: "/chat/user",
 };
 
 export const routes = {
@@ -15,6 +16,11 @@ export const routes = {
         create: "/create",
         delete: "/delete",
         message_list: "/message_list",
+    },
+    user: {
+        create: "/create",
+        modify: "/modify",
+        delete: "/delete",
     },
 };
 
