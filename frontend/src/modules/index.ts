@@ -9,6 +9,7 @@ import image from "./reducer/image";
 import search from "./reducer/search";
 import friends from "./reducer/friends";
 import comment from "./reducer/comment";
+import chat from "./reducer/chat";
 //saga
 import { authSaga } from "./saga/auth";
 import { userSaga } from "./saga/user";
@@ -17,6 +18,7 @@ import { postsSaga } from "./saga/posts";
 import { searchSaga } from "./saga/search";
 import { friendsSaga } from "./saga/friends";
 import { commentSaga } from "./saga/comment";
+import { chatSaga } from "./saga/chat";
 
 export const rootReducer = combineReducers({
     auth,
@@ -27,6 +29,7 @@ export const rootReducer = combineReducers({
     search,
     friends,
     comment,
+    chat,
 });
 
 export function* rootSaga() {
@@ -38,5 +41,6 @@ export function* rootSaga() {
         searchSaga(),
         friendsSaga(),
         commentSaga(),
+        chatSaga(),
     ]);
 }

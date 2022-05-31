@@ -62,4 +62,11 @@ export const api = {
         refuse: "/friends/refuse",
         all: "/friends/all",
     },
+    chat: {
+        getRoomList: "/room/room_list",
+        modifyRoomName: "/room/modify",
+        deleteRoom: "/room/delete",
+        getMessage: "/getMessage",
+        addUser: "/addUser",
+    },
 };
