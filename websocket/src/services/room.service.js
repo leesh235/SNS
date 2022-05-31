@@ -4,7 +4,7 @@ export const findRoom = async (req) => {
     try {
         const { roomId } = req;
         const rooms = await Room.findOne({ title: roomId });
-        console.log("findRoom: ", rooms);
+        // console.log("findRoom: ", rooms);
         if (!rooms) {
             return false;
         } else {
@@ -18,6 +18,7 @@ export const findRoom = async (req) => {
 
 export const findRoomList = async (req) => {
     try {
+        // const { email } = req.body;
         const rooms = await Room.find({});
         console.log(rooms);
         return rooms;
@@ -30,7 +31,7 @@ export const findRoomList = async (req) => {
 export const createRoom = async (req) => {
     try {
         const { roomId } = req;
-        console.log("createRoom");
+        console.log("createRoom: ", roomId);
         const room = await Room.create({
             title: roomId,
         });

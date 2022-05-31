@@ -6,7 +6,7 @@ import {
     createRoom,
     deleteRoom,
     modifyRoom,
-} from "../services/chat_room.service";
+} from "../services/room.service";
 
 const router = express.Router();
 
