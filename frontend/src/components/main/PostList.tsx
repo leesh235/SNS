@@ -13,22 +13,6 @@ const Wrapper = styled.section`
     margin-top: 16px;
 `;
 
-const postList = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "2",
-    "3",
-    "4",
-    "2",
-    "3",
-    "4",
-    "2",
-    "3",
-    "4",
-];
-
 export const PostList = () => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
@@ -36,16 +20,12 @@ export const PostList = () => {
     );
 
     const user = useSelector((state: any) => state.profile.profile);
-    console.log(user);
-    const [postList, setPostList] = useState<Array<any>>([]);
 
     const getAllPosts = () => {
         dispatch(setAllPosts());
     };
 
-    useEffect(() => {
-        getAllPosts();
-    }, []);
+    useEffect(() => {}, [loading]);
 
     return (
         <Wrapper>

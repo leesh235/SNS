@@ -1,4 +1,8 @@
 import styled from "../styles/theme-components";
+import { useEffect } from "react";
+import { batch, useDispatch } from "react-redux";
+import { setRoomList } from "../modules/action/chat";
+import { setAllPosts } from "../modules/action/posts";
 import { SideMenu } from "../components/side/SideMenu";
 import { PostList } from "../components/main/PostList";
 import { ChattingList } from "../components/main/ChattingList";
@@ -16,6 +20,15 @@ const Wrapper = styled.main`
 `;
 
 const Main = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        batch(() => {
+            dispatch(setAllPosts());
+            dispatch(setRoomList());
+        });
+    }, []);
+
     return (
         <Wrapper>
             <SideMenu />
