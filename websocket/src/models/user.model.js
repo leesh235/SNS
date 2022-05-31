@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
 const userSchema = new mongoose.Schema({
-    _id: {
-        type: ObjectId,
+    email: {
+        type: String,
         required: [true],
         unique: true,
     },

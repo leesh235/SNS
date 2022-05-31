@@ -3,11 +3,6 @@ import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
 const roomSchema = new mongoose.Schema({
-    _id: {
-        type: ObjectId,
-        required: [true],
-        unique: true,
-    },
     title: {
         type: String,
         required: [true],
