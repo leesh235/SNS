@@ -44,15 +44,12 @@ export const PostList = () => {
     };
 
     useEffect(() => {
-        if (data === null) {
-            getAllPosts();
-        }
-        setPostList(data);
-    }, [loading]);
+        getAllPosts();
+    }, []);
 
     return (
         <Wrapper>
-            {postList?.map((val, idx) => {
+            {data?.map((val: any, idx: number) => {
                 return (
                     <PostCard
                         key={idx}
