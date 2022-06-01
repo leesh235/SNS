@@ -8,8 +8,8 @@ const userRoomSchema = new mongoose.Schema({
         required: [true],
         default: Date.now(),
     },
-    users: [{ type: ObjectId, ref: "User" }],
-    rooms: [{ type: ObjectId, ref: "Room" }],
+    user: { type: String, ref: "User" },
+    room: { type: ObjectId, ref: "Room" },
 });
 
 export const UserRoom = mongoose.model("UserRoom", userRoomSchema);

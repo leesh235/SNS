@@ -1,13 +1,7 @@
 import mongoose from "mongoose";
 
-const { ObjectId } = mongoose.Schema.Types;
-
 const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: [true],
-        unique: true,
-    },
+    _id: { type: String },
     nickName: {
         type: String,
         required: [true],

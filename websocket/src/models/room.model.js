@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-const { ObjectId } = mongoose.Schema.Types;
-
 const roomSchema = new mongoose.Schema({
     title: {
         type: String,
