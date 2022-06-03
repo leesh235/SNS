@@ -1,8 +1,16 @@
-import { ROOMLIST, ROOMLIST_ERROR, ROOMLIST_SUCCESS } from "../action/chat";
+import {
+    ROOMLIST,
+    ROOMLIST_ERROR,
+    ROOMLIST_SUCCESS,
+    MESSAGELIST,
+    MESSAGELIST_SUCCESS,
+    MESSAGELIST_ERROR,
+} from "../action/chat";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
 const initialState = {
     roomList: reducerUtils.initial(null),
+    messageList: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -14,6 +22,14 @@ const reducer = (state = initialState, action: any) => {
             return handleAsyncReducer(
                 ROOMLIST,
                 "roomList",
+                true
+            )(state, action);
+        case MESSAGELIST:
+        case MESSAGELIST_SUCCESS:
+        case MESSAGELIST_ERROR:
+            return handleAsyncReducer(
+                MESSAGELIST,
+                "messageList",
                 true
             )(state, action);
         default:
