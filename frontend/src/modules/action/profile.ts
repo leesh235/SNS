@@ -4,6 +4,10 @@ export const PROFILE = "user/PROFILE";
 export const PROFILE_SUCCESS = "user/PROFILE_SUCCESS";
 export const PROFILE_ERROR = "user/PROFILE_ERROR";
 
+export const USERDETAIL = "user/USERDETAIL";
+export const USERDETAIL_SUCCESS = "user/USERDETAIL_SUCCESS";
+export const USERDETAIL_ERROR = "user/USERDETAIL_ERROR";
+
 export const INTRODUCE = "user/INTRODUCE";
 export const INTRODUCE_SUCCESS = "user/INTRODUCE_SUCCESS";
 export const INTRODUCE_ERROR = "user/INTRODUCE_ERROR";
@@ -19,6 +23,12 @@ export const COVERIMAGE_ERROR = "user/COVERIMAGE_ERROR";
 export const setProfile = () => {
     return {
         type: PROFILE,
+    };
+};
+
+export const setUserDetail = () => {
+    return {
+        type: USERDETAIL,
     };
 };
 

@@ -6,12 +6,14 @@ import {
     setUserImage,
     getLatestImage,
     getAllImages,
+    getUserDetail,
 } from "../../lib/user";
 import {
     PROFILE,
     INTRODUCE,
     PROFILEIMAGE,
     COVERIMAGE,
+    USERDETAIL,
 } from "../action/profile";
 import { LATESTIMAGE, ALLIMAGE } from "../action/image";
 
@@ -21,6 +23,7 @@ const profile_image = createPromise(PROFILEIMAGE, setUserImage);
 const cover_image = createPromise(COVERIMAGE, setUserImage);
 const latest_image = createPromise(LATESTIMAGE, getLatestImage);
 const all_images = createPromise(ALLIMAGE, getAllImages);
+const user_detail = createPromise(USERDETAIL, getUserDetail);
 
 export function* userSaga() {
     yield takeEvery(PROFILE, profile);
@@ -29,4 +32,5 @@ export function* userSaga() {
     yield takeEvery(COVERIMAGE, cover_image);
     yield takeEvery(LATESTIMAGE, latest_image);
     yield takeEvery(ALLIMAGE, all_images);
+    yield takeEvery(USERDETAIL, user_detail);
 }

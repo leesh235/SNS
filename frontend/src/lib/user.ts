@@ -4,6 +4,7 @@ import { Introduce, UserImage } from "../types/user";
 
 export const getProfile = async () => {
     const res = await backend.get(api.user.profile);
+    console.log(res.data);
     return res.data;
 };
 
@@ -24,5 +25,10 @@ export const getLatestImage = async () => {
 
 export const getAllImages = async () => {
     const res = await backend.get(api.user.all_image);
+    return res.data;
+};
+
+export const getUserDetail = async () => {
+    const res = await backend.get(api.user.userDetail);
     return res.data;
 };
