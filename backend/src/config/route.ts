@@ -16,6 +16,7 @@ export const routes = {
     },
     user: {
         profile: "/profile",
+        login_info: "/login_info",
         set_image: "/image",
         set_introduce: "/introduce",
         friends: "/friends",
@@ -35,6 +36,7 @@ export const routes = {
         like_list: "/like",
         bookmark_list: "/bookmark",
         my_list: "/my",
+        user_list: "/user",
         friends_list: "/friends",
     },
     comment: {
