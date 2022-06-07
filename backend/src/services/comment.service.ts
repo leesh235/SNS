@@ -63,11 +63,8 @@ export const modify = async (req: any) => {
             body: { id, contents },
         } = req;
 
-        const result = await commentRepository.update(
-            { id, user: { email } },
-            { contents }
-        );
-        console.log(result);
+        await commentRepository.update({ id, user: { email } }, { contents });
+
         return true;
     } catch (error) {
         console.log(error);

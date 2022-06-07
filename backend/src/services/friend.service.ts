@@ -13,8 +13,7 @@ export const request = async (req: any) => {
         friends.req_user = email;
         friends.res_user = friend_email;
 
-        const result = await friendsRepository.save(friends);
-        console.log(result);
+        await friendsRepository.save(friends);
 
         return true;
     } catch (error) {
@@ -34,7 +33,6 @@ export const response = async (req: any) => {
             { id, res_user: { email } },
             { status: true }
         );
-        console.log(result);
 
         return true;
     } catch (error) {
@@ -188,7 +186,7 @@ export const findSimple = async (req: any) => {
                 modeFilter(res_frined, "req_user")
             ),
         };
-        console.log(result);
+
         return result;
     } catch (error) {
         console.log(error);
@@ -203,11 +201,10 @@ export const refuse = async (req: any) => {
             user: { email },
         } = req;
 
-        const result = await friendsRepository.delete({
+        await friendsRepository.delete({
             id,
             res_user: { email },
         });
-        console.log(result);
 
         return true;
     } catch (error) {

@@ -7,6 +7,34 @@ import { Like } from "typeorm";
 const userRepository = dataSource.getRepository(User);
 const fileRepository = dataSource.getRepository(FileUrl);
 
+export const user_detail = async (req: any) => {
+    try {
+        const { email } = req.query;
+
+        const result = await userRepository.findOne({
+            where: {
+                email,
+                deletedAt: undefined,
+            },
+            select: {
+                email: true,
+                nickName: true,
+                birth: true,
+                coverImage: true,
+                profileImage: true,
+                gender: true,
+                createdAt: true,
+                introduction: true,
+            },
+        });
+
+        return result;
+    } catch (error) {
+        console.log(error);
+        return {};
+    }
+};
+
 export const save_image = async (req: any) => {
     try {
         const {

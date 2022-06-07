@@ -127,7 +127,7 @@ export const setLike = async (req: any) => {
         likes.post = postId;
         likes.postName = postId;
         likes.email = email;
-        console.log(postId, email);
+
         const status = await likesRepository.findOne({
             relations: { user: true, post: true },
             where: {

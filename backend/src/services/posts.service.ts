@@ -92,7 +92,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
         });
 
         let result: any[] = [];
-        console.log(likesstatus);
+
         allList.forEach((val: any, idx: number) => {
             const {
                 id,
@@ -128,6 +128,52 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 commentquantity: comment.length,
                 likeStatus: status,
             });
+        });
+
+        return result;
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+};
+
+export const user_posts = async (req: any) => {
+    try {
+        const { email } = req.query;
+
+        const result = await postRepository.find({
+            relations: {
+                user: true,
+                likes: true,
+                fileUrl: true,
+                comment: true,
+            },
+            where: {
+                deletedAt: undefined,
+                user: {
+                    email,
+                },
+            },
+            select: {
+                id: true,
+                contents: true,
+                createdAt: true,
+                files: true,
+                user: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+                comment: {
+                    id: true,
+                },
+                likes: {
+                    id: true,
+                },
+                fileUrl: {
+                    fileUrl: true,
+                },
+            },
         });
 
         return result;
