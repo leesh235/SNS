@@ -9,12 +9,22 @@ import {
     getLatestImage,
     getPeople,
     getAllImages,
+    user_detail,
 } from "../services/user.service";
 
 const router = express.Router();
 
 //유저 프로필
 router.get(routes.user.profile, async (req, res) => {
+    try {
+        res.status(200).send({ ...(await user_detail(req)) });
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//유저 프로필
+router.get(routes.user.login_info, async (req, res) => {
     try {
         res.status(200).send(req.user);
     } catch (error) {
