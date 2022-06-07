@@ -5,7 +5,7 @@ import { Button2 } from "../../common/button/Button2";
 import { BoxShadow } from "../../styles/BoxShadow";
 import theme from "../../../styles/theme";
 import { useDispatch } from "react-redux";
-import { setIntroduce } from "../../../modules/action/profile";
+import { setIntroduce } from "../../../modules/action/user";
 
 const Wrapper = styled.div`
     width: 100%;

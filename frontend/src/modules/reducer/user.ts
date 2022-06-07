@@ -11,27 +11,27 @@ import {
     COVERIMAGE,
     COVERIMAGE_SUCCESS,
     COVERIMAGE_ERROR,
-    USERDETAIL,
-    USERDETAIL_SUCCESS,
-    USERDETAIL_ERROR,
-} from "../action/profile";
+    LOGININFO,
+    LOGININFO_SUCCESS,
+    LOGININFO_ERROR,
+} from "../action/user";
 
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
 const initialState = {
     profile: reducerUtils.initial(null),
-    userDetail: reducerUtils.initial(null),
+    loginInfo: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case USERDETAIL:
-        case USERDETAIL_SUCCESS:
-        case USERDETAIL_ERROR:
+        case LOGININFO:
+        case LOGININFO_SUCCESS:
+        case LOGININFO_ERROR:
             return handleAsyncReducer(
-                USERDETAIL,
-                "userDetail",
+                LOGININFO,
+                "loginInfo",
                 true
             )(state, action);
         case PROFILE:

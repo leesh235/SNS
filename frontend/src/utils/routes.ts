@@ -17,6 +17,7 @@ export const api = {
         join: "/auth/join",
     },
     user: {
+        login_info: "/user/login_info",
         profile: "/user/profile",
         introduce: "/user/introduce",
         image: "/user/image",
@@ -66,7 +67,7 @@ export const api = {
         getRoomList: "/room/room_list",
         modifyRoomName: "/room/modify",
         deleteRoom: "/room/delete",
-        getMessage: "/getMessage",
-        addUser: "/addUser",
+        getMessageList: "/message/message_list",
+        addUser: "/user/addUser",
     },
 };

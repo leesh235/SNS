@@ -4,9 +4,9 @@ export const PROFILE = "user/PROFILE";
 export const PROFILE_SUCCESS = "user/PROFILE_SUCCESS";
 export const PROFILE_ERROR = "user/PROFILE_ERROR";
 
-export const USERDETAIL = "user/USERDETAIL";
-export const USERDETAIL_SUCCESS = "user/USERDETAIL_SUCCESS";
-export const USERDETAIL_ERROR = "user/USERDETAIL_ERROR";
+export const LOGININFO = "user/LOGININFO";
+export const LOGININFO_SUCCESS = "user/LOGININFO_SUCCESS";
+export const LOGININFO_ERROR = "user/LOGININFO_ERROR";
 
 export const INTRODUCE = "user/INTRODUCE";
 export const INTRODUCE_SUCCESS = "user/INTRODUCE_SUCCESS";
@@ -26,9 +26,9 @@ export const setProfile = () => {
     };
 };
 
-export const setUserDetail = () => {
+export const setLogInInfo = () => {
     return {
-        type: USERDETAIL,
+        type: LOGININFO,
     };
 };
 

@@ -210,6 +210,7 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                         to={{
                             pathname: `${routes.userInfo}${post?.writer}`,
                         }}
+                        state={post?.writer}
                     >
                         <Icon size={"40px"} src={post?.profileImage} />
                     </Link>

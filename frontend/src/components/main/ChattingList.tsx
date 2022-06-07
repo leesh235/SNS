@@ -87,8 +87,6 @@ const ChatIcon = styled.div`
     border-radius: 18px;
 `;
 
-const menu = ["1번방", "2번방", "3번방", "4번방", "5번방"];
-
 export const ChattingList = () => {
     const { loading, data, error } = useSelector(
         (state: any) => state.chat.roomList
@@ -110,7 +108,9 @@ export const ChattingList = () => {
         setRoom((pre) => pre.concat(room));
     };
 
-    useEffect(() => {}, [loading]);
+    useEffect(() => {
+        console.log(data);
+    }, [loading]);
 
     return (
         <>
@@ -123,18 +123,18 @@ export const ChattingList = () => {
                     fc={theme.color.lightBlack}
                     margin={"0 0 10px 16px"}
                 />
-                {menu.map((val: any, idx: number) => {
+                {data?.map((val: any, idx: number) => {
                     return (
                         <Menu
-                            key={idx}
+                            key={val._id}
                             onClick={() => {
-                                handleOpen(val);
-                                handleRoom(val);
+                                handleOpen(val._id);
+                                handleRoom(val._id);
                             }}
                         >
                             <Icon />
                             <Text
-                                text={val}
+                                text={val.title}
                                 fs={"15px"}
                                 fw={500}
                                 lh={"20px"}
@@ -145,12 +145,13 @@ export const ChattingList = () => {
                 })}
             </Wrapper>
             <ChatList>
-                {menu.map((val: any, idx: number) => {
-                    if (open === val) {
+                {data?.map((val: any, idx: number) => {
+                    if (open === val._id) {
                         return (
                             <ChattingRoom
-                                key={idx}
-                                roomName={val}
+                                key={val._id}
+                                roomId={val._id}
+                                roomName={val.title}
                                 closeFunc={handleClose}
                             />
                         );

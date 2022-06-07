@@ -2,8 +2,8 @@ import { backend } from "./axios";
 import { api } from "../utils/routes";
 import { Introduce, UserImage } from "../types/user";
 
-export const getProfile = async () => {
-    const res = await backend.get(api.user.profile);
+export const getLogInInfo = async () => {
+    const res = await backend.get(api.user.login_info);
     console.log(res.data);
     return res.data;
 };
@@ -28,7 +28,7 @@ export const getAllImages = async () => {
     return res.data;
 };
 
-export const getUserDetail = async () => {
-    const res = await backend.get(api.user.userDetail);
+export const getProfile = async () => {
+    const res = await backend.get(api.user.profile);
     return res.data;
 };

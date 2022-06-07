@@ -13,7 +13,7 @@ import { GroubIcon } from "../../assets/icon/GroubIcon";
 import { HomeIcon } from "../../assets/icon/HomeIcon";
 import { MessageIcon } from "../../assets/icon/MessageIcon";
 import { useSelector, useDispatch } from "react-redux";
-import { setProfile } from "../../modules/action/profile";
+import { setLogInInfo, setProfile } from "../../modules/action/user";
 import { Avatar } from "../common/Image/Avatar";
 import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
@@ -144,7 +144,7 @@ const rightData = [<AppIcon />, <MessageIcon />, <BellIcon />, <ArrowDIcon />];
 export const Header = () => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
-        (state: any) => state?.profile?.profile
+        (state: any) => state?.user?.loginInfo
     );
 
     const [click, setClick] = useState<number>(0);
@@ -154,6 +154,7 @@ export const Header = () => {
     };
 
     useEffect(() => {
+        dispatch(setLogInInfo());
         dispatch(setProfile());
     }, []);
 

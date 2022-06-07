@@ -77,7 +77,7 @@ const menuList = [
 
 export const SideMenu = () => {
     const { loading, data, error } = useSelector(
-        (state: any) => state?.profile?.profile
+        (state: any) => state?.user?.profile
     );
 
     return (

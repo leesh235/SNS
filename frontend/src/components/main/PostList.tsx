@@ -19,7 +19,7 @@ export const PostList = () => {
         (state: any) => state.posts.allPosts
     );
 
-    const user = useSelector((state: any) => state.profile.profile);
+    const user = useSelector((state: any) => state.user.loginInfo);
 
     const getAllPosts = () => {
         dispatch(setAllPosts());

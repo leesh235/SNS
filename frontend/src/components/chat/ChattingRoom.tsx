@@ -1,7 +1,8 @@
 import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setMessageList } from "../../modules/action/chat";
 import { response, request, event } from "../../utils/socket";
 
 const Wrapper = styled.div`
@@ -26,11 +27,14 @@ const Title = styled.div`
 
 const Message = styled.div`
     width: 100%;
-    height: calc(100% - 80px);
+    /* height: calc(100% - 80px); */
+    max-height: 380px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-end;
+
+    overflow-x: hidden;
+    overflow-y: auto;
 `;
 
 const Chatting = styled.form`
@@ -49,13 +53,17 @@ const LeaveBtn = styled.div`
 `;
 
 interface Props {
+    roomId: Number;
     roomName: String;
     closeFunc: any;
 }
 
-export const ChattingRoom = ({ roomName, closeFunc }: Props) => {
+export const ChattingRoom = ({ roomId, roomName, closeFunc }: Props) => {
+    const dispatch = useDispatch();
+
+    const user_store = useSelector((state: any) => state.profile.profile);
     const { loading, data, error } = useSelector(
-        (state: any) => state.profile.profile
+        (state: any) => state.chat.messageList
     );
 
     const createDom = (parent: any, tag: any, data: any) => {
@@ -69,8 +77,8 @@ export const ChattingRoom = ({ roomName, closeFunc }: Props) => {
         e.preventDefault();
         const { value } = e.currentTarget.chatInput;
         request(event.chat, {
-            roomId: roomName,
-            userId: data.nickName,
+            roomId,
+            userId: user_store.data.email,
             msg: value,
         });
         e.currentTarget.chatInput.value = "";
@@ -78,11 +86,12 @@ export const ChattingRoom = ({ roomName, closeFunc }: Props) => {
 
     const handleLeave = () => {
         closeFunc();
-        request(event.leave, { roomId: roomName, userId: data.nickName });
+        request(event.leave, { roomId, userId: user_store.data.email });
     };
 
     useEffect(() => {
-        request(event.join, { roomId: roomName, userId: data.nickName });
+        dispatch(setMessageList({ roomId }));
+        request(event.join, { roomId, userId: user_store.data.email });
         response(event.message, (data: any) => {
             createDom("chatList", "div", data);
         });
@@ -95,7 +104,15 @@ export const ChattingRoom = ({ roomName, closeFunc }: Props) => {
                 <div>{roomName}</div>
                 <LeaveBtn onClick={handleLeave}>X</LeaveBtn>
             </Title>
-            <Message id="chatList"></Message>
+            <Message id="chatList">
+                {data.map((val: any) => {
+                    return (
+                        <div key={val._id}>
+                            {val.nickName}:{val.message}
+                        </div>
+                    );
+                })}
+            </Message>
             <Chatting onSubmit={handleChatting}>
                 <input name="chatInput" />
             </Chatting>

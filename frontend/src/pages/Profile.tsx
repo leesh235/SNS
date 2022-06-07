@@ -1,8 +1,7 @@
 import styled from "../styles/theme-components";
 import theme from "../styles/theme";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
 import { ProfilePost } from "../components/profile/ProfilePost";
@@ -67,13 +66,20 @@ const menuUrl = [
 const Profile = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const query = location.state;
     const [click, setClick] = useState<number>(0);
     const handleOnClick = ({ id }: { id: number }) => {
         setClick(id);
         navigate(`${menuUrl[id]}`, { replace: true });
     };
 
-    useEffect(() => {}, [location]);
+    useEffect(() => {
+        if (query !== null) {
+            console.log(query);
+        } else {
+            console.log("query");
+        }
+    }, [location]);
 
     return (
         <Wrapper>

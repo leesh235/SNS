@@ -5,7 +5,7 @@ import { PostFlexCard } from "./card/PostFlexCard";
 import { BoxShadow } from "../styles/BoxShadow";
 import { Text } from "../common/Text";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfile } from "../../modules/action/profile";
+import { setProfile } from "../../modules/action/user";
 import { setLatestImage } from "../../modules/action/image";
 import { setMyPosts } from "../../modules/action/posts";
 import { useEffect } from "react";

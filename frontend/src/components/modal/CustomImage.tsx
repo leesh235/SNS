@@ -4,7 +4,7 @@ import { Text } from "../common/Text";
 import { AvatarEditor } from "../common/AvatarEditor";
 import { base64ToImage } from "../../utils/base64Func";
 import { useDispatch } from "react-redux";
-import { setProfileImage } from "../../modules/action/profile";
+import { setProfileImage } from "../../modules/action/user";
 import theme from "../../styles/theme";
 
 const Wrapper = styled.main`

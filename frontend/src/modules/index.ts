@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { all } from "@redux-saga/core/effects";
 //reducer
 import auth from "./reducer/auth";
-import profile from "./reducer/profile";
+import user from "./reducer/user";
 import post from "./reducer/post";
 import posts from "./reducer/posts";
 import image from "./reducer/image";
@@ -22,7 +22,7 @@ import { chatSaga } from "./saga/chat";
 
 export const rootReducer = combineReducers({
     auth,
-    profile,
+    user,
     post,
     posts,
     image,

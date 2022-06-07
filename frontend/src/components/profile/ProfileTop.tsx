@@ -6,7 +6,7 @@ import { SetProfileImage } from "../modal/SetProfileImage";
 import { CustomImage } from "../modal/CustomImage";
 import { SelectImage } from "../modal/SelectImage";
 import theme from "../../styles/theme";
-import { setCoverImage } from "../../modules/action/profile";
+import { setCoverImage } from "../../modules/action/user";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
 
