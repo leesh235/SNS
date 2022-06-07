@@ -9,9 +9,9 @@ const likesRepository = dataSource.getRepository(Likes);
 export const findAll = async (req: any, mode?: PostMode) => {
     try {
         const {
-            user: { email },
+            query: { email },
         } = req;
-
+        console.log(email);
         let where = {};
         let relations = {};
         if (mode === PostMode.MY) {
