@@ -212,7 +212,7 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                 <TopWrapper>
                     <Link
                         to={{
-                            pathname: `${routes.userInfo}${post?.writer}`,
+                            pathname: `${routes.userInfo}${post?.userId}`,
                         }}
                         state={post?.userId}
                     >

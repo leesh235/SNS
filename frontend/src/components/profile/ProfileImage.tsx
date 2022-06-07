@@ -1,8 +1,9 @@
 import styled from "../../styles/theme-components";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ImageCard } from "./card/ImageCard";
 import { setAlltImages } from "../../modules/action/image";
+import { useParams } from "react-router-dom";
 
 const Wrapper = styled.section`
     width: 908px;
@@ -10,12 +11,19 @@ const Wrapper = styled.section`
     margin-top: 16px;
 `;
 
-export const ProfileImage = () => {
+interface Props {}
+
+export const ProfileImage = ({}: Props) => {
+    const { email } = useParams();
     const dispatch = useDispatch();
 
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.user?.profile
+    );
+
     useEffect(() => {
-        dispatch(setAlltImages());
-    }, []);
+        dispatch(setAlltImages({ email }));
+    }, [email]);
 
     return (
         <Wrapper>

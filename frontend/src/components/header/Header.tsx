@@ -209,7 +209,7 @@ export const Header = () => {
                 </LongIcon>
                 <Link
                     to={{
-                        pathname: `${routes.userInfo}${data?.nickName}`,
+                        pathname: `${routes.userInfo}${data?.email}`,
                     }}
                     state={data?.email}
                 >

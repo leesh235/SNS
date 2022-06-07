@@ -6,14 +6,16 @@ export const ALLIMAGE = "image/ALLIMAGE";
 export const ALLIMAGE_SUCCESS = "image/ALLIMAGE_SUCCESS";
 export const ALLIMAGE_ERROR = "image/ALLIMAGE_ERROR";
 
-export const setLatestImage = () => {
+export const setLatestImage = (data: any) => {
     return {
         type: LATESTIMAGE,
+        data,
     };
 };
 
-export const setAlltImages = () => {
+export const setAlltImages = (data: any) => {
     return {
         type: ALLIMAGE,
+        data,
     };
 };

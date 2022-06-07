@@ -1,8 +1,8 @@
 import styled from "../styles/theme-components";
 import theme from "../styles/theme";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../modules/action/user";
 import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
@@ -66,10 +66,14 @@ const menuUrl = [
 ];
 
 const Profile = () => {
+    const { email } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
-    const query = location.state;
+
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.user?.profile
+    );
+
     const [click, setClick] = useState<number>(0);
     const handleOnClick = ({ id }: { id: number }) => {
         setClick(id);
@@ -77,8 +81,8 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if (query !== null) dispatch(setProfile({ email: query }));
-    }, [location]);
+        dispatch(setProfile({ email }));
+    }, [email]);
 
     return (
         <Wrapper>
