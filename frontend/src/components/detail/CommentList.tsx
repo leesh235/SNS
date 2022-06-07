@@ -25,7 +25,7 @@ export const CommentList = () => {
         (state: any) => state?.comment?.commentList
     );
 
-    const user = useSelector((state: any) => state?.profile?.profile);
+    const user = useSelector((state: any) => state?.user?.loginInfo);
 
     useEffect(() => {}, [loading]);
     return (
@@ -33,7 +33,11 @@ export const CommentList = () => {
             <ScollWrapper>
                 {data?.map((val: any, idx: number) => {
                     return (
-                        <CommentCard key={idx} comment={val} user={user.data} />
+                        <CommentCard
+                            key={idx}
+                            comment={val}
+                            user={user?.data}
+                        />
                     );
                 })}
             </ScollWrapper>
