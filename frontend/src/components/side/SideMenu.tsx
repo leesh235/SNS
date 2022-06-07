@@ -84,7 +84,7 @@ export const SideMenu = () => {
         <Wrapper>
             <Link
                 to={{
-                    pathname: `${routes.userInfo}${data?.nickName}`,
+                    pathname: `${routes.userInfo}${data?.email}`,
                 }}
                 state={data?.email}
             >
