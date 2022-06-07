@@ -22,12 +22,12 @@ export const setUserImage = async (formData: any) => {
     return res.data;
 };
 
-export const getLatestImage = async () => {
-    const res = await backend.get(api.user.latest_image);
+export const getLatestImage = async (fromData: any) => {
+    const res = await backend.get(api.user.latest_image, { params: fromData });
     return res.data;
 };
 
-export const getAllImages = async () => {
-    const res = await backend.get(api.user.all_image);
+export const getAllImages = async (fromData: any) => {
+    const res = await backend.get(api.user.all_image, { params: fromData });
     return res.data;
 };
