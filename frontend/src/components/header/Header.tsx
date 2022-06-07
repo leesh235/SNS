@@ -198,15 +198,21 @@ export const Header = () => {
                 })}
             </CenterWrapper>
             <RightWrapper>
-                <LongIcon>
-                    <Text
-                        text={"친구 찾기"}
-                        fs={"15px"}
-                        fw={600}
-                        lh={"20px"}
-                        width={"auto"}
-                    />
-                </LongIcon>
+                <Link
+                    to={{
+                        pathname: `${routes.friends}`,
+                    }}
+                >
+                    <LongIcon>
+                        <Text
+                            text={"친구 찾기"}
+                            fs={"15px"}
+                            fw={600}
+                            lh={"20px"}
+                            width={"auto"}
+                        />
+                    </LongIcon>
+                </Link>
                 <Link
                     to={{
                         pathname: `${routes.userInfo}${data?.email}`,

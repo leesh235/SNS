@@ -178,6 +178,8 @@ export const ProfileTop = () => {
         (state: any) => state?.user?.profile
     );
 
+    const loginInfo = useSelector((state: any) => state?.user?.loginInfo);
+
     const handleOpenCImg = () => {
         setCImgBtnopen(true);
     };
@@ -285,15 +287,17 @@ export const ProfileTop = () => {
                         onChange={handleOnChange}
                     />
                     <ImageShadow>
-                        <CoverImageButtonWrapper onClick={handleOpenCImg}>
-                            <Text
-                                text={"커버 사진 추가"}
-                                fs={"15px"}
-                                fw={600}
-                                lh={"20px"}
-                                ta={"center"}
-                            />
-                        </CoverImageButtonWrapper>
+                        {loginInfo?.data?.email === data?.email && (
+                            <CoverImageButtonWrapper onClick={handleOpenCImg}>
+                                <Text
+                                    text={"커버 사진 추가"}
+                                    fs={"15px"}
+                                    fw={600}
+                                    lh={"20px"}
+                                    ta={"center"}
+                                />
+                            </CoverImageButtonWrapper>
+                        )}
                         {cImgBtnopen && (
                             <CloseEventBtn
                                 closeFunc={handleCloseCImg}

@@ -70,16 +70,13 @@ const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.profile
-    );
-
     const [click, setClick] = useState<number>(0);
     const handleOnClick = ({ id }: { id: number }) => {
         setClick(id);
         navigate(`${menuUrl[id]}`, { replace: true });
     };
 
+    console.log(email);
     useEffect(() => {
         dispatch(setProfile({ email }));
     }, [email]);

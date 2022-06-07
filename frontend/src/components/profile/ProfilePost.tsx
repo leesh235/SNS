@@ -71,7 +71,10 @@ export const ProfilePost = ({ handleUrl }: Props) => {
     return (
         <Wrapper>
             <LeftWrapper>
-                <IntroduceCard introduction={data?.introduction || ""} />
+                <IntroduceCard
+                    introduction={data?.introduction || ""}
+                    email={data?.email}
+                />
                 <LatestImageCard handleUrl={handleUrl} />
                 <BoxShadow>
                     <FlexWrapper>

@@ -4,7 +4,7 @@ import { Text } from "../../common/Text";
 import { Button2 } from "../../common/button/Button2";
 import { BoxShadow } from "../../styles/BoxShadow";
 import theme from "../../../styles/theme";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIntroduce } from "../../../modules/action/user";
 
 const Wrapper = styled.div`
@@ -68,8 +68,18 @@ const IntroduceButton = styled.button`
     }
 `;
 
-export const IntroduceCard = ({ introduction }: { introduction: string }) => {
+export const IntroduceCard = ({
+    introduction,
+    email,
+}: {
+    introduction: string;
+    email: string;
+}) => {
     const [openIntro, setOpenIntro] = useState<boolean>(false);
+
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.user?.loginInfo
+    );
 
     const dispatch = useDispatch();
 
@@ -103,70 +113,86 @@ export const IntroduceCard = ({ introduction }: { introduction: string }) => {
                     fw={700}
                     width={"95%"}
                 />
-                {openIntro ? (
-                    <form onSubmit={writeIntroduce}>
-                        <IntroduceInput
-                            name="introduce"
-                            defaultValue={introduction}
-                            placeholder="   회원님에 대해 소개해주세요"
-                        />
-                        <Text
-                            text={"101자 남음"}
-                            fs={"13px"}
-                            fc={theme.color.darkGray}
-                            width={"100%"}
-                            ta={"right"}
-                            margin={"8px 0"}
-                        />
-                        <FlexWrapper>
-                            <IntroduceButton
-                                type="button"
-                                onClick={closeIntroduce}
-                            >
-                                취소
-                            </IntroduceButton>
-                            <IntroduceButton>저장</IntroduceButton>
-                        </FlexWrapper>
-                    </form>
-                ) : (
+                {email === data.email ? (
                     <>
-                        <Text
-                            text={introduction}
-                            fs={"15px"}
-                            width={"100%"}
-                            ta={"center"}
-                            margin={"8px 0"}
-                        />
+                        {openIntro ? (
+                            <form onSubmit={writeIntroduce}>
+                                <IntroduceInput
+                                    name="introduce"
+                                    defaultValue={introduction}
+                                    placeholder="   회원님에 대해 소개해주세요"
+                                />
+                                <Text
+                                    text={"101자 남음"}
+                                    fs={"13px"}
+                                    fc={theme.color.darkGray}
+                                    width={"100%"}
+                                    ta={"right"}
+                                    margin={"8px 0"}
+                                />
+                                <FlexWrapper>
+                                    <IntroduceButton
+                                        type="button"
+                                        onClick={closeIntroduce}
+                                    >
+                                        취소
+                                    </IntroduceButton>
+                                    <IntroduceButton>저장</IntroduceButton>
+                                </FlexWrapper>
+                            </form>
+                        ) : (
+                            <>
+                                <Text
+                                    text={introduction}
+                                    fs={"15px"}
+                                    width={"100%"}
+                                    ta={"center"}
+                                    margin={"8px 0"}
+                                />
+                                <Button2
+                                    text={"소개 추가"}
+                                    color={theme.color.gray}
+                                    fs={"15px"}
+                                    fw={600}
+                                    fc={theme.color.black}
+                                    width={"95%"}
+                                    height={"36px"}
+                                    onClick={openIntroduce}
+                                />
+                            </>
+                        )}
+                    </>
+                ) : (
+                    <Text
+                        text={introduction}
+                        fs={"15px"}
+                        width={"100%"}
+                        ta={"center"}
+                        margin={"8px 0"}
+                    />
+                )}
+                {email === data.email && (
+                    <>
                         <Button2
-                            text={"소개 추가"}
+                            text={"상세 정보 수정"}
                             color={theme.color.gray}
                             fs={"15px"}
                             fw={600}
                             fc={theme.color.black}
                             width={"95%"}
                             height={"36px"}
-                            onClick={openIntroduce}
+                        />
+                        <Button2
+                            text={"대표 사진 추가"}
+                            color={theme.color.gray}
+                            fs={"15px"}
+                            fw={600}
+                            fc={theme.color.black}
+                            width={"95%"}
+                            height={"36px"}
                         />
                     </>
                 )}
-                <Button2
-                    text={"상세 정보 수정"}
-                    color={theme.color.gray}
-                    fs={"15px"}
-                    fw={600}
-                    fc={theme.color.black}
-                    width={"95%"}
-                    height={"36px"}
-                />
-                <Button2
-                    text={"대표 사진 추가"}
-                    color={theme.color.gray}
-                    fs={"15px"}
-                    fw={600}
-                    fc={theme.color.black}
-                    width={"95%"}
-                    height={"36px"}
-                />
             </Wrapper>
         </BoxShadow>
     );
