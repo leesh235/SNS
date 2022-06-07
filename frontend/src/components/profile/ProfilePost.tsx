@@ -56,12 +56,12 @@ export const ProfilePost = ({ handleUrl }: Porps) => {
     const dispatch = useDispatch();
 
     const { loading, data, error } = useSelector(
-        (state: any) => state?.profile?.profile
+        (state: any) => state?.user?.profile
     );
 
     useEffect(() => {
         batch(() => {
-            dispatch(setProfile());
+            // dispatch(setProfile());
             dispatch(setLatestImage());
             dispatch(setMyPosts());
         });

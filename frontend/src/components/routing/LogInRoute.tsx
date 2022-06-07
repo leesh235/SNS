@@ -15,7 +15,7 @@ export const LogInRoute = () => {
             <Routes>
                 <Route path={`${routes.home}`} element={<Main />} />
                 <Route path={`${routes.welcome}`} element={<Start />} />
-                <Route path={`${routes.profile}`} element={<Profile />} />
+                {/* <Route path={`${routes.profile}`} element={<Profile />} /> */}
                 <Route path={`${routes.detail}:postId`} element={<Detail />} />
                 <Route
                     path={`${routes.userInfo}:email`}

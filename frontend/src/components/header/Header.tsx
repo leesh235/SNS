@@ -155,7 +155,6 @@ export const Header = () => {
 
     useEffect(() => {
         dispatch(setLogInInfo());
-        dispatch(setProfile());
     }, []);
 
     return (
@@ -210,8 +209,9 @@ export const Header = () => {
                 </LongIcon>
                 <Link
                     to={{
-                        pathname: `${routes.profile}`,
+                        pathname: `${routes.userInfo}${data?.nickName}`,
                     }}
+                    state={data?.email}
                 >
                     <LongIcon2>
                         <Avatar src={data?.profileImage} />

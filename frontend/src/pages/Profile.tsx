@@ -2,6 +2,8 @@ import styled from "../styles/theme-components";
 import theme from "../styles/theme";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setProfile } from "../modules/action/user";
 import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
 import { ProfilePost } from "../components/profile/ProfilePost";
@@ -64,6 +66,7 @@ const menuUrl = [
 ];
 
 const Profile = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const query = location.state;
@@ -74,12 +77,9 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if (query !== null) {
-            console.log(query);
-        } else {
-            console.log("query");
-        }
-    }, [location]);
+        if (query !== null) dispatch(setProfile({ email: query }));
+        console.log(query);
+    }, [location, query]);
 
     return (
         <Wrapper>

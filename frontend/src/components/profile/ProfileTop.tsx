@@ -175,7 +175,7 @@ export const ProfileTop = () => {
     const [cImgModalopen, setCImgModalopen] = useState<boolean>(false);
 
     const { loading, data, error } = useSelector(
-        (state: any) => state?.profile?.profile
+        (state: any) => state?.user?.profile
     );
 
     const handleOpenCImg = () => {
@@ -247,7 +247,9 @@ export const ProfileTop = () => {
         }
     };
 
-    useEffect(() => {}, [loading]);
+    useEffect(() => {
+        console.log(loading);
+    }, [loading]);
 
     return (
         <>

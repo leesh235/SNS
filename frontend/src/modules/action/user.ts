@@ -20,9 +20,10 @@ export const COVERIMAGE = "user/COVERIMAGE";
 export const COVERIMAGE_SUCCESS = "user/COVERIMAGE_SUCCESS";
 export const COVERIMAGE_ERROR = "user/COVERIMAGE_ERROR";
 
-export const setProfile = () => {
+export const setProfile = (data: any) => {
     return {
         type: PROFILE,
+        data,
     };
 };
 

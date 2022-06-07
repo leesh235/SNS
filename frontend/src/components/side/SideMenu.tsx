@@ -77,12 +77,17 @@ const menuList = [
 
 export const SideMenu = () => {
     const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.profile
+        (state: any) => state?.user?.loginInfo
     );
 
     return (
         <Wrapper>
-            <Link to={{ pathname: `${routes.profile}` }}>
+            <Link
+                to={{
+                    pathname: `${routes.userInfo}${data?.nickName}`,
+                }}
+                state={data?.email}
+            >
                 <Menu>
                     <AvatarIcon src={data?.profileImage} />
                     <Text
