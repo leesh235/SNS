@@ -20,9 +20,10 @@ export const setAllPosts = () => {
     };
 };
 
-export const setMyPosts = () => {
+export const setMyPosts = (data: any) => {
     return {
         type: MYPOSTS,
+        data,
     };
 };
 

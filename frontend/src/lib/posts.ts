@@ -6,8 +6,8 @@ export const getPostsFunc = async () => {
     return res.data;
 };
 
-export const getMyPostsFunc = async () => {
-    const res = await backend.get(api.posts.my_list);
+export const getMyPostsFunc = async (formData: any) => {
+    const res = await backend.get(api.posts.my_list, { params: formData });
     return res.data;
 };
 
