@@ -247,9 +247,7 @@ export const ProfileTop = () => {
         }
     };
 
-    useEffect(() => {
-        console.log(loading);
-    }, [loading]);
+    useEffect(() => {}, [loading]);
 
     return (
         <>

@@ -248,7 +248,7 @@ interface Props {
 export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
-        (state: any) => state?.profile?.profile
+        (state: any) => state?.user?.profile
     );
     const [fileList, setFileList] = useState<any[]>(post?.images || []);
     const [open, setOpen] = useState<boolean>(false);
@@ -325,7 +325,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         } else {
             dispatch(setWritePost(formData));
         }
-        dispatch(setMyPosts());
+        dispatch(setMyPosts({ email: data.email }));
 
         setClose(false);
     };

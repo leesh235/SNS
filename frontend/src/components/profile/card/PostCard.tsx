@@ -10,7 +10,7 @@ import { CloseEventBtn } from "../../common/button/CloseEventBtn";
 import { CommentBtn } from "../../common/button/CommentBtn";
 import { CommentInput } from "../../common/input/CommentInput";
 import { HoverBtn } from "../../common/button/HoverBtn";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDeletePost, setLike } from "../../../modules/action/post";
 import { setWriteComment } from "../../../modules/action/comment";
 import theme from "../../../styles/theme";
@@ -150,6 +150,10 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
     const [openBtn, setOpenBtn] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
 
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.user?.loginInfo
+    );
+
     const handleBtnOpen = () => {
         setOpenBtn(true);
     };
@@ -236,7 +240,7 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                             width={"auto"}
                         />
                     </FlexWrapper>
-                    {post.userId === user.email ? (
+                    {post.userId === data.email ? (
                         <Hover onClick={handleBtnOpen}>
                             <MoreIcon />
                         </Hover>
@@ -309,8 +313,8 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                 </BottomWrapper>
 
                 <CommentInput
-                    image={user.profileImage}
-                    writer={user.email}
+                    image={data.profileImage}
+                    writer={data.email}
                     onSubmit={handleOnSubmit}
                     width={"calc(100% - 20px)"}
                 />

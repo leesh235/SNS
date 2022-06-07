@@ -5,7 +5,7 @@ import { PostFlexCard } from "./card/PostFlexCard";
 import { BoxShadow } from "../styles/BoxShadow";
 import { Text } from "../common/Text";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfile } from "../../modules/action/user";
+import { useLocation } from "react-router-dom";
 import { setLatestImage } from "../../modules/action/image";
 import { setMyPosts } from "../../modules/action/posts";
 import { useEffect } from "react";
@@ -54,6 +54,7 @@ interface Porps {
 
 export const ProfilePost = ({ handleUrl }: Porps) => {
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const { loading, data, error } = useSelector(
         (state: any) => state?.user?.profile
@@ -63,9 +64,9 @@ export const ProfilePost = ({ handleUrl }: Porps) => {
         batch(() => {
             // dispatch(setProfile());
             dispatch(setLatestImage());
-            dispatch(setMyPosts());
+            dispatch(setMyPosts({ email: location.state }));
         });
-    }, []);
+    }, [location]);
 
     return (
         <Wrapper>

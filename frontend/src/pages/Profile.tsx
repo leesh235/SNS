@@ -78,8 +78,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (query !== null) dispatch(setProfile({ email: query }));
-        console.log(query);
-    }, [location, query]);
+    }, [location]);
 
     return (
         <Wrapper>

@@ -65,16 +65,16 @@ export const PostFlexCard = ({ user }: Props) => {
     );
 
     const [menu, setMenu] = useState<number>(0);
-    const [postList, setPostList] = useState<Array<any>>([]);
+
     const handleOnClick = (id: number) => {
         setMenu(id);
     };
 
     const getMyPosts = () => {
-        dispatch(setMyPosts());
+        dispatch(setMyPosts({ email: user.email }));
     };
 
-    useEffect(() => {}, [loading, data]);
+    useEffect(() => {}, [loading]);
 
     return (
         <>
