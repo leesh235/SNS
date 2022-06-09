@@ -27,7 +27,7 @@ export const user_detail = async (req: any) => {
                 introduction: true,
             },
         });
-
+        console.log(result);
         return result;
     } catch (error) {
         console.log(error);
@@ -119,7 +119,7 @@ export const getUserImage = async (req: any) => {
 export const getAllImages = async (req: any) => {
     try {
         const {
-            user: { email },
+            query: { email },
         } = req;
 
         const images = await fileRepository.find({
@@ -153,7 +153,7 @@ export const getAllImages = async (req: any) => {
 export const getLatestImage = async (req: any) => {
     try {
         const {
-            user: { email },
+            query: { email },
         } = req;
 
         const images = await fileRepository.find({

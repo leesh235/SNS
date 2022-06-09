@@ -6,6 +6,7 @@ import {
     findAll,
     refuse,
     findSimple,
+    get_is_friend,
 } from "../services/friend.service";
 
 const router = express.Router();
@@ -23,6 +24,15 @@ router.post(routes.friend.request, async (req, res) => {
 router.post(routes.friend.response, async (req, res) => {
     try {
         res.status(200).send(await response(req));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//친구 여부
+router.get(routes.friend.is_friend, async (req, res) => {
+    try {
+        res.status(200).send(await get_is_friend(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

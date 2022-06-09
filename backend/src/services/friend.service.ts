@@ -41,6 +41,26 @@ export const response = async (req: any) => {
     }
 };
 
+export const get_is_friend = async (req: any) => {
+    try {
+        const {
+            query: { email },
+        } = req;
+
+        const result = await friendsRepository.findOne({
+            relations: { req_user: true, res_user: true },
+            where: [{ req_user: { email } }, { res_user: { email } }],
+        });
+
+        if (!result) return false;
+
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
+
 const modeFilter = (list: any, key: string) => {
     let result: any[] = [];
     list.forEach((val: any, idx: number) => {

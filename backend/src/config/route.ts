@@ -53,6 +53,7 @@ export const routes = {
         friend: "/friend",
     },
     friend: {
+        is_friend: "/is_friend",
         request: "/request",
         response: "/response",
         request_list: "/request_list",
