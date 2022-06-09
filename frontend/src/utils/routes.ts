@@ -57,6 +57,7 @@ export const api = {
     friends: {
         req: "/friends/request",
         res: "/friends/response",
+        is_friend: "/friends/is_friend",
         req_list: "/friends/request_list",
         res_list: "/friends/response_list",
         friends_list: "/friends/friend_list",

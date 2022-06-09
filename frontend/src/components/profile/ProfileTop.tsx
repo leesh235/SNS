@@ -9,6 +9,7 @@ import theme from "../../styles/theme";
 import { setCoverImage } from "../../modules/action/user";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
+import { Button2 } from "../common/button/Button2";
 
 const Wrapper = styled.section`
     background-color: ${(props) => props.theme.color.white};
@@ -61,6 +62,16 @@ const FlexWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    > :nth-child(2) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: auto;
+        > :nth-child(1) {
+            margin-right: 10px;
+        }
+    }
 `;
 
 const UserImage = styled.div`
@@ -177,7 +188,7 @@ export const ProfileTop = () => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.user?.profile
     );
-
+    const isFriend = useSelector((state: any) => state?.friends?.isFriend);
     const loginInfo = useSelector((state: any) => state?.user?.loginInfo);
 
     const handleOpenCImg = () => {
@@ -350,6 +361,36 @@ export const ProfileTop = () => {
                             lh={"38px"}
                             width={"auto"}
                         />
+                        {loginInfo?.data?.email !== data?.email && (
+                            <div>
+                                <Button2
+                                    text={"친구"}
+                                    color={
+                                        isFriend?.data
+                                            ? theme.color.seaBule
+                                            : theme.color.gray
+                                    }
+                                    fs={"15px"}
+                                    fw={600}
+                                    fc={
+                                        isFriend?.data
+                                            ? theme.color.white
+                                            : theme.color.black
+                                    }
+                                    width={"76px"}
+                                    height={"36px"}
+                                />
+                                <Button2
+                                    text={"메세지 보내기"}
+                                    color={theme.color.gray}
+                                    fs={"15px"}
+                                    fw={600}
+                                    fc={theme.color.black}
+                                    width={"140px"}
+                                    height={"36px"}
+                                />
+                            </div>
+                        )}
                     </FlexWrapper>
                 </Bottom>
             </Wrapper>

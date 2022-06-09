@@ -26,6 +26,17 @@ export const ALLLIST = "friends/ALLLIST";
 export const ALLLIST_SUCCESS = "friends/ALLLIST_SUCCESS";
 export const ALLLIST_ERROR = "friends/ALLLIST_ERROR";
 
+export const ISFRIEND = "friends/ISFRIEND";
+export const ISFRIEND_SUCCESS = "friends/ISFRIEND_SUCCESS";
+export const ISFRIEND_ERROR = "friends/ISFRIEND_ERROR";
+
+export const setIsFriend = (data: any) => {
+    return {
+        type: ISFRIEND,
+        data,
+    };
+};
+
 export const setRequest = (data: any) => {
     return {
         type: REQUEST,

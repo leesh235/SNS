@@ -38,3 +38,10 @@ export const friendList = async (formData: any) => {
     });
     return res.data;
 };
+
+export const isFriend = async (formData: any) => {
+    const res = await backend.get(api.friends.is_friend, {
+        params: formData,
+    });
+    return res.data;
+};

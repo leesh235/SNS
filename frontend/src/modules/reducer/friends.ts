@@ -20,6 +20,9 @@ import {
     ALLLIST,
     ALLLIST_SUCCESS,
     ALLLIST_ERROR,
+    ISFRIEND,
+    ISFRIEND_SUCCESS,
+    ISFRIEND_ERROR,
 } from "../action/friends";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 
@@ -31,11 +34,20 @@ const initialState = {
     friend_list: reducerUtils.initial(null),
     refuse: reducerUtils.initial(null),
     all: reducerUtils.initial(null),
+    isFriend: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
+        case ISFRIEND:
+        case ISFRIEND_SUCCESS:
+        case ISFRIEND_ERROR:
+            return handleAsyncReducer(
+                ISFRIEND,
+                "isFriend",
+                true
+            )(state, action);
         case REQUEST:
         case REQUEST_SUCCESS:
         case REQUEST_ERROR:

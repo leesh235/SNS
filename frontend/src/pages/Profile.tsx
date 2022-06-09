@@ -13,6 +13,7 @@ import { ProfileImage } from "../components/profile/ProfileImage";
 import { ProfileVideo } from "../components/profile/ProfileVideo";
 import { ProfileCheckIn } from "../components/profile/ProfileCheckIn";
 import { ProfileTop } from "../components/profile/ProfileTop";
+import { setIsFriend } from "../modules/action/friends";
 
 const Wrapper = styled.main`
     background-color: ${(props) => props.theme.color.gray};
@@ -76,9 +77,9 @@ const Profile = () => {
         navigate(`${menuUrl[id]}`, { replace: true });
     };
 
-    console.log(email);
     useEffect(() => {
         dispatch(setProfile({ email }));
+        dispatch(setIsFriend({ email }));
     }, [email]);
 
     return (
