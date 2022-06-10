@@ -1,15 +1,6 @@
-import {
-    SEARCHALL,
-    SEARCHALL_SUCCESS,
-    SEARCHALL_ERROR,
-    SEARCHPOST,
-    SEARCHPOST_SUCCESS,
-    SEARCHPOST_ERROR,
-    SEARCHPEOPLE,
-    SEARCHPEOPLE_SUCCESS,
-    SEARCHPEOPLE_ERROR,
-} from "../action/search";
+import { SEARCHALL, SEARCHPOST, SEARCHPEOPLE } from "../action/search";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     all: reducerUtils.initial(null),
@@ -21,16 +12,16 @@ const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
         case SEARCHALL:
-        case SEARCHALL_SUCCESS:
-        case SEARCHALL_ERROR:
+        case typeUtils(SEARCHALL).success:
+        case typeUtils(SEARCHALL).error:
             return handleAsyncReducer(SEARCHALL, "all", true)(state, action);
         case SEARCHPOST:
-        case SEARCHPOST_SUCCESS:
-        case SEARCHPOST_ERROR:
+        case typeUtils(SEARCHPOST).success:
+        case typeUtils(SEARCHPOST).error:
             return handleAsyncReducer(SEARCHPOST, "post", true)(state, action);
         case SEARCHPEOPLE:
-        case SEARCHPEOPLE_SUCCESS:
-        case SEARCHPEOPLE_ERROR:
+        case typeUtils(SEARCHPEOPLE).success:
+        case typeUtils(SEARCHPEOPLE).error:
             return handleAsyncReducer(
                 SEARCHPEOPLE,
                 "people",

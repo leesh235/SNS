@@ -1,30 +1,15 @@
 import {
     REQUEST,
-    REQUEST_SUCCESS,
-    REQUEST_ERROR,
     RESPONSE,
-    RESPONSE_SUCCESS,
-    RESPONSE_ERROR,
     REQUESTLIST,
-    REQUESTLIST_SUCCESS,
-    REQUESTLIST_ERROR,
     RESPONSELIST,
-    RESPONSELIST_SUCCESS,
-    RESPONSELIST_ERROR,
     FRIENDSLIST,
-    FRIENDSLIST_SUCCESS,
-    FRIENDSLIST_ERROR,
     REFUSE,
-    REFUSE_SUCCESS,
-    REFUSE_ERROR,
     ALLLIST,
-    ALLLIST_SUCCESS,
-    ALLLIST_ERROR,
     ISFRIEND,
-    ISFRIEND_SUCCESS,
-    ISFRIEND_ERROR,
 } from "../action/friends";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     req: reducerUtils.initial(null),
@@ -38,55 +23,55 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type, data } = action;
+    const { type } = action;
     switch (type) {
         case ISFRIEND:
-        case ISFRIEND_SUCCESS:
-        case ISFRIEND_ERROR:
+        case typeUtils(ISFRIEND).success:
+        case typeUtils(ISFRIEND).error:
             return handleAsyncReducer(
                 ISFRIEND,
                 "isFriend",
                 true
             )(state, action);
         case REQUEST:
-        case REQUEST_SUCCESS:
-        case REQUEST_ERROR:
+        case typeUtils(REQUEST).success:
+        case typeUtils(REQUEST).error:
             return handleAsyncReducer(REQUEST, "req", true)(state, action);
         case RESPONSE:
-        case RESPONSE_SUCCESS:
-        case RESPONSE_ERROR:
+        case typeUtils(RESPONSE).success:
+        case typeUtils(RESPONSE).error:
             return handleAsyncReducer(RESPONSE, "res", true)(state, action);
         case REFUSE:
-        case REFUSE_SUCCESS:
-        case REFUSE_ERROR:
+        case typeUtils(REFUSE):
+        case typeUtils(REFUSE):
             return handleAsyncReducer(REFUSE, "refuse", true)(state, action);
         case REQUESTLIST:
-        case REQUESTLIST_SUCCESS:
-        case REQUESTLIST_ERROR:
+        case typeUtils(REQUESTLIST).success:
+        case typeUtils(REQUESTLIST).error:
             return handleAsyncReducer(
                 REQUESTLIST,
                 "req_list",
                 true
             )(state, action);
         case RESPONSELIST:
-        case RESPONSELIST_SUCCESS:
-        case RESPONSELIST_ERROR:
+        case typeUtils(RESPONSELIST).success:
+        case typeUtils(RESPONSELIST).error:
             return handleAsyncReducer(
                 RESPONSELIST,
                 "res_list",
                 true
             )(state, action);
         case FRIENDSLIST:
-        case FRIENDSLIST_SUCCESS:
-        case FRIENDSLIST_ERROR:
+        case typeUtils(FRIENDSLIST).success:
+        case typeUtils(FRIENDSLIST).error:
             return handleAsyncReducer(
                 FRIENDSLIST,
                 "friend_list",
                 true
             )(state, action);
         case ALLLIST:
-        case ALLLIST_SUCCESS:
-        case ALLLIST_ERROR:
+        case typeUtils(ALLLIST).success:
+        case typeUtils(ALLLIST).error:
             return handleAsyncReducer(ALLLIST, "all", true)(state, action);
         default:
             return state;

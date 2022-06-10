@@ -1,12 +1,6 @@
-import {
-    ROOMLIST,
-    ROOMLIST_ERROR,
-    ROOMLIST_SUCCESS,
-    MESSAGELIST,
-    MESSAGELIST_SUCCESS,
-    MESSAGELIST_ERROR,
-} from "../action/chat";
+import { ROOMLIST, MESSAGELIST } from "../action/chat";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     roomList: reducerUtils.initial(null),
@@ -14,19 +8,19 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type, data } = action;
+    const { type } = action;
     switch (type) {
         case ROOMLIST:
-        case ROOMLIST_SUCCESS:
-        case ROOMLIST_ERROR:
+        case typeUtils(ROOMLIST).success:
+        case typeUtils(ROOMLIST).error:
             return handleAsyncReducer(
                 ROOMLIST,
                 "roomList",
                 true
             )(state, action);
         case MESSAGELIST:
-        case MESSAGELIST_SUCCESS:
-        case MESSAGELIST_ERROR:
+        case typeUtils(MESSAGELIST).success:
+        case typeUtils(MESSAGELIST).error:
             return handleAsyncReducer(
                 MESSAGELIST,
                 "messageList",

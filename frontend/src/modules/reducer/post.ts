@@ -1,21 +1,12 @@
 import {
     WRITEPOST,
-    WRITEPOST_SUCCESS,
-    WRITEPOST_ERROR,
     POSTDETAIL,
-    POSTDETAIL_SUCCESS,
-    POSTDETAIL_ERROR,
     MODIFYPOST,
-    MODIFYPOST_SUCCESS,
-    MODIFYPOST_ERROR,
     DELETEPOST,
-    DELETEPOST_SUCCESS,
-    DELETEPOST_ERROR,
     LIKE,
-    LIKE_SUCCESS,
-    LIKE_ERROR,
 } from "../action/post";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     deletePost: reducerUtils.initial(null),
@@ -26,27 +17,27 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type, data } = action;
+    const { type } = action;
     switch (type) {
         case WRITEPOST:
-        case WRITEPOST_SUCCESS:
-        case WRITEPOST_ERROR:
+        case typeUtils(WRITEPOST).success:
+        case typeUtils(WRITEPOST).error:
             return handleAsyncReducer(
                 WRITEPOST,
                 "writePost",
                 true
             )(state, action);
         case POSTDETAIL:
-        case POSTDETAIL_SUCCESS:
-        case POSTDETAIL_ERROR:
+        case typeUtils(POSTDETAIL).success:
+        case typeUtils(POSTDETAIL).error:
             return handleAsyncReducer(
                 POSTDETAIL,
                 "postDetail",
                 true
             )(state, action);
         case MODIFYPOST:
-        case MODIFYPOST_SUCCESS:
-        case MODIFYPOST_ERROR:
+        case typeUtils(MODIFYPOST).success:
+        case typeUtils(MODIFYPOST).error:
             return handleAsyncReducer(
                 MODIFYPOST,
                 "modifyPost",
@@ -54,16 +45,16 @@ const reducer = (state = initialState, action: any) => {
             )(state, action);
 
         case DELETEPOST:
-        case DELETEPOST_SUCCESS:
-        case DELETEPOST_ERROR:
+        case typeUtils(DELETEPOST).success:
+        case typeUtils(DELETEPOST).error:
             return handleAsyncReducer(
                 DELETEPOST,
                 "deletePost",
                 true
             )(state, action);
         case LIKE:
-        case LIKE_SUCCESS:
-        case LIKE_ERROR:
+        case typeUtils(LIKE).success:
+        case typeUtils(LIKE).error:
             return handleAsyncReducer(LIKE, "like", true)(state, action);
         default:
             return state;

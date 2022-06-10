@@ -1,22 +1,12 @@
 import {
     PROFILE,
-    PROFILE_SUCCESS,
-    PROFILE_ERROR,
     INTRODUCE,
-    INTRODUCE_SUCCESS,
-    INTRODUCE_ERROR,
     PROFILEIMAGE,
-    PROFILEIMAGE_SUCCESS,
-    PROFILEIMAGE_ERROR,
     COVERIMAGE,
-    COVERIMAGE_SUCCESS,
-    COVERIMAGE_ERROR,
     LOGININFO,
-    LOGININFO_SUCCESS,
-    LOGININFO_ERROR,
 } from "../action/user";
-
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     profile: reducerUtils.initial(null),
@@ -27,27 +17,27 @@ const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
         case LOGININFO:
-        case LOGININFO_SUCCESS:
-        case LOGININFO_ERROR:
+        case typeUtils(LOGININFO).success:
+        case typeUtils(LOGININFO).error:
             return handleAsyncReducer(
                 LOGININFO,
                 "loginInfo",
                 true
             )(state, action);
         case PROFILE:
-        case PROFILE_SUCCESS:
-        case PROFILE_ERROR:
+        case typeUtils(PROFILE).success:
+        case typeUtils(PROFILE).error:
             return handleAsyncReducer(PROFILE, "profile", true)(state, action);
         case INTRODUCE:
-        case INTRODUCE_ERROR:
+        case typeUtils(INTRODUCE).error:
             return handleAsyncReducer(PROFILE, "profile", true)(state, action);
         case PROFILEIMAGE:
-        case PROFILEIMAGE_ERROR:
+        case typeUtils(PROFILEIMAGE).error:
             return handleAsyncReducer(PROFILE, "profile", true)(state, action);
         case COVERIMAGE:
-        case COVERIMAGE_ERROR:
+        case typeUtils(COVERIMAGE).error:
             return handleAsyncReducer(PROFILE, "profile", true)(state, action);
-        case INTRODUCE_SUCCESS:
+        case typeUtils(INTRODUCE).success:
             return {
                 ...state,
                 profile: {
@@ -59,7 +49,7 @@ const reducer = (state = initialState, action: any) => {
                     },
                 },
             };
-        case PROFILEIMAGE_SUCCESS:
+        case typeUtils(PROFILEIMAGE).success:
             return {
                 ...state,
                 profile: {
@@ -71,7 +61,7 @@ const reducer = (state = initialState, action: any) => {
                     },
                 },
             };
-        case COVERIMAGE_SUCCESS:
+        case typeUtils(COVERIMAGE).success:
             return {
                 ...state,
                 profile: {

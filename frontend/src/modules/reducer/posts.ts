@@ -1,18 +1,6 @@
-import {
-    ALLPOSTS,
-    ALLPOSTS_SUCCESS,
-    ALLPOSTS_ERROR,
-    MYPOSTS,
-    MYPOSTS_SUCCESS,
-    MYPOSTS_ERROR,
-    LIKEPOSTS,
-    LIKEPOSTS_ERROR,
-    LIKEPOSTS_SUCCESS,
-    FRIENDSPOSTS,
-    FRIENDSPOSTS_ERROR,
-    FRIENDSPOSTS_SUCCESS,
-} from "../action/posts";
+import { ALLPOSTS, MYPOSTS, LIKEPOSTS, FRIENDSPOSTS } from "../action/posts";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     allPosts: reducerUtils.initial(null),
@@ -22,31 +10,31 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type, data } = action;
+    const { type } = action;
     switch (type) {
         case ALLPOSTS:
-        case ALLPOSTS_SUCCESS:
-        case ALLPOSTS_ERROR:
+        case typeUtils(ALLPOSTS).success:
+        case typeUtils(ALLPOSTS).error:
             return handleAsyncReducer(
                 ALLPOSTS,
                 "allPosts",
                 true
             )(state, action);
         case MYPOSTS:
-        case MYPOSTS_SUCCESS:
-        case MYPOSTS_ERROR:
+        case typeUtils(MYPOSTS).success:
+        case typeUtils(MYPOSTS).error:
             return handleAsyncReducer(MYPOSTS, "myPosts", true)(state, action);
         case LIKEPOSTS:
-        case LIKEPOSTS_SUCCESS:
-        case LIKEPOSTS_ERROR:
+        case typeUtils(LIKEPOSTS).success:
+        case typeUtils(LIKEPOSTS).error:
             return handleAsyncReducer(
                 LIKEPOSTS,
                 "likePosts",
                 true
             )(state, action);
         case FRIENDSPOSTS:
-        case FRIENDSPOSTS_SUCCESS:
-        case FRIENDSPOSTS_ERROR:
+        case typeUtils(FRIENDSPOSTS).success:
+        case typeUtils(FRIENDSPOSTS).error:
             return handleAsyncReducer(
                 FRIENDSPOSTS,
                 "friendsPosts",

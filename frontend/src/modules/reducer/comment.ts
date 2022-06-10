@@ -1,18 +1,6 @@
-import {
-    COMMENTLIST,
-    COMMENTLIST_SUCCESS,
-    COMMENTLIST_ERROR,
-    WRITE,
-    WRITE_SUCCESS,
-    WRITE_ERROR,
-    MODIFY,
-    MODIFY_SUCCESS,
-    MODIFY_ERROR,
-    DELETE,
-    DELETE_SUCCESS,
-    DELETE_ERROR,
-} from "../action/comment";
+import { COMMENTLIST, WRITE, MODIFY, DELETE } from "../action/comment";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     commentList: reducerUtils.initial(null),
@@ -22,27 +10,27 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type, data } = action;
+    const { type } = action;
     switch (type) {
         case COMMENTLIST:
-        case COMMENTLIST_SUCCESS:
-        case COMMENTLIST_ERROR:
+        case typeUtils(COMMENTLIST).success:
+        case typeUtils(COMMENTLIST).error:
             return handleAsyncReducer(
                 COMMENTLIST,
                 "commentList",
                 true
             )(state, action);
         case WRITE:
-        case WRITE_SUCCESS:
-        case WRITE_ERROR:
+        case typeUtils(WRITE).success:
+        case typeUtils(WRITE).error:
             return handleAsyncReducer(WRITE, "write", true)(state, action);
         case MODIFY:
-        case MODIFY_SUCCESS:
-        case MODIFY_ERROR:
+        case typeUtils(MODIFY).success:
+        case typeUtils(MODIFY).error:
             return handleAsyncReducer(MODIFY, "modify", true)(state, action);
         case DELETE:
-        case DELETE_SUCCESS:
-        case DELETE_ERROR:
+        case typeUtils(DELETE).success:
+        case typeUtils(DELETE).error:
             return handleAsyncReducer(DELETE, "delete", true)(state, action);
         default:
             return state;
