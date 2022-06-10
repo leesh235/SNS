@@ -3,7 +3,6 @@ import styled from "../../styles/theme-components";
 import { Text } from "../common/Text";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { ChattingRoom } from "../chat/ChattingRoom";
 
 const Wrapper = styled.section`
     position: fixed;
@@ -72,92 +71,37 @@ const ChatList = styled.section`
     padding: 20px;
 `;
 
-const ChatItem = styled.div`
-    width: 360px;
-    height: 460px;
-    border-radius: 18px;
-    background-color: white;
-    padding: 20px;
-`;
-
-const ChatIcon = styled.div`
-    width: 36px;
-    height: 36px;
-    background-color: blueviolet;
-    border-radius: 18px;
-`;
-
 export const ChattingList = () => {
     const { loading, data, error } = useSelector(
         (state: any) => state.chat.roomList
     );
 
-    const [open, setOpen] = useState<any>();
-    const [room, setRoom] = useState([]);
-
-    const handleOpen = (room: any) => {
-        console.log(room);
-        setOpen(room);
-    };
-
-    const handleClose = () => {
-        setOpen("");
-    };
-
-    const handleRoom = (room: any) => {
-        setRoom((pre) => pre.concat(room));
-    };
-
-    useEffect(() => {
-        console.log(data);
-    }, [loading]);
+    useEffect(() => {}, [loading]);
 
     return (
-        <>
-            <Wrapper>
-                <Text
-                    text={"그룹 대화"}
-                    fs={"17px"}
-                    fw={600}
-                    lh={"20px"}
-                    fc={theme.color.lightBlack}
-                    margin={"0 0 10px 16px"}
-                />
-                {data?.map((val: any, idx: number) => {
-                    return (
-                        <Menu
-                            key={val._id}
-                            onClick={() => {
-                                handleOpen(val._id);
-                                handleRoom(val._id);
-                            }}
-                        >
-                            <Icon />
-                            <Text
-                                text={val.title}
-                                fs={"15px"}
-                                fw={500}
-                                lh={"20px"}
-                                width={"auto"}
-                            />
-                        </Menu>
-                    );
-                })}
-            </Wrapper>
-            <ChatList>
-                {data?.map((val: any, idx: number) => {
-                    if (open === val._id) {
-                        return (
-                            <ChattingRoom
-                                key={val._id}
-                                roomId={val._id}
-                                roomName={val.title}
-                                closeFunc={handleClose}
-                            />
-                        );
-                    }
-                })}
-            </ChatList>
-        </>
+        <Wrapper>
+            <Text
+                text={"그룹 대화"}
+                fs={"17px"}
+                fw={600}
+                lh={"20px"}
+                fc={theme.color.lightBlack}
+                margin={"0 0 10px 16px"}
+            />
+            {data?.map((val: any, idx: number) => {
+                return (
+                    <Menu key={val._id}>
+                        <Icon />
+                        <Text
+                            text={val.title}
+                            fs={"15px"}
+                            fw={500}
+                            lh={"20px"}
+                            width={"auto"}
+                        />
+                    </Menu>
+                );
+            })}
+        </Wrapper>
     );
 };
