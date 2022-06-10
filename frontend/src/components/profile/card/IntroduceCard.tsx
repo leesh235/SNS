@@ -93,10 +93,7 @@ export const IntroduceCard = ({}: Props) => {
         setOpenIntro(false);
     };
 
-    useEffect(() => {
-        console.log("loginInfo: ", loginInfo.data);
-        console.log("userInfo: ", userInfo.data);
-    }, []);
+    useEffect(() => {}, []);
 
     return (
         <BoxShadow tag={"article"}>
