@@ -68,18 +68,13 @@ const IntroduceButton = styled.button`
     }
 `;
 
-export const IntroduceCard = ({
-    introduction,
-    email,
-}: {
-    introduction: string;
-    email: string;
-}) => {
+interface Props {}
+
+export const IntroduceCard = ({}: Props) => {
     const [openIntro, setOpenIntro] = useState<boolean>(false);
 
-    const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.loginInfo
-    );
+    const loginInfo = useSelector((state: any) => state?.user?.loginInfo);
+    const userInfo = useSelector((state: any) => state?.user?.profile);
 
     const dispatch = useDispatch();
 
@@ -99,8 +94,9 @@ export const IntroduceCard = ({
     };
 
     useEffect(() => {
-        // console.log(data);
-    }, [introduction]);
+        console.log("loginInfo: ", loginInfo.data);
+        console.log("userInfo: ", userInfo.data);
+    }, []);
 
     return (
         <BoxShadow tag={"article"}>
@@ -113,13 +109,13 @@ export const IntroduceCard = ({
                     fw={700}
                     width={"95%"}
                 />
-                {email === data.email ? (
+                {userInfo?.data?.email === loginInfo?.data?.email ? (
                     <>
                         {openIntro ? (
                             <form onSubmit={writeIntroduce}>
                                 <IntroduceInput
                                     name="introduce"
-                                    defaultValue={introduction}
+                                    defaultValue={userInfo?.data?.introduction}
                                     placeholder="   회원님에 대해 소개해주세요"
                                 />
                                 <Text
@@ -143,7 +139,7 @@ export const IntroduceCard = ({
                         ) : (
                             <>
                                 <Text
-                                    text={introduction}
+                                    text={userInfo?.data?.introduction}
                                     fs={"15px"}
                                     width={"100%"}
                                     ta={"center"}
@@ -164,14 +160,14 @@ export const IntroduceCard = ({
                     </>
                 ) : (
                     <Text
-                        text={introduction}
+                        text={userInfo?.data?.introduction}
                         fs={"15px"}
                         width={"100%"}
                         ta={"center"}
                         margin={"8px 0"}
                     />
                 )}
-                {email === data.email && (
+                {userInfo?.data?.email === loginInfo?.data?.email && (
                     <>
                         <Button2
                             text={"상세 정보 수정"}
