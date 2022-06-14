@@ -18,12 +18,12 @@ export class Request_friend {
     @ManyToOne((type) => User, (fromUser) => fromUser.fromFriend, {
         onDelete: "CASCADE",
     })
-    @JoinColumn({ name: "userOne", referencedColumnName: "email" })
+    @JoinColumn({ name: "fromUser", referencedColumnName: "email" })
     fromUser: User;
 
     @ManyToOne((type) => User, (toUser) => toUser.toFriend, {
         onDelete: "CASCADE",
     })
-    @JoinColumn({ name: "userTwo", referencedColumnName: "email" })
+    @JoinColumn({ name: "toUser", referencedColumnName: "email" })
     toUser: User;
 }

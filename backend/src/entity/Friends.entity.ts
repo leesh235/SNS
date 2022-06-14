@@ -17,21 +17,15 @@ export class Friends {
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
     createdAt: Date | undefined;
 
-    @UpdateDateColumn({ type: "timestamp", name: "update_date" })
-    updatedAt: Date | undefined;
-
-    @Column({ type: "boolean", default: false, name: "status" })
-    status: boolean;
-
-    @ManyToOne((type) => User, (req_user) => req_user.userOne, {
+    @ManyToOne((type) => User, (userOne) => userOne.friendOne, {
         onDelete: "CASCADE",
     })
     @JoinColumn({ name: "userOne", referencedColumnName: "email" })
-    req_user: User;
+    userOne: User;
 
-    @ManyToOne((type) => User, (res_user) => res_user.userTwo, {
+    @ManyToOne((type) => User, (userTwo) => userTwo.friendTwo, {
         onDelete: "CASCADE",
     })
     @JoinColumn({ name: "userTwo", referencedColumnName: "email" })
-    res_user: User;
+    userTwo: User;
 }
