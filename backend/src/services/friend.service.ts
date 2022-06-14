@@ -1,6 +1,8 @@
 import { dataSource } from "../config/typeorm";
 import { Friends } from "../entity/Friends.entity";
+import { Request_friend } from "../entity/Request_friend";
 
+const requestFriendsRepository = dataSource.getRepository(Request_friend);
 const friendsRepository = dataSource.getRepository(Friends);
 
 export const request = async (req: any) => {
@@ -9,11 +11,25 @@ export const request = async (req: any) => {
             body: { friend_email },
             user: { email },
         } = req;
-        const friends = new Friends();
-        friends.req_user = email;
-        friends.res_user = friend_email;
 
-        await friendsRepository.save(friends);
+        const exist = await friendsRepository.findOne({
+            relations: {
+                userOne: true,
+                userTwo: true,
+            },
+            where: [
+                { userOne: { email: friend_email } },
+                { userTwo: { email: friend_email } },
+            ],
+        });
+
+        if (exist) return false;
+
+        const friends = new Request_friend();
+        friends.fromUser = email;
+        friends.toUser = friend_email;
+
+        await requestFriendsRepository.save(friends);
 
         return true;
     } catch (error) {
@@ -29,10 +45,45 @@ export const response = async (req: any) => {
             user: { email },
         } = req;
 
-        const result = await friendsRepository.update(
-            { id, res_user: { email } },
-            { status: true }
-        );
+        const request: any = await requestFriendsRepository.findOne({
+            relations: { toUser: true, fromUser: true },
+            where: { id },
+            select: {
+                id: true,
+                toUser: { email: true },
+                fromUser: { email: true },
+            },
+        });
+
+        const friend = new Friends();
+        friend.userOne = request?.fromUser.email;
+        friend.userTwo = email;
+
+        await friendsRepository.save(friend);
+
+        await requestFriendsRepository.delete({
+            id,
+            toUser: { email },
+        });
+
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
+
+export const refuse = async (req: any) => {
+    try {
+        const {
+            body: { id },
+            user: { email },
+        } = req;
+
+        await requestFriendsRepository.delete({
+            id,
+            toUser: { email },
+        });
 
         return true;
     } catch (error) {
@@ -48,8 +99,8 @@ export const get_is_friend = async (req: any) => {
         } = req;
 
         const result = await friendsRepository.findOne({
-            relations: { req_user: true, res_user: true },
-            where: [{ req_user: { email } }, { res_user: { email } }],
+            relations: { userOne: true, userTwo: true },
+            where: [{ userOne: { email } }, { userTwo: { email } }],
         });
 
         if (!result) return false;
@@ -61,47 +112,21 @@ export const get_is_friend = async (req: any) => {
     }
 };
 
-const modeFilter = (list: any, key: string) => {
-    let result: any[] = [];
-    list.forEach((val: any, idx: number) => {
-        result.push({ id: val.id, user: val[key] });
-    });
-    return result;
-};
-
-export const findAll = async (
-    req: any,
-    mode: "friend" | "request" | "response"
-) => {
+export const findAll = async (req: any) => {
     try {
         const {
+            query: { select, search },
             user: { email },
         } = req;
 
-        let status = mode === "friend" ? true : false;
-
-        const req_list = await friendsRepository.find({
-            relations: {
-                res_user: true,
-            },
-            where: { status, res_user: { email } },
+        const friendList = await friendsRepository.find({
+            relations: { userOne: true, userTwo: true },
+            where: [{ userOne: { email } }, { userTwo: { email } }],
             select: {
                 id: true,
-                res_user: { email: true, nickName: true, profileImage: true },
-            },
-            order: {
-                createdAt: "desc",
-            },
-        });
-
-        const res_list = await friendsRepository.find({
-            relations: {
-                req_user: true,
-            },
-            where: { status, req_user: { email } },
-            select: {
-                id: true,
-                req_user: { email: true, nickName: true, profileImage: true },
+                createdAt: true,
+                userOne: { email: true, nickName: true, profileImage: true },
+                userTwo: { email: true, nickName: true, profileImage: true },
             },
             order: {
                 createdAt: "desc",
@@ -110,38 +135,89 @@ export const findAll = async (
 
         let result: any[] = [];
 
-        if (mode === "request") {
-            return modeFilter(req_list, "res_user");
-        } else if (mode === "response") {
-            return modeFilter(res_list, "req_user");
-        } else if (mode === "friend") {
-            result = modeFilter(req_list, "res_user").concat(
-                modeFilter(res_list, "req_user")
-            );
-            return result;
-        } else {
-            return [];
-        }
+        friendList.forEach((val: any) => {
+            const { id, userOne, userTwo } = val;
+            const userEmail =
+                userOne.email === email ? userTwo.email : userOne.email;
+            const userNickName =
+                userOne.email === email ? userTwo.nickName : userOne.nickName;
+            const userProfileImage =
+                userOne.email === email
+                    ? userTwo.profileImage
+                    : userOne.profileImage;
+            result.push({
+                id,
+                email: userEmail,
+                nickName: userNickName,
+                profileImage: userProfileImage,
+            });
+        });
+
+        return result;
     } catch (error) {
+        console.log(error);
         return [];
     }
 };
 
-export const findSimple = async (req: any) => {
+export const findRequest = async (req: any, mode: "request" | "response") => {
     try {
         const {
             user: { email },
         } = req;
 
-        const req_list = await friendsRepository.find({
+        const list = await requestFriendsRepository.find({
             relations: {
-                res_user: true,
+                toUser: true,
+                fromUser: true,
             },
-            where: { status: false, res_user: { email } },
+            where: [{ fromUser: { email } }, { toUser: { email } }],
+            select: {
+                id: true,
+                fromUser: { email: true, nickName: true, profileImage: true },
+                toUser: { email: true, nickName: true, profileImage: true },
+            },
+            order: {
+                createdAt: "desc",
+            },
+        });
+        console.log(list);
+        let result: any[] = [];
+
+        list.forEach((val: any) => {
+            const { id, fromUser, toUser } = val;
+            const user = mode === "request" ? fromUser : toUser;
+            result.push({
+                id,
+                email: user.email,
+                nickName: user.nickName,
+                profileImage: user.profileImage,
+            });
+        });
+
+        return result;
+    } catch (error) {
+        return [];
+    }
+};
+
+export const findAllList = async (req: any) => {
+    try {
+        const {
+            user: { email },
+        } = req;
+
+        const list = await requestFriendsRepository.find({
+            relations: {
+                toUser: true,
+                fromUser: true,
+            },
+            where: [{ toUser: { email } }, { fromUser: { email } }],
             select: {
                 id: true,
                 createdAt: true,
-                res_user: { email: true, nickName: true, profileImage: true },
+                toUser: { email: true, nickName: true, profileImage: true },
+                fromUser: { email: true, nickName: true, profileImage: true },
             },
             order: {
                 createdAt: "desc",
@@ -149,86 +225,70 @@ export const findSimple = async (req: any) => {
             take: 4,
         });
 
-        const res_list = await friendsRepository.find({
-            relations: {
-                req_user: true,
-            },
-            where: { status: false, req_user: { email } },
+        let requestList: any[] = [];
+        let responseList: any[] = [];
+
+        list.forEach((val: any) => {
+            const { id, fromUser, toUser } = val;
+            if (fromUser.email === email)
+                requestList.push({
+                    id,
+                    email: fromUser.email,
+                    nickName: fromUser.nickName,
+                    profileImage: fromUser.profileImage,
+                });
+            else
+                responseList.push({
+                    id,
+                    email: toUser.email,
+                    nickName: toUser.nickName,
+                    profileImage: toUser.profileImage,
+                });
+        });
+
+        const friendList = await friendsRepository.find({
+            relations: { userOne: true, userTwo: true },
+            where: [{ userOne: { email } }, { userTwo: { email } }],
             select: {
                 id: true,
                 createdAt: true,
-                req_user: { email: true, nickName: true, profileImage: true },
+                userOne: { email: true, nickName: true, profileImage: true },
+                userTwo: { email: true, nickName: true, profileImage: true },
             },
             order: {
                 createdAt: "desc",
             },
-            take: 4,
         });
 
-        const req_frined = await friendsRepository.find({
-            relations: {
-                res_user: true,
-            },
-            where: { status: true, res_user: { email } },
-            select: {
-                id: true,
-                updatedAt: true,
-                res_user: { email: true, nickName: true, profileImage: true },
-            },
-            order: {
-                updatedAt: "desc",
-            },
-            take: 2,
+        let friends: any[] = [];
+
+        friendList.forEach((val: any) => {
+            const { id, userOne, userTwo } = val;
+            const userEmail =
+                userOne.email === email ? userTwo.email : userOne.email;
+            const userNickName =
+                userOne.email === email ? userTwo.nickName : userOne.nickName;
+            const userProfileImage =
+                userOne.email === email
+                    ? userTwo.profileImage
+                    : userOne.profileImage;
+            friends.push({
+                id,
+                email: userEmail,
+                nickName: userNickName,
+                profileImage: userProfileImage,
+            });
         });
 
-        const res_frined = await friendsRepository.find({
-            relations: {
-                req_user: true,
-            },
-            where: { status: true, req_user: { email } },
-            select: {
-                id: true,
-                updatedAt: true,
-                req_user: { email: true, nickName: true, profileImage: true },
-            },
-            order: {
-                updatedAt: "desc",
-            },
-            take: 2,
-        });
-
-        let result;
-
-        result = {
-            request: modeFilter(req_list, "res_user"),
-            response: modeFilter(res_list, "req_user"),
-            friends: modeFilter(req_frined, "res_user").concat(
-                modeFilter(res_frined, "req_user")
-            ),
+        let result = {
+            requestList,
+            responseList,
+            friends,
         };
 
         return result;
     } catch (error) {
         console.log(error);
         return {};
-    }
-};
-
-export const refuse = async (req: any) => {
-    try {
-        const {
-            body: { id },
-            user: { email },
-        } = req;
-
-        await friendsRepository.delete({
-            id,
-            res_user: { email },
-        });
-
-        return true;
-    } catch (error) {
-        console.log(error);
-        return false;
     }
 };

@@ -5,8 +5,9 @@ import {
     response,
     findAll,
     refuse,
-    findSimple,
+    findAllList,
     get_is_friend,
+    findRequest,
 } from "../services/friend.service";
 
 const router = express.Router();
@@ -50,7 +51,7 @@ router.post(routes.friend.refuse, async (req, res) => {
 //친구 요청 리스트
 router.get(routes.friend.request_list, async (req, res) => {
     try {
-        res.status(200).send(await findAll(req, "request"));
+        res.status(200).send(await findRequest(req, "request"));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -59,7 +60,7 @@ router.get(routes.friend.request_list, async (req, res) => {
 //친구 응답 리스트
 router.get(routes.friend.response_list, async (req, res) => {
     try {
-        res.status(200).send(await findAll(req, "response"));
+        res.status(200).send(await findRequest(req, "response"));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -68,7 +69,7 @@ router.get(routes.friend.response_list, async (req, res) => {
 //친구 목록
 router.get(routes.friend.friend_list, async (req, res) => {
     try {
-        res.status(200).send(await findAll(req, "friend"));
+        res.status(200).send(await findAll(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -77,7 +78,7 @@ router.get(routes.friend.friend_list, async (req, res) => {
 //친구 home 목록
 router.get(routes.friend.all, async (req, res) => {
     try {
-        res.status(200).send(await findSimple(req));
+        res.status(200).send(await findAllList(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
