@@ -50,7 +50,7 @@ export const FriendsHome = ({ handleMenu }: Props) => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.friends?.all
     );
-
+    console.log(data);
     return (
         <Wrapper>
             <SectionWrapper>
@@ -71,7 +71,7 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                     </EventWrapper>
                 </FlexWrapper>
                 <CardWrapper>
-                    {data?.request?.map((val: any, idx: number) => {
+                    {data?.requestList?.map((val: any, idx: number) => {
                         return <FriendCard key={idx} user={val} type={"req"} />;
                     })}
                 </CardWrapper>
@@ -94,7 +94,7 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                     </EventWrapper>
                 </FlexWrapper>
                 <CardWrapper>
-                    {data?.response?.map((val: any, idx: number) => {
+                    {data?.responseList?.map((val: any, idx: number) => {
                         return <FriendCard key={idx} user={val} type={"res"} />;
                     })}
                 </CardWrapper>

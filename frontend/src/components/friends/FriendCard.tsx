@@ -105,14 +105,9 @@ export const FriendCard = ({ user, type }: Props) => {
 
     return (
         <Wrapper>
-            <ImageWrapper src={user.user.profileImage} />
+            <ImageWrapper src={user.profileImage} />
             <UserInfo>
-                <Text
-                    text={user.user.nickName}
-                    fs={"17px"}
-                    fw={600}
-                    lh={"20px"}
-                />
+                <Text text={user.nickName} fs={"17px"} fw={600} lh={"20px"} />
                 <BtnWrapper>
                     {type === "req" && (
                         <ConfirmBtn
