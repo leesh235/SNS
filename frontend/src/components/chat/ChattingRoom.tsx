@@ -10,23 +10,25 @@ import {
 import { response, request, event } from "../../utils/socket";
 
 const Wrapper = styled.div`
-    width: 360px;
-    height: 460px;
-    border-radius: 18px;
+    width: 338px;
+    height: 100%;
+    border-radius: 6px;
     background-color: white;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 `;
 const Title = styled.div`
-    width: 100%;
-    height: 40px;
+    width: calc(100% - 16px);
+    height: 32px;
+    padding: 8px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid gray;
     > :nth-child(2) {
         display: flex;
         flex-direction: row;
@@ -34,23 +36,23 @@ const Title = styled.div`
 `;
 
 const Message = styled.div`
-    width: 100%;
-    /* height: calc(100% - 80px); */
-    max-height: 380px;
+    width: calc(100% - 16px);
+    height: 346px;
+    padding: 0 8px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
     overflow-x: hidden;
     overflow-y: auto;
 `;
 
 const Chatting = styled.form`
     width: 100%;
-    height: 40px;
+    height: 60px;
     > input {
         width: 100%;
         height: 100%;
+        border: 0;
     }
 `;
 

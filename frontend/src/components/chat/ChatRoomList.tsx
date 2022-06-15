@@ -12,8 +12,7 @@ const Wrapper = styled.section`
     justify-content: flex-end;
     align-items: flex-end;
     width: auto;
-    height: 540px;
-    padding: 20px;
+    height: 455px;
 `;
 
 const ChatRoomWrapper = styled.section`
@@ -23,7 +22,7 @@ const ChatRoomWrapper = styled.section`
     flex-direction: column-reverse;
     align-items: flex-end;
     justify-content: center;
-    margin-left: 20px;
+    margin: 20px;
 `;
 
 const ChatRoomIcon = styled.div`
