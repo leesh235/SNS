@@ -2,11 +2,11 @@ import { User } from "../models/user.model";
 
 export const getUser = async (req) => {
     try {
-        const { email } = req.query;
+        const { userId } = req.query;
         const user = await User.findOne({
-            email,
+            _id: userId,
         });
-        console.log("getUser: ", user);
+
         return user;
     } catch (error) {
         console.log(error);
@@ -19,7 +19,7 @@ export const saveUser = async (req) => {
         const { email, nickName } = req.body;
 
         const user = await User.create({
-            email,
+            _id: email,
             nickName,
         });
         console.log("saveUser: ", user);
