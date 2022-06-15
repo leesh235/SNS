@@ -1,3 +1,4 @@
+import { In, Not } from "typeorm";
 import { dataSource } from "../config/typeorm";
 import { Friends } from "../entity/Friends.entity";
 import { Request_friend } from "../entity/Request_friend";
@@ -115,7 +116,6 @@ export const get_is_friend = async (req: any) => {
 export const findAll = async (req: any) => {
     try {
         const {
-            query: { select, search },
             user: { email },
         } = req;
 
@@ -135,7 +135,7 @@ export const findAll = async (req: any) => {
 
         let result: any[] = [];
 
-        friendList.forEach((val: any) => {
+        friendList.map((val: any) => {
             const { id, userOne, userTwo } = val;
             const userEmail =
                 userOne.email === email ? userTwo.email : userOne.email;
@@ -181,7 +181,7 @@ export const findRequest = async (req: any, mode: "request" | "response") => {
                 createdAt: "desc",
             },
         });
-        console.log(list);
+
         let result: any[] = [];
 
         list.forEach((val: any) => {
