@@ -1,8 +1,10 @@
 import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
 import { Text } from "../common/Text";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { setJoinRoom, setLeaveRoom } from "../../modules/action/chat";
+import { CreateChatRoom } from "../chat/CreateChatRoom";
 
 const Wrapper = styled.section`
     position: fixed;
@@ -53,55 +55,80 @@ const Menu = styled.li`
 const Icon = styled.div`
     width: 36px;
     height: 36px;
-    background-color: blueviolet;
+    background-color: ${(props) => props.theme.color.white};
     border-radius: 18px;
     margin: 12px 18px 12px 0px;
-`;
-
-const ChatList = styled.section`
-    position: fixed;
-    right: 0;
-    bottom: 0;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    align-items: flex-end;
-    width: auto;
-    height: 540px;
-    padding: 20px;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const ChattingList = () => {
+    const dispatch = useDispatch();
+
     const { loading, data, error } = useSelector(
         (state: any) => state.chat.roomList
     );
 
+    const [open, setOpen] = useState<boolean>(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleOpenRoom = (id: string) => {
+        dispatch(setJoinRoom({ id }));
+        dispatch(setLeaveRoom(id));
+    };
+
     useEffect(() => {}, [loading]);
 
     return (
-        <Wrapper>
-            <Text
-                text={"그룹 대화"}
-                fs={"17px"}
-                fw={600}
-                lh={"20px"}
-                fc={theme.color.lightBlack}
-                margin={"0 0 10px 16px"}
-            />
-            {data?.map((val: any, idx: number) => {
-                return (
-                    <Menu key={val._id}>
-                        <Icon />
-                        <Text
-                            text={val.title}
-                            fs={"15px"}
-                            fw={500}
-                            lh={"20px"}
-                            width={"auto"}
-                        />
-                    </Menu>
-                );
-            })}
-        </Wrapper>
+        <>
+            <Wrapper>
+                <Text
+                    text={"그룹 대화"}
+                    fs={"17px"}
+                    fw={600}
+                    lh={"20px"}
+                    fc={theme.color.lightBlack}
+                    margin={"0 0 10px 16px"}
+                />
+                {data?.map((val: any, idx: number) => {
+                    return (
+                        <Menu
+                            key={val._id}
+                            onClick={() => {
+                                handleOpenRoom(val._id);
+                            }}
+                        >
+                            <Icon />
+                            <Text
+                                text={val.title}
+                                fs={"15px"}
+                                fw={500}
+                                lh={"20px"}
+                                width={"auto"}
+                            />
+                        </Menu>
+                    );
+                })}
+                <Menu onClick={() => handleOpen()}>
+                    <Icon>+</Icon>
+                    <Text
+                        text={"새 그룹 만들기"}
+                        fs={"15px"}
+                        fw={500}
+                        lh={"20px"}
+                        width={"auto"}
+                    />
+                </Menu>
+            </Wrapper>
+            {open && <CreateChatRoom closeFunc={handleClose} />}
+        </>
     );
 };
