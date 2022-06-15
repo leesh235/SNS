@@ -1,4 +1,4 @@
-import { In, Not } from "typeorm";
+import { In, Not, Like } from "typeorm";
 import { dataSource } from "../config/typeorm";
 import { Friends } from "../entity/Friends.entity";
 import { Request_friend } from "../entity/Request_friend";
@@ -116,12 +116,33 @@ export const get_is_friend = async (req: any) => {
 export const findAll = async (req: any) => {
     try {
         const {
+            query: { select, search },
             user: { email },
         } = req;
+        console.log(select);
+        console.log(search);
+
+        let NotIn: any[] = [];
+        if (select !== undefined) NotIn = select;
 
         const friendList = await friendsRepository.find({
             relations: { userOne: true, userTwo: true },
-            where: [{ userOne: { email } }, { userTwo: { email } }],
+            where: [
+                {
+                    userOne: { email },
+                    userTwo: {
+                        email: Not(In(NotIn)),
+                        nickName: Like(`%${search}%`),
+                    },
+                },
+                {
+                    userTwo: { email },
+                    userOne: {
+                        email: Not(In(NotIn)),
+                        nickName: Like(`%${search}%`),
+                    },
+                },
+            ],
             select: {
                 id: true,
                 createdAt: true,
@@ -132,6 +153,7 @@ export const findAll = async (req: any) => {
                 createdAt: "desc",
             },
         });
+        console.log(friendList);
 
         let result: any[] = [];
 
