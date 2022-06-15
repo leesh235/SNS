@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { routes } from "../../utils/routes";
 import { Header } from "../header/Header";
+import { ChatRoomList } from "../chat/ChatRoomList";
 import Main from "../../pages/Main";
 import Start from "../../pages/Start";
 import Profile from "../../pages/Profile";
@@ -15,7 +16,6 @@ export const LogInRoute = () => {
             <Routes>
                 <Route path={`${routes.home}`} element={<Main />} />
                 <Route path={`${routes.welcome}`} element={<Start />} />
-                {/* <Route path={`${routes.profile}`} element={<Profile />} /> */}
                 <Route path={`${routes.detail}:postId`} element={<Detail />} />
                 <Route
                     path={`${routes.userInfo}:email`}
@@ -24,6 +24,7 @@ export const LogInRoute = () => {
                 <Route path={`${routes.friends}`} element={<Friends />} />
                 <Route path={`${routes.search}`} element={<Search />} />
             </Routes>
+            <ChatRoomList />
         </Router>
     );
 };
