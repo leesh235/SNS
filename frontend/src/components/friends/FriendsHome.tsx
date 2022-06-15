@@ -50,7 +50,7 @@ export const FriendsHome = ({ handleMenu }: Props) => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.friends?.all
     );
-    console.log(data);
+
     return (
         <Wrapper>
             <SectionWrapper>

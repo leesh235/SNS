@@ -42,7 +42,7 @@ const Friends = () => {
             dispatch(setAllList());
             dispatch(setRequestList());
             dispatch(setResponseList());
-            dispatch(setFriendList());
+            dispatch(setFriendList({ select: [], search: "" }));
         });
     }, [menu]);
 
