@@ -7,6 +7,7 @@ import {
     deleteRoom,
     modifyRoom,
 } from "../services/room.service";
+import { getRooms } from "../services/user_room.service";
 
 const router = express.Router();
 
@@ -21,8 +22,7 @@ router.get(routes.room.room, async (req, res) => {
 
 router.get(routes.room.room_list, async (req, res) => {
     try {
-        await findRoomList(req);
-        res.status(200).send({ message: `success_room_list` });
+        res.status(200).send(await getRooms(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
