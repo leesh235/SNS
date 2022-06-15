@@ -47,9 +47,10 @@ export const setResponseList = () => {
     };
 };
 
-export const setFriendList = () => {
+export const setFriendList = (data?: any) => {
     return {
         type: FRIENDSLIST,
+        data,
     };
 };
 
