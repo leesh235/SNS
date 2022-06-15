@@ -2,7 +2,11 @@ import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMessageList } from "../../modules/action/chat";
+import {
+    setMessageList,
+    setJoinRoom,
+    setJoinRoomList,
+} from "../../modules/action/chat";
 import { response, request, event } from "../../utils/socket";
 
 const Wrapper = styled.div`
@@ -23,6 +27,10 @@ const Title = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    > :nth-child(2) {
+        display: flex;
+        flex-direction: row;
+    }
 `;
 
 const Message = styled.div`
@@ -49,19 +57,19 @@ const Chatting = styled.form`
 const LeaveBtn = styled.div`
     width: 20px;
     height: 20px;
+    margin-left: 10px;
     cursor: pointer;
 `;
 
 interface Props {
     roomId: Number;
     roomName: String;
-    closeFunc: any;
 }
 
-export const ChattingRoom = ({ roomId, roomName, closeFunc }: Props) => {
+export const ChattingRoom = ({ roomId, roomName }: Props) => {
     const dispatch = useDispatch();
 
-    const user_store = useSelector((state: any) => state.profile.profile);
+    const user_store = useSelector((state: any) => state.user.loginInfo);
     const { loading, data, error } = useSelector(
         (state: any) => state.chat.messageList
     );
@@ -85,8 +93,12 @@ export const ChattingRoom = ({ roomId, roomName, closeFunc }: Props) => {
     };
 
     const handleLeave = () => {
-        closeFunc();
+        dispatch(setJoinRoom({ id: "" }));
         request(event.leave, { roomId, userId: user_store.data.email });
+    };
+
+    const handleSimple = () => {
+        dispatch(setJoinRoomList(roomId));
     };
 
     useEffect(() => {
@@ -95,17 +107,26 @@ export const ChattingRoom = ({ roomId, roomName, closeFunc }: Props) => {
         response(event.message, (data: any) => {
             createDom("chatList", "div", data);
         });
-        console.log(data);
     }, []);
 
     return (
         <Wrapper>
             <Title>
                 <div>{roomName}</div>
-                <LeaveBtn onClick={handleLeave}>X</LeaveBtn>
+                <div>
+                    <LeaveBtn
+                        onClick={() => {
+                            handleSimple();
+                            handleLeave();
+                        }}
+                    >
+                        ㅡ
+                    </LeaveBtn>
+                    <LeaveBtn onClick={handleLeave}>X</LeaveBtn>
+                </div>
             </Title>
             <Message id="chatList">
-                {data.map((val: any) => {
+                {data?.map((val: any) => {
                     return (
                         <div key={val._id}>
                             {val.nickName}:{val.message}
