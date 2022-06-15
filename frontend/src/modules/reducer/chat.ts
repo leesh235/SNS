@@ -1,14 +1,22 @@
-import { ROOMLIST, MESSAGELIST } from "../action/chat";
+import {
+    ROOMLIST,
+    MESSAGELIST,
+    JOINROOM,
+    JOINROOMLIST,
+    LEAVEROOM,
+} from "../action/chat";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
     roomList: reducerUtils.initial(null),
     messageList: reducerUtils.initial(null),
+    joinRoom: { id: "" },
+    joinRoomList: [],
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type } = action;
+    const { type, data } = action;
     switch (type) {
         case ROOMLIST:
         case typeUtils(ROOMLIST).success:
@@ -26,6 +34,24 @@ const reducer = (state = initialState, action: any) => {
                 "messageList",
                 true
             )(state, action);
+        case JOINROOM:
+            return {
+                ...state,
+                joinRoom: data,
+            };
+        case JOINROOMLIST:
+            return {
+                ...state,
+                joinRoomList: [...state.joinRoomList, data],
+            };
+        case LEAVEROOM:
+            const arr = state.joinRoomList.filter((val) => {
+                return val !== data;
+            });
+            return {
+                ...state,
+                joinRoomList: arr,
+            };
         default:
             return state;
     }
