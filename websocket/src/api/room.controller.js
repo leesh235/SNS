@@ -6,6 +6,7 @@ import {
     createRoom,
     deleteRoom,
     modifyRoom,
+    createGroupRoom,
 } from "../services/room.service";
 import { getRooms } from "../services/user_room.service";
 
@@ -28,10 +29,17 @@ router.get(routes.room.room_list, async (req, res) => {
     }
 });
 
+router.post(routes.room.create_group, async (req, res) => {
+    try {
+        res.status(200).send(await createGroupRoom(req));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
 router.post(routes.room.create, async (req, res) => {
     try {
-        await createRoom(req);
-        res.status(200).send({ message: `success_create` });
+        res.status(200).send(await createRoom(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

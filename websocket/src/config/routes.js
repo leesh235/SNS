@@ -7,6 +7,7 @@ export const baseRoutes = {
 export const routes = {
     room: {
         create: "/create",
+        create_group: "/create_group",
         delete: "/delete",
         modify: "/modify",
         room: "/room",
