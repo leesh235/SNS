@@ -65,6 +65,7 @@ export const api = {
         all: "/friends/all",
     },
     chat: {
+        create_group: "/room/create_group",
         getRoomList: "/room/room_list",
         modifyRoomName: "/room/modify",
         deleteRoom: "/room/delete",

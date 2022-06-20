@@ -3,6 +3,7 @@ export const MESSAGELIST = "chat/MESSAGELIST";
 export const JOINROOM = "chat/JOINROOM";
 export const JOINROOMLIST = "chat/JOINROOMLIST";
 export const LEAVEROOM = "chat/LEAVEROOM";
+export const CREATEGROUPROOM = "chat/CREATEGROUPROOM";
 
 export const setRoomList = () => {
     return {
@@ -34,6 +35,13 @@ export const setJoinRoomList = (data: any) => {
 export const setLeaveRoom = (data: any) => {
     return {
         type: LEAVEROOM,
+        data,
+    };
+};
+
+export const setCreateGroupRoom = (data: any) => {
+    return {
+        type: CREATEGROUPROOM,
         data,
     };
 };
