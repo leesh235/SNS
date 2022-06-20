@@ -5,7 +5,7 @@ export const findRoom = async (req) => {
     try {
         const { roomId } = req;
         const rooms = await Room.findOne({ title: roomId });
-        // console.log("findRoom: ", rooms);
+
         if (!rooms) {
             return false;
         } else {
@@ -45,14 +45,14 @@ export const createGroupRoom = async (req) => {
             title,
         });
 
-        let arr = [];
+        let arr = [{ room: room._id.toString(), user: "test2" }];
         select.forEach((val, idx) => {
             arr.push({ room: room._id.toString(), user: val.email });
         });
 
         await UserRoom.create(arr);
 
-        return true;
+        return room;
     } catch (error) {
         console.log(error);
         return false;
@@ -61,7 +61,7 @@ export const createGroupRoom = async (req) => {
 
 export const createRoom = async (req) => {
     try {
-        const { select } = req.body;
+        const { friend } = req.body;
 
         let title;
         if (typeof select === "object") {
