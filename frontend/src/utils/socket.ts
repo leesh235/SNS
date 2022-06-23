@@ -1,6 +1,8 @@
 import { io } from "socket.io-client";
 
-export let socket: any = io("http://localhost:4000/");
+export let socket: any = io("http://localhost:4000/", {
+    query: { token: `${localStorage.getItem("token")}` },
+});
 
 export const connectSocket = () => {
     if (socket) return;

@@ -11,4 +11,7 @@ export const backend = axios.create({
 
 export const websocket = axios.create({
     baseURL: REACT_APP_WS,
+    headers: {
+        Authorization: `${localStorage.getItem("token")}`,
+    },
 });
