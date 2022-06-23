@@ -4,12 +4,28 @@ import { findRoom, createRoom } from "../services/room.service";
 import { joinUserToRoom } from "../services/user_room.service";
 import { createChat } from "../services/chat.service";
 import { getUser } from "../services/user.service";
+import { verify } from "jsonwebtoken";
+import { jwt_authenticate } from "../config/jwt";
 
 export default (server) => {
-    const { FE_URL, BE_URL } = process.env;
+    const { FE_URL, JWT_SECRET } = process.env;
     const io = new Server(server, { cors: { origin: `${FE_URL}` } });
 
-    io.on("connection", (socket) => {
+    io.use((socket, next) => {
+        if (socket?.handshake?.query?.token) {
+            verify(
+                socket?.handshake?.query?.token,
+                `${JWT_SECRET}`,
+                (err, decoded) => {
+                    if (err) return next(new Error(`Authentication error`));
+                    socket.decoded = decoded;
+                    next();
+                }
+            );
+        } else {
+            next(new Error(`Authentication error`));
+        }
+    }).on("connection", (socket) => {
         console.log("connection");
         /*
             1.작동 방식

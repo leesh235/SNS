@@ -6,16 +6,19 @@ import { baseRoutes } from "../config/routes";
 import room from "../api/room.controller";
 import message from "../api/chat.controller";
 import user from "../api/user.controller";
+//middleware
+import { jwt_authenticate } from "../config/jwt";
 
 export default async (app) => {
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morgan("dev"));
+    app.use(jwt_authenticate);
 
-    app.use(baseRoutes.room, room);
-    app.use(baseRoutes.message, message);
-    app.use(baseRoutes.user, user);
+    app.use(baseRoutes.room, jwt_authenticate, room);
+    app.use(baseRoutes.message, jwt_authenticate, message);
+    app.use(baseRoutes.user, jwt_authenticate, user);
 
     return app;
 };
