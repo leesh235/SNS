@@ -8,6 +8,10 @@ const userRoomSchema = new mongoose.Schema({
         required: [true],
         default: Date.now(),
     },
+    title: {
+        type: String,
+        required: [true],
+    },
     user: { type: String, ref: "User" },
     room: { type: ObjectId, ref: "Room" },
 });
