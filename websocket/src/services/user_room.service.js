@@ -2,16 +2,17 @@ import { UserRoom } from "../models/user_room.model";
 
 export const getRooms = async (req) => {
     try {
-        const { userId } = req.query;
-        const rooms = await UserRoom.find({ user: "test2" })
+        const { email } = req.user;
+
+        const rooms = await UserRoom.find({ user: email })
             .populate("room")
-            .select({ room: true });
+            .select({ room: true, title: true });
 
         let result = [];
         rooms.map((val) => {
             result.push({
                 _id: val.room._id.toString(),
-                title: val.room.title,
+                title: val.title,
             });
         });
 
