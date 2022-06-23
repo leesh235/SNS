@@ -4,13 +4,13 @@ export const findChatList = async (req) => {
     try {
         const { roomId } = req.query;
 
-        const chat = await Chat.find({ room: roomId }).populate("user");
-        let result = [];
+        const chat = await Chat.find({ room: roomId });
 
+        let result = [];
         chat.forEach((val) => {
             result.push({
                 _id: val._id,
-                nickName: val.user.nickName,
+                nickName: val.nickName,
                 message: val.message,
             });
         });
@@ -24,15 +24,20 @@ export const findChatList = async (req) => {
 
 export const createChat = async (req) => {
     try {
-        const { roomId, userId, msg } = req;
+        const { roomId, userId, nickName, msg } = req.body;
 
         const chat = await Chat.create({
             room: roomId,
-            user: userId,
+            userId,
+            nickName: nickName,
             message: msg,
-        }).then((data) => data.populate("user"));
+        });
 
-        return chat;
+        return {
+            nickName: chat.nickName,
+            message: chat.message,
+            roomId: chat.room.toString(),
+        };
     } catch (error) {
         console.log(error);
         return error;

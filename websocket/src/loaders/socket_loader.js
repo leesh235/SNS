@@ -1,11 +1,8 @@
 import { Server } from "socket.io";
 import { event } from "../config/routes";
-import { findRoom, createRoom } from "../services/room.service";
-import { joinUserToRoom } from "../services/user_room.service";
 import { createChat } from "../services/chat.service";
 import { getUser } from "../services/user.service";
 import { verify } from "jsonwebtoken";
-import { jwt_authenticate } from "../config/jwt";
 
 export default (server) => {
     const { FE_URL, JWT_SECRET } = process.env;
@@ -59,30 +56,27 @@ export default (server) => {
                     -user_room등록/user_room해제
         */
 
-        socket.on(event.join, ({ roomId, userId }) => {
+        socket.on(event.join, ({ roomId }) => {
             socket.join(roomId);
-            io.to(roomId).emit(event.message, `${userId}님이 입장하셨습니다.`);
         });
 
-        socket.on(event.leave, async ({ roomId, userId }) => {
-            const { nickName } = await getUser({ query: { userId } });
-            io.to(roomId).emit(
-                event.message,
-                `${nickName}님이 퇴장하셨습니다.`
-            );
+        socket.on(event.leave, async ({ roomId }) => {
             socket.leave(roomId);
         });
 
-        socket.on(event.chat, async ({ roomId, userId, msg }) => {
-            const {
-                user: { nickName },
-                message,
-            } = await createChat({
-                roomId,
-                userId,
-                msg,
+        socket.on(event.chat, async ({ roomId, userId, nickName, msg }) => {
+            const result = await createChat({
+                body: {
+                    roomId,
+                    userId,
+                    msg,
+                    nickName,
+                },
             });
-            io.to(roomId).emit(event.message, `${nickName}: ${message}`);
+            io.to(result.roomId).emit(
+                event.message,
+                `${result.nickName}: ${result.message}`
+            );
         });
 
         socket.on("disconnect", () => {

@@ -12,7 +12,14 @@ const chatSchema = new mongoose.Schema({
         required: [true],
         default: Date.now(),
     },
-    user: { type: String, ref: "User" },
+    userId: {
+        type: String,
+        required: [true],
+    },
+    nickName: {
+        type: String,
+        required: [true],
+    },
     room: { type: ObjectId, ref: "Room" },
 });
 
