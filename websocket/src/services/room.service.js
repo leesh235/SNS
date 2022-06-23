@@ -17,37 +17,25 @@ export const findRoom = async (req) => {
     }
 };
 
-export const findRoomList = async (req) => {
-    try {
-        // const { email } = req.body;
-        const rooms = await Room.find({});
-        console.log(rooms);
-        return rooms;
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
-};
-
 export const createGroupRoom = async (req) => {
     try {
-        const { select } = req.body;
+        const {
+            body: { select },
+            user: { email },
+        } = req;
 
-        let title;
+        let title = email;
         if (typeof select === "object") {
             select.forEach((val, idx) => {
-                if (idx === 0) title = `${val.nickName}`;
-                else title += `,${val.nickName}`;
+                title += `,${val.nickName}`;
             });
         }
 
-        const room = await Room.create({
-            title,
-        });
+        const room = await Room.create({});
 
-        let arr = [{ room: room._id.toString(), user: "test2" }];
+        let arr = [{ room: room._id.toString(), user: email, title }];
         select.forEach((val, idx) => {
-            arr.push({ room: room._id.toString(), user: val.email });
+            arr.push({ room: room._id.toString(), user: val.email, title });
         });
 
         await UserRoom.create(arr);
@@ -89,19 +77,33 @@ export const createRoom = async (req) => {
     }
 };
 
-export const deleteRoom = async (req) => {
+export const modifyRoom = async (req) => {
     try {
-        console.log("deleteRoom");
-        return;
+        const {
+            user: { email },
+            body: { roomId, title },
+        } = req;
+
+        const result = await UserRoom.updateOne(
+            { room: roomId, user: email },
+            { title }
+        );
+        console.log("modifyRoom: ", result);
+
+        if (result) {
+            return result;
+        } else {
+            return false;
+        }
     } catch (error) {
         console.log(error);
-        return error;
+        return false;
     }
 };
 
-export const modifyRoom = async (req) => {
+export const deleteRoom = async (req) => {
     try {
-        console.log("modifyRoom");
+        console.log("deleteRoom");
         return;
     } catch (error) {
         console.log(error);
