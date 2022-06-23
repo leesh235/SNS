@@ -14,6 +14,6 @@ export const getMessageList = async (formData: any) => {
 };
 
 export const setGroupChattingRoom = async (formData: any) => {
-    const { data } = await websocket.post(api.chat.create_group, formData);
+    const { data } = await websocket.post(api.chat.create_room, formData);
     return data;
 };
