@@ -53,11 +53,10 @@ export const modifyRoom = async (req) => {
 export const deleteRoom = async (req) => {
     try {
         const {
-            user: { email },
             body: { roomId },
         } = req;
 
-        const result = await UserRoom.deleteOne({ room: roomId, user: email });
+        const result = await Room.deleteOne({ room: roomId });
 
         return result;
     } catch (error) {
