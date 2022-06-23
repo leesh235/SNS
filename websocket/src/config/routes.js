@@ -12,6 +12,8 @@ export const routes = {
         modify: "/modify",
         room: "/room",
         room_list: "/room_list",
+        leave: "/leave",
+        join: "/join",
     },
     message: {
         create: "/create",

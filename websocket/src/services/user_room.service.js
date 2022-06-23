@@ -25,10 +25,26 @@ export const getRooms = async (req) => {
 
 export const joinUserToRoom = async (req) => {
     try {
-        const { roomId, users } = req;
+        const {
+            body: { roomId, select },
+            user: { email },
+        } = req;
 
-        const arr = users.map((user) => {
-            return { room: roomId, user: user };
+        const room = await UserRoom.find({ room: roomId });
+
+        let title = "";
+        room.forEach((val, idx) => {
+            if (idx === 0) title = `${val.user}`;
+            else title += `,${val.user}`;
+        });
+
+        select.forEach((val) => {
+            title += `,${val}`;
+        });
+
+        let arr = [];
+        select.forEach((val, idx) => {
+            arr.push({ room: roomId, user: val, title });
         });
 
         await UserRoom.create(arr);
@@ -42,7 +58,13 @@ export const joinUserToRoom = async (req) => {
 
 export const leaveUserToRoom = async (req) => {
     try {
-        console.log("leaveUserToRoom");
+        const {
+            user: { email },
+            body: { roomId },
+        } = req;
+
+        const result = await UserRoom.deleteOne({ user: email, room: roomId });
+
         return true;
     } catch (error) {
         console.log(error);
