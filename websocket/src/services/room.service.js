@@ -88,13 +88,8 @@ export const modifyRoom = async (req) => {
             { room: roomId, user: email },
             { title }
         );
-        console.log("modifyRoom: ", result);
 
-        if (result) {
-            return result;
-        } else {
-            return false;
-        }
+        return result;
     } catch (error) {
         console.log(error);
         return false;
@@ -103,8 +98,14 @@ export const modifyRoom = async (req) => {
 
 export const deleteRoom = async (req) => {
     try {
-        console.log("deleteRoom");
-        return;
+        const {
+            user: { email },
+            body: { roomId },
+        } = req;
+
+        const result = await UserRoom.deleteOne({ room: roomId, user: email });
+
+        return result;
     } catch (error) {
         console.log(error);
         return error;
