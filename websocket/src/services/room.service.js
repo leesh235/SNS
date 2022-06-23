@@ -17,9 +17,9 @@ export const createRoom = async (req) => {
 
         const room = await Room.create({});
 
-        let arr = [{ room: room._id.toString(), user: email, title }];
+        let arr = [{ room: room._id.toString(), userId: email, title }];
         select.forEach((val, idx) => {
-            arr.push({ room: room._id.toString(), user: val.email, title });
+            arr.push({ room: room._id.toString(), userId: val.email, title });
         });
 
         await UserRoom.create(arr);
@@ -39,7 +39,7 @@ export const modifyRoom = async (req) => {
         } = req;
 
         const result = await UserRoom.updateOne(
-            { room: roomId, user: email },
+            { room: roomId, userId: email },
             { title }
         );
 
