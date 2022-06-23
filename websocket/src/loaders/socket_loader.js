@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import { event } from "../config/routes";
 import { createChat } from "../services/chat.service";
-import { getUser } from "../services/user.service";
 import { verify } from "jsonwebtoken";
 
 export default (server) => {
