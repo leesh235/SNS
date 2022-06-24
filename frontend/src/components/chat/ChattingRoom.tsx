@@ -1,6 +1,5 @@
-import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setMessageList,
@@ -29,14 +28,16 @@ const Title = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid gray;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
     > :nth-child(2) {
         display: flex;
         flex-direction: row;
     }
 `;
 
-const MessageWrapper = styled.div`
+const MessageList = styled.div`
     width: calc(100% - 16px);
     height: 346px;
     padding: 0 8px;
@@ -50,7 +51,7 @@ const MessageWrapper = styled.div`
     }
 `;
 
-const MyMessage = styled.div`
+const MyMessageWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -58,7 +59,7 @@ const MyMessage = styled.div`
     align-items: center;
 `;
 
-const Message = styled.div`
+const MessageWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -66,14 +67,37 @@ const Message = styled.div`
     align-items: center;
 `;
 
-const Chatting = styled.form`
-    width: 100%;
-    height: 60px;
-    > input {
-        width: 100%;
-        height: 100%;
-        border: 0;
+const Message = styled.div`
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 18px;
+    background-color: ${(props) => props.theme.color.gray};
+    padding: 8px 12px;
+    a {
+        width: auto;
     }
+`;
+
+const ChatForm = styled.form`
+    width: calc(100% - 20px);
+    height: 60px;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ChatInput = styled.input`
+    border: 0px;
+    border-radius: 18px;
+    background-color: ${(props) => props.theme.color.gray};
+    width: calc(100% - 20px);
+    height: 16px;
+    padding: 10px;
 `;
 
 const LeaveBtn = styled.div`
@@ -90,6 +114,7 @@ interface Props {
 
 export const ChattingRoom = ({ roomId, roomName }: Props) => {
     const dispatch = useDispatch();
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     const user_store = useSelector((state: any) => state.user.loginInfo);
     const { loading, data, error } = useSelector(
@@ -105,6 +130,12 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
         list.appendChild(item);
     };
 
+    const handleScroll = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
+        }
+    };
+
     const handleChatting: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         const { value } = e.currentTarget.chatInput;
@@ -115,6 +146,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
             msg: value,
         });
         e.currentTarget.chatInput.value = "";
+        handleScroll();
     };
 
     const handleLeave = () => {
@@ -127,6 +159,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
     };
 
     useEffect(() => {
+        handleScroll();
         dispatch(setMessageList({ roomId }));
         request(event.join, { roomId, userId: user_store.data.email });
         response(event.message, (data: any) => {
@@ -150,47 +183,51 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
                     <LeaveBtn onClick={handleLeave}>X</LeaveBtn>
                 </div>
             </Title>
-            <MessageWrapper id="chatList">
+            <MessageList id="chatList" ref={scrollRef}>
                 {data?.map((val: any) => {
                     if (user_store.data.email !== val.userId)
                         return (
-                            <Message key={val._id}>
+                            <MessageWrapper key={val._id}>
                                 <Text
                                     text={val.nickName}
                                     tag={"span"}
                                     width={"auto"}
                                     fs={"15px"}
                                 />
-                                <Text
-                                    text={val.message}
-                                    tag={"span"}
-                                    width={"auto"}
-                                    fs={"15px"}
-                                />
-                            </Message>
+                                <Message>
+                                    <Text
+                                        text={val.message}
+                                        tag={"span"}
+                                        width={"auto"}
+                                        fs={"15px"}
+                                    />
+                                </Message>
+                            </MessageWrapper>
                         );
                     else
                         return (
-                            <MyMessage key={val._id}>
-                                <Text
-                                    text={val.message}
-                                    tag={"span"}
-                                    width={"auto"}
-                                    fs={"15px"}
-                                />
+                            <MyMessageWrapper key={val._id}>
+                                <Message>
+                                    <Text
+                                        text={val.message}
+                                        tag={"span"}
+                                        width={"auto"}
+                                        fs={"15px"}
+                                    />
+                                </Message>
                                 <Text
                                     text={val.nickName}
                                     tag={"span"}
                                     width={"auto"}
                                     fs={"15px"}
                                 />
-                            </MyMessage>
+                            </MyMessageWrapper>
                         );
                 })}
-            </MessageWrapper>
-            <Chatting onSubmit={handleChatting}>
-                <input name="chatInput" />
-            </Chatting>
+            </MessageList>
+            <ChatForm onSubmit={handleChatting}>
+                <ChatInput name="chatInput" placeholder="Aa" autoFocus />
+            </ChatForm>
         </Wrapper>
     );
 };
