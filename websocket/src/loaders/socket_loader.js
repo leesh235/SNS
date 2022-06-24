@@ -72,10 +72,12 @@ export default (server) => {
                     nickName,
                 },
             });
-            io.to(result.roomId).emit(
-                event.message,
-                `${result.nickName}: ${result.message}`
-            );
+            io.to(result.roomId).emit(event.message, {
+                _id: result._id,
+                userId: result.userId,
+                nickName: result.nickName,
+                message: result.message,
+            });
         });
 
         socket.on("disconnect", () => {

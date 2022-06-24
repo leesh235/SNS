@@ -9,9 +9,10 @@ export const findChatList = async (req) => {
         let result = [];
         chat.forEach((val) => {
             result.push({
-                _id: val._id,
+                _id: val._id.toString(),
                 nickName: val.nickName,
                 message: val.message,
+                userId: val.userId,
             });
         });
 
@@ -34,9 +35,11 @@ export const createChat = async (req) => {
         });
 
         return {
+            _id: chat._id.toString(),
             nickName: chat.nickName,
             message: chat.message,
             roomId: chat.room.toString(),
+            userId: chat.userId,
         };
     } catch (error) {
         console.log(error);
