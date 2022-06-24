@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { ChattingRoom } from "./ChattingRoom";
 import { setRoomList } from "../../modules/action/chat";
+import { ChatIcon } from "./ChatIcon";
 
 const Wrapper = styled.section`
     position: fixed;
@@ -16,7 +17,7 @@ const Wrapper = styled.section`
     height: 455px;
 `;
 
-const ChatRoomWrapper = styled.section`
+const ChatIconList = styled.section`
     width: 50px;
     height: auto;
     display: flex;
@@ -29,11 +30,12 @@ const ChatRoomWrapper = styled.section`
 const ChatRoomIcon = styled.div`
     width: 50px;
     height: 50px;
-    border-radius: 25px;
-    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 25px;
+    background-color: ${(props) => props.theme.color.white};
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     margin-top: 10px;
     cursor: pointer;
 `;
@@ -52,25 +54,33 @@ export const ChatRoomList = () => {
     }, [store_room]);
 
     return (
-        <Wrapper>
-            {data?.map((val: any, idx: number) => {
-                if (store_room?.id === val._id) {
-                    return (
-                        <ChattingRoom
-                            key={val._id}
-                            roomId={val._id}
-                            roomName={val.title}
-                        />
-                    );
-                }
-            })}
-            <ChatRoomWrapper>
-                <ChatRoomIcon>set</ChatRoomIcon>
-                {simpleRoomList?.map((val: any, idx: number) => {
-                    if (store_room.id !== val)
-                        return <ChatRoomIcon key={idx}>{idx}</ChatRoomIcon>;
+        <>
+            <Wrapper>
+                {data?.map((val: any, idx: number) => {
+                    if (store_room?.id === val._id) {
+                        return (
+                            <ChattingRoom
+                                key={val._id}
+                                roomId={val._id}
+                                roomName={val.title}
+                            />
+                        );
+                    }
                 })}
-            </ChatRoomWrapper>
-        </Wrapper>
+                <ChatIconList>
+                    <ChatRoomIcon>set</ChatRoomIcon>
+                    {simpleRoomList?.map((val: any, idx: number) => {
+                        if (store_room.id !== val.roomId)
+                            return (
+                                <ChatIcon
+                                    key={val.roomId}
+                                    id={val.roomId}
+                                    title={val.title}
+                                />
+                            );
+                    })}
+                </ChatIconList>
+            </Wrapper>
+        </>
     );
 };

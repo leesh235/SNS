@@ -155,7 +155,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
     };
 
     const handleSimple = () => {
-        dispatch(setJoinRoomList(roomId));
+        dispatch(setJoinRoomList({ roomId: roomId, title: roomName }));
     };
 
     useEffect(() => {

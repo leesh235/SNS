@@ -56,7 +56,7 @@ const reducer = (state = initialState, action: any) => {
             };
         case LEAVEROOM:
             const arr = state.joinRoomList.filter((val) => {
-                return val !== data;
+                return val["roomId"] !== data;
             });
             return {
                 ...state,
