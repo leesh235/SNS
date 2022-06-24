@@ -9,6 +9,7 @@ import theme from "../../../styles/theme";
 import { ListIcon, ListIconC } from "../../../assets/icon/ListIcon";
 import { GridIcon, GridIconC } from "../../../assets/icon/GridIcon";
 import { setMyPosts } from "../../../modules/action/posts";
+import { PostGridCard } from "./PostGridCard";
 
 const PostWrapper = styled.article`
     display: flex;
@@ -20,12 +21,12 @@ const PostWrapper = styled.article`
 `;
 
 const PostGridWrapper = styled.article`
-    display: flex;
-    flex-direction: column;
+    margin-top: 15px;
     > :nth-child(n) {
         margin-bottom: 15px;
     }
-    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 `;
 
 const GridWrapper = styled.div`
@@ -81,13 +82,6 @@ export const PostFlexCard = ({ user }: Props) => {
             <BoxShadow padding={"0px"}>
                 <FlexWrapper>
                     <Text text={"게시물"} fs={"20px"} fw={700} lh={"24px"} />
-                    <Text text={"필터"} fs={"15px"} fw={600} lh={"20px"} />
-                    <Text
-                        text={"게시물 관리"}
-                        fs={"15px"}
-                        fw={600}
-                        lh={"20px"}
-                    />
                 </FlexWrapper>
                 <GridWrapper>
                     {menuList.map((val, idx) => {
@@ -165,7 +159,11 @@ export const PostFlexCard = ({ user }: Props) => {
                     })}
                 </PostWrapper>
             ) : (
-                <PostGridWrapper>gridcards</PostGridWrapper>
+                <PostGridWrapper>
+                    {data?.map((val: any, idx: number) => {
+                        return <PostGridCard key={idx} post={val} />;
+                    })}
+                </PostGridWrapper>
             )}
         </>
     );
