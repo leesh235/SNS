@@ -68,9 +68,11 @@ const IntroduceButton = styled.button`
     }
 `;
 
-interface Props {}
+interface Props {
+    handleUrl: any;
+}
 
-export const IntroduceCard = ({}: Props) => {
+export const IntroduceCard = ({ handleUrl }: Props) => {
     const [openIntro, setOpenIntro] = useState<boolean>(false);
 
     const loginInfo = useSelector((state: any) => state?.user?.loginInfo);
@@ -174,6 +176,9 @@ export const IntroduceCard = ({}: Props) => {
                             fc={theme.color.black}
                             width={"95%"}
                             height={"36px"}
+                            onClick={() => {
+                                handleUrl({ id: 1 });
+                            }}
                         />
                         <Button2
                             text={"대표 사진 추가"}
