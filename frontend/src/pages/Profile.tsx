@@ -49,21 +49,20 @@ const Menu = styled.li<{ color: string }>`
 const menuList = [
     "게시물",
     "정보",
-    "친구",
     "사진",
-    "동영상",
-    "체크인",
-    "더 보기",
+    // "친구",
+    // "동영상",
+    // "체크인",
 ];
 
 const menuUrl = [
     "",
     "#sk=about",
-    "#sk=friends",
     "#sk=photos",
-    "#sk=videos",
-    "#sk=map",
-    "",
+    // "#sk=friends",
+    // "#sk=videos",
+    // "#sk=map",
+    // "",
 ];
 
 const Profile = () => {
@@ -138,10 +137,10 @@ const Profile = () => {
             </Center>
             {click === 0 && <ProfilePost handleUrl={handleOnClick} />}
             {click === 1 && <ProfileInfo />}
-            {click === 2 && <ProfileFriend />}
-            {click === 3 && <ProfileImage />}
-            {click === 4 && <ProfileVideo />}
-            {click === 5 && <ProfileCheckIn />}
+            {click === 2 && <ProfileImage />}
+            {/* {click === 3 && <ProfileFriend />} */}
+            {/* {click === 4 && <ProfileVideo />}
+            {click === 5 && <ProfileCheckIn />} */}
         </Wrapper>
     );
 };

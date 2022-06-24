@@ -73,7 +73,7 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
                     />
                     <UrlBtn
                         onClick={() => {
-                            handleUrl({ id: 3 });
+                            handleUrl({ id: 2 });
                         }}
                     >
                         <Text
