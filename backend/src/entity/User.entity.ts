@@ -16,6 +16,9 @@ import { Comment } from "./comment.entity";
 import { Likes } from "./Likes.entity";
 import { FileUrl } from "./file_url.entity";
 import { Request_friend } from "./Request_friend";
+import { UserAbiliy } from "./User_ability";
+import { UserUniversity } from "./User_university";
+import { UserSchool } from "./User_school";
 
 @Entity("user")
 export class User {
@@ -61,6 +64,15 @@ export class User {
 
     @OneToOne((type) => UserInfo, (userInfo) => userInfo.user)
     userInfo: UserInfo;
+
+    @OneToOne((type) => UserInfo, (ability) => ability.user)
+    ability: UserAbiliy;
+
+    @OneToOne((type) => UserInfo, (university) => university.user)
+    university: UserUniversity;
+
+    @OneToOne((type) => UserInfo, (school) => school.user)
+    school: UserSchool;
 
     @OneToMany((type) => Post, (post) => post.user)
     post: Post[];

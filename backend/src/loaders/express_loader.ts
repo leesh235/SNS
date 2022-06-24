@@ -11,6 +11,7 @@ import comment from "../api/comment.controller";
 import chatting from "../api/chatting.controller";
 import search from "../api/search.controller";
 import friends from "../api/friend.controller";
+import userDetail from "../api/user_detail.controller";
 //middleware
 import { corsOptions } from "../config/cors";
 import "../config/passport";
@@ -27,6 +28,7 @@ export default async ({ app }: { app: express.Application }) => {
 
     app.use(`${baseRoutes.auth}`, auth);
     app.use(`${baseRoutes.user}`, jwt_authenticate, user);
+    app.use(`${baseRoutes.user_detail}`, jwt_authenticate, userDetail);
     app.use(`${baseRoutes.post}`, jwt_authenticate, post);
     app.use(`${baseRoutes.posts}`, jwt_authenticate, posts);
     app.use(`${baseRoutes.comment}`, jwt_authenticate, comment);

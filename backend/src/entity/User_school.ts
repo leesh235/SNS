@@ -7,18 +7,24 @@ import {
 } from "typeorm";
 import { User } from "./User.entity";
 
-@Entity("user_info")
-export class UserInfo {
+@Entity("user_school")
+export class UserSchool {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({ type: "varchar", nullable: true })
-    number: string;
+    school: string;
+
+    @Column({ type: "varchar", nullable: true, default: true })
+    status: boolean;
 
     @Column({ type: "varchar", nullable: true })
-    address: string;
+    start: string;
 
-    @OneToOne((type) => User, (user) => user.userInfo, { onDelete: "CASCADE" })
+    @Column({ type: "varchar", nullable: true })
+    end: string;
+
+    @OneToOne((type) => User, (user) => user.school, { onDelete: "CASCADE" })
     @JoinColumn()
     user: User;
 }

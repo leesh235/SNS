@@ -1,6 +1,7 @@
 export const baseRoutes = {
     auth: "/api/auth",
     user: "/api/user",
+    user_detail: "/api/user_detail",
     post: "/api/post",
     posts: "/api/posts",
     comment: "/api/comment",
@@ -13,6 +14,15 @@ export const routes = {
     auth: {
         login: "/login",
         join: "/join",
+    },
+    user_detail: {
+        get_ability: "/ability",
+        get_info: "/info",
+        set_ability: "/set_ability",
+        set_university: "/set_university",
+        set_school: "/set_school",
+        set_number: "/set_number",
+        set_address: "/set_address",
     },
     user: {
         profile: "/profile",
