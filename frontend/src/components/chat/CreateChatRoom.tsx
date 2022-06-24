@@ -3,6 +3,11 @@ import { Text } from "../common/Text";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriendList } from "../../modules/action/friends";
+import {
+    setCreateGroupRoom,
+    setJoinRoom,
+    setRoomList,
+} from "../../modules/action/chat";
 import { FriendList } from "./FriendList";
 import theme from "../../styles/theme";
 
@@ -38,6 +43,14 @@ const Top = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+    > :nth-child(3) {
+        width: 100%;
+        min-height: 38px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
     }
 `;
 
@@ -83,6 +96,17 @@ const Middle = styled.input`
     border-bottom: 1px solid ${(props) => props.theme.color.gray};
 `;
 
+const CreateBtn = styled.div`
+    width: 60px;
+    height: 30px;
+    border-radius: 6px;
+    background-color: ${(props) => props.theme.color.lightSeaBlue};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+`;
+
 interface Props {
     closeFunc: any;
 }
@@ -93,6 +117,10 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
     const [select, setSelect] = useState<string[]>([]);
     const [selectNickName, setSelectNickName] = useState<any[]>([]);
     const [search, setSearch] = useState<string>("");
+
+    const { loading, data, error } = useSelector(
+        (state: any) => state.chat.createGroupRoom
+    );
 
     const handleSelect = (email: string, nickName: string) => {
         const arr = select.filter((email) => {
@@ -119,6 +147,13 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
 
     const handleSearch: React.FormEventHandler<HTMLInputElement> = (e) => {
         setSearch(e.currentTarget.value);
+    };
+
+    const handleCreateGroupRoom = () => {
+        dispatch(setCreateGroupRoom({ select: selectNickName }));
+        dispatch(setRoomList());
+        dispatch(setJoinRoom({ id: data?._id }));
+        closeFunc();
     };
 
     useEffect(() => {
@@ -177,6 +212,20 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
                         })}
                     </SelectWrapper>
                 </div>
+                {selectNickName.length !== 0 && (
+                    <div>
+                        <CreateBtn onClick={handleCreateGroupRoom}>
+                            <Text
+                                text={"생성"}
+                                fs={"13px"}
+                                fw={600}
+                                lh={"16px"}
+                                width={"auto"}
+                                fc={theme.color.seaBule}
+                            />
+                        </CreateBtn>
+                    </div>
+                )}
             </Top>
             <Middle
                 name="search"

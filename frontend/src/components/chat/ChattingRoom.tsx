@@ -8,6 +8,7 @@ import {
     setJoinRoomList,
 } from "../../modules/action/chat";
 import { response, request, event } from "../../utils/socket";
+import { Text } from "../common/Text";
 
 const Wrapper = styled.div`
     width: 338px;
@@ -35,7 +36,7 @@ const Title = styled.div`
     }
 `;
 
-const Message = styled.div`
+const MessageWrapper = styled.div`
     width: calc(100% - 16px);
     height: 346px;
     padding: 0 8px;
@@ -44,6 +45,25 @@ const Message = styled.div`
     align-items: flex-start;
     overflow-x: hidden;
     overflow-y: auto;
+    > :nth-child(n) {
+        margin: 5px 0;
+    }
+`;
+
+const MyMessage = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
+const Message = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 `;
 
 const Chatting = styled.form`
@@ -79,7 +99,9 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
     const createDom = (parent: any, tag: any, data: any) => {
         let list: any = document.getElementById(parent);
         let item = document.createElement(tag);
-        item.innerText = data;
+        if (user_store.data.email !== data.userId)
+            item.innerText = `${data.nickName}${data.message}`;
+        else item.innerText = `${data.message}${data.nickName}`;
         list.appendChild(item);
     };
 
@@ -89,6 +111,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
         request(event.chat, {
             roomId,
             userId: user_store.data.email,
+            nickName: user_store.data.nickName,
             msg: value,
         });
         e.currentTarget.chatInput.value = "";
@@ -107,7 +130,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
         dispatch(setMessageList({ roomId }));
         request(event.join, { roomId, userId: user_store.data.email });
         response(event.message, (data: any) => {
-            createDom("chatList", "div", data);
+            createDom("chatList", "span", data);
         });
     }, []);
 
@@ -127,15 +150,44 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
                     <LeaveBtn onClick={handleLeave}>X</LeaveBtn>
                 </div>
             </Title>
-            <Message id="chatList">
+            <MessageWrapper id="chatList">
                 {data?.map((val: any) => {
-                    return (
-                        <div key={val._id}>
-                            {val.nickName}:{val.message}
-                        </div>
-                    );
+                    if (user_store.data.email !== val.userId)
+                        return (
+                            <Message key={val._id}>
+                                <Text
+                                    text={val.nickName}
+                                    tag={"span"}
+                                    width={"auto"}
+                                    fs={"15px"}
+                                />
+                                <Text
+                                    text={val.message}
+                                    tag={"span"}
+                                    width={"auto"}
+                                    fs={"15px"}
+                                />
+                            </Message>
+                        );
+                    else
+                        return (
+                            <MyMessage key={val._id}>
+                                <Text
+                                    text={val.message}
+                                    tag={"span"}
+                                    width={"auto"}
+                                    fs={"15px"}
+                                />
+                                <Text
+                                    text={val.nickName}
+                                    tag={"span"}
+                                    width={"auto"}
+                                    fs={"15px"}
+                                />
+                            </MyMessage>
+                        );
                 })}
-            </Message>
+            </MessageWrapper>
             <Chatting onSubmit={handleChatting}>
                 <input name="chatInput" />
             </Chatting>

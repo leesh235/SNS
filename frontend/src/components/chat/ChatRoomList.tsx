@@ -1,7 +1,8 @@
 import styled from "../../styles/theme-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { ChattingRoom } from "./ChattingRoom";
+import { setRoomList } from "../../modules/action/chat";
 
 const Wrapper = styled.section`
     position: fixed;
@@ -38,6 +39,8 @@ const ChatRoomIcon = styled.div`
 `;
 
 export const ChatRoomList = () => {
+    const dispatch = useDispatch();
+
     const { loading, data, error } = useSelector(
         (state: any) => state.chat.roomList
     );
@@ -45,8 +48,8 @@ export const ChatRoomList = () => {
     const store_room = useSelector((state: any) => state.chat.joinRoom);
 
     useEffect(() => {
-        console.log(simpleRoomList);
-    }, [loading, simpleRoomList]);
+        dispatch(setRoomList());
+    }, [store_room]);
 
     return (
         <Wrapper>
