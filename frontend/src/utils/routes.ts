@@ -28,6 +28,15 @@ export const api = {
         await_friend: "/user/await_friend",
         people: "/user/people",
     },
+    userDetail: {
+        get_ability: "/user_detail/ability",
+        get_info: "/user_detail/info",
+        set_ability: "/user_detail/set_ability",
+        set_university: "/user_detail/set_university",
+        set_school: "/user_detail/set_school",
+        set_number: "/user_detail/set_number",
+        set_address: "/user_detail/set_address",
+    },
     post: {
         get: "/post/",
         write: "/post/write",
