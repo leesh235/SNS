@@ -23,6 +23,9 @@ export const routes = {
         set_school: "/set_school",
         set_number: "/set_number",
         set_address: "/set_address",
+        delete_ability: "/delete_ability",
+        delete_university: "/delete_university",
+        delete_school: "/delete_school",
     },
     user: {
         profile: "/profile",

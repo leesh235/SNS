@@ -8,6 +8,7 @@ import {
     saveNumber,
     saveSchool,
     saveUniversity,
+    deleteUserInfo,
 } from "../services/user_detail.service";
 
 const router = express.Router();
@@ -70,6 +71,33 @@ router.post(routes.user_detail.set_number, async (req, res) => {
 router.post(routes.user_detail.set_address, async (req, res) => {
     try {
         res.status(200).send(await saveAddress(req));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//직장 삭제
+router.post(routes.user_detail.delete_ability, async (req, res) => {
+    try {
+        res.status(200).send(await deleteUserInfo(req, "ability"));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//대학 삭제
+router.post(routes.user_detail.delete_university, async (req, res) => {
+    try {
+        res.status(200).send(await deleteUserInfo(req, "university"));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//고등학교 삭제
+router.post(routes.user_detail.delete_school, async (req, res) => {
+    try {
+        res.status(200).send(await deleteUserInfo(req, "school"));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

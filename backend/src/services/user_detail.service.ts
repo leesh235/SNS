@@ -259,3 +259,34 @@ export const saveAddress = async (req: any) => {
         return false;
     }
 };
+
+export const deleteUserInfo = async (
+    req: any,
+    mode: "ability" | "university" | "school"
+) => {
+    try {
+        const {
+            user: { email },
+            body: { id },
+        } = req;
+
+        if (mode === "ability") {
+            await userAbilityRepository.delete({ id, user: { email } });
+            return true;
+        }
+        if (mode === "university") {
+            await userUniversityRepository.delete({ id, user: { email } });
+            return true;
+        }
+
+        if (mode === "school") {
+            await userSchoolRepository.delete({ id, user: { email } });
+            return true;
+        }
+
+        return false;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
