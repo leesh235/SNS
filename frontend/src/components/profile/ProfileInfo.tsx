@@ -18,8 +18,8 @@ export const ProfileInfo = () => {
     return (
         <Wrapper>
             <InfoCard />
-            <QuestionCard />
-            <LikeCard />
+            {/* <QuestionCard />
+            <LikeCard /> */}
         </Wrapper>
     );
 };

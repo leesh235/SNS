@@ -6,6 +6,9 @@ import theme from "../../../styles/theme";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Summary } from "../ProfileInfo/Summary";
+import { Ability } from "../ProfileInfo/Ability";
+import { UserInfo } from "../ProfileInfo/UserInfo";
 
 const FlexWrapper = styled.div`
     width: 100%;
@@ -25,28 +28,20 @@ const LeftWrapper = styled.div`
 `;
 
 const RightWrapper = styled.div`
-    width: 100%;
+    width: calc(100% - 32px);
     height: auto;
+    padding: 16px;
+    > :nth-child(n) {
+        margin-bottom: 24px;
+    }
 `;
 
-const data = [
-    "개요",
-    "경력 및 학력",
-    "이전 거주지",
-    "연락처 및 기본 정보",
-    "가족 및 결혼/연애 상태",
-    "자세한 내 소개",
-    "중요 이벤트",
-];
+const data = ["개요", "경력 및 학력", "연락처 및 기본 정보"];
 
 const dataUrl = [
     "#sk=about",
     "#sk=about_work_and_education",
-    "#sk=about_places",
     "#sk=about_contact_and_basic_info",
-    "#sk=about_family_and_relationships",
-    "#sk=about_details",
-    "#sk=about_life_events",
 ];
 
 export const InfoCard = () => {
@@ -120,7 +115,11 @@ export const InfoCard = () => {
                         }
                     })}
                 </LeftWrapper>
-                <RightWrapper></RightWrapper>
+                <RightWrapper>
+                    {select === 0 && <Summary />}
+                    {select === 1 && <Ability />}
+                    {select === 2 && <UserInfo />}
+                </RightWrapper>
             </FlexWrapper>
         </BoxShadow>
     );
