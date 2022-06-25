@@ -37,3 +37,24 @@ export const setAddress = async (formData: any) => {
     const res = await backend.post(api.userDetail.set_address, { ...formData });
     return res.data;
 };
+
+export const deleteAbility = async (formData: any) => {
+    const res = await backend.post(api.userDetail.delete_ability, {
+        ...formData,
+    });
+    return res.data;
+};
+
+export const deleteUniversity = async (formData: any) => {
+    const res = await backend.post(api.userDetail.delete_university, {
+        ...formData,
+    });
+    return res.data;
+};
+
+export const deleteSchool = async (formData: any) => {
+    const res = await backend.post(api.userDetail.delete_school, {
+        ...formData,
+    });
+    return res.data;
+};

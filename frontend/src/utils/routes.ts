@@ -36,6 +36,9 @@ export const api = {
         set_school: "/user_detail/set_school",
         set_number: "/user_detail/set_number",
         set_address: "/user_detail/set_address",
+        delete_ability: "/user_detail/delete_ability",
+        delete_university: "/user_detail/delete_university",
+        delete_school: "/user_detail/delete_school",
     },
     post: {
         get: "/post/",
