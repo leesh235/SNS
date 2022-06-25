@@ -32,13 +32,22 @@ export const findInfo = async (req: any) => {
             },
         });
 
-        return {
-            number: find?.number,
-            address: find?.address,
-            email: find?.user.email,
-            gender: find?.user.gender,
-            birth: find?.user.birth,
-        };
+        if (find)
+            return {
+                number: find?.number,
+                address: find?.address,
+                email: find?.user.email,
+                gender: find?.user.gender,
+                birth: find?.user.birth,
+            };
+        else
+            return {
+                number: null,
+                address: null,
+                email: null,
+                gender: null,
+                birth: null,
+            };
     } catch (error) {
         console.log(error);
         return {};
@@ -68,10 +77,6 @@ export const findAbility = async (req: any) => {
         const ability = await userAbilityRepository.findOne(setting);
         const university = await userUniversityRepository.findOne(setting);
         const school = await userSchoolRepository.findOne(setting);
-
-        console.log(ability);
-        console.log(university);
-        console.log(school);
 
         return { ability, university, school };
     } catch (error) {
