@@ -158,6 +158,9 @@ export const AddSchool = () => {
         const { school } = e.currentTarget;
         console.log(school.value);
         // dispatch(setSchool({}));
+        setTimeout(() => {
+            dispatch(setGetAbility());
+        }, 1);
         setOpen(false);
     };
 

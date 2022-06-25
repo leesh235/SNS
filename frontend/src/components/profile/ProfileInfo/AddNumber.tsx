@@ -135,10 +135,14 @@ export const AddNumber = () => {
     const handleSave: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         const { number } = e.currentTarget;
-        console.log(number.value);
-        // dispatch(setAbility({}));
+        dispatch(setNumber({ number: number.value }));
+        setTimeout(() => {
+            dispatch(setGetInfo());
+        }, 1);
         setOpen(false);
     };
+
+    useEffect(() => {}, [loading]);
 
     if (!open && data?.number === null) {
         return (

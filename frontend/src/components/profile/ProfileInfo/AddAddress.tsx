@@ -120,6 +120,10 @@ export const AddAddress = () => {
         (state: any) => state.userDetail.info
     );
 
+    const store_set_address = useSelector(
+        (state: any) => state.userDetail.info
+    );
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -135,10 +139,14 @@ export const AddAddress = () => {
     const handleSave: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         const { address } = e.currentTarget;
-        console.log(address.value);
-        // dispatch(setAddress({}));
+        dispatch(setAddress({ address: address.value }));
+        setTimeout(() => {
+            dispatch(setGetInfo());
+        }, 1);
         setOpen(false);
     };
+
+    useEffect(() => {}, [loading]);
 
     if (!open && data?.address === null) {
         return (

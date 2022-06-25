@@ -158,6 +158,9 @@ export const AddAbility = () => {
         const { job, position, address } = e.currentTarget;
         console.log(job.value, position.value, address.value);
         // dispatch(setAbility({}));
+        setTimeout(() => {
+            dispatch(setGetAbility());
+        }, 1);
         setOpen(false);
     };
 

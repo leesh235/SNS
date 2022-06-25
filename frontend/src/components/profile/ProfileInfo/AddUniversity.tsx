@@ -161,6 +161,9 @@ export const AddUniversity = () => {
         const { university, major, degree } = e.currentTarget;
         console.log(university.value, major.value, degree.value);
         // dispatch(setUniversity({}));
+        setTimeout(() => {
+            dispatch(setGetAbility());
+        }, 1);
         setOpen(false);
     };
 
