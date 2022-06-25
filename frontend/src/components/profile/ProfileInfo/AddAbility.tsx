@@ -1,7 +1,11 @@
 import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGetAbility, setAbility } from "../../../modules/action/userDetail";
+import {
+    setGetAbility,
+    setAbility,
+    setDeleteAbility,
+} from "../../../modules/action/userDetail";
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { Button2 } from "../../common/button/Button2";
@@ -145,11 +149,14 @@ export const AddAbility = () => {
         setOpen(true);
     };
 
-    const handleDelete = () => {
+    const handleDelete = (id: any) => {
         setOpenBtn(false);
         if (window.confirm("직장 정보를 삭제하시겠습니까?")) {
             console.log("삭제");
-            // dispatch(setAbility({}));
+            dispatch(setDeleteAbility({ id }));
+            setTimeout(() => {
+                dispatch(setGetAbility());
+            }, 10);
         }
     };
 
@@ -157,10 +164,16 @@ export const AddAbility = () => {
         e.preventDefault();
         const { job, position, address } = e.currentTarget;
         console.log(job.value, position.value, address.value);
-        // dispatch(setAbility({}));
+        dispatch(
+            setAbility({
+                name: job.value,
+                position: position.value,
+                address: address.value,
+            })
+        );
         setTimeout(() => {
             dispatch(setGetAbility());
-        }, 1);
+        }, 10);
         setOpen(false);
     };
 
@@ -212,7 +225,9 @@ export const AddAbility = () => {
                             <Button2
                                 text={"직장 삭제"}
                                 width={"120px"}
-                                onClick={handleDelete}
+                                onClick={() => {
+                                    handleDelete(data?.ability?.id);
+                                }}
                             />
                         </ButtonWrapper>
                     )}

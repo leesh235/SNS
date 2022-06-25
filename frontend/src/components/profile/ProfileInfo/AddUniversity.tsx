@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
     setGetAbility,
     setUniversity,
+    setDeleteUniversity,
 } from "../../../modules/action/userDetail";
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
@@ -148,11 +149,14 @@ export const AddUniversity = () => {
         setOpen(true);
     };
 
-    const handleDelete = () => {
+    const handleDelete = (id: any) => {
         setOpenBtn(false);
         if (window.confirm("대학 정보를 삭제하시겠습니까?")) {
             console.log("삭제");
-            // dispatch(setUniversity({}));
+            dispatch(setDeleteUniversity({ id }));
+            setTimeout(() => {
+                dispatch(setGetAbility());
+            }, 10);
         }
     };
 
@@ -160,12 +164,20 @@ export const AddUniversity = () => {
         e.preventDefault();
         const { university, major, degree } = e.currentTarget;
         console.log(university.value, major.value, degree.value);
-        // dispatch(setUniversity({}));
+        dispatch(
+            setUniversity({
+                name: university.value,
+                major: major.value,
+                degree: degree.value,
+            })
+        );
         setTimeout(() => {
             dispatch(setGetAbility());
-        }, 1);
+        }, 10);
         setOpen(false);
     };
+
+    useEffect(() => {}, [loading]);
 
     if (!open && data?.university === null) {
         return (
@@ -213,7 +225,9 @@ export const AddUniversity = () => {
                             <Button2
                                 text={"대학 삭제"}
                                 width={"120px"}
-                                onClick={handleDelete}
+                                onClick={() => {
+                                    handleDelete(data?.university?.id);
+                                }}
                             />
                         </ButtonWrapper>
                     )}

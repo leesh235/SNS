@@ -1,7 +1,11 @@
 import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGetAbility, setSchool } from "../../../modules/action/userDetail";
+import {
+    setGetAbility,
+    setSchool,
+    setDeleteSchool,
+} from "../../../modules/action/userDetail";
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { Button2 } from "../../common/button/Button2";
@@ -145,11 +149,14 @@ export const AddSchool = () => {
         setOpen(true);
     };
 
-    const handleDelete = () => {
+    const handleDelete = (id: any) => {
         setOpenBtn(false);
         if (window.confirm("고등학교 정보를 삭제하시겠습니까?")) {
             console.log("삭제");
-            // dispatch(setSchool({}));
+            dispatch(setDeleteSchool({ id }));
+            setTimeout(() => {
+                dispatch(setGetAbility());
+            }, 10);
         }
     };
 
@@ -157,12 +164,14 @@ export const AddSchool = () => {
         e.preventDefault();
         const { school } = e.currentTarget;
         console.log(school.value);
-        // dispatch(setSchool({}));
+        dispatch(setSchool({ name: school.value }));
         setTimeout(() => {
             dispatch(setGetAbility());
-        }, 1);
+        }, 10);
         setOpen(false);
     };
+
+    useEffect(() => {}, [loading]);
 
     if (!open && data?.school === null) {
         return (
@@ -204,7 +213,9 @@ export const AddSchool = () => {
                             <Button2
                                 text={"학교 삭제"}
                                 width={"120px"}
-                                onClick={handleDelete}
+                                onClick={() => {
+                                    handleDelete(data?.school?.id);
+                                }}
                             />
                         </ButtonWrapper>
                     )}
