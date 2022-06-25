@@ -6,6 +6,9 @@ import {
     SETNUMBER,
     SETSCHOOL,
     SETUNIVERSITY,
+    DELETEABILITY,
+    DELETEUNIVERSITY,
+    DELETESCHOOL,
 } from "../action/userDetail";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
@@ -18,6 +21,9 @@ const initialState = {
     setSchool: reducerUtils.initial(null),
     setNumber: reducerUtils.initial(null),
     setAddress: reducerUtils.initial(null),
+    deleteAbility: reducerUtils.initial(null),
+    deleteUniversity: reducerUtils.initial(null),
+    deleteSchool: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -75,7 +81,30 @@ const reducer = (state = initialState, action: any) => {
                 "setAddress",
                 true
             )(state, action);
-
+        case DELETEABILITY:
+        case typeUtils(DELETEABILITY).success:
+        case typeUtils(DELETEABILITY).error:
+            return handleAsyncReducer(
+                DELETEABILITY,
+                "deleteAbility",
+                true
+            )(state, action);
+        case DELETEUNIVERSITY:
+        case typeUtils(DELETEUNIVERSITY).success:
+        case typeUtils(DELETEUNIVERSITY).error:
+            return handleAsyncReducer(
+                DELETEUNIVERSITY,
+                "deleteUniversity",
+                true
+            )(state, action);
+        case DELETESCHOOL:
+        case typeUtils(DELETESCHOOL).success:
+        case typeUtils(DELETESCHOOL).error:
+            return handleAsyncReducer(
+                DELETESCHOOL,
+                "deleteSchool",
+                true
+            )(state, action);
         default:
             return state;
     }

@@ -5,6 +5,9 @@ export const SETUNIVERSITY = "user_detail/SETUNIVERSITY";
 export const SETSCHOOL = "user_detail/SETSCHOOL";
 export const SETNUMBER = "user_detail/SETNUMBER";
 export const SETADDRESS = "user_detail/SETADDRESS";
+export const DELETEABILITY = "user_detail/DELETEABILITY";
+export const DELETEUNIVERSITY = "user_detail/DELETEUNIVERSITY";
+export const DELETESCHOOL = "user_detail/DELETESCHOOL";
 
 export const setGetAbility = () => {
     return {
@@ -49,6 +52,27 @@ export const setNumber = (data: any) => {
 export const setAddress = (data: any) => {
     return {
         type: SETADDRESS,
+        data,
+    };
+};
+
+export const setDeleteAbility = (data: any) => {
+    return {
+        type: DELETEABILITY,
+        data,
+    };
+};
+
+export const setDeleteUniversity = (data: any) => {
+    return {
+        type: DELETEUNIVERSITY,
+        data,
+    };
+};
+
+export const setDeleteSchool = (data: any) => {
+    return {
+        type: DELETESCHOOL,
         data,
     };
 };

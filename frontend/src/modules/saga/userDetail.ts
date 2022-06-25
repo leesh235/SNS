@@ -8,6 +8,9 @@ import {
     setNumber,
     setSchool,
     setUniversity,
+    deleteAbility,
+    deleteUniversity,
+    deleteSchool,
 } from "../../lib/userDetail";
 import {
     GETABILITY,
@@ -17,6 +20,9 @@ import {
     SETNUMBER,
     SETSCHOOL,
     SETUNIVERSITY,
+    DELETEABILITY,
+    DELETESCHOOL,
+    DELETEUNIVERSITY,
 } from "../action/userDetail";
 
 const get_ability = createPromise(GETABILITY, getAbility);
@@ -26,6 +32,9 @@ const set_university = createPromise(SETUNIVERSITY, setUniversity);
 const set_school = createPromise(SETSCHOOL, setSchool);
 const set_number = createPromise(SETNUMBER, setNumber);
 const set_address = createPromise(SETADDRESS, setAddress);
+const delete_ability = createPromise(DELETEABILITY, deleteAbility);
+const delete_university = createPromise(DELETEUNIVERSITY, deleteUniversity);
+const delete_school = createPromise(DELETESCHOOL, deleteSchool);
 
 export function* userDetailSaga() {
     yield takeEvery(GETABILITY, get_ability);
@@ -35,4 +44,7 @@ export function* userDetailSaga() {
     yield takeEvery(SETSCHOOL, set_school);
     yield takeEvery(SETNUMBER, set_number);
     yield takeEvery(SETADDRESS, set_address);
+    yield takeEvery(DELETEABILITY, delete_ability);
+    yield takeEvery(DELETEUNIVERSITY, delete_university);
+    yield takeEvery(DELETESCHOOL, delete_school);
 }
