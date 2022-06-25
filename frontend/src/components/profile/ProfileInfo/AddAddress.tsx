@@ -148,11 +148,10 @@ export const AddAddress = () => {
             </AddButtonWrapper>
         );
     } else if (!open && data?.address !== null) {
-        const { address } = data;
         return (
             <GridWrapper>
                 <Icon />
-                <Text text={address} fs={"15px"} width={"auto"} />
+                <Text text={data?.address} fs={"15px"} width={"auto"} />
                 <SettingIcon onClick={handleModify}>
                     <MoreIcon />
                 </SettingIcon>

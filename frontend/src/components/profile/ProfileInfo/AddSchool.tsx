@@ -169,15 +169,21 @@ export const AddSchool = () => {
             </AddButtonWrapper>
         );
     } else if (!open && data?.school !== null) {
-        const { id, school, start, end } = data?.school;
         return (
             <GridWrapper>
                 <Icon />
                 <div>
                     <div>
-                        <Text text={school} fs={"15px"} width={"auto"} />
+                        <Text
+                            text={data?.school?.school}
+                            fs={"15px"}
+                            width={"auto"}
+                        />
                     </div>
-                    <Text text={`${start}-${end}`} fs={"13px"} />
+                    <Text
+                        text={`${data?.school?.start}-${data?.school?.end}`}
+                        fs={"13px"}
+                    />
                 </div>
                 <SettingIcon
                     onClick={() => {

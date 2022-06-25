@@ -161,6 +161,8 @@ export const AddAbility = () => {
         setOpen(false);
     };
 
+    useEffect(() => {}, [loading]);
+
     if (!open && data?.ability === null) {
         return (
             <AddButtonWrapper onClick={handleOpen}>
@@ -169,16 +171,27 @@ export const AddAbility = () => {
             </AddButtonWrapper>
         );
     } else if (!open && data?.ability !== null) {
-        const { job, position, start, end } = data.ability;
         return (
             <GridWrapper>
                 <Icon />
                 <div>
                     <div>
-                        <Text text={job} fs={"15px"} fw={600} width={"auto"} />
-                        <Text text={position} fs={"15px"} width={"auto"} />
+                        <Text
+                            text={data?.ability?.job}
+                            fs={"15px"}
+                            fw={600}
+                            width={"auto"}
+                        />
+                        <Text
+                            text={data?.ability?.position}
+                            fs={"15px"}
+                            width={"auto"}
+                        />
                     </div>
-                    <Text text={`${start}-${end}`} fs={"13px"} />
+                    <Text
+                        text={`${data?.ability?.start}-${data?.ability?.end}`}
+                        fs={"13px"}
+                    />
                 </div>
                 <SettingIcon
                     onClick={() => {
@@ -209,17 +222,17 @@ export const AddAbility = () => {
                 <Input4
                     name={"job"}
                     title={"회사"}
-                    defaultValue={data?.ability?.job}
+                    defaultValue={data?.ability?.job || ""}
                 />
                 <Input4
                     name={"position"}
                     title={"직위"}
-                    defaultValue={data?.ability?.position}
+                    defaultValue={data?.ability?.position || ""}
                 />
                 <Input4
                     name={"address"}
                     title={"도서/지역"}
-                    defaultValue={data?.ability?.address}
+                    defaultValue={data?.ability?.address || ""}
                 />
                 <ButtonFlexWrapper>
                     <div>

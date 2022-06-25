@@ -148,11 +148,10 @@ export const AddNumber = () => {
             </AddButtonWrapper>
         );
     } else if (!open && data?.number !== null) {
-        const { number } = data;
         return (
             <GridWrapper>
                 <Icon />
-                <Text text={number} fs={"15px"} width={"auto"} />
+                <Text text={data?.number} fs={"15px"} width={"auto"} />
                 <SettingIcon onClick={handleModify}>
                     <MoreIcon />
                 </SettingIcon>

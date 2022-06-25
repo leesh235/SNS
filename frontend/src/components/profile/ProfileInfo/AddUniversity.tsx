@@ -172,21 +172,27 @@ export const AddUniversity = () => {
             </AddButtonWrapper>
         );
     } else if (!open && data?.university !== null) {
-        const { id, university, major, degree, start, end } = data?.university;
         return (
             <GridWrapper>
                 <Icon />
                 <div>
                     <div>
                         <Text
-                            text={university}
+                            text={data?.university?.university}
                             fs={"15px"}
                             fw={600}
                             width={"auto"}
                         />
-                        <Text text={major} fs={"15px"} width={"auto"} />
+                        <Text
+                            text={data?.university?.major}
+                            fs={"15px"}
+                            width={"auto"}
+                        />
                     </div>
-                    <Text text={`${degree}/${start}-${end}`} fs={"13px"} />
+                    <Text
+                        text={`${data?.university?.degree}/${data?.university?.start}-${data?.university?.end}`}
+                        fs={"13px"}
+                    />
                 </div>
                 <SettingIcon
                     onClick={() => {
