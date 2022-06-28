@@ -22,18 +22,6 @@ export class Likes {
     })
     status: LikeStatus;
 
-    @Column({
-        type: "varchar",
-        nullable: false,
-    })
-    email: LikeStatus;
-
-    @Column({
-        type: "int",
-        nullable: false,
-    })
-    postName: LikeStatus;
-
     @ManyToOne((type) => Post, (post) => post.likes, { onDelete: "CASCADE" })
     @JoinColumn({ name: "postId", referencedColumnName: "id" })
     post: Post;

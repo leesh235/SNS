@@ -125,8 +125,7 @@ export const setLike = async (req: any) => {
         const likes = new Likes();
         likes.user = email;
         likes.post = postId;
-        likes.postName = postId;
-        likes.email = email;
+        likes.post = postId;
 
         const status = await likesRepository.findOne({
             relations: { user: true, post: true },
@@ -150,8 +149,7 @@ export const setLike = async (req: any) => {
         } else {
             await likesRepository.save(likes);
         }
-        // return await findLikeCount(req);
-        // console.log(status);
+
         return true;
     } catch (error) {
         console.log(error);

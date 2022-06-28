@@ -9,9 +9,9 @@ const likesRepository = dataSource.getRepository(Likes);
 export const findAll = async (req: any, mode?: PostMode) => {
     try {
         const {
-            query: { email },
+            user: { email },
         } = req;
-        console.log(email);
+
         let where = {};
         let relations = {};
         if (mode === PostMode.MY) {
@@ -74,6 +74,9 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 },
                 likes: {
                     id: true,
+                    user: {
+                        email: true,
+                    },
                 },
                 fileUrl: {
                     fileUrl: true,
@@ -84,10 +87,13 @@ export const findAll = async (req: any, mode?: PostMode) => {
             },
         });
 
-        const likesstatus: any = await likesRepository.find({
-            where: { email },
+        const likeStatus: any = await likesRepository.find({
+            relations: { user: true, post: true },
+            where: { user: { email } },
             select: {
-                postName: true,
+                id: true,
+                post: { id: true },
+                user: { email: true },
             },
         });
 
@@ -109,10 +115,13 @@ export const findAll = async (req: any, mode?: PostMode) => {
             fileUrl.forEach((img: any, cnt: number) => {
                 images.push(img.fileUrl);
             });
-            let status: boolean = false;
 
-            likesstatus.forEach((val: any) => {
-                if (val.postName === id) status = true;
+            let status: boolean = false;
+            likeStatus.forEach((val: any, idx: number) => {
+                if (val.post.id === id) {
+                    status = true;
+                    return;
+                }
             });
 
             result.push({
