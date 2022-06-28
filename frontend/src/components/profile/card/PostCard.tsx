@@ -183,7 +183,9 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
 
     const handleLike = () => {
         dispatch(setLike({ postId: post.postId }));
-        getPosts();
+        setTimeout(() => {
+            getPosts();
+        }, 50);
     };
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
