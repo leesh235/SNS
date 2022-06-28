@@ -17,3 +17,8 @@ export const setGroupChattingRoom = async (formData: any) => {
     const { data } = await websocket.post(api.chat.create_room, formData);
     return data;
 };
+
+export const deleteRoom = async (formData: any) => {
+    const { data } = await websocket.post(api.chat.deleteRoom, formData);
+    return data;
+};

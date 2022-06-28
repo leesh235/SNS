@@ -5,6 +5,7 @@ import {
     JOINROOMLIST,
     LEAVEROOM,
     CREATEGROUPROOM,
+    DELETEROOM,
 } from "../action/chat";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
@@ -15,6 +16,7 @@ const initialState = {
     joinRoom: { id: "" },
     joinRoomList: [],
     createGroupRoom: reducerUtils.initial(null),
+    deleteRoom: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -42,6 +44,14 @@ const reducer = (state = initialState, action: any) => {
             return handleAsyncReducer(
                 CREATEGROUPROOM,
                 "createGroupRoom",
+                true
+            )(state, action);
+        case DELETEROOM:
+        case typeUtils(DELETEROOM).success:
+        case typeUtils(DELETEROOM).error:
+            return handleAsyncReducer(
+                DELETEROOM,
+                "deleteRoom",
                 true
             )(state, action);
         case JOINROOM:

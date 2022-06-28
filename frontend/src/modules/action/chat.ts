@@ -4,6 +4,7 @@ export const JOINROOM = "chat/JOINROOM";
 export const JOINROOMLIST = "chat/JOINROOMLIST";
 export const LEAVEROOM = "chat/LEAVEROOM";
 export const CREATEGROUPROOM = "chat/CREATEGROUPROOM";
+export const DELETEROOM = "chat/DELETEROOM";
 
 export const setRoomList = () => {
     return {
@@ -42,6 +43,13 @@ export const setLeaveRoom = (data: any) => {
 export const setCreateGroupRoom = (data: any) => {
     return {
         type: CREATEGROUPROOM,
+        data,
+    };
+};
+
+export const setDeleteRoom = (data: any) => {
+    return {
+        type: DELETEROOM,
         data,
     };
 };
