@@ -17,6 +17,8 @@ import { setLogInInfo, setProfile } from "../../modules/action/user";
 import { Avatar } from "../common/Image/Avatar";
 import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
+import { Button2 } from "../common/button/Button2";
+import { logOut } from "../../utils/authUtils";
 
 const Wrapper = styled.header`
     position: fixed;
@@ -62,6 +64,7 @@ const RightWrapper = styled.div`
     > :nth-child(n) {
         margin-right: 8px;
     }
+    position: relative;
 `;
 
 const IconWrapper = styled.div`
@@ -125,6 +128,24 @@ const ButtonWrapper = styled.div<{ color: string }>`
     border-bottom: 3px solid ${(props) => props.color};
 `;
 
+const SeeMoreWrapper = styled.div`
+    width: calc(200px - 30px);
+    height: auto;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 4px 8px rgb(0 0 0 / 20%);
+    background-color: ${(props) => props.theme.color.white};
+    position: absolute;
+    top: 45px;
+    display: flex;
+    flex-direction: column;
+    > :nth-child(1) {
+        border-bottom: 1px solid ${(props) => props.theme.color.lightGray};
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+    }
+`;
+
 const list = [
     <Div>
         <HomeIcon />
@@ -148,6 +169,7 @@ export const Header = () => {
     );
 
     const [click, setClick] = useState<number>(0);
+    const [open, setOpen] = useState<boolean>(false);
 
     const handleOnClick = ({ id }: { id: number }) => {
         setClick(id);
@@ -231,8 +253,31 @@ export const Header = () => {
                     </LongIcon2>
                 </Link>
                 {rightData.map((val, idx) => {
-                    return <IconWrapper key={idx}>{val}</IconWrapper>;
+                    if (idx === 3)
+                        return (
+                            <IconWrapper
+                                key={idx}
+                                onClick={() => {
+                                    setOpen(true);
+                                }}
+                            >
+                                {val}
+                            </IconWrapper>
+                        );
+                    else return <IconWrapper key={idx}>{val}</IconWrapper>;
                 })}
+                {open && (
+                    <SeeMoreWrapper>
+                        <div></div>
+                        <div>
+                            <Button2
+                                text={"로그아웃"}
+                                width={"100%"}
+                                onClick={logOut}
+                            />
+                        </div>
+                    </SeeMoreWrapper>
+                )}
             </RightWrapper>
         </Wrapper>
     );
