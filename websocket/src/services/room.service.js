@@ -1,25 +1,25 @@
 import { Room } from "../models/room.model";
 import { UserRoom } from "../models/user_room.model";
+import { roomTitleUtil } from "../utils/roomTitleUtil";
 
 export const createRoom = async (req) => {
     try {
         const {
             body: { select },
-            user: { email },
+            user: { email, nickName },
         } = req;
 
-        let title = email;
-        if (typeof select === "object") {
-            select.forEach((val, idx) => {
-                title += `,${val.nickName}`;
-            });
-        }
+        select.push({ email, nickName });
 
         const room = await Room.create({});
 
-        let arr = [{ room: room._id.toString(), userId: email, title }];
+        let arr = [];
         select.forEach((val, idx) => {
-            arr.push({ room: room._id.toString(), userId: val.email, title });
+            arr.push({
+                room: room._id.toString(),
+                userId: val.email,
+                title: roomTitleUtil(select, val.email),
+            });
         });
 
         await UserRoom.create(arr);
@@ -56,7 +56,7 @@ export const deleteRoom = async (req) => {
             body: { roomId },
         } = req;
 
-        const result = await Room.deleteOne({ room: roomId });
+        const result = await UserRoom.deleteOne({ room: roomId });
 
         return result;
     } catch (error) {
