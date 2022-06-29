@@ -54,9 +54,13 @@ export const deleteRoom = async (req) => {
     try {
         const {
             body: { roomId },
+            user: { email },
         } = req;
 
-        const result = await UserRoom.deleteOne({ room: roomId });
+        const result = await UserRoom.deleteOne({
+            room: roomId,
+            userId: email,
+        });
 
         return result;
     } catch (error) {
