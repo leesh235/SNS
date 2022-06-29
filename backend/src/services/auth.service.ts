@@ -23,7 +23,10 @@ export const existUser = async (user: User) => {
 export const save = async (user: User) => {
     try {
         const result = await userRepository.save(user);
-        const accessToken = generateAccessToken(result.email);
+        const accessToken = generateAccessToken({
+            email: result.email,
+            nickName: result.nickName,
+        });
         return accessToken;
     } catch (error) {
         console.log(error);

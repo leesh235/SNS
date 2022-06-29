@@ -34,6 +34,7 @@ const localVerify: (
             },
             select: {
                 email: true,
+                nickName: true,
                 password: true,
             },
         });
@@ -45,7 +46,10 @@ const localVerify: (
         if (!(await comparePassword(password, user.password))) {
             return done(null, false, { message: incorrect.INCORRECT_PASSWORD });
         }
-        const accessToken = generateAccessToken(user.email);
+        const accessToken = generateAccessToken({
+            email: user.email,
+            nickName: user.nickName,
+        });
         // const refreshToken = generateRefreshToken(user.email);
 
         // await dataSource
