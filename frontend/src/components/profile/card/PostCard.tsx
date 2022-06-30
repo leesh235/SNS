@@ -61,25 +61,32 @@ const ContentsWrapper = styled.div`
     padding: 4px 0px 16px 0px;
 `;
 
-const ImagesWrapper = styled.div`
+const ImagesWrapper = styled.div<{ cnt?: any }>`
     width: 100%;
-    height: auto;
-    overflow-x: auto;
-`;
-
-const ImageSlider = styled.div`
-    width: auto;
-    height: auto;
+    height: ${(props) => (props.cnt > 1 ? "590px" : "100%")};
     display: flex;
-    flex-direction: row;
-    > :nth-child(n + 2) {
-        margin-left: 5px;
-    }
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    position: relative;
 `;
 
-const Image = styled.img`
-    width: 100%;
-    height: 400px;
+const Image = styled.img<{ cnt?: any }>`
+    width: ${(props) => `calc(${99 / props.cnt}%)`};
+    height: ${(props) => `calc(${99 / props.cnt}%)`};
+    max-height: 500px;
+`;
+
+const ImageShadow = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(99% / 2);
+    height: calc(99% / 2);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(96, 103, 112, 0.5);
 `;
 
 const BottomWrapper = styled.div`
@@ -256,6 +263,7 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                             height={"auto"}
                             top={"57px"}
                             right={"16px"}
+                            zIndenx={"9"}
                         >
                             <HoverBtn
                                 text={"게시물 수정"}
@@ -277,16 +285,47 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                         margin={"0 16px"}
                     />
                 </ContentsWrapper>
-                <ImagesWrapper>
-                    <Link to={{ pathname: `${routes.detail}${post?.postId}` }}>
-                        <ImageSlider>
-                            {post?.images &&
-                                post?.images.map((val, idx) => {
-                                    return <Image key={idx} src={`${val}`} />;
-                                })}
-                        </ImageSlider>
-                    </Link>
-                </ImagesWrapper>
+                <Link
+                    to={{
+                        pathname: `${routes.detail}${post?.postId}`,
+                    }}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        maxHeight: "590px",
+                    }}
+                >
+                    {post?.images && (
+                        <ImagesWrapper cnt={post?.images.length}>
+                            {post?.images.map((val, idx) => {
+                                if (idx < 4)
+                                    return (
+                                        <Image
+                                            key={idx}
+                                            cnt={
+                                                post?.images &&
+                                                post?.images?.length > 1
+                                                    ? 2
+                                                    : 1
+                                            }
+                                            src={`${val}`}
+                                        />
+                                    );
+                            })}
+                            {post?.images.length > 4 && (
+                                <ImageShadow>
+                                    <Text
+                                        text={`+${post?.images.length - 4}장`}
+                                        fs={"45px"}
+                                        fw={550}
+                                        width={"auto"}
+                                        fc={theme.color.white}
+                                    />
+                                </ImageShadow>
+                            )}
+                        </ImagesWrapper>
+                    )}
+                </Link>
                 <Quantity>
                     <Text
                         text={`좋아요 ${post.likequantity}개`}
