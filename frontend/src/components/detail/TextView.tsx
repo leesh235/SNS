@@ -228,7 +228,7 @@ export const TextView = () => {
                 <OptionView>
                     <Button2
                         text={"좋아요"}
-                        fc={data.likeStatus && theme.color.seaBule}
+                        fc={data?.likeStatus && theme.color.seaBule}
                         width={"90%"}
                         onClick={handleLike}
                     />
