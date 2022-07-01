@@ -17,8 +17,7 @@ const router = express.Router();
 //해당 게시글
 router.get(routes.post.get, async (req, res) => {
     try {
-        const { postId } = req.query;
-        const post = await find(Number(postId));
+        const post = await find(req);
         if (post !== null) {
             res.status(200).send(post);
         } else {

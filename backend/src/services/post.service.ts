@@ -11,11 +11,17 @@ const likesRepository = dataSource.getRepository(Likes);
 const commentRepository = dataSource.getRepository(Comment);
 const fileRepository = dataSource.getRepository(FileUrl);
 
-export const find = async (id: number) => {
+export const find = async (req: any) => {
     try {
+        const {
+            query: { postId },
+            user: { email },
+        } = req;
+        const id = Number(postId);
+
         const post = await postRepository.findOne({
-            where: { id, deletedAt: undefined },
             relations: { user: true, fileUrl: true },
+            where: { id, deletedAt: undefined },
             select: {
                 id: true,
                 contents: true,
@@ -33,6 +39,17 @@ export const find = async (id: number) => {
             },
         });
 
+        const like = await likesRepository.findOne({
+            relations: { post: true, user: true },
+            where: {
+                post: { id },
+                user: { email },
+            },
+            select: {
+                id: true,
+            },
+        });
+
         if (post) {
             let images: any[] = [];
             post.fileUrl.forEach((val, idx) => {
@@ -45,6 +62,7 @@ export const find = async (id: number) => {
                 writer: post.user.nickName,
                 profileImage: post.user.profileImage,
                 images,
+                likeStatus: like === null ? false : true,
             };
 
             return result;
@@ -124,7 +142,6 @@ export const setLike = async (req: any) => {
         } = req;
         const likes = new Likes();
         likes.user = email;
-        likes.post = postId;
         likes.post = postId;
 
         const status = await likesRepository.findOne({
