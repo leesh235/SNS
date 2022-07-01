@@ -14,14 +14,6 @@ export class Likes {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({
-        type: "enum",
-        nullable: false,
-        enum: LikeStatus,
-        default: LikeStatus.LIKE,
-    })
-    status: LikeStatus;
-
     @ManyToOne((type) => Post, (post) => post.likes, { onDelete: "CASCADE" })
     @JoinColumn({ name: "postId", referencedColumnName: "id" })
     post: Post;
