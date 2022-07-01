@@ -13,6 +13,8 @@ import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
 import { setWriteComment, setCommentList } from "../../modules/action/comment";
 import { CommentList } from "./CommentList";
+import { setLike, setPostDetail } from "../../modules/action/post";
+import theme from "../../styles/theme";
 
 const Wrapper = styled.section`
     width: 100%;
@@ -144,7 +146,7 @@ export const TextView = () => {
         );
         setTimeout(() => {
             dispatch(setCommentList({ postId: Number(postId) }));
-        }, 500);
+        }, 50);
         e.currentTarget.comment.value = "";
     };
 
@@ -154,6 +156,13 @@ export const TextView = () => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleLike = () => {
+        dispatch(setLike({ postId: Number(postId) }));
+        setTimeout(() => {
+            dispatch(setPostDetail({ postId: Number(postId) }));
+        }, 50);
     };
 
     return (
@@ -217,9 +226,14 @@ export const TextView = () => {
                     </Contents>
                 </PostView>
                 <OptionView>
-                    <Button2 text={"좋아요"} width={"100%"} />
-                    <CommentBtn />
-                    <Button2 text={"공유하기"} width={"100%"} />
+                    <Button2
+                        text={"좋아요"}
+                        fc={data.likeStatus && theme.color.seaBule}
+                        width={"90%"}
+                        onClick={handleLike}
+                    />
+                    <CommentBtn width={"90%"} />
+                    <Button2 text={"공유하기"} width={"90%"} />
                 </OptionView>
             </Middle>
             <Bottom>
