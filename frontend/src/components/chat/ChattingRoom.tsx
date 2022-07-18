@@ -70,6 +70,44 @@ const MessageList = styled.div`
     > :nth-child(n) {
         margin: 5px 0;
     }
+    .message {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        > :nth-child(2) {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 18px;
+            background-color: ${(props) => props.theme.color.gray};
+            padding: 8px 12px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+    }
+    .my_message {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        > :nth-child(2) {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 18px;
+            background-color: ${(props) => props.theme.color.gray};
+            padding: 8px 12px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+    }
 `;
 
 const MyMessageWrapper = styled.div`
@@ -146,11 +184,22 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
 
     const createDom = (parent: any, tag: any, data: any) => {
         let list: any = document.getElementById(parent);
-        let item = document.createElement(tag);
-        if (user_store.data.email !== data.userId)
-            item.innerText = `${data.nickName}${data.message}`;
-        else item.innerText = `${data.message}${data.nickName}`;
-        list.appendChild(item);
+        let itemWrapper = document.createElement(tag);
+        let name = document.createElement("div");
+        let contents = document.createElement("span");
+        if (user_store.data.email !== data.userId) {
+            itemWrapper.className = "message";
+            name.innerText = `${data.nickName}`;
+            contents.innerText = `${data.message}`;
+        } else {
+            itemWrapper.className = "my_message";
+            name.innerText = `${data.nickName}`;
+            contents.innerText = `${data.message}`;
+        }
+        itemWrapper.appendChild(name);
+        itemWrapper.appendChild(contents);
+        list.appendChild(itemWrapper);
+        handleScroll();
     };
 
     const handleScroll = () => {
@@ -174,7 +223,6 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
 
     const handleLeave = () => {
         dispatch(setJoinRoom({ id: "" }));
-        request(event.leave, { roomId, userId: user_store.data.email });
     };
 
     const handleSimple = () => {
@@ -192,8 +240,11 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
         dispatch(setMessageList({ roomId }));
         request(event.join, { roomId, userId: user_store.data.email });
         response(event.message, (data: any) => {
-            createDom("chatList", "span", data);
+            createDom("chatList", "div", data);
         });
+        return () => {
+            request(event.leave, { roomId, userId: user_store.data.email });
+        };
     }, []);
 
     return (
