@@ -1,5 +1,5 @@
 import express from "express";
-import { findAll, user_posts } from "../services/posts.service";
+import { findAll, user_posts, findPostIds } from "../services/posts.service";
 import { routes } from "../config/route";
 import { PostMode } from "../config/enums";
 
@@ -11,6 +11,17 @@ router.get(routes.posts.all_ist, async (req, res) => {
         const allList = await findAll(req);
         res.status(200).send(allList);
     } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//전체 리스트 id array
+router.get(routes.posts.ids, async (req, res) => {
+    try {
+        const allList = await findPostIds(req);
+        res.status(200).send(allList);
+    } catch (error) {
+        console.log(error);
         res.status(500).send({ message: `${error}` });
     }
 });

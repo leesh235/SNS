@@ -51,6 +51,7 @@ export const routes = {
         my_list: "/my",
         user_list: "/user",
         friends_list: "/friends",
+        ids: "/ids",
     },
     comment: {
         get: "/",
