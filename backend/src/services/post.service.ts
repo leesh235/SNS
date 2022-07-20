@@ -166,12 +166,29 @@ export const setLike = async (req: any) => {
                 post: { id: postId },
             });
             result.postId = postId;
-            result.statue = false;
+            result.status = false;
         } else {
             await likesRepository.save(likes);
             result.postId = postId;
-            result.statue = true;
+            result.status = true;
         }
+
+        const quantity = await likesRepository.count({
+            relations: {
+                post: true,
+            },
+            where: {
+                post: {
+                    id: postId,
+                },
+            },
+            select: {
+                id: true,
+                post: {},
+            },
+        });
+
+        result.quantity = quantity;
 
         return result;
     } catch (error) {
