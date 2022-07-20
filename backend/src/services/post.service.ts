@@ -158,16 +158,22 @@ export const setLike = async (req: any) => {
                 post: { id: true },
             },
         });
+
+        let result: any = {};
         if (status) {
             await likesRepository.delete({
                 user: { email },
                 post: { id: postId },
             });
+            result.postId = postId;
+            result.statue = false;
         } else {
             await likesRepository.save(likes);
+            result.postId = postId;
+            result.statue = true;
         }
 
-        return true;
+        return result;
     } catch (error) {
         console.log(error);
         return false;

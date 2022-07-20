@@ -70,11 +70,8 @@ router.delete(routes.post.delete, async (req, res) => {
 //좋아요 버튼
 router.post(routes.post.like, async (req, res) => {
     try {
-        if (await setLike(req)) {
-            res.status(200).send({ message: `${success.SAVE_LIKE}` });
-        } else {
-            res.status(404).send({ message: `${fail.SAVE_LIKE}` });
-        }
+        const result = await setLike(req);
+        res.status(200).send({ ...result });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
