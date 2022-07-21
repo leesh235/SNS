@@ -13,4 +13,5 @@ export enum PostMode {
     LIKE = "like",
     BOOKMARK = "bookmark",
     FRIENDS = "friends",
+    ALL = "all",
 }

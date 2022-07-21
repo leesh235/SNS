@@ -7,7 +7,7 @@ import { findAllModeUtil } from "../utils/typeormUtil";
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
 
-export const findAll = async (req: any, mode?: PostMode) => {
+export const findDetails = async (req: any, mode?: PostMode) => {
     try {
         const {
             user: { email },
@@ -109,7 +109,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
     }
 };
 
-export const findDetails = async (req: any, mode?: PostMode) => {
+export const findAll = async (req: any, mode?: PostMode) => {
     try {
         const {
             user: { email },
@@ -142,7 +142,7 @@ export const findDetails = async (req: any, mode?: PostMode) => {
         allList.forEach((val: any) => {
             result.push(val?.id);
         });
-
+        console.log(result);
         return result;
     } catch (error) {
         console.log(error);
