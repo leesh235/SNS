@@ -61,8 +61,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
             },
         });
 
-        let result: any[] = [];
-        let obj: any = {};
+        let result: any = {};
         allList.forEach((val: any, idx: number) => {
             const {
                 id,
@@ -88,20 +87,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 }
             });
 
-            result.push({
-                postId: id,
-                userId: user.email,
-                writer: user.nickName,
-                profileImage: user.profileImage,
-                contents,
-                createdAt,
-                images,
-                files,
-                likequantity: likes.length,
-                commentquantity: comment.length,
-                likeStatus: status,
-            });
-            obj[`${id}`] = {
+            result[`${id}`] = {
                 postId: id,
                 userId: user.email,
                 writer: user.nickName,
@@ -115,15 +101,15 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 likeStatus: status,
             };
         });
-        return obj;
-        return { postIdList: result, postDetailList: obj };
+
+        return result;
     } catch (error) {
         console.log(error);
         return [];
     }
 };
 
-export const findPostIds = async (req: any, mode?: PostMode) => {
+export const findDetails = async (req: any, mode?: PostMode) => {
     try {
         const {
             user: { email },
@@ -159,7 +145,7 @@ export const findPostIds = async (req: any, mode?: PostMode) => {
 
         return result;
     } catch (error) {
-        console.group(error);
+        console.log(error);
         return [];
     }
 };

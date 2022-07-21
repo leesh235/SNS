@@ -1,17 +1,34 @@
 import { PostMode } from "../config/enums";
 
 export const findAllModeUtil = (email: string, mode: any, where: any) => {
+    let result: any;
     switch (mode) {
         case PostMode.MY:
-            return (where.user = { email });
+            return (result = {
+                ...where,
+                user: {
+                    email,
+                },
+            });
         case PostMode.LIKE:
-            return (where.likes = { userId: email });
+            return (result = {
+                ...where,
+                likes: {
+                    userId: email,
+                },
+            });
         case PostMode.BOOKMARK:
-            return where;
+            return (result = {
+                ...where,
+            });
         case PostMode.FRIENDS:
-            return where;
+            return (result = {
+                ...where,
+            });
         default: {
-            return where;
+            return (result = {
+                ...where,
+            });
         }
     }
 };
