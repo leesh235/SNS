@@ -40,6 +40,14 @@ const reducer = (state = initialState, action: any) => {
                 "friendsPosts",
                 true
             )(state, action);
+        case FRIENDSPOSTS:
+        case typeUtils(FRIENDSPOSTS).success:
+        case typeUtils(FRIENDSPOSTS).error:
+            return handleAsyncReducer(
+                FRIENDSPOSTS,
+                "friendsPosts",
+                true
+            )(state, action);
         default:
             return state;
     }

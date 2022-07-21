@@ -5,13 +5,13 @@ import {
     getMyPostsFunc,
     getBookmarkPostsFunc,
     getFriendsPostsFunc,
-    getListPostsFunc,
+    getLikePostsFunc,
 } from "../../lib/posts";
 import { ALLPOSTS, MYPOSTS, LIKEPOSTS, FRIENDSPOSTS } from "../action/posts";
 
 const posts = createPromise(ALLPOSTS, getPostsFunc);
 const myPosts = createPromise(MYPOSTS, getMyPostsFunc);
-const likePosts = createPromise(LIKEPOSTS, getListPostsFunc);
+const likePosts = createPromise(LIKEPOSTS, getLikePostsFunc);
 const friendsPosts = createPromise(FRIENDSPOSTS, getFriendsPostsFunc);
 
 export function* postsSaga() {

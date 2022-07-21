@@ -2,7 +2,12 @@ import { backend } from "./axios";
 import { api } from "../utils/routes";
 import { GetPost, Like, DeletePost } from "../types/post";
 
-export const getPostFunc = async (formData: GetPost) => {
+export const postDetailsFunc = async () => {
+    const res = await backend.get(api.postIds.ids);
+    return res.data;
+};
+
+export const postFunc = async (formData: GetPost) => {
     const res = await backend.get(api.post.get, { params: formData });
     return res.data;
 };

@@ -133,32 +133,18 @@ const Hover = styled.div`
 `;
 
 interface Props {
-    getPosts?: any;
-    post: {
-        postId: number;
-        userId: string;
-        writer: string;
-        contents: string;
-        createdAt: string;
-        images?: Array<String>;
-        profileImage?: string;
-        likequantity: number;
-        commentquantity: number;
-        likeStatus: boolean;
-    };
-    user: {
-        email: string;
-        profileImage: string;
-    };
+    postId: number;
 }
 
-export const PostCard = ({ getPosts, post, user }: Props) => {
+export const PostCard = ({ postId }: Props) => {
     const dispatch = useDispatch();
     const [openBtn, setOpenBtn] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
 
-    const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.loginInfo
+    const user = useSelector((state: any) => state?.user?.loginInfo?.data);
+
+    const post = useSelector(
+        (state: any) => state?.post?.postDetails?.data?.[`${postId}`]
     );
 
     const handleBtnOpen = () => {
@@ -184,15 +170,12 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                 "휴지통으로 보내시겠습니까?(30일 후에 영구 삭제됩니다.)"
             )
         ) {
-            dispatch(setDeletePost({ postId: post?.postId }));
+            dispatch(setDeletePost({ postId }));
         }
     };
 
     const handleLike = () => {
-        dispatch(setLike({ postId: post.postId }));
-        setTimeout(() => {
-            getPosts();
-        }, 50);
+        dispatch(setLike({ postId }));
     };
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -203,12 +186,12 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
 
         dispatch(
             setWriteComment({
-                postId: post.postId,
+                postId: postId,
                 contents: e.currentTarget.comment.value,
             })
         );
         // setTimeout(() => {
-        //     dispatch(setCommentList({ postId: Number(post.postId) }));
+        //     dispatch(setCommentList({ postId: Number(postId) }));
         // }, 500);
         e.currentTarget.comment.value = "";
     };
@@ -249,7 +232,7 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                             width={"auto"}
                         />
                     </FlexWrapper>
-                    {post.userId === data.email ? (
+                    {post?.userId === user?.email ? (
                         <Hover onClick={handleBtnOpen}>
                             <MoreIcon />
                         </Hover>
@@ -297,7 +280,7 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                 >
                     {post?.images && (
                         <ImagesWrapper cnt={post?.images.length}>
-                            {post?.images.map((val, idx) => {
+                            {post?.images.map((val: string, idx: number) => {
                                 if (idx < 4)
                                     return (
                                         <Image
@@ -328,14 +311,14 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                 </Link>
                 <Quantity>
                     <Text
-                        text={`좋아요 ${post.likequantity}개`}
+                        text={`좋아요 ${post?.likequantity}개`}
                         fs={"15px"}
                         lh={"20px"}
                         margin={"0 16px"}
                         width={"auto"}
                     />
                     <Text
-                        text={`댓글 ${post.commentquantity}개`}
+                        text={`댓글 ${post?.commentquantity}개`}
                         fs={"15px"}
                         lh={"20px"}
                         margin={"0 16px"}
@@ -347,15 +330,15 @@ export const PostCard = ({ getPosts, post, user }: Props) => {
                         text={"좋아요"}
                         width={"100%"}
                         onClick={handleLike}
-                        fc={post.likeStatus ? theme.color.seaBule : ""}
+                        fc={post?.likeStatus ? theme.color.seaBule : ""}
                     />
                     <CommentBtn />
                     <Button2 text={"공유하기"} width={"100%"} />
                 </BottomWrapper>
 
                 <CommentInput
-                    image={data.profileImage}
-                    writer={data.email}
+                    image={user?.profileImage}
+                    writer={user?.email}
                     onSubmit={handleOnSubmit}
                     width={"calc(100% - 20px)"}
                 />

@@ -1,8 +1,7 @@
 import styled from "../../styles/theme-components";
 import { PostCard } from "../profile/card/PostCard";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setAllPosts } from "../../modules/action/posts";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.section`
     display: grid;
@@ -14,31 +13,20 @@ const Wrapper = styled.section`
 `;
 
 export const PostList = () => {
-    const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
         (state: any) => state.posts.allPosts
     );
 
-    const user = useSelector((state: any) => state.user.loginInfo);
-
-    const getAllPosts = () => {
-        dispatch(setAllPosts());
-    };
-
-    useEffect(() => {}, [loading]);
+    useEffect(() => {
+        console.log(data);
+    }, [loading]);
 
     return (
         <Wrapper>
-            {data?.map((val: any, idx: number) => {
-                return (
-                    <PostCard
-                        key={idx}
-                        post={val}
-                        user={user.data}
-                        getPosts={getAllPosts}
-                    />
-                );
-            })}
+            {loading &&
+                data?.map((val: any, idx: number) => {
+                    return <PostCard key={idx} postId={val} />;
+                })}
         </Wrapper>
     );
 };

@@ -75,7 +75,9 @@ export const PostFlexCard = ({ user }: Props) => {
         dispatch(setMyPosts({ email: user.email }));
     };
 
-    useEffect(() => {}, [loading]);
+    useEffect(() => {
+        console.log(data);
+    }, [loading]);
 
     return (
         <>
@@ -148,14 +150,7 @@ export const PostFlexCard = ({ user }: Props) => {
             {menu === 0 ? (
                 <PostWrapper>
                     {data?.map((val: any, idx: number) => {
-                        return (
-                            <PostCard
-                                key={idx}
-                                post={val}
-                                getPosts={getMyPosts}
-                                user={user}
-                            />
-                        );
+                        return <PostCard key={idx} postId={val} />;
                     })}
                 </PostWrapper>
             ) : (

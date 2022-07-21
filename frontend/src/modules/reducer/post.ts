@@ -1,6 +1,7 @@
 import {
-    WRITEPOST,
+    POSTDETAILS,
     POSTDETAIL,
+    WRITEPOST,
     MODIFYPOST,
     DELETEPOST,
     LIKE,
@@ -9,22 +10,23 @@ import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
+    postDetails: reducerUtils.initial(null),
+    postDetail: reducerUtils.initial(null),
     deletePost: reducerUtils.initial(null),
     modifyPost: reducerUtils.initial(null),
     writePost: reducerUtils.initial(null),
-    postDetail: reducerUtils.initial(null),
     like: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type } = action;
+    const { type, data } = action;
     switch (type) {
-        case WRITEPOST:
-        case typeUtils(WRITEPOST).success:
-        case typeUtils(WRITEPOST).error:
+        case POSTDETAILS:
+        case typeUtils(POSTDETAILS).success:
+        case typeUtils(POSTDETAILS).error:
             return handleAsyncReducer(
-                WRITEPOST,
-                "writePost",
+                POSTDETAILS,
+                "postDetails",
                 true
             )(state, action);
         case POSTDETAIL:
@@ -35,6 +37,14 @@ const reducer = (state = initialState, action: any) => {
                 "postDetail",
                 true
             )(state, action);
+        case WRITEPOST:
+        case typeUtils(WRITEPOST).success:
+        case typeUtils(WRITEPOST).error:
+            return handleAsyncReducer(
+                WRITEPOST,
+                "writePost",
+                true
+            )(state, action);
         case MODIFYPOST:
         case typeUtils(MODIFYPOST).success:
         case typeUtils(MODIFYPOST).error:
@@ -43,7 +53,6 @@ const reducer = (state = initialState, action: any) => {
                 "modifyPost",
                 true
             )(state, action);
-
         case DELETEPOST:
         case typeUtils(DELETEPOST).success:
         case typeUtils(DELETEPOST).error:
@@ -53,9 +62,23 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
         case LIKE:
-        case typeUtils(LIKE).success:
         case typeUtils(LIKE).error:
-            return handleAsyncReducer(LIKE, "like", true)(state, action);
+            return handleAsyncReducer(LIKE, "postDetails", true)(state, action);
+        case typeUtils(LIKE).success:
+            return {
+                ...state,
+                postDetails: {
+                    ...state.postDetails,
+                    data: {
+                        ...state.postDetails.data,
+                        [data.postId]: {
+                            ...state.postDetails.data[data.postId],
+                            likeStatus: data.status,
+                            likequantity: data.quantity,
+                        },
+                    },
+                },
+            };
         default:
             return state;
     }

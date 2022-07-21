@@ -1,21 +1,28 @@
 import { GetPost, DeletePost } from "../../types/post";
 
 export const WRITEPOST = "post/WRITEPOST";
+export const POSTDETAILS = "post/POSTDETAILS";
 export const POSTDETAIL = "post/POSTDETAIL";
 export const MODIFYPOST = "post/MODIFYPOST";
 export const DELETEPOST = "post/DELETEPOST";
 export const LIKE = "post/LIKE";
 
-export const setWritePost = (data: any) => {
+export const setPostDetails = () => {
     return {
-        type: WRITEPOST,
-        data,
+        type: POSTDETAILS,
     };
 };
 
 export const setPostDetail = (data: GetPost) => {
     return {
         type: POSTDETAIL,
+        data,
+    };
+};
+
+export const setWritePost = (data: any) => {
+    return {
+        type: WRITEPOST,
         data,
     };
 };

@@ -54,6 +54,9 @@ export const api = {
         my_list: "/posts/my",
         friends_list: "/posts/friends",
     },
+    postIds: {
+        ids: "/posts/ids/",
+    },
     comment: {
         get: "/comment/",
         write: "/comment/write",

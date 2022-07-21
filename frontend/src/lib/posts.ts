@@ -16,7 +16,7 @@ export const getFriendsPostsFunc = async () => {
     return res.data;
 };
 
-export const getListPostsFunc = async () => {
+export const getLikePostsFunc = async () => {
     const res = await backend.get(api.posts.like_list);
     return res.data;
 };
