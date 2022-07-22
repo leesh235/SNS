@@ -143,7 +143,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
         allList.forEach((val: any) => {
             result.push(val?.id);
         });
-        console.log(result);
+
         return result;
     } catch (error) {
         console.log(error);

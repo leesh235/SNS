@@ -27,7 +27,7 @@ export const user_detail = async (req: any) => {
                 introduction: true,
             },
         });
-        console.log(result);
+
         return result;
     } catch (error) {
         console.log(error);

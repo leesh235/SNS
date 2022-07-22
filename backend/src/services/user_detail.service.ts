@@ -252,7 +252,7 @@ export const saveAddress = async (req: any) => {
         } else {
             result = await userInfoRepository.save(userInfo);
         }
-        console.log(result);
+
         return true;
     } catch (error) {
         console.log(error);

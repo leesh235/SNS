@@ -119,8 +119,6 @@ export const findAll = async (req: any) => {
             query: { select, search },
             user: { email },
         } = req;
-        console.log(select);
-        console.log(search);
 
         let NotIn: any[] = [];
         if (select !== undefined) NotIn = select;
@@ -153,7 +151,6 @@ export const findAll = async (req: any) => {
                 createdAt: "desc",
             },
         });
-        console.log(friendList);
 
         let result: any[] = [];
 
