@@ -239,7 +239,7 @@ interface Props {
         writer: string;
         contents: string;
         createdAt: string;
-        images?: Array<String>;
+        images?: Array<{ id: number; url: string }>;
         profileImage?: string;
         files?: string;
     };
@@ -251,7 +251,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         (state: any) => state?.user?.profile
     );
     const [fileList, setFileList] = useState<any[]>(post?.images || []);
-    const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(post?.images ? true : false);
     const [modal, setModal] = useState<boolean>(false);
 
     const handleModalOpen = () => {
@@ -273,6 +273,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
 
     const handleImageOnChange: React.ChangeEventHandler = (e) => {
         const { files } = e?.target as HTMLInputElement;
+        console.log(files);
         if (files) {
             const arr = Array.from(files);
             setFileList((state) => state.concat(arr));
@@ -325,24 +326,24 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         } else {
             dispatch(setWritePost(formData));
         }
-        dispatch(setMyPosts({ email: data.email }));
+        setTimeout(() => {
+            dispatch(setMyPosts({ email: data.email }));
+        }, 100);
 
         setClose(false);
     };
 
     const handleUrl = (url: any) => {
-        if (typeof url === "string") {
-            return url;
+        if (url.id) {
+            console.log("server");
+            return url.url;
         } else {
+            console.log("FILE");
             return obToUrl(url);
         }
     };
 
     useEffect(() => {
-        if (post?.images === fileList) {
-            handleOpen();
-            setFileList(post?.images);
-        }
         document.body.style.cssText = `
             overflow: hidden;
             padding-right: 17px;
@@ -350,7 +351,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         return () => {
             document.body.style.cssText = ``;
         };
-    }, [fileList]);
+    }, []);
 
     return (
         <>

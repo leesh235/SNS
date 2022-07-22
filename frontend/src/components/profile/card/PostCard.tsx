@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDeletePost, setLike } from "../../../modules/action/post";
 import { setWriteComment } from "../../../modules/action/comment";
 import theme from "../../../styles/theme";
+import { setMyPosts } from "../../../modules/action/posts";
 
 const Wrapper = styled.article`
     width: 100%;
@@ -171,6 +172,7 @@ export const PostCard = ({ postId }: Props) => {
             )
         ) {
             dispatch(setDeletePost({ postId }));
+            dispatch(setMyPosts({ email: user.email }));
         }
     };
 
@@ -280,18 +282,18 @@ export const PostCard = ({ postId }: Props) => {
                 >
                     {post?.images && (
                         <ImagesWrapper cnt={post?.images.length}>
-                            {post?.images.map((val: string, idx: number) => {
+                            {post?.images.map((val: any, idx: number) => {
                                 if (idx < 4)
                                     return (
                                         <Image
-                                            key={idx}
+                                            key={val.id}
                                             cnt={
                                                 post?.images &&
                                                 post?.images?.length > 1
                                                     ? 2
                                                     : 1
                                             }
-                                            src={`${val}`}
+                                            src={`${val.url}`}
                                         />
                                     );
                             })}
