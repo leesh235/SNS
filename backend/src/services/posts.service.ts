@@ -43,6 +43,7 @@ export const findDetails = async (req: any, mode?: PostMode) => {
                     },
                 },
                 fileUrl: {
+                    id: true,
                     fileUrl: true,
                 },
             },
@@ -74,9 +75,9 @@ export const findDetails = async (req: any, mode?: PostMode) => {
                 fileUrl,
             } = val;
 
-            let images: string[] = [];
+            let images: any[] = [];
             fileUrl.forEach((img: any, cnt: number) => {
-                images.push(img.fileUrl);
+                images.push({ id: img.id, url: img.fileUrl });
             });
 
             let status: boolean = false;
