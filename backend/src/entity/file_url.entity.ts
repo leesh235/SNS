@@ -17,7 +17,7 @@ export class FileUrl {
     date: string;
 
     @Column({ type: "varchar", nullable: false })
-    fileUrl!: string;
+    fileName: string;
 
     @ManyToOne((type) => User, (user) => user.fileUrl, { onDelete: "CASCADE" })
     @JoinColumn({ name: "userId", referencedColumnName: "email" })
