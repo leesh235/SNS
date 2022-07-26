@@ -1,6 +1,7 @@
 import styled from "../../styles/theme-components";
 import { useEffect } from "react";
 import { Text } from "../common/Text";
+import theme from "../../styles/theme";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -34,9 +35,10 @@ const Top = styled.div`
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 60px auto 60px;
+    grid-template-columns: calc(100% - 60px) 60px;
     align-items: center;
     > :nth-child(1) {
+        padding-left: 60px;
         justify-self: center;
     }
 `;
@@ -105,8 +107,19 @@ const DeleteBtn = styled.div`
 `;
 
 const Bottom = styled.div`
-    width: 100%;
-    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 32px);
+    height: 36px;
+    margin: 0 16px;
+    border-radius: 6px;
+    padding: 0;
+    background-color: ${(props) => props.theme.color.seaBule};
+    :hover {
+        background-color: ${(props) => props.theme.color.darkSeaBlue};
+    }
+    cursor: pointer;
 `;
 
 interface Props {
@@ -139,7 +152,6 @@ export const ModifyPost = ({
         <Wrapper>
             <Box>
                 <Top>
-                    <CloseBtn onClick={closeFunc}>X</CloseBtn>
                     <Text
                         text={"사진/동영상"}
                         fs={"20px"}
@@ -148,6 +160,7 @@ export const ModifyPost = ({
                         ta={"center"}
                         width={"100%"}
                     />
+                    <CloseBtn onClick={closeFunc}>X</CloseBtn>
                 </Top>
                 <Middle>
                     {fileList?.map((val, idx) => {
@@ -165,7 +178,15 @@ export const ModifyPost = ({
                         );
                     })}
                 </Middle>
-                <Bottom>Bottom</Bottom>
+                <Bottom onClick={closeFunc}>
+                    <Text
+                        text={"완료"}
+                        fs={"15px"}
+                        fw={600}
+                        ta={"center"}
+                        fc={theme.color.white}
+                    />
+                </Bottom>
             </Box>
         </Wrapper>
     );

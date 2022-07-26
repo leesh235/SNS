@@ -187,14 +187,14 @@ const Addbtn = styled.label`
     opacity: 0;
 `;
 
-const Bottom = styled.button<{ bc?: string }>`
+const Bottom = styled.button`
     width: calc(100% - 32px);
     height: 36px;
     margin: 0 16px;
     border: 0;
     border-radius: 6px;
     padding: 0;
-    background-color: ${(props) => props.bc};
+    background-color: ${(props) => props.theme.color.seaBule};
     :hover {
         background-color: ${(props) => props.theme.color.darkSeaBlue};
     }
@@ -250,7 +250,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.user?.profile
     );
-    // const [fileList, setFileList] = useState<any[]>(post?.images || []);
+
     const [fileList, setFileList] = useState<{ id: number; url: any }[]>(
         post?.images || []
     );
@@ -261,6 +261,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     const [modal, setModal] = useState<boolean>(false);
 
     const handleModal = () => {
+        console.log(fileList);
         if (!modal) setModal(true);
         else setModal(false);
     };
@@ -283,7 +284,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         }
     };
 
-    const handleDelete = (id: number) => {
+    const handleDelete = (id: number, list: any[]) => {
         if (fileList !== []) {
             const arr = fileList.filter((val, idx) => {
                 return val.id !== id;
@@ -296,6 +297,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
             });
             setDeleteFileList((prev) => prev.concat(arr));
         }
+        console.log(fileList);
     };
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -465,9 +467,9 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                             />
                         </ClickBtn>
                     </ImageContents>
-                    <Bottom bc={theme.color.gray}>
+                    <Bottom>
                         <Text
-                            text={"게시"}
+                            text={post ? "저장" : "게시"}
                             fs={"15px"}
                             fw={600}
                             lh={"20px"}

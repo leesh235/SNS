@@ -64,7 +64,7 @@ const color = {
     lightBlack: "#606770",
     gray: "rgb(233, 235, 238)",
     lightSeaBlue: "rgb(231, 243, 255)",
-    darkSeaBlue: "rgb(221, 233, 245)",
+    darkSeaBlue: "#2851A3",
     gray1: "rgb(247, 248, 250)",
 };
 
