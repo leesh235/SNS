@@ -18,6 +18,7 @@ import { Avatar } from "../common/Image/Avatar";
 import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
 import { Button2 } from "../common/button/Button2";
+import { SeeMore } from "./SeeMore";
 import { logOut } from "../../utils/authUtils";
 
 const Wrapper = styled.header`
@@ -175,8 +176,14 @@ export const Header = () => {
         setClick(id);
     };
 
+    const handleSeeMore = () => {
+        console.log("handleSeeMore");
+        if (!open) setOpen(true);
+        else setOpen(false);
+    };
+
     useEffect(() => {
-        dispatch(setLogInInfo());
+        if (data === null) dispatch(setLogInInfo());
     }, []);
 
     return (
@@ -255,29 +262,13 @@ export const Header = () => {
                 {rightData.map((val, idx) => {
                     if (idx === 3)
                         return (
-                            <IconWrapper
-                                key={idx}
-                                onClick={() => {
-                                    setOpen(true);
-                                }}
-                            >
+                            <IconWrapper key={idx} onClick={handleSeeMore}>
                                 {val}
                             </IconWrapper>
                         );
                     else return <IconWrapper key={idx}>{val}</IconWrapper>;
                 })}
-                {open && (
-                    <SeeMoreWrapper>
-                        <div></div>
-                        <div>
-                            <Button2
-                                text={"로그아웃"}
-                                width={"100%"}
-                                onClick={logOut}
-                            />
-                        </div>
-                    </SeeMoreWrapper>
-                )}
+                {open && <SeeMore closeFunc={handleSeeMore} />}
             </RightWrapper>
         </Wrapper>
     );
