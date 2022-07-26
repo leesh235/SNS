@@ -152,15 +152,15 @@ export const ModifyPost = ({
                 <Middle>
                     {fileList?.map((val, idx) => {
                         return (
-                            <ImageWrapper key={idx}>
+                            <ImageWrapper key={val.id}>
                                 <DeleteBtn
                                     onClick={() => {
-                                        deleteFunc(idx);
+                                        deleteFunc(val.id);
                                     }}
                                 >
                                     X
                                 </DeleteBtn>
-                                <Image src={handleUrl(val)} />
+                                <Image src={handleUrl(val.url)} />
                             </ImageWrapper>
                         );
                     })}

@@ -71,13 +71,7 @@ export const PostFlexCard = ({ user }: Props) => {
         setMenu(id);
     };
 
-    const getMyPosts = () => {
-        dispatch(setMyPosts({ email: user.email }));
-    };
-
-    useEffect(() => {
-        console.log(data);
-    }, [loading]);
+    useEffect(() => {}, [loading]);
 
     return (
         <>

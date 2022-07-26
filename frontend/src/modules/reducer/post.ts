@@ -14,8 +14,6 @@ const initialState = {
     postDetail: reducerUtils.initial(null),
     deletePost: reducerUtils.initial(null),
     modifyPost: reducerUtils.initial(null),
-    writePost: reducerUtils.initial(null),
-    like: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -38,29 +36,59 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
         case WRITEPOST:
-        case typeUtils(WRITEPOST).success:
         case typeUtils(WRITEPOST).error:
             return handleAsyncReducer(
                 WRITEPOST,
-                "writePost",
+                "postDetails",
                 true
             )(state, action);
+        case typeUtils(WRITEPOST).success:
+            console.log(data);
+            return {
+                ...state,
+                postDetails: {
+                    ...state.postDetails,
+                    data: {
+                        ...state.postDetails.data,
+                        ...data,
+                    },
+                },
+            };
         case MODIFYPOST:
-        case typeUtils(MODIFYPOST).success:
         case typeUtils(MODIFYPOST).error:
             return handleAsyncReducer(
                 MODIFYPOST,
                 "modifyPost",
                 true
             )(state, action);
+        case typeUtils(MODIFYPOST).success:
+            return {
+                ...state,
+                postDetails: {
+                    ...state.postDetails,
+                    data: {
+                        ...state.postDetails.data,
+                        [data?.id]: data.data,
+                    },
+                },
+            };
         case DELETEPOST:
-        case typeUtils(DELETEPOST).success:
         case typeUtils(DELETEPOST).error:
             return handleAsyncReducer(
                 DELETEPOST,
-                "deletePost",
+                "postDetails",
                 true
             )(state, action);
+        case typeUtils(DELETEPOST).success:
+            let newData: any = state.postDetails.data;
+            delete newData?.[data.id];
+            return {
+                ...state,
+                postDetails: {
+                    ...state.postDetails,
+                    data: newData,
+                },
+            };
         case LIKE:
         case typeUtils(LIKE).error:
             return handleAsyncReducer(LIKE, "postDetails", true)(state, action);

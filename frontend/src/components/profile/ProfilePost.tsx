@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { setLatestImage } from "../../modules/action/image";
 import { setMyPosts } from "../../modules/action/posts";
+import { setPostDetails } from "../../modules/action/post";
 import { useEffect } from "react";
 import { LatestImageCard } from "./card/LatestImageCard";
 import { batch } from "react-redux";
@@ -62,7 +63,7 @@ export const ProfilePost = ({ handleUrl }: Props) => {
 
     useEffect(() => {
         batch(() => {
-            // dispatch(setProfile());
+            dispatch(setPostDetails());
             dispatch(setLatestImage({ email }));
             dispatch(setMyPosts({ email }));
         });

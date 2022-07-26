@@ -250,43 +250,51 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.user?.profile
     );
-    const [fileList, setFileList] = useState<any[]>(post?.images || []);
+    // const [fileList, setFileList] = useState<any[]>(post?.images || []);
+    const [fileList, setFileList] = useState<{ id: number; url: any }[]>(
+        post?.images || []
+    );
+    const [deleteFileList, setDeleteFileList] = useState<
+        { id: number; url: any }[]
+    >([]);
     const [open, setOpen] = useState<boolean>(post?.images ? true : false);
     const [modal, setModal] = useState<boolean>(false);
 
-    const handleModalOpen = () => {
-        setModal(true);
-    };
-
-    const handleModalClose = () => {
-        setModal(false);
+    const handleModal = () => {
+        if (!modal) setModal(true);
+        else setModal(false);
     };
 
     const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setFileList([]);
-        setOpen(false);
+        if (!open) setOpen(true);
+        else {
+            setFileList([]);
+            setOpen(false);
+        }
     };
 
     const handleImageOnChange: React.ChangeEventHandler = (e) => {
         const { files } = e?.target as HTMLInputElement;
-        console.log(files);
         if (files) {
-            const arr = Array.from(files);
+            const arr = Array.from(files).map((val, idx) => {
+                return { id: fileList.length + idx + 1, url: val };
+            });
             setFileList((state) => state.concat(arr));
         }
     };
 
     const handleDelete = (id: number) => {
         if (fileList !== []) {
-            setFileList(
-                fileList.filter((val, idx) => {
-                    return idx !== id;
-                })
-            );
+            const arr = fileList.filter((val, idx) => {
+                return val.id !== id;
+            });
+            setFileList(arr);
+        }
+        if (post?.images) {
+            const arr = fileList.filter((val, idx) => {
+                return val.id === id;
+            });
+            setDeleteFileList((prev) => prev.concat(arr));
         }
     };
 
@@ -302,26 +310,18 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         const formData = new FormData();
         formData.append("contents", contents.value);
         if (files) {
-            if (!post?.files) {
-                formData.append("date", `${Date.now()}`);
-            } else {
-                formData.append("date", post?.files);
-            }
-            for (let i = 0; i < files.length; i++) {
-                formData.append("images", files[i]);
-            }
+            formData.append(
+                "date",
+                !post?.files ? `${Date.now()}` : post?.files
+            );
+            Array.from(files).forEach((val: any) => {
+                formData.append("images", val);
+            });
         }
 
         if (post?.files) {
-            let result = [];
-            result = fileList.reduce((acc, img) => {
-                if (typeof img === "string") {
-                    return acc.filter((val: any) => val !== img);
-                } else return acc;
-            }, post?.images);
             formData.append("postId", `${post?.postId}`);
-            formData.append("urls", JSON.stringify(result));
-
+            formData.append("urls", JSON.stringify(deleteFileList));
             dispatch(setModifyPost(formData));
         } else {
             dispatch(setWritePost(formData));
@@ -334,13 +334,8 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     };
 
     const handleUrl = (url: any) => {
-        if (url.id) {
-            console.log("server");
-            return url.url;
-        } else {
-            console.log("FILE");
-            return obToUrl(url);
-        }
+        if (typeof url === "string") return url;
+        else return obToUrl(url);
     };
 
     useEffect(() => {
@@ -351,7 +346,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         return () => {
             document.body.style.cssText = ``;
         };
-    }, []);
+    }, [fileList]);
 
     return (
         <>
@@ -397,7 +392,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                     />
                     {open && (
                         <ImageBox>
-                            <CloseBtn onClick={handleClose}>X</CloseBtn>
+                            <CloseBtn onClick={handleOpen}>X</CloseBtn>
                             {fileList.length === 0 ? (
                                 <ImageBtn htmlFor="imgOrvedio">
                                     <Text
@@ -418,7 +413,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                                 </ImageBtn>
                             ) : (
                                 <ImagePreview>
-                                    <ModifyBtn onClick={handleModalOpen}>
+                                    <ModifyBtn onClick={handleModal}>
                                         <Text
                                             text={"모두 수정"}
                                             fs={"15px"}
@@ -440,7 +435,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                                         return (
                                             <SelectImage
                                                 key={idx}
-                                                src={handleUrl(file)}
+                                                src={handleUrl(file.url)}
                                             ></SelectImage>
                                         );
                                     })}
@@ -456,7 +451,11 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                         multiple
                     />
                     <ImageContents>
-                        <ClickBtn onClick={handleOpen}>
+                        <ClickBtn
+                            onClick={() => {
+                                if (!open) handleOpen();
+                            }}
+                        >
                             <Text
                                 text={"사진 추가"}
                                 fs={"15px"}
@@ -481,7 +480,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
             {modal && (
                 <ModifyPost
                     fileList={fileList}
-                    closeFunc={handleModalClose}
+                    closeFunc={handleModal}
                     deleteFunc={handleDelete}
                     handleUrl={handleUrl}
                 />
