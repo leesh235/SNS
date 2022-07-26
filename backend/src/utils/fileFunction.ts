@@ -44,15 +44,11 @@ export const mikdirPosts = (req: any) => {
     }
 };
 
-export const deleteFile = (req: any) => {
-    const {
-        body: { urls },
-    } = req;
-    const images = JSON.parse(urls);
-
-    images.forEach((url: string) => {
-        let imgPath = `${process.env.POST_PATH}${url.split("5000")[1]}`;
-        let dirId = url.split("/")[4];
+export const deleteFile = (images: any) => {
+    console.log(images);
+    images.forEach((url: any) => {
+        let imgPath = `${process.env.POST_PATH}${url.url.split("5000")[1]}`;
+        let dirId = url.url.split("/")[4];
         let dirPath = `${imgPath.split(dirId)[0]}${dirId}`;
         if (fs.readFileSync(imgPath)) {
             fs.unlinkSync(imgPath);
@@ -61,4 +57,11 @@ export const deleteFile = (req: any) => {
             fs.removeSync(dirPath);
         }
     });
+};
+
+export const fileNameFunc = (
+    email: string,
+    file: { id: number; date: string; fileName: string }
+) => {
+    return `${process.env.BE_URL}/${email}/${file.date}/${file.id}_${file.fileName}`;
 };
