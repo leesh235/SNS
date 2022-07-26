@@ -3,6 +3,7 @@ import { Post } from "../entity/Post.entity";
 import { Likes } from "../entity/Likes.entity";
 import { PostMode } from "../config/enums";
 import { findAllModeUtil } from "../utils/typeormUtil";
+import { fileNameFunc } from "../utils/fileFunction";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
@@ -44,7 +45,8 @@ export const findDetails = async (req: any, mode?: PostMode) => {
                 },
                 fileUrl: {
                     id: true,
-                    fileUrl: true,
+                    fileName: true,
+                    date: true,
                 },
             },
             order: {
@@ -77,7 +79,10 @@ export const findDetails = async (req: any, mode?: PostMode) => {
 
             let images: any[] = [];
             fileUrl.forEach((img: any, cnt: number) => {
-                images.push({ id: img.id, url: img.fileUrl });
+                images.push({
+                    id: img.id,
+                    url: fileNameFunc(user.email, img),
+                });
             });
 
             let status: boolean = false;
@@ -185,7 +190,7 @@ export const user_posts = async (req: any) => {
                     id: true,
                 },
                 fileUrl: {
-                    fileUrl: true,
+                    fileName: true,
                 },
             },
         });

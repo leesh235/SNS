@@ -1,7 +1,7 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
 import { FileUrl } from "../entity/file_url.entity";
-import { getFilePath } from "../utils/fileFunction";
+import { getFilePath, fileNameFunc } from "../utils/fileFunction";
 import { Like } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
@@ -133,14 +133,19 @@ export const getAllImages = async (req: any) => {
                 },
                 user: {},
                 id: true,
-                fileUrl: true,
+                fileName: true,
+                date: true,
             },
         });
 
         let result: any[] = [];
         images.forEach((val, idx) => {
-            const { id, post, fileUrl } = val;
-            result.push({ id, postId: post.id, url: fileUrl });
+            const { id, post, fileName, date } = val;
+            result.push({
+                id,
+                postId: post.id,
+                url: fileNameFunc(email, { id, date, fileName }),
+            });
         });
 
         return result;
@@ -163,7 +168,8 @@ export const getLatestImage = async (req: any) => {
             },
             select: {
                 id: true,
-                fileUrl: true,
+                fileName: true,
+                date: true,
                 post: {
                     id: true,
                 },
@@ -173,8 +179,12 @@ export const getLatestImage = async (req: any) => {
 
         let result: any[] = [];
         images.forEach((val, idx) => {
-            const { id, post, fileUrl } = val;
-            result.push({ id, postId: post.id, url: fileUrl });
+            const { id, post, fileName, date } = val;
+            result.push({
+                id,
+                postId: post.id,
+                url: fileNameFunc(email, { id, date, fileName }),
+            });
         });
 
         return result;
