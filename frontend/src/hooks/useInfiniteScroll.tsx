@@ -1,45 +1,57 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect, useMemo, MutableRefObject } from "react";
 
 interface Props {
-    list: any[];
-    fetchData: Function;
+    target: MutableRefObject<HTMLDivElement | null>;
+
+    root?: Element | null;
+    rootMargin?: string;
+    threshold?: number;
+
+    pageSize: number;
+    targetArray: Array<any>;
+    endPoint?: number;
 }
 
-export const useInfiniteScroll = ({ list, fetchData }: Props) => {
-    const observerRef = useRef<IntersectionObserver>();
-    const [standard, setStandard] = useState<HTMLDivElement | null>(null);
+export const useInfiniteScroll = ({
+    target,
+    root = null,
+    rootMargin = "0px",
+    threshold = 1,
+    pageSize,
+    targetArray,
+}: Props) => {
+    const [count, setCount] = useState<number>(0);
 
-    const intersectionObserver = useCallback(
-        (
-            entries: IntersectionObserverEntry[],
-            observer: IntersectionObserver
-        ) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
+    const observer = useMemo(() => {
+        return new IntersectionObserver(
+            (
+                entries: IntersectionObserverEntry[],
+                observer: IntersectionObserver
+            ) => {
+                if (target?.current === null) return;
+
+                if (entries[0].isIntersecting) {
                     console.log("entry");
-                    // fetchData();
-                    observerRef.current?.unobserve(entry.target);
+                    setCount((prev) => prev + 1);
+                    observer.disconnect();
                 }
-            });
-        },
-        [list]
-    );
-    console.log("hooks");
-    useEffect(() => {
-        console.log("observer");
-        observerRef.current = new IntersectionObserver(intersectionObserver);
+            },
+            { root, rootMargin, threshold }
+        );
     }, []);
 
     useEffect(() => {
-        console.log("ref");
-        if (standard) {
-            observerRef?.current?.observe(standard);
-        }
-        return () => {
-            observerRef.current && observerRef.current.disconnect();
-        };
-    }, [standard]);
+        if (target?.current === null) return;
 
-    return { setStandard };
+        if (pageSize * (count + 1) <= targetArray.length)
+            observer.observe(target.current);
+
+        return () => {
+            if (target.current !== null && observer) {
+                observer.unobserve(target.current);
+            }
+        };
+    }, [count, targetArray]);
+
+    return { count, setCount };
 };
