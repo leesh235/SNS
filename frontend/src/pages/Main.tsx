@@ -27,7 +27,6 @@ const Main = () => {
     useEffect(() => {
         batch(() => {
             dispatch(setPostDetails());
-            dispatch(setAllPosts());
             dispatch(setRoomList());
         });
     }, []);
