@@ -1,8 +1,8 @@
 import { backend } from "./axios";
 import { api } from "../utils/routes";
 
-export const getPostsFunc = async () => {
-    const res = await backend.get(api.posts.all_ist);
+export const getPostsFunc = async (formData: any) => {
+    const res = await backend.get(api.posts.all_ist, { params: formData });
     return res.data;
 };
 

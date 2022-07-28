@@ -4,9 +4,10 @@ export const LIKEPOSTS = "posts/LIKEPOSTS";
 export const FRIENDSPOSTS = "posts/FRIENDSPOSTS";
 export const POSTDETAILS = "posts/POSTDETAILS";
 
-export const setAllPosts = () => {
+export const setAllPosts = (data: any) => {
     return {
         type: ALLPOSTS,
+        data,
     };
 };
 
