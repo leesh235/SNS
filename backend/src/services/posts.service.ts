@@ -119,8 +119,9 @@ export const findAll = async (req: any, mode?: PostMode) => {
     try {
         const {
             user: { email },
+            query: { take, skip },
         } = req;
-
+        console.log(take, skip);
         const where = findAllModeUtil(email, mode, { deletedAt: undefined });
 
         const allList: any[] = await postRepository.find({
@@ -131,15 +132,17 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 comment: true,
             },
             where,
+            order: {
+                id: "desc",
+            },
+            take: Number(take),
+            skip: Number(skip),
             select: {
                 id: true,
                 user: {},
                 fileUrl: {},
                 likes: {},
                 comment: {},
-            },
-            order: {
-                createdAt: "desc",
             },
         });
 
@@ -148,7 +151,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
         allList.forEach((val: any) => {
             result.push(val?.id);
         });
-
+        console.log(result.length);
         return result;
     } catch (error) {
         console.log(error);
