@@ -1,5 +1,5 @@
 import styled from "../../../styles/theme-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, MutableRefObject, RefObject } from "react";
 import { Link } from "react-router-dom";
 import { routes } from "../../../utils/routes";
 import { Text } from "../../common/Text";
@@ -135,9 +135,10 @@ const Hover = styled.div`
 
 interface Props {
     postId: number;
+    endView?: RefObject<HTMLDivElement> | undefined;
 }
 
-export const PostCard = ({ postId }: Props) => {
+export const PostCard = ({ postId, endView = undefined }: Props) => {
     const dispatch = useDispatch();
     const [openBtn, setOpenBtn] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -202,7 +203,7 @@ export const PostCard = ({ postId }: Props) => {
 
     return (
         <>
-            <Wrapper>
+            <Wrapper ref={endView}>
                 <TopWrapper>
                     <Link
                         to={{

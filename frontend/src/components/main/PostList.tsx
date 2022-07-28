@@ -29,7 +29,7 @@ export const PostList = ({ getPostsFunc }: Props) => {
     const { count } = useInfiniteScroll({
         target: target,
         targetArray: data || [],
-        threshold: 0.8,
+        threshold: 1,
         pageSize: 4,
     });
 
@@ -40,25 +40,11 @@ export const PostList = ({ getPostsFunc }: Props) => {
     return (
         <Wrapper>
             {data?.map((val: any, idx: number) => {
-                if (idx === data.length - 1)
-                    return (
-                        <div
-                            key={idx}
-                            ref={target}
-                            style={{ width: "100%", height: "auto" }}
-                        >
-                            <PostCard key={idx} postId={val} />
-                        </div>
-                    );
-                else
-                    return (
-                        <div
-                            key={idx}
-                            style={{ width: "100%", height: "auto" }}
-                        >
-                            <PostCard key={idx} postId={val} />
-                        </div>
-                    );
+                return idx === data.length - 1 ? (
+                    <PostCard key={idx} endView={target} postId={val} />
+                ) : (
+                    <PostCard key={idx} postId={val} />
+                );
             })}
             {loading && <div>Loading...</div>}
         </Wrapper>
