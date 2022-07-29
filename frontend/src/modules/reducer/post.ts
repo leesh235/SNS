@@ -31,11 +31,8 @@ const reducer = (state = initialState, action: any) => {
                 ...state,
                 postDetails: {
                     ...state.postDetails,
-                    loading: true,
-                    data: {
-                        ...state.postDetails.data,
-                        ...data,
-                    },
+                    loading: false,
+                    data,
                 },
             };
         case POSTDETAIL:

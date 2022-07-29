@@ -25,7 +25,7 @@ const reducer = (state = initialState, action: any) => {
                 allPosts: {
                     ...state.allPosts,
                     loading: false,
-                    data: [...state.allPosts.data, ...data],
+                    data,
                 },
             };
         case MYPOSTS:

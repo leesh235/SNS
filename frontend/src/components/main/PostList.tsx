@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import { PostCard } from "../profile/card/PostCard";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { setAllPosts } from "../../modules/action/posts";
@@ -15,11 +15,9 @@ const Wrapper = styled.section`
     margin: 16px 0;
 `;
 
-interface Props {
-    getPostsFunc?: any;
-}
+interface Props {}
 
-export const PostList = ({ getPostsFunc }: Props) => {
+export const PostList = ({}: Props) => {
     const dispatch = useDispatch();
     const target = useRef<HTMLDivElement>(null);
 
@@ -35,8 +33,8 @@ export const PostList = ({ getPostsFunc }: Props) => {
     });
 
     useEffect(() => {
-        dispatch(setPostDetails({ take: 4, skip: count * 4 }));
-        dispatch(setAllPosts({ take: 4, skip: count * 4 }));
+        dispatch(setPostDetails({ type: "all", take: count * 4 + 4 }));
+        dispatch(setAllPosts({ take: count * 4 + 4 }));
     }, [count]);
 
     return (
