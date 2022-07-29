@@ -2,42 +2,41 @@ import { PostMode } from "../config/enums";
 import { Not, Like } from "typeorm";
 
 export const findAllModeUtil = (email: string, mode: any, where: any) => {
-    let result: any;
     switch (mode) {
         case PostMode.MY:
-            return (result = {
+            return {
                 ...where,
                 user: {
                     email,
                 },
-            });
+            };
         case PostMode.LIKE:
-            return (result = {
+            return {
                 ...where,
                 likes: {
                     userId: email,
                 },
-            });
+            };
         case PostMode.BOOKMARK:
-            return (result = {
+            return {
                 ...where,
-            });
+            };
         case PostMode.FRIENDS:
-            return (result = {
+            return {
                 ...where,
-            });
+            };
         case PostMode.ALL: {
-            return (result = {
+            return {
                 ...where,
                 user: {
-                    email: Not(email),
+                    email: Not(Like(`%${email}%`)),
                 },
-            });
+            };
         }
         default: {
-            return (result = {
+            return {
                 ...where,
-            });
+            };
         }
     }
 };

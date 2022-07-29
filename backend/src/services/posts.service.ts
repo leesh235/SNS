@@ -12,9 +12,10 @@ export const findDetails = async (req: any, mode?: PostMode) => {
     try {
         const {
             user: { email },
+            query: { type, take, skip },
         } = req;
 
-        const where = findAllModeUtil(email, mode, { deletedAt: undefined });
+        const where = findAllModeUtil(email, type, { deletedAt: undefined });
 
         const allList: any = await postRepository.find({
             relations: {
@@ -50,8 +51,9 @@ export const findDetails = async (req: any, mode?: PostMode) => {
                 },
             },
             order: {
-                createdAt: "desc",
+                id: "desc",
             },
+            take: Number(take),
         });
 
         const likeStatus: any = await likesRepository.find({
@@ -121,7 +123,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
             user: { email },
             query: { take, skip },
         } = req;
-        console.log(take, skip);
+
         const where = findAllModeUtil(email, mode, { deletedAt: undefined });
 
         const allList: any[] = await postRepository.find({
@@ -136,7 +138,6 @@ export const findAll = async (req: any, mode?: PostMode) => {
                 id: "desc",
             },
             take: Number(take),
-            skip: Number(skip),
             select: {
                 id: true,
                 user: {},
@@ -151,7 +152,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
         allList.forEach((val: any) => {
             result.push(val?.id);
         });
-        console.log(result.length);
+
         return result;
     } catch (error) {
         console.log(error);
