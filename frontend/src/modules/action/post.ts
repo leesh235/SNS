@@ -7,9 +7,10 @@ export const MODIFYPOST = "post/MODIFYPOST";
 export const DELETEPOST = "post/DELETEPOST";
 export const LIKE = "post/LIKE";
 
-export const setPostDetails = () => {
+export const setPostDetails = (data: any) => {
     return {
         type: POSTDETAILS,
+        data,
     };
 };
 

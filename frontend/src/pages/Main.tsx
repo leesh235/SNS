@@ -2,8 +2,6 @@ import styled from "../styles/theme-components";
 import { useEffect } from "react";
 import { batch, useDispatch } from "react-redux";
 import { setRoomList } from "../modules/action/chat";
-import { setAllPosts } from "../modules/action/posts";
-import { setPostDetails } from "../modules/action/post";
 import { SideMenu } from "../components/side/SideMenu";
 import { PostList } from "../components/main/PostList";
 import { ChattingList } from "../components/main/ChattingList";
@@ -26,7 +24,6 @@ const Main = () => {
 
     useEffect(() => {
         batch(() => {
-            dispatch(setPostDetails());
             dispatch(setRoomList());
         });
     }, []);

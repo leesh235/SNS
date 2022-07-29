@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { setAllPosts } from "../../modules/action/posts";
+import { setPostDetails } from "../../modules/action/post";
 
 const Wrapper = styled.section`
     display: grid;
@@ -34,6 +35,7 @@ export const PostList = ({ getPostsFunc }: Props) => {
     });
 
     useEffect(() => {
+        dispatch(setPostDetails({ take: 4, skip: count * 4 }));
         dispatch(setAllPosts({ take: 4, skip: count * 4 }));
     }, [count]);
 
