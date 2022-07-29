@@ -1,8 +1,8 @@
 import styled from "../../styles/theme-components";
-import { IntroduceCard } from "./card/IntroduceCard";
-import { WritePostCard } from "./card/WritePostCard";
-import { PostFlexCard } from "./card/PostFlexCard";
-import { BoxShadow } from "../styles/BoxShadow";
+import { IntroduceCard } from "./post/IntroduceCard";
+import { WritePostCard } from "./post/WritePostCard";
+import { PostFlexCard } from "./post/PostFlexCard";
+import { BoxShadow } from "../common/styles/BoxShadow";
 import { Text } from "../common/Text";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -10,7 +10,7 @@ import { setLatestImage } from "../../modules/action/image";
 import { setMyPosts } from "../../modules/action/posts";
 import { setPostDetails } from "../../modules/action/post";
 import { useEffect } from "react";
-import { LatestImageCard } from "./card/LatestImageCard";
+import { LatestImageCard } from "./post/LatestImageCard";
 import { batch } from "react-redux";
 
 const Wrapper = styled.section`
@@ -63,9 +63,9 @@ export const ProfilePost = ({ handleUrl }: Props) => {
 
     useEffect(() => {
         batch(() => {
-            dispatch(setPostDetails());
+            dispatch(setPostDetails({ type: "my", take: 4 }));
             dispatch(setLatestImage({ email }));
-            dispatch(setMyPosts({ email }));
+            dispatch(setMyPosts({ email, take: 4 }));
         });
     }, [email]);
 

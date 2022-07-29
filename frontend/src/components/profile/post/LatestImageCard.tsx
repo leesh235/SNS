@@ -1,6 +1,6 @@
 import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
-import { BoxShadow } from "../../styles/BoxShadow";
+import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 import theme from "../../../styles/theme";
 import { useSelector } from "react-redux";

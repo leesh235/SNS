@@ -1,5 +1,5 @@
 import styled from "../styles/theme-components";
-import { ForgetHeader } from "../components/header/ForgetHeader";
+import { ForgetHeader } from "../components/common/header/ForgetHeader";
 import { ForgetForm } from "../components/form/ForgetForm";
 
 const Wrapper = styled.main`

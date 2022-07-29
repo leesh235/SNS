@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { Text } from "../../common/Text";
 import { Button2 } from "../../common/button/Button2";
-import { BoxShadow } from "../../styles/BoxShadow";
+import { BoxShadow } from "../../common/styles/BoxShadow";
 import theme from "../../../styles/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { setIntroduce } from "../../../modules/action/user";

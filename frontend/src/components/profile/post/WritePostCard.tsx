@@ -1,6 +1,6 @@
 import styled from "../../../styles/theme-components";
 import { IconButton } from "../../common/button/IconButton";
-import { BoxShadow } from "../../styles/BoxShadow";
+import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 import theme from "../../../styles/theme";
 import { InputButton } from "../../common/button/InputButton";

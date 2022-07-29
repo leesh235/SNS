@@ -1,7 +1,7 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useEffect } from "react";
-import { Button2 } from "../common/button/Button2";
-import { logOut } from "../../utils/authUtils";
+import { Button2 } from "../button/Button2";
+import { logOut } from "../../../utils/authUtils";
 
 const Wrapper = styled.div`
     width: calc(200px - 30px);

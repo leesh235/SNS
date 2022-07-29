@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { routes } from "../../utils/routes";
-import { Header } from "../header/Header";
+import { Header } from "../common/header/Header";
 import { ChatRoomList } from "../chat/ChatRoomList";
 import Main from "../../pages/Main";
 import Start from "../../pages/Start";

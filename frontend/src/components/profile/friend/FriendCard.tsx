@@ -1,5 +1,5 @@
 import styled from "../../../styles/theme-components";
-import { BoxShadow } from "../../styles/BoxShadow";
+import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 
 const FlexWrapper = styled.div`
@@ -7,12 +7,12 @@ const FlexWrapper = styled.div`
     height: auto;
 `;
 
-export const QuestionCard = () => {
+export const FriendCard = () => {
     return (
-        <BoxShadow tag={"article"} padding={"0"}>
+        <BoxShadow tag={"article"}>
             <FlexWrapper>
                 <Text
-                    text={"질문"}
+                    text={"친구"}
                     fs={"20px"}
                     fw={700}
                     lh={"24px"}

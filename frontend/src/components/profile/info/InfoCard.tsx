@@ -1,14 +1,14 @@
 import styled from "../../../styles/theme-components";
-import { BoxShadow } from "../../styles/BoxShadow";
+import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 import { IconButton } from "../../common/button/IconButton";
 import theme from "../../../styles/theme";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { Summary } from "../ProfileInfo/Summary";
-import { Ability } from "../ProfileInfo/Ability";
-import { UserInfo } from "../ProfileInfo/UserInfo";
+import { Summary } from "./Summary";
+import { Ability } from "./Ability";
+import { UserInfo } from "./UserInfo";
 
 const FlexWrapper = styled.div`
     width: 100%;

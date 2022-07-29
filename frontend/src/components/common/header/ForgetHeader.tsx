@@ -1,5 +1,5 @@
-import styled from "../../styles/theme-components";
-import { Logo } from "../common/Logo";
+import styled from "../../../styles/theme-components";
+import { Logo } from "../Logo";
 
 const Wrapper = styled.header`
     display: flex;

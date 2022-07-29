@@ -1,4 +1,4 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 
 const Wrapper = styled.div<StyleProps>`
     width: ${(props) => props.width};
