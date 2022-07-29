@@ -1,5 +1,5 @@
 import { PostMode } from "../config/enums";
-import { Not, Like } from "typeorm";
+import { Not } from "typeorm";
 
 export const findAllModeUtil = (email: string, mode: any, where: any) => {
     switch (mode) {
@@ -29,7 +29,7 @@ export const findAllModeUtil = (email: string, mode: any, where: any) => {
             return {
                 ...where,
                 user: {
-                    email: Not(Like(`%${email}%`)),
+                    email: Not(email),
                 },
             };
         }
