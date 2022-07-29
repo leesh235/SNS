@@ -1,17 +1,12 @@
 import styled from "../../../styles/theme-components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useInfiniteScroll } from "../../../hooks/useInfiniteScroll";
 import { PostCard } from "../card/PostCard";
-import { BoxShadow } from "../../common/styles/BoxShadow";
-import { IconButton } from "../../common/button/IconButton";
-import { Text } from "../../common/Text";
-import theme from "../../../styles/theme";
-import { ListIcon, ListIconC } from "../../../assets/icon/ListIcon";
-import { GridIcon, GridIconC } from "../../../assets/icon/GridIcon";
 import { setMyPosts } from "../../../modules/action/posts";
-import { PostGridCard } from "./PostGridCard";
+import { setPostDetails } from "../../../modules/action/post";
 
-const PostWrapper = styled.article`
+const Wrapper = styled.article`
     display: flex;
     flex-direction: column;
     > :nth-child(n) {
@@ -20,140 +15,38 @@ const PostWrapper = styled.article`
     margin-top: 15px;
 `;
 
-const PostGridWrapper = styled.article`
-    margin-top: 15px;
-    > :nth-child(n) {
-        margin-bottom: 15px;
-    }
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-`;
+interface Props {}
 
-const GridWrapper = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: flex-end;
-    height: 40px;
-    padding: 0 14px;
-    border-top: 1px solid ${(props) => props.theme.color.lightGray};
-`;
-
-const FlexWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 54px;
-    padding: 0 14px;
-`;
-
-const ButtonWrapper = styled.div<{ color: string }>`
-    border-bottom: 3px solid ${(props) => props.color};
-`;
-
-const menuList = ["리스트 보기", "그리드 보기"];
-
-interface Props {
-    user: {
-        email: string;
-        profileImage: string;
-    };
-}
-
-export const PostFlexCard = ({ user }: Props) => {
+export const PostFlexCard = ({}: Props) => {
     const dispatch = useDispatch();
+    const target = useRef<HTMLDivElement>(null);
+
+    const user = useSelector((state: any) => state?.user?.profile?.data);
     const { loading, data, error } = useSelector(
         (state: any) => state?.posts?.myPosts
     );
 
-    const [menu, setMenu] = useState<number>(0);
+    const { count } = useInfiniteScroll({
+        target: target,
+        targetArray: data || [],
+        threshold: 1,
+        pageSize: 4,
+    });
 
-    const handleOnClick = (id: number) => {
-        setMenu(id);
-    };
-
-    useEffect(() => {}, [loading]);
+    useEffect(() => {
+        dispatch(setPostDetails({ type: "my", take: count * 4 + 4 }));
+        dispatch(setMyPosts({ email: user?.email, take: count * 4 + 4 }));
+    }, [count]);
 
     return (
-        <>
-            <BoxShadow padding={"0px"}>
-                <FlexWrapper>
-                    <Text text={"게시물"} fs={"20px"} fw={700} lh={"24px"} />
-                </FlexWrapper>
-                <GridWrapper>
-                    {menuList.map((val, idx) => {
-                        if (menu === idx) {
-                            return (
-                                <ButtonWrapper
-                                    key={idx}
-                                    color={theme.color.seaBule}
-                                    onClick={() => {
-                                        handleOnClick(idx);
-                                    }}
-                                >
-                                    <IconButton
-                                        width={"100%"}
-                                        height={"32px"}
-                                        hover={false}
-                                    >
-                                        {idx === 0 ? (
-                                            <ListIconC />
-                                        ) : (
-                                            <GridIconC />
-                                        )}
-                                        <Text
-                                            text={val}
-                                            fs={"15px"}
-                                            fw={600}
-                                            lh={"20px"}
-                                            fc={theme.color.seaBule}
-                                            width={"auto"}
-                                        />
-                                    </IconButton>
-                                </ButtonWrapper>
-                            );
-                        } else {
-                            return (
-                                <ButtonWrapper
-                                    key={idx}
-                                    color={theme.color.white}
-                                    onClick={() => {
-                                        handleOnClick(idx);
-                                    }}
-                                >
-                                    <IconButton width={"100%"} height={"32px"}>
-                                        {idx === 0 ? (
-                                            <ListIcon />
-                                        ) : (
-                                            <GridIcon />
-                                        )}
-                                        <Text
-                                            text={val}
-                                            fs={"15px"}
-                                            fw={600}
-                                            lh={"20px"}
-                                            fc={theme.color.lightBlack}
-                                            width={"auto"}
-                                        />
-                                    </IconButton>
-                                </ButtonWrapper>
-                            );
-                        }
-                    })}
-                </GridWrapper>
-            </BoxShadow>
-            {menu === 0 ? (
-                <PostWrapper>
-                    {data?.map((val: any, idx: number) => {
-                        return <PostCard key={idx} postId={val} />;
-                    })}
-                </PostWrapper>
-            ) : (
-                <PostGridWrapper>
-                    {data?.map((val: any, idx: number) => {
-                        return <PostGridCard key={idx} post={val} />;
-                    })}
-                </PostGridWrapper>
-            )}
-        </>
+        <Wrapper>
+            {data?.map((val: any, idx: number) => {
+                return idx === data.length - 1 ? (
+                    <PostCard key={idx} endView={target} postId={val} />
+                ) : (
+                    <PostCard key={idx} postId={val} />
+                );
+            })}
+        </Wrapper>
     );
 };

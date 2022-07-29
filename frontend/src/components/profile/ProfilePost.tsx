@@ -1,7 +1,7 @@
 import styled from "../../styles/theme-components";
 import { IntroduceCard } from "./post/IntroduceCard";
 import { WritePostCard } from "./post/WritePostCard";
-import { PostFlexCard } from "./post/PostFlexCard";
+import { PostListCard } from "./post/PostListCard";
 import { BoxShadow } from "../common/styles/BoxShadow";
 import { Text } from "../common/Text";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +9,10 @@ import { useParams } from "react-router-dom";
 import { setLatestImage } from "../../modules/action/image";
 import { setMyPosts } from "../../modules/action/posts";
 import { setPostDetails } from "../../modules/action/post";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { LatestImageCard } from "./post/LatestImageCard";
 import { batch } from "react-redux";
+import { useObserver } from "../../hooks/useObserver";
 
 const Wrapper = styled.section`
     width: 908px;
@@ -57,39 +58,35 @@ export const ProfilePost = ({ handleUrl }: Props) => {
     const { email } = useParams();
     const dispatch = useDispatch();
 
-    const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.profile
-    );
-
     useEffect(() => {
         batch(() => {
-            dispatch(setPostDetails({ type: "my", take: 4 }));
             dispatch(setLatestImage({ email }));
-            dispatch(setMyPosts({ email, take: 4 }));
         });
     }, [email]);
 
     return (
-        <Wrapper>
-            <LeftWrapper>
-                <IntroduceCard handleUrl={handleUrl} />
-                <LatestImageCard handleUrl={handleUrl} />
-                <BoxShadow>
-                    <FlexWrapper>
-                        <Text
-                            text={"친구"}
-                            fs={"20px"}
-                            fw={700}
-                            lh={"24px"}
-                            width={"auto"}
-                        />
-                    </FlexWrapper>
-                </BoxShadow>
-            </LeftWrapper>
-            <RightWrapper>
-                <WritePostCard />
-                <PostFlexCard user={data} />
-            </RightWrapper>
-        </Wrapper>
+        <>
+            <Wrapper>
+                <LeftWrapper>
+                    <IntroduceCard handleUrl={handleUrl} />
+                    <LatestImageCard handleUrl={handleUrl} />
+                    <BoxShadow>
+                        <FlexWrapper>
+                            <Text
+                                text={"친구"}
+                                fs={"20px"}
+                                fw={700}
+                                lh={"24px"}
+                                width={"auto"}
+                            />
+                        </FlexWrapper>
+                    </BoxShadow>
+                </LeftWrapper>
+                <RightWrapper>
+                    <WritePostCard />
+                    <PostListCard />
+                </RightWrapper>
+            </Wrapper>
+        </>
     );
 };
