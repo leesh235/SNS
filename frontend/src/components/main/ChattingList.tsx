@@ -3,7 +3,11 @@ import styled from "../../styles/theme-components";
 import { Text } from "../common/Text";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { setJoinRoom, setLeaveRoom } from "../../modules/action/chat";
+import {
+    setJoinRoom,
+    setLeaveRoom,
+    setRoomList,
+} from "../../modules/action/chat";
 import { CreateChatRoom } from "../chat/CreateChatRoom";
 
 const Wrapper = styled.section`
@@ -85,7 +89,9 @@ export const ChattingList = () => {
         dispatch(setLeaveRoom(id));
     };
 
-    useEffect(() => {}, [loading]);
+    useEffect(() => {
+        dispatch(setRoomList());
+    }, []);
 
     return (
         <>
