@@ -1,10 +1,9 @@
 import styled from "../styles/theme-components";
-import { useEffect } from "react";
-import { batch, useDispatch } from "react-redux";
-import { setRoomList } from "../modules/action/chat";
+import { useEffect, useState } from "react";
 import { SideMenu } from "../components/side/SideMenu";
 import { PostList } from "../components/main/PostList";
 import { ChattingList } from "../components/main/ChattingList";
+import { useLocation } from "react-router-dom";
 
 const Wrapper = styled.main`
     background-color: ${(props) => props.theme.color.gray};
@@ -20,17 +19,20 @@ const Wrapper = styled.main`
 `;
 
 const Main = () => {
-    const dispatch = useDispatch();
+    const location = useLocation();
+    const init: number = location.state !== null ? Number(location.state) : 1;
+    const [menu, setMenu] = useState<number>(init);
+    const handleMenu = (id: number) => {
+        setMenu(id);
+    };
 
     useEffect(() => {
-        batch(() => {
-            dispatch(setRoomList());
-        });
-    }, []);
+        console.log(menu);
+    }, [menu]);
 
     return (
         <Wrapper>
-            <SideMenu />
+            <SideMenu handleMenu={handleMenu} />
             <PostList />
             <ChattingList />
         </Wrapper>

@@ -1,8 +1,10 @@
 import styled from "../../styles/theme-components";
 import { Text } from "../common/Text";
 import { routes } from "../../utils/routes";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import theme from "../../styles/theme";
+import { useEffect } from "react";
 
 const Wrapper = styled.ul`
     position: fixed;
@@ -36,7 +38,7 @@ const Wrapper = styled.ul`
     }
 `;
 
-const Menu = styled.li`
+const Menu = styled.li<{ backColor?: string }>`
     height: 52px;
     display: flex;
     flex-direction: row;
@@ -44,6 +46,7 @@ const Menu = styled.li`
     margin: 0 8px;
     padding: 0 8px;
     cursor: pointer;
+    background-color: ${(props) => props.backColor};
     &:hover {
         background-color: ${(props) => props.theme.color.lightGray};
         border-radius: 10px;
@@ -75,10 +78,17 @@ const menuList = [
     { name: "좋아요", route: "" },
 ];
 
-export const SideMenu = () => {
+interface Props {
+    handleMenu: (id: number) => void;
+}
+
+export const SideMenu = ({ handleMenu }: Props) => {
+    const location = useLocation();
     const { loading, data, error } = useSelector(
         (state: any) => state?.user?.loginInfo
     );
+
+    useEffect(() => {}, [location?.state]);
 
     return (
         <Wrapper>
@@ -100,9 +110,33 @@ export const SideMenu = () => {
                 </Menu>
             </Link>
             {menuList.map((val, idx) => {
-                return (
-                    <Link key={idx} to={{ pathname: `${val.route}` }}>
-                        <Menu>
+                if (val.route !== "")
+                    return (
+                        <Link key={idx} to={{ pathname: `${val.route}` }}>
+                            <Menu>
+                                <Icon />
+                                <Text
+                                    text={val.name}
+                                    fs={"15px"}
+                                    fw={500}
+                                    lh={"20px"}
+                                    width={"auto"}
+                                />
+                            </Menu>
+                        </Link>
+                    );
+                else
+                    return (
+                        <Menu
+                            key={idx}
+                            onClick={() => handleMenu(idx)}
+                            backColor={
+                                location.state !== null &&
+                                location.state === idx
+                                    ? theme.color.gray1
+                                    : ""
+                            }
+                        >
                             <Icon />
                             <Text
                                 text={val.name}
@@ -112,8 +146,7 @@ export const SideMenu = () => {
                                 width={"auto"}
                             />
                         </Menu>
-                    </Link>
-                );
+                    );
             })}
         </Wrapper>
     );
