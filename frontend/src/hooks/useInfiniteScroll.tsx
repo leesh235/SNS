@@ -31,7 +31,6 @@ export const useInfiniteScroll = ({
                 if (target?.current === null) return;
 
                 if (entries[0].isIntersecting) {
-                    console.log("entry");
                     setCount((prev) => prev + 1);
                     observer.disconnect();
                 }
