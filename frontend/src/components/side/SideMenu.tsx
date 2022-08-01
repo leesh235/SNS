@@ -47,9 +47,9 @@ const Menu = styled.li<{ backColor?: string }>`
     padding: 0 8px;
     cursor: pointer;
     background-color: ${(props) => props.backColor};
+    border-radius: 10px;
     &:hover {
         background-color: ${(props) => props.theme.color.lightGray};
-        border-radius: 10px;
     }
 `;
 
@@ -74,15 +74,13 @@ const Icon = styled.div`
 const menuList = [
     { name: "친구찾기", route: routes.friends },
     { name: "시작하기", route: routes.welcome },
-    { name: "최신", route: "" },
-    { name: "좋아요", route: "" },
+    // { name: "최신", route: routes.latest },
+    { name: "좋아요", route: routes.like },
 ];
 
-interface Props {
-    handleMenu: (id: number) => void;
-}
+interface Props {}
 
-export const SideMenu = ({ handleMenu }: Props) => {
+export const SideMenu = ({}: Props) => {
     const location = useLocation();
     const { loading, data, error } = useSelector(
         (state: any) => state?.user?.loginInfo
@@ -110,30 +108,12 @@ export const SideMenu = ({ handleMenu }: Props) => {
                 </Menu>
             </Link>
             {menuList.map((val, idx) => {
-                if (val.route !== "")
-                    return (
-                        <Link key={idx} to={{ pathname: `${val.route}` }}>
-                            <Menu>
-                                <Icon />
-                                <Text
-                                    text={val.name}
-                                    fs={"15px"}
-                                    fw={500}
-                                    lh={"20px"}
-                                    width={"auto"}
-                                />
-                            </Menu>
-                        </Link>
-                    );
-                else
-                    return (
+                return (
+                    <Link key={idx} to={{ pathname: `${val.route}` }}>
                         <Menu
-                            key={idx}
-                            onClick={() => handleMenu(idx)}
                             backColor={
-                                location.state !== null &&
-                                location.state === idx
-                                    ? theme.color.gray1
+                                location.pathname === val.route
+                                    ? theme.color.lightGray
                                     : ""
                             }
                         >
@@ -146,7 +126,8 @@ export const SideMenu = ({ handleMenu }: Props) => {
                                 width={"auto"}
                             />
                         </Menu>
-                    );
+                    </Link>
+                );
             })}
         </Wrapper>
     );

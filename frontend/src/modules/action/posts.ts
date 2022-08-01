@@ -18,9 +18,10 @@ export const setMyPosts = (data: any) => {
     };
 };
 
-export const setLikePosts = () => {
+export const setLikePosts = (data: any) => {
     return {
         type: LIKEPOSTS,
+        data,
     };
 };
 

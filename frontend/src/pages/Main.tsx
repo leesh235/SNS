@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { SideMenu } from "../components/side/SideMenu";
 import { PostList } from "../components/main/PostList";
 import { ChattingList } from "../components/main/ChattingList";
-import { useLocation } from "react-router-dom";
 
 const Wrapper = styled.main`
     background-color: ${(props) => props.theme.color.gray};
@@ -19,20 +18,11 @@ const Wrapper = styled.main`
 `;
 
 const Main = () => {
-    const location = useLocation();
-    const init: number = location.state !== null ? Number(location.state) : 1;
-    const [menu, setMenu] = useState<number>(init);
-    const handleMenu = (id: number) => {
-        setMenu(id);
-    };
-
-    useEffect(() => {
-        console.log(menu);
-    }, [menu]);
+    useEffect(() => {}, []);
 
     return (
         <Wrapper>
-            <SideMenu handleMenu={handleMenu} />
+            <SideMenu />
             <PostList />
             <ChattingList />
         </Wrapper>

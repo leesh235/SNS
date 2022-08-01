@@ -23,6 +23,7 @@ export const LogInRoute = () => {
                 />
                 <Route path={`${routes.friends}`} element={<Friends />} />
                 <Route path={`${routes.search}`} element={<Search />} />
+                <Route path={`${routes.like}`} element={<Main />} />
             </Routes>
             <ChatRoomList />
         </Router>

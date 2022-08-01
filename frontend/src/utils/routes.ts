@@ -9,6 +9,8 @@ export const routes = {
     detail: "/detail/",
     userInfo: "/user/",
     search: "/search",
+    like: "/like",
+    latest: "/latest",
 };
 
 export const api = {

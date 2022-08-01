@@ -1,6 +1,5 @@
 import styled from "../styles/theme-components";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { SideMenu } from "../components/side/SideMenu";
 import { Welcome } from "../components/start/Welcome";
 
@@ -18,18 +17,11 @@ const Wrapper = styled.main`
 `;
 
 const Start = () => {
-    const navigate = useNavigate();
-    const [menu, setMenu] = useState<number>(1);
-
-    const handleMenu = (id: number) => {
-        navigate("/", { state: id });
-    };
-
     useEffect(() => {}, []);
 
     return (
         <Wrapper>
-            <SideMenu handleMenu={handleMenu} />
+            <SideMenu />
             <Welcome />
         </Wrapper>
     );

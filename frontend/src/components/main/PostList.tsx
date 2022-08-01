@@ -3,8 +3,10 @@ import { PostCard } from "../profile/card/PostCard";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
-import { setAllPosts } from "../../modules/action/posts";
+import { setAllPosts, setLikePosts } from "../../modules/action/posts";
 import { setPostDetails } from "../../modules/action/post";
+import { useLocation } from "react-router-dom";
+import { routes } from "../../utils/routes";
 
 const Wrapper = styled.section`
     display: grid;
@@ -18,11 +20,13 @@ const Wrapper = styled.section`
 interface Props {}
 
 export const PostList = ({}: Props) => {
+    const location = useLocation();
     const dispatch = useDispatch();
     const target = useRef<HTMLDivElement>(null);
 
+    const key = location.pathname === routes.home ? "allPosts" : "likePosts";
     const { loading, data, error } = useSelector(
-        (state: any) => state.posts.allPosts
+        (state: any) => state.posts?.[key]
     );
 
     const { count } = useInfiniteScroll({
@@ -33,20 +37,27 @@ export const PostList = ({}: Props) => {
     });
 
     useEffect(() => {
-        dispatch(setPostDetails({ type: "all", take: count * 4 + 4 }));
-        dispatch(setAllPosts({ take: count * 4 + 4 }));
-    }, [count]);
+        if (location.pathname === routes.home) {
+            dispatch(setPostDetails({ type: "all", take: count * 4 + 4 }));
+            dispatch(setAllPosts({ take: count * 4 + 4 }));
+        } else if (location.pathname === routes.like) {
+            dispatch(setPostDetails({ type: "like", take: count * 4 + 4 }));
+            dispatch(setLikePosts({ take: count * 4 + 4 }));
+        }
+    }, [count, location.pathname]);
 
-    return (
-        <Wrapper>
-            {data?.map((val: any, idx: number) => {
-                return idx === data.length - 1 ? (
-                    <PostCard key={idx} endView={target} postId={val} />
-                ) : (
-                    <PostCard key={idx} postId={val} />
-                );
-            })}
-            {loading && <div>Loading...</div>}
-        </Wrapper>
-    );
+    if (data?.length !== 0)
+        return (
+            <Wrapper>
+                {data?.map((val: any, idx: number) => {
+                    return idx === data.length - 1 ? (
+                        <PostCard key={idx} endView={target} postId={val} />
+                    ) : (
+                        <PostCard key={idx} postId={val} />
+                    );
+                })}
+                {loading && <div>Loading...</div>}
+            </Wrapper>
+        );
+    else return <div>게시글이 없습니다</div>;
 };

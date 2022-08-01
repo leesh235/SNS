@@ -16,8 +16,9 @@ export const getFriendsPostsFunc = async () => {
     return res.data;
 };
 
-export const getLikePostsFunc = async () => {
-    const res = await backend.get(api.posts.like_list);
+export const getLikePostsFunc = async (formData: any) => {
+    const res = await backend.get(api.posts.like_list, { params: formData });
+    console.log(res.data);
     return res.data;
 };
 
