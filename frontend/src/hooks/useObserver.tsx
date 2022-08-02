@@ -1,53 +1,22 @@
-import { useEffect, useMemo, MutableRefObject, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useRef } from "react";
 
-interface Props {
-    target: MutableRefObject<HTMLDivElement | null>;
+interface Props {}
 
-    root?: Element | null;
-    rootMargin?: string;
-    threshold?: number;
-}
-
-export const useObserver = ({
-    target,
-    root = null,
-    rootMargin = "0px",
-    threshold = 1,
-}: Props) => {
+export const useObserver = ({}: Props) => {
+    const ref = useRef<HTMLDivElement>(null);
     const [check, setCheck] = useState<boolean>(false);
 
-    const observer = useMemo(() => {
-        return new IntersectionObserver(
-            (
-                entries: IntersectionObserverEntry[],
-                observer: IntersectionObserver
-            ) => {
-                if (target?.current === null) return;
-
-                console.log("entry");
-                if (!entries[0].isIntersecting) {
-                    setCheck(true);
-                } else {
-                    setCheck(false);
-                }
-                observer.disconnect();
-            },
-            { root, rootMargin, threshold }
-        );
-    }, []);
+    const handleOnScroll = (e: any) => {
+        if (e.currentTarget.window.pageYOffset > 450) setCheck(true);
+        else setCheck(false);
+    };
 
     useEffect(() => {
-        if (target?.current === null) return;
-
-        observer.observe(target.current);
-
+        window.addEventListener("scroll", handleOnScroll);
         return () => {
-            if (target.current !== null && observer) {
-                observer.unobserve(target.current);
-            }
+            window.removeEventListener("scroll", handleOnScroll);
         };
     }, []);
 
-    return { check };
+    return { ref, check };
 };
