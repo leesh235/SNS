@@ -14,7 +14,7 @@ export const findAllModeUtil = (email: string, mode: any, where: any) => {
             return {
                 ...where,
                 likes: {
-                    userId: email,
+                    user: { email },
                 },
             };
         case PostMode.BOOKMARK:
