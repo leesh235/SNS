@@ -21,6 +21,11 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: repeat(2, auto);
     column-gap: 16px;
+    .fix {
+        position: fixed;
+        top: 142px;
+        z-index: 9;
+    }
 `;
 
 const LeftWrapper = styled.section`
@@ -52,9 +57,10 @@ const FlexWrapper = styled.div`
 
 interface Props {
     handleUrl: any;
+    check: boolean;
 }
 
-export const ProfilePost = ({ handleUrl }: Props) => {
+export const ProfilePost = ({ handleUrl, check }: Props) => {
     const { email } = useParams();
     const dispatch = useDispatch();
 
@@ -67,7 +73,7 @@ export const ProfilePost = ({ handleUrl }: Props) => {
     return (
         <>
             <Wrapper>
-                <LeftWrapper>
+                <LeftWrapper className={check ? "fix" : ""}>
                     <IntroduceCard handleUrl={handleUrl} />
                     <LatestImageCard handleUrl={handleUrl} />
                     <BoxShadow>
@@ -82,6 +88,7 @@ export const ProfilePost = ({ handleUrl }: Props) => {
                         </FlexWrapper>
                     </BoxShadow>
                 </LeftWrapper>
+                {check && <div style={{ width: "360px" }}></div>}
                 <RightWrapper>
                     <WritePostCard />
                     <PostListCard />
