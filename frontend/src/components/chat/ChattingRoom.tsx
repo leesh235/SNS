@@ -11,6 +11,7 @@ import {
 import { response, request, event } from "../../utils/socket";
 import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
+import { useScrollBottom } from "../../hooks/useScrollBottom";
 
 const Wrapper = styled.div`
     width: 338px;
@@ -180,6 +181,8 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
         (state: any) => state.chat.messageList
     );
 
+    const { ref, setId } = useScrollBottom();
+
     const [open, setOpen] = useState<boolean>(false);
 
     const createDom = (parent: any, tag: any, data: any) => {
@@ -199,13 +202,6 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
         itemWrapper.appendChild(name);
         itemWrapper.appendChild(contents);
         list.appendChild(itemWrapper);
-        handleScroll();
-    };
-
-    const handleScroll = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
-        }
     };
 
     const handleChatting: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -218,7 +214,6 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
             msg: value,
         });
         e.currentTarget.chatInput.value = "";
-        handleScroll();
     };
 
     const handleLeave = () => {
@@ -236,12 +231,13 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
     };
 
     useEffect(() => {
-        handleScroll();
         dispatch(setMessageList({ roomId }));
         request(event.join, { roomId, userId: user_store.data.email });
         response(event.message, (data: any) => {
             createDom("chatList", "div", data);
+            setId(`${loading}`);
         });
+        console.log("data");
         return () => {
             request(event.leave, { roomId, userId: user_store.data.email });
         };
@@ -268,7 +264,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
                     <LeaveBtn onClick={handleLeave}>X</LeaveBtn>
                 </div>
             </Title>
-            <MessageList id="chatList" ref={scrollRef}>
+            <MessageList id="chatList" ref={ref}>
                 {data?.map((val: any) => {
                     if (user_store.data.email !== val.userId)
                         return (
