@@ -1,13 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 
-interface Props {}
+interface Props {
+    height: number;
+}
 
-export const useObserver = ({}: Props) => {
+export const useObserver = ({ height }: Props) => {
     const ref = useRef<HTMLDivElement>(null);
     const [check, setCheck] = useState<boolean>(false);
 
     const handleOnScroll = (e: any) => {
-        if (e.currentTarget.window.pageYOffset > 450) setCheck(true);
+        if (e.currentTarget.window.pageYOffset > height) setCheck(true);
         else setCheck(false);
     };
 

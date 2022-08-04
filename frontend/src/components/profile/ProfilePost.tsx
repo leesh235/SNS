@@ -24,7 +24,7 @@ const Wrapper = styled.section`
     .fix {
         position: fixed;
         top: 142px;
-        z-index: 9;
+        z-index: 1;
     }
 `;
 

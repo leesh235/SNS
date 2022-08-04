@@ -79,7 +79,7 @@ const Profile = () => {
     const { email } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { ref, check } = useObserver({});
+    const { ref, check } = useObserver({ height: 450 });
 
     const [click, setClick] = useState<number>(0);
     const handleOnClick = ({ id }: { id: number }) => {
