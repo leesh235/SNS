@@ -4,7 +4,8 @@ export const findChatList = async (req) => {
     try {
         const { roomId } = req.query;
 
-        const chat = await Chat.find({ room: roomId });
+        const chat = await Chat.find({ room: roomId }).sort({ createdAt: 1 });
+        // .limit(10);
 
         let result = [];
         chat.forEach((val) => {
@@ -15,7 +16,7 @@ export const findChatList = async (req) => {
                 userId: val.userId,
             });
         });
-
+        console.log(chat);
         return result;
     } catch (error) {
         console.log(error);
