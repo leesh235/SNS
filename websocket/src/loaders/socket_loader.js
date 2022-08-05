@@ -1,39 +1,27 @@
-import { Server } from "socket.io";
 import { event } from "../config/routes";
 import { createChat } from "../services/chat.service";
 import { verify } from "jsonwebtoken";
-import { createAdapter } from "@socket.io/mongo-adapter";
-import mongoose from "mongoose";
 
-const collection = mongoose.connection.createCollection("ctartCapped", {
-    capped: true,
-    size: 1e6,
-});
+// function publicRooms() {
+//     const {
+//         sockets: {
+//             adapter: { sids, rooms },
+//         },
+//     } = io;
+//     const publicRooms = [];
+//     rooms.forEach((_, key) => {
+//         if (sids.get(key) === undefined) {
+//             publicRooms.push(key);
+//         }
+//     });
+//     return publicRooms;
+// }
 
-function publicRooms() {
-    const {
-        sockets: {
-            adapter: { sids, rooms },
-        },
-    } = io;
-    const publicRooms = [];
-    rooms.forEach((_, key) => {
-        if (sids.get(key) === undefined) {
-            publicRooms.push(key);
-        }
-    });
-    return publicRooms;
-}
-
-export default (server) => {
+export default (io) => {
     const { FE_URL, JWT_SECRET } = process.env;
-    const io = new Server(server, { cors: { origin: `${FE_URL}` } });
+    // const io = new Server(server, { cors: { origin: `${FE_URL}` } });
 
-    collection
-        .then((db) => io.adapter(createAdapter(db)))
-        .catch((err) => console.log(err));
-
-    io.use((socket, next) => {
+    io?.use((socket, next) => {
         if (socket?.handshake?.query?.token) {
             verify(
                 socket?.handshake?.query?.token,
@@ -54,10 +42,7 @@ export default (server) => {
         socket.on(event.join, ({ roomId }) => {
             console.log("join: ", roomId);
             socket.join(roomId);
-            console.log(publicRooms());
-            // console.log(socket.adapter.rooms.get(roomId).size);
-            // console.log(socket.adapter.rooms);
-            // console.log(socket.adapter.sids);
+            console.log(socket.adapter.rooms);
         });
 
         socket.on(event.leave, async ({ roomId }) => {
