@@ -2,10 +2,36 @@ import { Server } from "socket.io";
 import { event } from "../config/routes";
 import { createChat } from "../services/chat.service";
 import { verify } from "jsonwebtoken";
+import { createAdapter } from "@socket.io/mongo-adapter";
+import mongoose from "mongoose";
+
+const collection = mongoose.connection.createCollection("ctartCapped", {
+    capped: true,
+    size: 1e6,
+});
+
+function publicRooms() {
+    const {
+        sockets: {
+            adapter: { sids, rooms },
+        },
+    } = io;
+    const publicRooms = [];
+    rooms.forEach((_, key) => {
+        if (sids.get(key) === undefined) {
+            publicRooms.push(key);
+        }
+    });
+    return publicRooms;
+}
 
 export default (server) => {
     const { FE_URL, JWT_SECRET } = process.env;
     const io = new Server(server, { cors: { origin: `${FE_URL}` } });
+
+    collection
+        .then((db) => io.adapter(createAdapter(db)))
+        .catch((err) => console.log(err));
 
     io.use((socket, next) => {
         if (socket?.handshake?.query?.token) {
@@ -15,6 +41,7 @@ export default (server) => {
                 (err, decoded) => {
                     if (err) return next(new Error(`Authentication error`));
                     socket.decoded = decoded;
+                    console.log(socket.adapter.rooms);
                     next();
                 }
             );
@@ -23,7 +50,47 @@ export default (server) => {
         }
     }).on("connection", (socket) => {
         console.log("connection");
-        /*
+
+        socket.on(event.join, ({ roomId }) => {
+            console.log("join: ", roomId);
+            socket.join(roomId);
+            console.log(publicRooms());
+            // console.log(socket.adapter.rooms.get(roomId).size);
+            // console.log(socket.adapter.rooms);
+            // console.log(socket.adapter.sids);
+        });
+
+        socket.on(event.leave, async ({ roomId }) => {
+            console.log("leave: ", roomId);
+            socket.leave(roomId);
+        });
+
+        socket.on(event.chat, async ({ roomId, userId, nickName, msg }) => {
+            const result = await createChat({
+                body: {
+                    roomId,
+                    userId,
+                    msg,
+                    nickName,
+                },
+            });
+            io.to(roomId).emit(event.message, {
+                _id: result._id,
+                userId: result.userId,
+                nickName: result.nickName,
+                message: result.message,
+            });
+            // console.log(socket.connected);
+            io.emit("test2" | "test", { message: "success" });
+        });
+
+        socket.on("disconnect", () => {
+            console.log("disconnect");
+        });
+    });
+};
+
+/*
             1.작동 방식
                 -client의 최상단 component에서 websocket 연결
                 -각 채팅방 입장 시 join event 발생
@@ -54,34 +121,3 @@ export default (server) => {
                     -message저장
                     -user_room등록/user_room해제
         */
-
-        socket.on(event.join, ({ roomId }) => {
-            socket.join(roomId);
-        });
-
-        socket.on(event.leave, async ({ roomId }) => {
-            socket.leave(roomId);
-        });
-
-        socket.on(event.chat, async ({ roomId, userId, nickName, msg }) => {
-            const result = await createChat({
-                body: {
-                    roomId,
-                    userId,
-                    msg,
-                    nickName,
-                },
-            });
-            io.to(result.roomId).emit(event.message, {
-                _id: result._id,
-                userId: result.userId,
-                nickName: result.nickName,
-                message: result.message,
-            });
-        });
-
-        socket.on("disconnect", () => {
-            console.log("disconnect");
-        });
-    });
-};
