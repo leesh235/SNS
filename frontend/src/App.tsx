@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { LogInRoute } from "./components/routing/LogInRoute";
-import { LogOutRoute } from "./components/routing/LogOutRoute";
+import { LogInRoute } from "./components/common/routing/LogInRoute";
+import { LogOutRoute } from "./components/common/routing/LogOutRoute";
 import { connectSocket, disconnectSocket } from "./utils/socket";
 
 const App = () => {

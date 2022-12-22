@@ -1,5 +1,5 @@
-import styled from "../styles/theme-components";
-import { Logo } from "../components/common/Logo";
+import styled from "../../styles/theme-components";
+import { Logo } from "../common/Logo";
 
 const Wrapper = styled.section`
     > :nth-child(1) {
