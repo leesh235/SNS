@@ -7,14 +7,15 @@ import { setLogin } from "../../modules/action/auth";
 import { authMessage } from "../../utils/message";
 import { useForm } from "../../hooks/useForm";
 import { useModal } from "../../hooks/useModal";
+import { loginValidate } from "../../utils/validate";
 //components
-import { Input } from "../common/input/Input";
+import { FocusInput } from "../common/input/FocusInput";
 import { Button } from "../common/button/Button";
 import { Join } from "../modal/Join";
-import { Line } from "../common/Line";
 import { LinkText } from "../common/button/LinkText";
+import { ErrorMessage } from "../common/ErrorMessage";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     width: 396px;
     height: auto;
     display: flex;
@@ -22,27 +23,33 @@ const Wrapper = styled.section`
     align-items: center;
 `;
 
-const BoxWrapper = styled.section`
+const BoxLayout = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 396px;
+    width: 366px;
     height: auto;
-    padding: 10px 0 24px 0;
+    padding: 15px;
     border: none;
     border-radius: 8px;
     background-color: ${(props) => props.theme.color.white};
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 `;
 
-const FormWrapper = styled.form`
+const FormLayout = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 364px;
-    > :nth-child(n) {
-        margin: 6px 0px;
-    }
+    justify-content: space-between;
+    width: 100%;
+    max-width: 364px;
+    height: 240px;
+`;
+
+const Line = styled.div`
+    width: 100%;
+    max-width: 364px;
+    border-bottom: 1px solid ${(props) => props.theme.color.lightGray};
     margin: 0 0 20px 0;
 `;
 
@@ -53,7 +60,7 @@ export const LogInForm = () => {
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: "",
-        validate: "",
+        validate: loginValidate,
         stateFunc: (state: any) => state.auth?.user,
         onSubmit: (formData: any) => {
             dispatch(
@@ -76,30 +83,34 @@ export const LogInForm = () => {
 
     return (
         <>
-            <Wrapper>
-                <BoxWrapper>
-                    <FormWrapper onSubmit={handleSubmit}>
-                        <Input
+            <Layout>
+                <BoxLayout>
+                    <FormLayout onSubmit={handleSubmit}>
+                        <FocusInput
                             {...setOption("email")}
-                            cssObj={{ padding: "14px 16px" }}
                             placeholder={"이메일 또는 전화번호"}
-                            required={true}
+                            error={errors.email}
                         />
-                        <Input
-                            {...setOption("password")}
-                            cssObj={{ padding: "14px 16px" }}
-                            placeholder={"비밀번호"}
+                        {errors.email === "required" && (
+                            <ErrorMessage message="이메일을 입력하세요" />
+                        )}
+                        <FocusInput
                             type={"password"}
-                            required={true}
+                            {...setOption("password")}
+                            placeholder={"비밀번호"}
+                            error={errors.password}
                         />
+                        {errors.password === "required" && (
+                            <ErrorMessage message="비밀번호를 입력하세요" />
+                        )}
                         <Button text="로그인" />
                         <LinkText
                             to={routes.forget}
                             text={"비밀번호를 잊으셨나요?"}
                             color={theme.color.seaBule}
                         />
-                        <Line />
-                    </FormWrapper>
+                    </FormLayout>
+                    <Line />
                     <Button
                         text={"새 계정 만들기"}
                         width={"144px"}
@@ -109,9 +120,9 @@ export const LogInForm = () => {
                         type={"button"}
                         onClick={onModalClick}
                     />
-                </BoxWrapper>
+                </BoxLayout>
                 <LinkText to={routes.forget} text={"페이지 만들기."} fw={600} />
-            </Wrapper>
+            </Layout>
             {modal && <Join onClose={onModalClick} />}
         </>
     );
