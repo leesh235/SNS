@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { StoreType } from "../types/common";
 
 interface Props {
     initValues?: any;
@@ -20,7 +21,7 @@ export const useForm = ({
     const [errors, setErrors] = useState<any>({});
     const [isLoaing, setIsLoading] = useState<boolean>(false);
 
-    const { loading, data, error }: any = useSelector(stateFunc);
+    const { loading, data, error }: StoreType = useSelector(stateFunc);
 
     const setOption = (name: string) => {
         const onChange: React.FormEventHandler<HTMLInputElement> = (e) => {

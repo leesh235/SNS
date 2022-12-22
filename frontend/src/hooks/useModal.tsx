@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 
-interface Props {}
+interface Returns {
+    modal: boolean;
+    onModalClick: () => void;
+}
 
-export const useModal = (): Props => {
+export const useModal = (): Returns => {
     const [modal, setModal] = useState<boolean>(false);
 
     const handleModalClick = () => {
