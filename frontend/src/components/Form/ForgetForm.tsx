@@ -1,5 +1,5 @@
 import styled from "../../styles/theme-components";
-import { Input } from "../common/input/Input";
+import { FocusInput } from "../common/input/FocusInput";
 import { Button } from "../common/button/Button";
 import theme from "../../styles/theme";
 
@@ -52,9 +52,8 @@ export const ForgetForm = () => {
             <Text2>
                 계정을 검색하려면 이메일 주소 또는 휴대폰 번호를 입력하세요.
             </Text2>
-            <Input
-                width={"444px"}
-                padding={"16px 0px 16px 16px"}
+            <FocusInput
+                cssObj={{ width: "444px", padding: "16px 0px 16px 16px" }}
                 placeholder={"이메일 또는 전화번호"}
             />
             <ButtonWrapper>
