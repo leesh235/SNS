@@ -4,7 +4,7 @@ import theme from "../../styles/theme";
 import { routes } from "../../utils/routes";
 import { useModal } from "../../hooks/useModal";
 //components
-import { Button } from "../common/button/Button";
+import { BagicButton } from "../common/button/BagicButton";
 import { Join } from "../modal/Join";
 import { LinkText } from "../common/button/LinkText";
 import { LoginForm } from "./LoginForm";
@@ -46,14 +46,15 @@ export const LogInBox = () => {
                 <BoxLayout>
                     <LoginForm />
                     <Line />
-                    <Button
+                    <BagicButton
                         text={"새 계정 만들기"}
-                        width={"144px"}
-                        height={"48px"}
-                        color={theme.color.lightGreen}
-                        fs={"17px"}
-                        type={"button"}
                         onClick={onModalClick}
+                        cssObj={{
+                            width: "144px",
+                            height: "48px",
+                            backgroundColor: theme.color.lightGreen,
+                            fontSize: "17px",
+                        }}
                     />
                 </BoxLayout>
                 <LinkText to={routes.forget} text={"페이지 만들기."} fw={600} />

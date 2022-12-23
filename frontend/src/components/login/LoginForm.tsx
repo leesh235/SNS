@@ -9,7 +9,7 @@ import { useForm } from "../../hooks/useForm";
 import { loginValidate } from "../../utils/validate";
 //components
 import { FocusInput } from "../common/input/FocusInput";
-import { Button } from "../common/button/Button";
+import { BagicButton } from "../common/button/BagicButton";
 import { LinkText } from "../common/button/LinkText";
 import { ErrorMessage } from "../common/ErrorMessage";
 
@@ -68,7 +68,7 @@ export const LoginForm = () => {
             {errors.password === "required" && (
                 <ErrorMessage message="비밀번호를 입력하세요" />
             )}
-            <Button text="로그인" />
+            <BagicButton text="로그인" type={"submit"} />
             <LinkText
                 to={routes.forget}
                 text={"비밀번호를 잊으셨나요?"}

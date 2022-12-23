@@ -1,6 +1,6 @@
 import styled from "../styles/theme-components";
 import { ForgetHeader } from "../components/common/header/ForgetHeader";
-import { ForgetForm } from "../components/form/ForgetForm";
+import { ForgetForm } from "../components/forget/ForgetForm";
 
 const Wrapper = styled.main`
     width: 100%;

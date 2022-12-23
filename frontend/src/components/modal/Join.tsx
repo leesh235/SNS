@@ -1,6 +1,6 @@
 import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
-import { Button } from "../common/button/Button";
+import { BagicButton } from "../common/button/BagicButton";
 import { RequireInput } from "../common/input/RequireInput";
 import { useDispatch, useSelector } from "react-redux";
 import { setJoin } from "../../modules/action/auth";
@@ -181,12 +181,15 @@ export const Join = ({ onClose }: Props) => {
                         쿠키 정책에 동의하게 됩니다. Facebook으로부터 SMS 알림을
                         받을 수 있으며 알림은 언제든지 옵트 아웃할 수 있습니다.
                     </Contents>
-                    <Button
+                    <BagicButton
                         text={"가입하기"}
-                        width={"194px"}
-                        height={"36px"}
-                        color={theme.color.lightGreen}
-                        fs={"17px"}
+                        type={"submit"}
+                        cssObj={{
+                            width: "194px",
+                            height: "36px",
+                            backgroundColor: theme.color.lightGreen,
+                            fontSize: "17px",
+                        }}
                     />
                 </FormWrapper>
             </BoxWrapper>

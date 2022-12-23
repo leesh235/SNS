@@ -1,7 +1,7 @@
 import styled from "../../styles/theme-components";
 import { BoxShadow } from "../common/styles/BoxShadow";
 import { Text } from "../common/Text";
-import { Button } from "../common/button/Button";
+import { BagicButton } from "../common/button/BagicButton";
 import theme from "../../styles/theme";
 
 const Wrapper = styled.section`
@@ -83,12 +83,14 @@ export const Welcome = () => {
                                 "친구들이 회원님을 쉽게 알아볼 수 있도록 사진을 추가하세요."
                             }
                         />
-                        <Button
-                            fs={"17px"}
-                            fw={600}
-                            width={"153px"}
-                            height={"40px"}
+                        <BagicButton
                             text={"사진 추가"}
+                            cssObj={{
+                                fontSize: "17px",
+                                fontWeight: 600,
+                                width: "153px",
+                                height: "40px",
+                            }}
                         />
                     </div>
                     <Icon />
@@ -114,7 +116,6 @@ export const Welcome = () => {
                 </FlexWrapper>
             </BoxShadow>
             <BoxShadow width={"510px"}>
-                {" "}
                 <FlexWrapper>
                     <Text
                         fs={"20px"}
@@ -131,12 +132,14 @@ export const Welcome = () => {
                             "Facebook에서 공유하고 싶은 내용의 공개 범위를 관리할 수 있습니다."
                         }
                     />
-                    <Button
-                        fs={"17px"}
-                        fw={600}
-                        width={"264px"}
-                        height={"40px"}
+                    <BagicButton
                         text={"공개 범위 기능 둘러보기"}
+                        cssObj={{
+                            fontSize: "17px",
+                            fontWeight: 600,
+                            width: "264px",
+                            height: "40px",
+                        }}
                     />
                 </FlexWrapper>
             </BoxShadow>

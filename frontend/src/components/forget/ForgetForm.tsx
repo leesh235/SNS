@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import { FocusInput } from "../common/input/FocusInput";
-import { Button } from "../common/button/Button";
+import { BagicButton } from "../common/button/BagicButton";
 import theme from "../../styles/theme";
 
 const Wrapper = styled.form`
@@ -57,19 +57,19 @@ export const ForgetForm = () => {
                 placeholder={"이메일 또는 전화번호"}
             />
             <ButtonWrapper>
-                <Button
+                <BagicButton
                     text={"취소"}
-                    width={"70px"}
-                    height={"36px"}
-                    fs={"15px"}
-                    fc={theme.color.lightBlack}
-                    color={theme.color.gray}
+                    cssObj={{
+                        width: "70px",
+                        height: "36px",
+                        fontSize: "15px",
+                        fontColor: theme.color.lightBlack,
+                        backgroundColor: theme.color.gray,
+                    }}
                 />
-                <Button
+                <BagicButton
                     text={"검색"}
-                    width={"70px"}
-                    height={"36px"}
-                    fs={"15px"}
+                    cssObj={{ width: "70px", height: "36px", fontSize: "15px" }}
                 />
             </ButtonWrapper>
         </Wrapper>
