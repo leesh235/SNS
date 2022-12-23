@@ -23,7 +23,7 @@ interface Props extends StyleProps {
     to: string;
 }
 
-export const LinkText = ({ text, to, fw, color }: Props) => {
+export const TextLink = ({ text, to, fw, color }: Props) => {
     return (
         <Wrapper fw={fw} color={color}>
             <Link
@@ -37,7 +37,7 @@ export const LinkText = ({ text, to, fw, color }: Props) => {
     );
 };
 
-LinkText.defaultProps = {
+TextLink.defaultProps = {
     text: "버튼",
     to: "/",
     fw: 500,

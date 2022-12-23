@@ -10,7 +10,7 @@ import { loginValidate } from "../../utils/validate";
 //components
 import { FocusInput } from "../common/input/FocusInput";
 import { BagicButton } from "../common/button/BagicButton";
-import { LinkText } from "../common/link/LinkText";
+import { TextLink } from "../common/link/TextLink";
 import { ErrorMessage } from "../common/ErrorMessage";
 
 const Layout = styled.form`
@@ -69,7 +69,7 @@ export const LoginForm = () => {
                 <ErrorMessage message="비밀번호를 입력하세요" />
             )}
             <BagicButton text="로그인" type={"submit"} />
-            <LinkText
+            <TextLink
                 to={routes.forget}
                 text={"비밀번호를 잊으셨나요?"}
                 color={theme.color.seaBule}

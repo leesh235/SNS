@@ -6,7 +6,7 @@ import { useModal } from "../../hooks/useModal";
 //components
 import { BagicButton } from "../common/button/BagicButton";
 import { Join } from "../modal/Join";
-import { LinkText } from "../common/link/LinkText";
+import { TextLink } from "../common/link/TextLink";
 import { LoginForm } from "./LoginForm";
 
 const Layout = styled.section`
@@ -57,7 +57,7 @@ export const LogInBox = () => {
                         }}
                     />
                 </BoxLayout>
-                <LinkText to={routes.forget} text={"페이지 만들기."} fw={600} />
+                <TextLink to={routes.forget} text={"페이지 만들기."} fw={600} />
             </Layout>
             {modal && <Join onClose={onModalClick} />}
         </>
