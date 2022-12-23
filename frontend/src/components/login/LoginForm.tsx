@@ -10,7 +10,7 @@ import { loginValidate } from "../../utils/validate";
 //components
 import { FocusInput } from "../common/input/FocusInput";
 import { BagicButton } from "../common/button/BagicButton";
-import { LinkText } from "../common/button/LinkText";
+import { LinkText } from "../common/link/LinkText";
 import { ErrorMessage } from "../common/ErrorMessage";
 
 const Layout = styled.form`

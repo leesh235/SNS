@@ -6,7 +6,7 @@ import { useModal } from "../../hooks/useModal";
 //components
 import { BagicButton } from "../common/button/BagicButton";
 import { Join } from "../modal/Join";
-import { LinkText } from "../common/button/LinkText";
+import { LinkText } from "../common/link/LinkText";
 import { LoginForm } from "./LoginForm";
 
 const Layout = styled.section`
