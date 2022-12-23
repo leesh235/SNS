@@ -88,18 +88,17 @@ export const JoinForm = ({ onClose }: Props) => {
         validate: "",
         stateFunc: (state: any) => state.auth?.user,
         onSubmit: (formData: any) => {
-            console.log(formData);
-            // dispatch(
-            //     setJoin({
-            //         firstName: formData.value,
-            //         secondName: formData.value,
-            //         email: formData.value,
-            //         password: formData.value,
-            //         birth: formData.value + formData.value + formData.value,
-            //         gender: formData.value,
-            //     })
-            // );
-            // onClose();
+            dispatch(
+                setJoin({
+                    firstName: formData.value,
+                    secondName: formData.value,
+                    email: formData.value,
+                    password: formData.value,
+                    birth: formData.value + formData.value + formData.value,
+                    gender: formData.value,
+                })
+            );
+            onClose();
         },
         result: (data: any, error: any) => {
             if (error) {
