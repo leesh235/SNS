@@ -68,7 +68,7 @@ export const ForgetForm = () => {
                 />
 
                 <FocusInput
-                    cssObj={{ width: "100%" }}
+                    cssObj={{ width: "calc(100% - 32px)" }}
                     placeholder={"이메일 또는 전화번호"}
                 />
             </FlexLayout>
