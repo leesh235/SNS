@@ -1,9 +1,14 @@
 import styled from "../../styles/theme-components";
+//functions
+import theme from "../../styles/theme";
+import { routes } from "../../utils/routes";
+//components
 import { FocusInput } from "../common/input/FocusInput";
 import { BagicButton } from "../common/button/BagicButton";
-import theme from "../../styles/theme";
+import { BagicLink } from "../common/link/BagicLink";
+import { Text } from "../common/Text";
 
-const Wrapper = styled.form`
+const Layout = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,23 +20,15 @@ const Wrapper = styled.form`
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 `;
 
-const Text1 = styled.div`
-    width: 466px;
-    padding: 18px 16px 18px 18px;
-    font-size: 20px;
-    font-weight: 600;
-    color: ${(props) => props.theme.color.black};
-    border-bottom: solid 1px ${(props) => props.theme.color.lightGray};
+const FlexLayout = styled.div`
+    width: calc(100% - 32px);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
-const Text2 = styled.div`
-    width: 462px;
-    margin: 16px;
-    font-size: 17px;
-    color: ${(props) => props.theme.color.black};
-`;
-
-const ButtonWrapper = styled.div`
+const ButtonLayout = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -40,24 +37,44 @@ const ButtonWrapper = styled.div`
     padding: 16px;
     margin-top: 16px;
     border-top: solid 1px ${(props) => props.theme.color.lightGray};
-    > :nth-child(2) {
-        margin: 0 0 0 8px;
-    }
 `;
 
 export const ForgetForm = () => {
+    const handleClick = () => {
+        console.log("비밀번호 전송");
+    };
+
     return (
-        <Wrapper>
-            <Text1>내 계정 찾기</Text1>
-            <Text2>
-                계정을 검색하려면 이메일 주소 또는 휴대폰 번호를 입력하세요.
-            </Text2>
-            <FocusInput
-                cssObj={{ width: "444px", padding: "16px 0px 16px 16px" }}
-                placeholder={"이메일 또는 전화번호"}
+        <Layout>
+            <Text
+                text={"내 계정 찾기"}
+                cssObj={{
+                    width: "calc(100% - 32px)",
+                    padding: "18px 16px",
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    fontColor: theme.color.black,
+                }}
             />
-            <ButtonWrapper>
-                <BagicButton
+            <FlexLayout>
+                <Text
+                    text={
+                        "계정을 검색하려면 이메일 주소 또는 휴대폰 번호를 입력하세요."
+                    }
+                    cssObj={{
+                        fontSize: "17px",
+                        margin: "0 0 16px 0",
+                    }}
+                />
+
+                <FocusInput
+                    cssObj={{ width: "100%" }}
+                    placeholder={"이메일 또는 전화번호"}
+                />
+            </FlexLayout>
+            <ButtonLayout>
+                <BagicLink
+                    to={routes.login}
                     text={"취소"}
                     cssObj={{
                         width: "70px",
@@ -69,9 +86,15 @@ export const ForgetForm = () => {
                 />
                 <BagicButton
                     text={"검색"}
-                    cssObj={{ width: "70px", height: "36px", fontSize: "15px" }}
+                    onClick={handleClick}
+                    cssObj={{
+                        width: "70px",
+                        height: "36px",
+                        fontSize: "15px",
+                        margin: "0 0 0 8px",
+                    }}
                 />
-            </ButtonWrapper>
-        </Wrapper>
+            </ButtonLayout>
+        </Layout>
     );
 };

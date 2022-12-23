@@ -8,7 +8,9 @@ interface StyleProps {
 }
 
 const Wrapper = styled.input<StyleProps>`
-    width: ${(props) => props.width || "326px"};
+    width: 100%;
+    max-width: ${(props) =>
+        props.width ? `calc(${props.width} - 32px)` : "326px"};
     height: ${(props) => props.height || "20px"};
     padding: ${(props) => props.padding || "14px 16px"};
     border-radius: 8px;

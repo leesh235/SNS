@@ -7,11 +7,14 @@ interface StyleProps {
     fontWeight?: number;
     fontColor?: string;
     backgroundColor?: string;
+    margin?: string;
 }
 
 const Wrapper = styled.button<StyleProps>`
-    width: ${(props) => props.width || "364px"};
+    width: 100%;
+    max-width: ${(props) => props.width || "364px"};
     height: ${(props) => props.height || "48px"};
+    margin: ${(props) => props.margin || "0"};
     padding: 0 16px;
     border: none;
     border-radius: 6px;
@@ -33,6 +36,7 @@ interface Props {
         fontWeight?: number;
         fontColor?: string;
         backgroundColor?: string;
+        margin?: string;
     };
 }
 
