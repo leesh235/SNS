@@ -4,16 +4,16 @@ interface StyleProps {
     width?: string;
     height?: string;
     padding?: string;
+    borderRadius?: string;
     error?: string;
 }
 
 const Wrapper = styled.input<StyleProps>`
     width: 100%;
-    max-width: ${(props) =>
-        props.width ? `calc(${props.width} - 32px)` : "326px"};
+    max-width: ${(props) => props.width || "326px"};
     height: ${(props) => props.height || "20px"};
     padding: ${(props) => props.padding || "14px 16px"};
-    border-radius: 8px;
+    border-radius: ${(props) => props.borderRadius || "8px"};
     font-size: 17px;
     color: ${(props) => props.theme.color.black};
     ::placeholder {
@@ -44,7 +44,12 @@ interface Props {
     placeholder?: string;
     onChange?: any;
     error?: string;
-    cssObj?: { width?: string; height?: string; padding?: string };
+    cssObj?: {
+        width?: string;
+        height?: string;
+        padding?: string;
+        borderRadius?: string;
+    };
 }
 
 export const FocusInput = ({
