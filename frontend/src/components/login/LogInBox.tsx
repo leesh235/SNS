@@ -5,9 +5,10 @@ import { routes } from "../../utils/routes";
 import { useModal } from "../../hooks/useModal";
 //components
 import { BagicButton } from "../common/button/BagicButton";
-import { Join } from "../modal/Join";
+import { JoinForm } from "../join/JoinForm";
 import { TextLink } from "../common/link/TextLink";
 import { LoginForm } from "./LoginForm";
+import { ModalLayout } from "../common/ModalLayout";
 
 const Layout = styled.section`
     width: 396px;
@@ -59,7 +60,11 @@ export const LogInBox = () => {
                 </BoxLayout>
                 <TextLink to={routes.forget} text={"페이지 만들기."} fw={600} />
             </Layout>
-            {modal && <Join onClose={onModalClick} />}
+            {modal && (
+                <ModalLayout>
+                    <JoinForm onClose={onModalClick} />
+                </ModalLayout>
+            )}
         </>
     );
 };
