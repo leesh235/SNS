@@ -1,17 +1,19 @@
 import styled from "../../styles/theme-components";
-import { Text } from "../common/Text";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+//functions
 import { setFriendList } from "../../modules/action/friends";
 import {
     setCreateGroupRoom,
     setJoinRoom,
     setRoomList,
 } from "../../modules/action/chat";
-import { FriendList } from "./FriendList";
 import theme from "../../styles/theme";
+//components
+import { Text } from "../common/Text";
+import { FriendList } from "./FriendList";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
     position: fixed;
     bottom: 0;
     right: 90px;
@@ -54,7 +56,7 @@ const Top = styled.div`
     }
 `;
 
-const SelectWrapper = styled.div`
+const SelectLayout = styled.div`
     margin-left: 5px;
 `;
 
@@ -161,37 +163,40 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
     }, [select, search]);
 
     return (
-        <Wrapper>
+        <Layout>
             <Top>
                 <div>
                     <Text
                         text={"새 메세지"}
-                        fs={"15px"}
-                        fw={500}
-                        lh={"20px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 500,
+                        }}
                     />
                     <CloseBtn onClick={closeFunc}>X</CloseBtn>
                 </div>
                 <div>
                     <Text
                         text={"받는 사람:"}
-                        fs={"15px"}
-                        fw={500}
-                        lh={"20px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 500,
+                        }}
                     />
-                    <SelectWrapper>
+                    <SelectLayout>
                         {selectNickName?.map((val: any, idx: number) => {
                             return (
                                 <SelectStyle key={idx}>
                                     <Text
                                         text={val.nickName}
-                                        fs={"13px"}
-                                        fw={600}
-                                        lh={"16px"}
-                                        width={"auto"}
-                                        fc={theme.color.seaBule}
+                                        tag={"span"}
+                                        cssObj={{
+                                            fontSize: "13px",
+                                            fontWeight: 600,
+                                            fontColor: theme.color.seaBule,
+                                        }}
                                     />
                                     <SelectCancle
                                         onClick={() => {
@@ -200,28 +205,30 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
                                     >
                                         <Text
                                             text={"x"}
-                                            fs={"13px"}
-                                            fw={600}
-                                            lh={"16px"}
-                                            width={"auto"}
-                                            fc={theme.color.seaBule}
+                                            tag={"span"}
+                                            cssObj={{
+                                                fontSize: "13px",
+                                                fontWeight: 600,
+                                                fontColor: theme.color.seaBule,
+                                            }}
                                         />
                                     </SelectCancle>
                                 </SelectStyle>
                             );
                         })}
-                    </SelectWrapper>
+                    </SelectLayout>
                 </div>
                 {selectNickName.length !== 0 && (
                     <div>
                         <CreateBtn onClick={handleCreateGroupRoom}>
                             <Text
                                 text={"생성"}
-                                fs={"13px"}
-                                fw={600}
-                                lh={"16px"}
-                                width={"auto"}
-                                fc={theme.color.seaBule}
+                                tag={"span"}
+                                cssObj={{
+                                    fontSize: "13px",
+                                    fontWeight: 600,
+                                    fontColor: theme.color.seaBule,
+                                }}
                             />
                         </CreateBtn>
                     </div>
@@ -233,6 +240,6 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
                 placeholder="친구 검색"
             />
             <FriendList handleSelect={handleSelect} />
-        </Wrapper>
+        </Layout>
     );
 };

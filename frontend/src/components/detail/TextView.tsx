@@ -1,22 +1,23 @@
 import styled from "../../styles/theme-components";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+//functions
+import { routes } from "../../utils/routes";
+import { setWriteComment, setCommentList } from "../../modules/action/comment";
+import { setLike, setPostDetail } from "../../modules/action/post";
+import theme from "../../styles/theme";
+//components
 import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
-import { Link } from "react-router-dom";
-import { routes } from "../../utils/routes";
 import { CommentInput } from "../common/input/CommentInput";
 import { CommentBtn } from "../common/button/CommentBtn";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
-import { setWriteComment, setCommentList } from "../../modules/action/comment";
 import { CommentList } from "./CommentList";
-import { setLike, setPostDetail } from "../../modules/action/post";
-import theme from "../../styles/theme";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     width: 100%;
     height: 100%;
     background-color: ${(props) => props.theme.color.white};
@@ -96,7 +97,7 @@ const OptionView = styled.div`
     justify-items: center;
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -166,7 +167,7 @@ export const TextView = () => {
     };
 
     return (
-        <Wrapper>
+        <Layout>
             <Top></Top>
             <Middle>
                 <PostView>
@@ -180,26 +181,12 @@ export const TextView = () => {
                         </Link>
                         <Text
                             text={`${data?.writer}`}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
+                            cssObj={{ fontSize: "15px", fontWeight: 600 }}
                         />
-                        <FlexWrapper>
-                            <Text
-                                text={`${data?.createdAt}`}
-                                fs={"12px"}
-                                lh={"16px"}
-                                tag={"span"}
-                                width={"auto"}
-                            />
-                            <Text
-                                text={"시간"}
-                                fs={"12px"}
-                                lh={"16px"}
-                                tag={"span"}
-                                width={"auto"}
-                            />
-                        </FlexWrapper>
+                        <FlexLayout>
+                            <Text text={`${data?.createdAt}`} tag={"span"} />
+                            <Text text={"시간"} tag={"span"} />
+                        </FlexLayout>
                         <Hover onClick={handleOpen}>
                             <MoreIcon />
                         </Hover>
@@ -217,12 +204,7 @@ export const TextView = () => {
                         )}
                     </UserInfo>
                     <Contents>
-                        <Text
-                            tag={"span"}
-                            text={data?.contents}
-                            fs={"12px"}
-                            lh={"16px"}
-                        />
+                        <Text text={data?.contents} tag={"span"} />
                     </Contents>
                 </PostView>
                 <OptionView>
@@ -244,6 +226,6 @@ export const TextView = () => {
                     onSubmit={handleOnSubmit}
                 />
             </Bottom>
-        </Wrapper>
+        </Layout>
     );
 };

@@ -1,13 +1,15 @@
 import styled from "../../styles/theme-components";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+//functions
+import { base64ToImage } from "../../utils/base64Func";
+import theme from "../../styles/theme";
+//components
 import { Text } from "../common/Text";
 import { AvatarEditor } from "../common/AvatarEditor";
-import { base64ToImage } from "../../utils/base64Func";
-import { useDispatch } from "react-redux";
 import { setProfileImage } from "../../modules/action/user";
-import theme from "../../styles/theme";
 
-const Wrapper = styled.main`
+const Layout = styled.main`
     width: 100%;
     height: 100vh;
     display: flex;
@@ -118,15 +120,16 @@ export const CustomImage = ({ closeFunc, onClick, image }: Props) => {
         closeFunc();
     };
     return (
-        <Wrapper>
+        <Layout>
             <Box>
                 <Top>
                     <Text
                         text={"프로필 사진 업로드"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
                     <CloseBtn onClick={closeFunc}>X</CloseBtn>
                 </Top>
@@ -135,27 +138,25 @@ export const CustomImage = ({ closeFunc, onClick, image }: Props) => {
                     <CancleBtn type="button" onClick={closeFunc}>
                         <Text
                             text={"취소"}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
-                            width={"100%"}
-                            ta={"center"}
-                            fc={theme.color.seaBule}
+                            cssObj={{
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                fontColor: theme.color.seaBule,
+                            }}
                         />
                     </CancleBtn>
                     <SubmitBtn type="button" onClick={saveImage}>
                         <Text
                             text={"저장"}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
-                            width={"100%"}
-                            ta={"center"}
-                            fc={theme.color.white}
+                            cssObj={{
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                fontColor: theme.color.white,
+                            }}
                         />
                     </SubmitBtn>
                 </Bottom>
             </Box>
-        </Wrapper>
+        </Layout>
     );
 };

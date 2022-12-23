@@ -1,23 +1,24 @@
 import styled from "../../../styles/theme-components";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+//functions
+import theme from "../../../styles/theme";
+//functions
 import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 import { IconButton } from "../../common/button/IconButton";
-import theme from "../../../styles/theme";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { Summary } from "./Summary";
 import { Ability } from "./Ability";
 import { UserInfo } from "./UserInfo";
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     height: auto;
     display: grid;
     grid-template-columns: 1fr 2fr;
 `;
 
-const LeftWrapper = styled.div`
+const LeftLayout = styled.div`
     width: calc(100% - 12px);
     height: auto;
     border-right: 1px solid ${(props) => props.theme.color.lightGray};
@@ -27,7 +28,7 @@ const LeftWrapper = styled.div`
     }
 `;
 
-const RightWrapper = styled.div`
+const RightLayout = styled.div`
     width: calc(100% - 32px);
     height: auto;
     padding: 16px;
@@ -59,15 +60,16 @@ export const InfoCard = () => {
 
     return (
         <BoxShadow tag={"article"} padding={"0"}>
-            <FlexWrapper>
-                <LeftWrapper>
+            <FlexLayout>
+                <LeftLayout>
                     <Text
                         text={"정보"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
-                        margin={"0 10px 20px 10px"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                            margin: "0 10px 20px 10px",
+                        }}
                     />
                     {data.map((val, idx) => {
                         if (idx === select) {
@@ -84,11 +86,11 @@ export const InfoCard = () => {
                                 >
                                     <Text
                                         text={val}
-                                        fs={"15px"}
-                                        fw={600}
-                                        lh={"20px"}
-                                        width={"100%"}
-                                        fc={theme.color.seaBule}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                            fontColor: theme.color.seaBule,
+                                        }}
                                     />
                                 </IconButton>
                             );
@@ -104,23 +106,23 @@ export const InfoCard = () => {
                                 >
                                     <Text
                                         text={val}
-                                        fs={"15px"}
-                                        fw={600}
-                                        lh={"20px"}
-                                        width={"100%"}
-                                        fc={theme.color.lightBlack}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                            fontColor: theme.color.lightBlack,
+                                        }}
                                     />
                                 </IconButton>
                             );
                         }
                     })}
-                </LeftWrapper>
-                <RightWrapper>
+                </LeftLayout>
+                <RightLayout>
                     {select === 0 && <Summary />}
                     {select === 1 && <Ability />}
                     {select === 2 && <UserInfo />}
-                </RightWrapper>
-            </FlexWrapper>
+                </RightLayout>
+            </FlexLayout>
         </BoxShadow>
     );
 };

@@ -1,8 +1,9 @@
 import styled from "../../../styles/theme-components";
+//components
 import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     height: auto;
 `;
@@ -10,15 +11,16 @@ const FlexWrapper = styled.div`
 export const VideoCard = () => {
     return (
         <BoxShadow tag={"article"}>
-            <FlexWrapper>
+            <FlexLayout>
                 <Text
                     text={"동영상"}
-                    fs={"20px"}
-                    fw={700}
-                    lh={"24px"}
-                    width={"auto"}
+                    tag={"span"}
+                    cssObj={{
+                        fontSize: "20px",
+                        fontWeight: 700,
+                    }}
                 />
-            </FlexWrapper>
+            </FlexLayout>
         </BoxShadow>
     );
 };

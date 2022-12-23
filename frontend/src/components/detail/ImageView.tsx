@@ -2,10 +2,11 @@ import styled from "../../styles/theme-components";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+//components
 import { LogoIcon } from "../../assets/icon/LogoIcon";
 import { Text } from "../common/Text";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     width: 100%;
     height: 100%;
     background-color: ${(props) => props.theme.color.black};
@@ -95,20 +96,28 @@ export const ImageView = () => {
     }, [loading]);
 
     return (
-        <Wrapper>
+        <Layout>
             <Top>
                 <CloseBtn onClick={handleClose}>X</CloseBtn>
                 <LogoIcon />
             </Top>
             <Contents>
                 <NextPreBtn onClick={handlePrev}>
-                    <Text text={"<"} fs={"20px"} fw={600} width={"auto"} />
+                    <Text
+                        text={"<"}
+                        tag={"span"}
+                        cssObj={{ fontSize: "20px", fontWeight: 600 }}
+                    />
                 </NextPreBtn>
                 <Image src={data?.images[select].url} />
                 <NextPreBtn onClick={handleNext}>
-                    <Text text={">"} fs={"20px"} fw={600} width={"auto"} />
+                    <Text
+                        text={">"}
+                        tag={"span"}
+                        cssObj={{ fontSize: "20px", fontWeight: 600 }}
+                    />
                 </NextPreBtn>
             </Contents>
-        </Wrapper>
+        </Layout>
     );
 };

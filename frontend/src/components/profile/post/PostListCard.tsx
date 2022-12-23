@@ -1,15 +1,17 @@
 import styled from "../../../styles/theme-components";
 import { useState } from "react";
+//functions
+import theme from "../../../styles/theme";
+//components
 import { BoxShadow } from "../../common/styles/BoxShadow";
 import { IconButton } from "../../common/button/IconButton";
 import { Text } from "../../common/Text";
-import theme from "../../../styles/theme";
 import { ListIcon, ListIconC } from "../../../assets/icon/ListIcon";
 import { GridIcon, GridIconC } from "../../../assets/icon/GridIcon";
 import { PostGridCard } from "./PostGridCard";
 import { PostFlexCard } from "./PostFlexCard";
 
-const GridWrapper = styled.div`
+const GridLayout = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: flex-end;
@@ -18,7 +20,7 @@ const GridWrapper = styled.div`
     border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -26,7 +28,7 @@ const FlexWrapper = styled.div`
     padding: 0 14px;
 `;
 
-const ButtonWrapper = styled.div<{ color: string }>`
+const ButtonLayout = styled.div<{ color: string }>`
     border-bottom: 3px solid ${(props) => props.color};
 `;
 
@@ -44,14 +46,20 @@ export const PostListCard = ({}: Props) => {
     return (
         <>
             <BoxShadow padding={"0px"}>
-                <FlexWrapper>
-                    <Text text={"게시물"} fs={"20px"} fw={700} lh={"24px"} />
-                </FlexWrapper>
-                <GridWrapper>
+                <FlexLayout>
+                    <Text
+                        text={"게시물"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
+                    />
+                </FlexLayout>
+                <GridLayout>
                     {menuList.map((val, idx) => {
                         if (menu === idx) {
                             return (
-                                <ButtonWrapper
+                                <ButtonLayout
                                     key={idx}
                                     color={theme.color.seaBule}
                                     onClick={() => {
@@ -70,18 +78,19 @@ export const PostListCard = ({}: Props) => {
                                         )}
                                         <Text
                                             text={val}
-                                            fs={"15px"}
-                                            fw={600}
-                                            lh={"20px"}
-                                            fc={theme.color.seaBule}
-                                            width={"auto"}
+                                            tag={"span"}
+                                            cssObj={{
+                                                fontSize: "15px",
+                                                fontWeight: 600,
+                                                fontColor: theme.color.seaBule,
+                                            }}
                                         />
                                     </IconButton>
-                                </ButtonWrapper>
+                                </ButtonLayout>
                             );
                         } else {
                             return (
-                                <ButtonWrapper
+                                <ButtonLayout
                                     key={idx}
                                     color={theme.color.white}
                                     onClick={() => {
@@ -96,18 +105,20 @@ export const PostListCard = ({}: Props) => {
                                         )}
                                         <Text
                                             text={val}
-                                            fs={"15px"}
-                                            fw={600}
-                                            lh={"20px"}
-                                            fc={theme.color.lightBlack}
-                                            width={"auto"}
+                                            tag={"span"}
+                                            cssObj={{
+                                                fontSize: "15px",
+                                                fontWeight: 600,
+                                                fontColor:
+                                                    theme.color.lightBlack,
+                                            }}
                                         />
                                     </IconButton>
-                                </ButtonWrapper>
+                                </ButtonLayout>
                             );
                         }
                     })}
-                </GridWrapper>
+                </GridLayout>
             </BoxShadow>
             {menu === 0 ? <PostFlexCard /> : <PostGridCard />}
         </>

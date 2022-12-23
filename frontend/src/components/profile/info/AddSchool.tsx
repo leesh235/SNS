@@ -6,13 +6,15 @@ import {
     setSchool,
     setDeleteSchool,
 } from "../../../modules/action/userDetail";
+//functions
+import theme from "../../../styles/theme";
+//components
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { Button2 } from "../../common/button/Button2";
 import { Input4 } from "../../common/input/Input4";
-import theme from "../../../styles/theme";
 
-const AddButtonWrapper = styled.div`
+const AddButtonLayout = styled.div`
     width: 100%;
     height: 36px;
     display: flex;
@@ -44,7 +46,7 @@ const AddText = styled.div`
     margin-left: 12px;
 `;
 
-const GridWrapper = styled.div`
+const GridLayout = styled.div`
     width: 100%;
     height: 52px;
     display: grid;
@@ -89,7 +91,7 @@ const SettingIcon = styled.div`
     position: relative;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonLayout = styled.div`
     width: auto;
     height: auto;
     padding: 6px;
@@ -100,7 +102,7 @@ const ButtonWrapper = styled.div`
     right: 2px;
 `;
 
-const FormWrapper = styled.form`
+const FormLayout = styled.form`
     width: 100%;
     height: auto;
     display: flex;
@@ -110,7 +112,7 @@ const FormWrapper = styled.form`
     }
 `;
 
-const ButtonFlexWrapper = styled.div`
+const ButtonFlexLayout = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -175,26 +177,25 @@ export const AddSchool = () => {
 
     if (!open && data?.school === null) {
         return (
-            <AddButtonWrapper onClick={handleOpen}>
+            <AddButtonLayout onClick={handleOpen}>
                 <AddIcon></AddIcon>
                 <AddText>고등학교 추가</AddText>
-            </AddButtonWrapper>
+            </AddButtonLayout>
         );
     } else if (!open && data?.school !== null) {
         return (
-            <GridWrapper>
+            <GridLayout>
                 <Icon />
                 <div>
                     <div>
                         <Text
                             text={data?.school?.school}
-                            fs={"15px"}
-                            width={"auto"}
+                            cssObj={{ fontSize: "15px" }}
                         />
                     </div>
                     <Text
                         text={`${data?.school?.start}-${data?.school?.end}`}
-                        fs={"13px"}
+                        cssObj={{ fontSize: "13px" }}
                     />
                 </div>
                 <SettingIcon
@@ -204,7 +205,7 @@ export const AddSchool = () => {
                 >
                     <MoreIcon />
                     {openBtn && (
-                        <ButtonWrapper>
+                        <ButtonLayout>
                             <Button2
                                 text={"학교 수정"}
                                 width={"120px"}
@@ -217,20 +218,20 @@ export const AddSchool = () => {
                                     handleDelete(data?.school?.id);
                                 }}
                             />
-                        </ButtonWrapper>
+                        </ButtonLayout>
                     )}
                 </SettingIcon>
-            </GridWrapper>
+            </GridLayout>
         );
     } else {
         return (
-            <FormWrapper onSubmit={handleSave}>
+            <FormLayout onSubmit={handleSave}>
                 <Input4
                     name={"school"}
                     title={"학교"}
                     defaultValue={data?.school?.school}
                 />
-                <ButtonFlexWrapper>
+                <ButtonFlexLayout>
                     <div>
                         <Button2
                             text={"취소"}
@@ -247,8 +248,8 @@ export const AddSchool = () => {
                             type={"submit"}
                         />
                     </div>
-                </ButtonFlexWrapper>
-            </FormWrapper>
+                </ButtonFlexLayout>
+            </FormLayout>
         );
     }
 };

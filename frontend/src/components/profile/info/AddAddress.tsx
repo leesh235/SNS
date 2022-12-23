@@ -1,14 +1,16 @@
 import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+//functions
 import { setGetInfo, setAddress } from "../../../modules/action/userDetail";
+import theme from "../../../styles/theme";
+//components
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { Button2 } from "../../common/button/Button2";
 import { Input4 } from "../../common/input/Input4";
-import theme from "../../../styles/theme";
 
-const AddButtonWrapper = styled.div`
+const AddButtonLayout = styled.div`
     width: 100%;
     height: 36px;
     display: flex;
@@ -40,7 +42,7 @@ const AddText = styled.div`
     margin-left: 12px;
 `;
 
-const GridWrapper = styled.div`
+const GridLayout = styled.div`
     width: 100%;
     height: 52px;
     display: grid;
@@ -85,7 +87,7 @@ const SettingIcon = styled.div`
     position: relative;
 `;
 
-const FormWrapper = styled.form`
+const FormLayout = styled.form`
     width: 100%;
     height: auto;
     display: flex;
@@ -95,7 +97,7 @@ const FormWrapper = styled.form`
     }
 `;
 
-const ButtonFlexWrapper = styled.div`
+const ButtonFlexLayout = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -150,30 +152,30 @@ export const AddAddress = () => {
 
     if (!open && data?.address === null) {
         return (
-            <AddButtonWrapper onClick={handleOpen}>
+            <AddButtonLayout onClick={handleOpen}>
                 <AddIcon></AddIcon>
                 <AddText>주소 추가</AddText>
-            </AddButtonWrapper>
+            </AddButtonLayout>
         );
     } else if (!open && data?.address !== null) {
         return (
-            <GridWrapper>
+            <GridLayout>
                 <Icon />
-                <Text text={data?.address} fs={"15px"} width={"auto"} />
+                <Text text={data?.address} cssObj={{ fontSize: "15px" }} />
                 <SettingIcon onClick={handleModify}>
                     <MoreIcon />
                 </SettingIcon>
-            </GridWrapper>
+            </GridLayout>
         );
     } else {
         return (
-            <FormWrapper onSubmit={handleSave}>
+            <FormLayout onSubmit={handleSave}>
                 <Input4
                     name={"address"}
                     title={"주소"}
                     defaultValue={data?.address}
                 />
-                <ButtonFlexWrapper>
+                <ButtonFlexLayout>
                     <div>
                         <Button2
                             text={"취소"}
@@ -190,8 +192,8 @@ export const AddAddress = () => {
                             type={"submit"}
                         />
                     </div>
-                </ButtonFlexWrapper>
-            </FormWrapper>
+                </ButtonFlexLayout>
+            </FormLayout>
         );
     }
 };

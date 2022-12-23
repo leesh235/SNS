@@ -2,12 +2,14 @@ import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { BoxShadow } from "../../common/styles/BoxShadow";
-import { Text } from "../../common/Text";
+//functions
 import theme from "../../../styles/theme";
 import { routes } from "../../../utils/routes";
+//components
+import { BoxShadow } from "../../common/styles/BoxShadow";
+import { Text } from "../../common/Text";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
     width: calc(100%-16px);
     height: auto;
     display: flex;
@@ -15,12 +17,12 @@ const Wrapper = styled.div`
     padding: 10px;
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     height: auto;
 `;
 
-const MenuWrapper = styled.ul`
+const MenuLayout = styled.ul`
     width: 100%;
     height: 60px;
     margin: 8px 0 16px 0;
@@ -46,7 +48,7 @@ const Menu = styled.li<{ click: boolean }>`
     }
 `;
 
-const ImageWrapper = styled.div`
+const ImageLayout = styled.div`
     width: 100%;
     height: auto;
     margin-bottom: 8px;
@@ -80,17 +82,18 @@ export const ImageCard = () => {
 
     return (
         <BoxShadow tag={"article"}>
-            <Wrapper>
-                <FlexWrapper>
+            <Layout>
+                <FlexLayout>
                     <Text
                         text={"사진"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
-                </FlexWrapper>
-                <MenuWrapper>
+                </FlexLayout>
+                <MenuLayout>
                     {menuList.map((val, idx) => {
                         if (idx === menu) {
                             return (
@@ -103,12 +106,11 @@ export const ImageCard = () => {
                                 >
                                     <Text
                                         text={val}
-                                        fs={"15px"}
-                                        fw={600}
-                                        lh={"20pxx"}
-                                        width={"100%"}
-                                        ta={"center"}
-                                        fc={theme.color.seaBule}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                            fontColor: theme.color.seaBule,
+                                        }}
                                     />
                                 </Menu>
                             );
@@ -123,19 +125,18 @@ export const ImageCard = () => {
                                 >
                                     <Text
                                         text={val}
-                                        fs={"15px"}
-                                        fw={600}
-                                        lh={"20pxx"}
-                                        width={"100%"}
-                                        ta={"center"}
-                                        fc={theme.color.lightBlack}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                            fontColor: theme.color.lightBlack,
+                                        }}
                                     />
                                 </Menu>
                             );
                         }
                     })}
-                </MenuWrapper>
-                <ImageWrapper>
+                </MenuLayout>
+                <ImageLayout>
                     {data?.map((val: any, idx: number) => {
                         return (
                             <Link
@@ -148,8 +149,8 @@ export const ImageCard = () => {
                             </Link>
                         );
                     })}
-                </ImageWrapper>
-            </Wrapper>
+                </ImageLayout>
+            </Layout>
         </BoxShadow>
     );
 };

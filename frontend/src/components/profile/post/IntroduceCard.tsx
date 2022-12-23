@@ -1,13 +1,15 @@
 import styled from "../../../styles/theme-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+//functions
+import theme from "../../../styles/theme";
+import { setIntroduce } from "../../../modules/action/user";
+//components
 import { Text } from "../../common/Text";
 import { Button2 } from "../../common/button/Button2";
 import { BoxShadow } from "../../common/styles/BoxShadow";
-import theme from "../../../styles/theme";
-import { useDispatch, useSelector } from "react-redux";
-import { setIntroduce } from "../../../modules/action/user";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
     width: 100%;
     height: auto;
     display: flex;
@@ -22,7 +24,7 @@ const Wrapper = styled.div`
     }
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     height: auto;
     display: flex;
@@ -95,18 +97,17 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
         setOpenIntro(false);
     };
 
-    useEffect(() => {}, []);
-
     return (
         <BoxShadow tag={"article"}>
-            <Wrapper>
+            <Layout>
                 <Text
-                    margin={"10px"}
                     text={"소개"}
-                    fs={"20px"}
-                    lh={"24px"}
-                    fw={700}
-                    width={"95%"}
+                    cssObj={{
+                        width: "95%",
+                        fontSize: "20px",
+                        fontWeight: 700,
+                        margin: "10px",
+                    }}
                 />
                 {userInfo?.data?.email === loginInfo?.data?.email ? (
                     <>
@@ -119,13 +120,13 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                                 />
                                 <Text
                                     text={"101자 남음"}
-                                    fs={"13px"}
-                                    fc={theme.color.darkGray}
-                                    width={"100%"}
-                                    ta={"right"}
-                                    margin={"8px 0"}
+                                    cssObj={{
+                                        fontColor: theme.color.darkGray,
+                                        fontSize: "15px",
+                                        margin: "8px 0",
+                                    }}
                                 />
-                                <FlexWrapper>
+                                <FlexLayout>
                                     <IntroduceButton
                                         type="button"
                                         onClick={closeIntroduce}
@@ -133,16 +134,16 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                                         취소
                                     </IntroduceButton>
                                     <IntroduceButton>저장</IntroduceButton>
-                                </FlexWrapper>
+                                </FlexLayout>
                             </form>
                         ) : (
                             <>
                                 <Text
                                     text={userInfo?.data?.introduction}
-                                    fs={"15px"}
-                                    width={"100%"}
-                                    ta={"center"}
-                                    margin={"8px 0"}
+                                    cssObj={{
+                                        fontSize: "15px",
+                                        margin: "8px 0",
+                                    }}
                                 />
                                 <Button2
                                     text={"소개 추가"}
@@ -160,10 +161,10 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                 ) : (
                     <Text
                         text={userInfo?.data?.introduction}
-                        fs={"15px"}
-                        width={"100%"}
-                        ta={"center"}
-                        margin={"8px 0"}
+                        cssObj={{
+                            fontSize: "15px",
+                            margin: "8px 0",
+                        }}
                     />
                 )}
                 {userInfo?.data?.email === loginInfo?.data?.email && (
@@ -191,7 +192,7 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                         />
                     </>
                 )}
-            </Wrapper>
+            </Layout>
         </BoxShadow>
     );
 };

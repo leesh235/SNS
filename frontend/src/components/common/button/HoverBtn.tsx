@@ -30,7 +30,14 @@ interface Props extends StyleProps {
 export const HoverBtn = ({ text, onClick, width, height, fs, fm }: Props) => {
     return (
         <Button onClick={onClick} width={width} height={height}>
-            <Text text={text} fs={fs} fw={500} lh={"20px"} margin={fm} />
+            <Text
+                text={text}
+                cssObj={{
+                    fontSize: fs,
+                    fontWeight: 500,
+                    margin: fm,
+                }}
+            />
         </Button>
     );
 };

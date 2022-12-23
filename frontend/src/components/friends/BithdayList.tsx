@@ -1,14 +1,15 @@
 import styled from "../../styles/theme-components";
+//components
 import { Text } from "../common/Text";
 
-const Wrapper = styled.article`
+const Layout = styled.article`
     width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
 `;
 
-const CardWrapper = styled.div`
+const CardLayout = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -16,15 +17,16 @@ const CardWrapper = styled.div`
 
 export const BithdayList = () => {
     return (
-        <Wrapper>
+        <Layout>
             <Text
                 text={"생일"}
-                fs={"20px"}
-                fw={700}
-                lh={"24px"}
-                margin={"0 0 16px 0"}
+                cssObj={{
+                    fontSize: "20px",
+                    fontWeight: 700,
+                    margin: "0 0 16px 0",
+                }}
             />
-            <CardWrapper></CardWrapper>
-        </Wrapper>
+            <CardLayout></CardLayout>
+        </Layout>
     );
 };

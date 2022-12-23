@@ -45,9 +45,11 @@ export const InputButton = ({
         >
             <Text
                 text={text}
-                fs={"17px"}
-                margin={"0 0 0 20px"}
-                fc={theme.color.lightBlack}
+                cssObj={{
+                    fontSize: "17px",
+                    fontColor: theme.color.lightBlack,
+                    margin: "0 0 0 20px",
+                }}
             />
         </Wrapper>
     );

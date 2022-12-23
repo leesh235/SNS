@@ -1,9 +1,11 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
 import { useEffect, useState } from "react";
-import { SearchInput } from "../input/SearchInput";
-import { IconButton } from "../button/IconButton";
-import { Text } from "../Text";
+import { useSelector, useDispatch } from "react-redux";
+//functions
+import { routes } from "../../../utils/routes";
+import { setLogInInfo } from "../../../modules/action/user";
+//components
 import { LogoIcon } from "../../../assets/icon/LogoIcon";
 import { AppIcon } from "../../../assets/icon/AppIcon";
 import { ArrowDIcon } from "../../../assets/icon/ArrowDIcon";
@@ -12,16 +14,14 @@ import { FriendIcon } from "../../../assets/icon/FriendIcon";
 import { GroubIcon } from "../../../assets/icon/GroubIcon";
 import { HomeIcon } from "../../../assets/icon/HomeIcon";
 import { MessageIcon } from "../../../assets/icon/MessageIcon";
-import { useSelector, useDispatch } from "react-redux";
-import { setLogInInfo, setProfile } from "../../../modules/action/user";
+import { SearchInput } from "../input/SearchInput";
+import { IconButton } from "../button/IconButton";
+import { Text } from "../Text";
 import { Avatar } from "../Image/Avatar";
 import { Link } from "react-router-dom";
-import { routes } from "../../../utils/routes";
-import { Button2 } from "../button/Button2";
 import { SeeMore } from "./SeeMore";
-import { logOut } from "../../../utils/authUtils";
 
-const Wrapper = styled.header`
+const Layout = styled.header`
     position: fixed;
     top: 0;
     left: 0;
@@ -36,7 +36,7 @@ const Wrapper = styled.header`
     z-index: 100;
 `;
 
-const LeftWrapper = styled.div`
+const LeftLayout = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -46,7 +46,7 @@ const LeftWrapper = styled.div`
     }
 `;
 
-const CenterWrapper = styled.ul`
+const CenterLayout = styled.ul`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -57,7 +57,7 @@ const CenterWrapper = styled.ul`
     padding-top: 3px;
 `;
 
-const RightWrapper = styled.div`
+const RightLayout = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -68,7 +68,7 @@ const RightWrapper = styled.div`
     position: relative;
 `;
 
-const IconWrapper = styled.div`
+const IconLayout = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 20px;
@@ -123,13 +123,13 @@ const Div = styled.div`
     justify-content: center;
 `;
 
-const ButtonWrapper = styled.div<{ color: string }>`
+const ButtonLayout = styled.div<{ color: string }>`
     width: auto;
     height: 200%;
     border-bottom: 3px solid ${(props) => props.color};
 `;
 
-const SeeMoreWrapper = styled.div`
+const SeeMoreLayout = styled.div`
     width: calc(200px - 30px);
     height: auto;
     padding: 15px;
@@ -187,16 +187,16 @@ export const Header = () => {
     }, []);
 
     return (
-        <Wrapper>
-            <LeftWrapper>
+        <Layout>
+            <LeftLayout>
                 <LogoIcon />
                 <SearchInput placeholder={"Facebook 검색"} />
-            </LeftWrapper>
-            <CenterWrapper>
+            </LeftLayout>
+            <CenterLayout>
                 {list.map((val, idx) => {
                     if (idx === click) {
                         return (
-                            <ButtonWrapper
+                            <ButtonLayout
                                 key={idx}
                                 color={theme.color.seaBule}
                                 onClick={() => {
@@ -204,7 +204,7 @@ export const Header = () => {
                                 }}
                             >
                                 <IconButton>{val}</IconButton>
-                            </ButtonWrapper>
+                            </ButtonLayout>
                         );
                     } else {
                         return (
@@ -212,7 +212,7 @@ export const Header = () => {
                                 key={idx}
                                 to={{ pathname: `${routeOpt[idx]}` }}
                             >
-                                <ButtonWrapper
+                                <ButtonLayout
                                     color={theme.color.white}
                                     key={idx}
                                     onClick={() => {
@@ -220,13 +220,13 @@ export const Header = () => {
                                     }}
                                 >
                                     <IconButton>{val}</IconButton>
-                                </ButtonWrapper>
+                                </ButtonLayout>
                             </Link>
                         );
                     }
                 })}
-            </CenterWrapper>
-            <RightWrapper>
+            </CenterLayout>
+            <RightLayout>
                 <Link
                     to={{
                         pathname: `${routes.friends}`,
@@ -235,10 +235,11 @@ export const Header = () => {
                     <LongIcon>
                         <Text
                             text={"친구 찾기"}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
-                            width={"auto"}
+                            tag={"span"}
+                            cssObj={{
+                                fontSize: "15px",
+                                fontWeight: 600,
+                            }}
                         />
                     </LongIcon>
                 </Link>
@@ -252,24 +253,25 @@ export const Header = () => {
                         <Avatar src={data?.profileImage} />
                         <Text
                             text={data?.nickName}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
-                            width={"50px"}
+                            cssObj={{
+                                width: "50px",
+                                fontSize: "15px",
+                                fontWeight: 600,
+                            }}
                         />
                     </LongIcon2>
                 </Link>
                 {rightData.map((val, idx) => {
                     if (idx === 3)
                         return (
-                            <IconWrapper key={idx} onClick={handleSeeMore}>
+                            <IconLayout key={idx} onClick={handleSeeMore}>
                                 {val}
-                            </IconWrapper>
+                            </IconLayout>
                         );
-                    else return <IconWrapper key={idx}>{val}</IconWrapper>;
+                    else return <IconLayout key={idx}>{val}</IconLayout>;
                 })}
                 {open && <SeeMore closeFunc={handleSeeMore} />}
-            </RightWrapper>
-        </Wrapper>
+            </RightLayout>
+        </Layout>
     );
 };

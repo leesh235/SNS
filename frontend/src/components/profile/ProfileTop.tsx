@@ -1,17 +1,19 @@
 import styled from "../../styles/theme-components";
-import { Text } from "../common/Text";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+//functions
+import theme from "../../styles/theme";
+import { setCoverImage } from "../../modules/action/user";
+//components
 import { SetProfileImage } from "../modal/SetProfileImage";
 import { CustomImage } from "../modal/CustomImage";
 import { SelectImage } from "../modal/SelectImage";
-import theme from "../../styles/theme";
-import { setCoverImage } from "../../modules/action/user";
+import { Text } from "../common/Text";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
 import { Button2 } from "../common/button/Button2";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     background-color: ${(props) => props.theme.color.white};
     width: 100%;
     height: 450px;
@@ -55,7 +57,7 @@ const ImageShadow = styled.div`
     justify-content: end;
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: calc(100% - 194px);
     height: 100%;
     margin-left: 194px;
@@ -95,7 +97,7 @@ const Image = styled.img`
     cursor: pointer;
 `;
 
-const CoverImageButtonWrapper = styled.div`
+const CoverImageButtonLayout = styled.div`
     margin-right: 30px;
     width: 144px;
     height: 36px;
@@ -264,30 +266,30 @@ export const ProfileTop = () => {
 
     return (
         <>
-            <Wrapper>
+            <Layout>
                 <Top cImg={cImg === "" ? data?.coverImage : cImg}>
                     {cImg !== "" && (
                         <ImageHeader>
                             <CancleBtn type="button" onClick={handleCancle}>
                                 <Text
                                     text={"취소"}
-                                    fs={"15px"}
-                                    fw={600}
-                                    lh={"20px"}
-                                    fc={theme.color.white}
-                                    width={"auto"}
-                                    ta={"center"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: " 15px",
+                                        fontWeight: 600,
+                                        fontColor: theme.color.white,
+                                    }}
                                 />
                             </CancleBtn>
                             <SaveBtn type="button" onClick={saveImage}>
                                 <Text
                                     text={"변경 내용 저장"}
-                                    fs={"15px"}
-                                    fw={600}
-                                    lh={"20px"}
-                                    fc={theme.color.white}
-                                    width={"auto"}
-                                    ta={"center"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: " 15px",
+                                        fontWeight: 600,
+                                        fontColor: theme.color.white,
+                                    }}
                                 />
                             </SaveBtn>
                         </ImageHeader>
@@ -299,15 +301,15 @@ export const ProfileTop = () => {
                     />
                     <ImageShadow>
                         {loginInfo?.data?.email === data?.email && (
-                            <CoverImageButtonWrapper onClick={handleOpenCImg}>
+                            <CoverImageButtonLayout onClick={handleOpenCImg}>
                                 <Text
                                     text={"커버 사진 추가"}
-                                    fs={"15px"}
-                                    fw={600}
-                                    lh={"20px"}
-                                    ta={"center"}
+                                    cssObj={{
+                                        fontSize: " 15px",
+                                        fontWeight: 600,
+                                    }}
                                 />
-                            </CoverImageButtonWrapper>
+                            </CoverImageButtonLayout>
                         )}
                         {cImgBtnopen && (
                             <CloseEventBtn
@@ -353,13 +355,14 @@ export const ProfileTop = () => {
                             />
                         </CloseEventBtn>
                     )}
-                    <FlexWrapper>
+                    <FlexLayout>
                         <Text
                             text={data?.nickName}
-                            fs={"32px"}
-                            fw={700}
-                            lh={"38px"}
-                            width={"auto"}
+                            tag={"span"}
+                            cssObj={{
+                                fontSize: " 32px",
+                                fontWeight: 700,
+                            }}
                         />
                         {loginInfo?.data?.email !== data?.email && (
                             <div>
@@ -391,9 +394,9 @@ export const ProfileTop = () => {
                                 />
                             </div>
                         )}
-                    </FlexWrapper>
+                    </FlexLayout>
                 </Bottom>
-            </Wrapper>
+            </Layout>
             {pImgModalopen && (
                 <SetProfileImage
                     closeFunc={handleClosePImgModal}

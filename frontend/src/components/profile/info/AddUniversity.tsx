@@ -1,18 +1,20 @@
 import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+//functions
 import {
     setGetAbility,
     setUniversity,
     setDeleteUniversity,
 } from "../../../modules/action/userDetail";
+import theme from "../../../styles/theme";
+//components
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { Button2 } from "../../common/button/Button2";
 import { Input4 } from "../../common/input/Input4";
-import theme from "../../../styles/theme";
 
-const AddButtonWrapper = styled.div`
+const AddButtonLayout = styled.div`
     width: 100%;
     height: 36px;
     display: flex;
@@ -44,7 +46,7 @@ const AddText = styled.div`
     margin-left: 12px;
 `;
 
-const GridWrapper = styled.div`
+const GridLayout = styled.div`
     width: 100%;
     height: 52px;
     display: grid;
@@ -89,7 +91,7 @@ const SettingIcon = styled.div`
     position: relative;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonLayout = styled.div`
     width: auto;
     height: auto;
     padding: 6px;
@@ -100,7 +102,7 @@ const ButtonWrapper = styled.div`
     right: 2px;
 `;
 
-const FormWrapper = styled.form`
+const FormLayout = styled.form`
     width: 100%;
     height: auto;
     display: flex;
@@ -110,7 +112,7 @@ const FormWrapper = styled.form`
     }
 `;
 
-const ButtonFlexWrapper = styled.div`
+const ButtonFlexLayout = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -181,32 +183,29 @@ export const AddUniversity = () => {
 
     if (!open && data?.university === null) {
         return (
-            <AddButtonWrapper onClick={handleOpen}>
+            <AddButtonLayout onClick={handleOpen}>
                 <AddIcon></AddIcon>
                 <AddText>대학 추가</AddText>
-            </AddButtonWrapper>
+            </AddButtonLayout>
         );
     } else if (!open && data?.university !== null) {
         return (
-            <GridWrapper>
+            <GridLayout>
                 <Icon />
                 <div>
                     <div>
                         <Text
                             text={data?.university?.university}
-                            fs={"15px"}
-                            fw={600}
-                            width={"auto"}
+                            cssObj={{ fontSize: "13px", fontWeight: 600 }}
                         />
                         <Text
                             text={data?.university?.major}
-                            fs={"15px"}
-                            width={"auto"}
+                            cssObj={{ fontSize: "13px" }}
                         />
                     </div>
                     <Text
                         text={`${data?.university?.degree}/${data?.university?.start}-${data?.university?.end}`}
-                        fs={"13px"}
+                        cssObj={{ fontSize: "13px" }}
                     />
                 </div>
                 <SettingIcon
@@ -216,7 +215,7 @@ export const AddUniversity = () => {
                 >
                     <MoreIcon />
                     {openBtn && (
-                        <ButtonWrapper>
+                        <ButtonLayout>
                             <Button2
                                 text={"대학 수정"}
                                 width={"120px"}
@@ -229,14 +228,14 @@ export const AddUniversity = () => {
                                     handleDelete(data?.university?.id);
                                 }}
                             />
-                        </ButtonWrapper>
+                        </ButtonLayout>
                     )}
                 </SettingIcon>
-            </GridWrapper>
+            </GridLayout>
         );
     } else {
         return (
-            <FormWrapper onSubmit={handleSave}>
+            <FormLayout onSubmit={handleSave}>
                 <Input4
                     name={"university"}
                     title={"학교"}
@@ -252,7 +251,7 @@ export const AddUniversity = () => {
                     title={"학위"}
                     defaultValue={data?.university?.degree}
                 />
-                <ButtonFlexWrapper>
+                <ButtonFlexLayout>
                     <div>
                         <Button2
                             text={"취소"}
@@ -269,8 +268,8 @@ export const AddUniversity = () => {
                             type={"submit"}
                         />
                     </div>
-                </ButtonFlexWrapper>
-            </FormWrapper>
+                </ButtonFlexLayout>
+            </FormLayout>
         );
     }
 };

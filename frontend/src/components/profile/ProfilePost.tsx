@@ -1,20 +1,19 @@
 import styled from "../../styles/theme-components";
+import { batch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+//functions
+import { setLatestImage } from "../../modules/action/image";
+//components
 import { IntroduceCard } from "./post/IntroduceCard";
 import { WritePostCard } from "./post/WritePostCard";
 import { PostListCard } from "./post/PostListCard";
 import { BoxShadow } from "../common/styles/BoxShadow";
 import { Text } from "../common/Text";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { setLatestImage } from "../../modules/action/image";
-import { setMyPosts } from "../../modules/action/posts";
-import { setPostDetails } from "../../modules/action/post";
-import { useEffect, useRef } from "react";
 import { LatestImageCard } from "./post/LatestImageCard";
-import { batch } from "react-redux";
-import { useObserver } from "../../hooks/useObserver";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     width: 908px;
     padding: 0 16px;
     margin-top: 16px;
@@ -28,7 +27,7 @@ const Wrapper = styled.section`
     }
 `;
 
-const LeftWrapper = styled.section`
+const LeftLayout = styled.section`
     width: 360px;
     display: flex;
     flex-direction: column;
@@ -37,7 +36,7 @@ const LeftWrapper = styled.section`
     }
 `;
 
-const RightWrapper = styled.section`
+const RightLayout = styled.section`
     width: 500px;
     display: flex;
     flex-direction: column;
@@ -46,7 +45,7 @@ const RightWrapper = styled.section`
     }
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     height: auto;
     display: flex;
@@ -72,28 +71,29 @@ export const ProfilePost = ({ handleUrl, check }: Props) => {
 
     return (
         <>
-            <Wrapper>
-                <LeftWrapper className={check ? "fix" : ""}>
+            <Layout>
+                <LeftLayout className={check ? "fix" : ""}>
                     <IntroduceCard handleUrl={handleUrl} />
                     <LatestImageCard handleUrl={handleUrl} />
                     <BoxShadow>
-                        <FlexWrapper>
+                        <FlexLayout>
                             <Text
                                 text={"친구"}
-                                fs={"20px"}
-                                fw={700}
-                                lh={"24px"}
-                                width={"auto"}
+                                tag={"span"}
+                                cssObj={{
+                                    fontSize: "20px",
+                                    fontWeight: 700,
+                                }}
                             />
-                        </FlexWrapper>
+                        </FlexLayout>
                     </BoxShadow>
-                </LeftWrapper>
+                </LeftLayout>
                 {check && <div style={{ width: "360px" }}></div>}
-                <RightWrapper>
+                <RightLayout>
                     <WritePostCard />
                     <PostListCard />
-                </RightWrapper>
-            </Wrapper>
+                </RightLayout>
+            </Layout>
         </>
     );
 };

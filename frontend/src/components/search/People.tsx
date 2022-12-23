@@ -1,11 +1,13 @@
 import styled from "../../styles/theme-components";
 import { Link } from "react-router-dom";
-import { Text } from "../common/Text";
-import { routes } from "../../utils/routes";
 import { useDispatch } from "react-redux";
+//functions
+import { routes } from "../../utils/routes";
 import { setRequest } from "../../modules/action/friends";
+//components
+import { Text } from "../common/Text";
 
-const Wrapper = styled.article`
+const Layout = styled.article`
     max-width: 648px;
     width: calc(100% - 32px);
     height: auto;
@@ -18,7 +20,7 @@ const Wrapper = styled.article`
     margin-bottom: 16px;
 `;
 
-const CardWrapper = styled.div<{ top?: boolean }>`
+const CardLayout = styled.div<{ top?: boolean }>`
     width: 100%;
     height: auto;
     display: grid;
@@ -74,12 +76,18 @@ export const People = ({ people }: Props) => {
     };
 
     return (
-        <Wrapper>
-            <Text text={"사람"} fs={"20px"} fw={700} lh={"24px"} />
+        <Layout>
+            <Text
+                text={"사람"}
+                cssObj={{
+                    fontSize: "20px",
+                    fontWeight: 700,
+                }}
+            />
             {people?.map((val: any, idx: number) => {
                 if (idx === 0) {
                     return (
-                        <CardWrapper top={true} key={val.email}>
+                        <CardLayout top={true} key={val.email}>
                             <Link
                                 to={{
                                     pathname: `${routes.userInfo}${val.email}`,
@@ -94,12 +102,12 @@ export const People = ({ people }: Props) => {
                                     }}
                                 >
                                     <Text
-                                        tag={"span"}
                                         text={val.nickName}
-                                        fs={"15px"}
-                                        fw={600}
-                                        lh={"20px"}
-                                        width={"auto"}
+                                        tag={"span"}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                        }}
                                     />
                                 </Link>
                             </UserInfo>
@@ -107,11 +115,11 @@ export const People = ({ people }: Props) => {
                                 type="button"
                                 onClick={() => handleFriend(val.email)}
                             ></FriendBtn>
-                        </CardWrapper>
+                        </CardLayout>
                     );
                 } else {
                     return (
-                        <CardWrapper key={val.email}>
+                        <CardLayout key={val.email}>
                             <Link
                                 to={{
                                     pathname: `${routes.userInfo}${val.email}`,
@@ -126,12 +134,12 @@ export const People = ({ people }: Props) => {
                                     }}
                                 >
                                     <Text
-                                        tag={"span"}
                                         text={val.nickName}
-                                        fs={"15px"}
-                                        fw={600}
-                                        lh={"20px"}
-                                        width={"auto"}
+                                        tag={"span"}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                        }}
                                     />
                                 </Link>
                             </UserInfo>
@@ -139,10 +147,10 @@ export const People = ({ people }: Props) => {
                                 type="button"
                                 onClick={() => handleFriend(val.email)}
                             ></FriendBtn>
-                        </CardWrapper>
+                        </CardLayout>
                     );
                 }
             })}
-        </Wrapper>
+        </Layout>
     );
 };

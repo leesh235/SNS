@@ -1,10 +1,11 @@
 import styled from "../../styles/theme-components";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+//components
 import { Avatar } from "../common/Image/Avatar";
 import { Text } from "../common/Text";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
     width: calc(100% - 20px);
     min-height: 157px;
     overflow-x: hidden;
@@ -40,7 +41,7 @@ export const FriendList = ({ handleSelect }: Props) => {
     useEffect(() => {}, [loading]);
 
     return (
-        <Wrapper>
+        <Layout>
             {data?.map((val: any, idx: number) => {
                 return (
                     <List
@@ -50,10 +51,13 @@ export const FriendList = ({ handleSelect }: Props) => {
                         }}
                     >
                         <Avatar src={val.profileImage} margin={"0 10px 0 0"} />
-                        <Text text={val.nickName} fs={"15px"} />
+                        <Text
+                            text={val.nickName}
+                            cssObj={{ fontSize: "15px" }}
+                        />
                     </List>
                 );
             })}
-        </Wrapper>
+        </Layout>
     );
 };

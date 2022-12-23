@@ -1,22 +1,23 @@
 import styled from "../../styles/theme-components";
-import { Text } from "../common/Text";
 import { useSelector } from "react-redux";
+//components
+import { Text } from "../common/Text";
 import { FriendCard } from "./FriendCard";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     width: 100%;
     display: flex;
     flex-direction: column;
 `;
 
-const SectionWrapper = styled.article`
+const SectionLayout = styled.article`
     width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -25,13 +26,13 @@ const FlexWrapper = styled.div`
     justify-content: space-between;
 `;
 
-const CardWrapper = styled.div`
+const CardLayout = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
 `;
 
-const EventWrapper = styled.div`
+const EventLayout = styled.div`
     width: auto;
     font-size: 17px;
     line-height: 20px;
@@ -52,78 +53,81 @@ export const FriendsHome = ({ handleMenu }: Props) => {
     );
 
     return (
-        <Wrapper>
-            <SectionWrapper>
-                <FlexWrapper>
+        <Layout>
+            <SectionLayout>
+                <FlexLayout>
                     <Text
                         text={"친구 요청"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
-                    <EventWrapper
+                    <EventLayout
                         onClick={() => {
                             handleMenu(1);
                         }}
                     >
                         모두 보기
-                    </EventWrapper>
-                </FlexWrapper>
-                <CardWrapper>
+                    </EventLayout>
+                </FlexLayout>
+                <CardLayout>
                     {data?.requestList?.map((val: any, idx: number) => {
                         return <FriendCard key={idx} user={val} type={"req"} />;
                     })}
-                </CardWrapper>
-            </SectionWrapper>
-            <SectionWrapper>
-                <FlexWrapper>
+                </CardLayout>
+            </SectionLayout>
+            <SectionLayout>
+                <FlexLayout>
                     <Text
                         text={"친구 대기"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
-                    <EventWrapper
+                    <EventLayout
                         onClick={() => {
                             handleMenu(2);
                         }}
                     >
                         모두 보기
-                    </EventWrapper>
-                </FlexWrapper>
-                <CardWrapper>
+                    </EventLayout>
+                </FlexLayout>
+                <CardLayout>
                     {data?.responseList?.map((val: any, idx: number) => {
                         return <FriendCard key={idx} user={val} type={"res"} />;
                     })}
-                </CardWrapper>
-            </SectionWrapper>
-            <SectionWrapper>
-                <FlexWrapper>
+                </CardLayout>
+            </SectionLayout>
+            <SectionLayout>
+                <FlexLayout>
                     <Text
                         text={"모든 친구"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
-                    <EventWrapper
+                    <EventLayout
                         onClick={() => {
                             handleMenu(3);
                         }}
                     >
                         모두 보기
-                    </EventWrapper>
-                </FlexWrapper>
-                <CardWrapper>
+                    </EventLayout>
+                </FlexLayout>
+                <CardLayout>
                     {data?.friends?.map((val: any, idx: number) => {
                         return (
                             <FriendCard key={idx} user={val} type={"friend"} />
                         );
                     })}
-                </CardWrapper>
-            </SectionWrapper>
-        </Wrapper>
+                </CardLayout>
+            </SectionLayout>
+        </Layout>
     );
 };

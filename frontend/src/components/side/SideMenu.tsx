@@ -1,12 +1,14 @@
 import styled from "../../styles/theme-components";
-import { Text } from "../common/Text";
-import { routes } from "../../utils/routes";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import theme from "../../styles/theme";
 import { useEffect } from "react";
+//functions
+import theme from "../../styles/theme";
+import { routes } from "../../utils/routes";
+//components
+import { Text } from "../common/Text";
 
-const Wrapper = styled.ul`
+const Layout = styled.ul`
     position: fixed;
     top: 56px;
     left: 0;
@@ -89,7 +91,7 @@ export const SideMenu = ({}: Props) => {
     useEffect(() => {}, [location?.state]);
 
     return (
-        <Wrapper>
+        <Layout>
             <Link
                 to={{
                     pathname: `${routes.userInfo}${data?.email}`,
@@ -100,10 +102,11 @@ export const SideMenu = ({}: Props) => {
                     <AvatarIcon src={data?.profileImage} />
                     <Text
                         text={data?.nickName}
-                        fs={"15px"}
-                        fw={500}
-                        lh={"20px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 500,
+                        }}
                     />
                 </Menu>
             </Link>
@@ -120,15 +123,16 @@ export const SideMenu = ({}: Props) => {
                             <Icon />
                             <Text
                                 text={val.name}
-                                fs={"15px"}
-                                fw={500}
-                                lh={"20px"}
-                                width={"auto"}
+                                tag={"span"}
+                                cssObj={{
+                                    fontSize: "15px",
+                                    fontWeight: 500,
+                                }}
                             />
                         </Menu>
                     </Link>
                 );
             })}
-        </Wrapper>
+        </Layout>
     );
 };

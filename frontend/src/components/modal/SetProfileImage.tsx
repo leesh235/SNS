@@ -1,10 +1,11 @@
 import styled from "../../styles/theme-components";
 import { useEffect } from "react";
-import { Text } from "../common/Text";
+//functions
 import theme from "../../styles/theme";
-import { CustomImage } from "./CustomImage";
+//components
+import { Text } from "../common/Text";
 
-const Wrapper = styled.main`
+const Layout = styled.main`
     width: 100%;
     height: 100vh;
     display: flex;
@@ -36,7 +37,7 @@ const Form = styled.form`
     justify-content: center;
 `;
 
-const TitleWrapper = styled.article`
+const TitleLayout = styled.article`
     width: 640px;
     height: 59px;
     padding: 0 0 0 60px;
@@ -107,32 +108,34 @@ export const SetProfileImage = ({ closeFunc, onClick, getImage }: Props) => {
     }, []);
 
     return (
-        <Wrapper>
+        <Layout>
             <Box>
-                <TitleWrapper>
+                <TitleLayout>
                     <Text
                         text={"프로필 사진 업데이트"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
                     <CloseBtn onClick={closeFunc}>X</CloseBtn>
-                </TitleWrapper>
+                </TitleLayout>
                 <Form>
                     <ViewInput htmlFor="userimage">
                         <Text
                             text={"사진 업로드"}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
-                            width={"auto"}
-                            fc={theme.color.seaBule}
+                            tag={"span"}
+                            cssObj={{
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                fontColor: theme.color.seaBule,
+                            }}
                         />
                     </ViewInput>
                     <Input type="file" id="userimage" onChange={onChange} />
                 </Form>
             </Box>
-        </Wrapper>
+        </Layout>
     );
 };

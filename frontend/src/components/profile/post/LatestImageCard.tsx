@@ -1,12 +1,14 @@
 import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+//functions
+import theme from "../../../styles/theme";
+import { routes } from "../../../utils/routes";
+//components
 import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
-import theme from "../../../styles/theme";
-import { useSelector } from "react-redux";
-import { routes } from "../../../utils/routes";
 
-const Wrapper = styled.article`
+const Layout = styled.article`
     width: calc(100% - 20px);
     height: calc(auto - 20px);
     display: flex;
@@ -15,7 +17,7 @@ const Wrapper = styled.article`
     padding: 10px 10px;
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     height: auto;
     display: flex;
@@ -24,7 +26,7 @@ const FlexWrapper = styled.div`
     justify-content: space-between;
 `;
 
-const ImageWrapper = styled.div`
+const ImageLayout = styled.div`
     width: 100%;
     margin-top: 10px;
     display: grid;
@@ -62,14 +64,15 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
     );
     return (
         <BoxShadow tag={"article"}>
-            <Wrapper>
-                <FlexWrapper>
+            <Layout>
+                <FlexLayout>
                     <Text
                         text={"사진"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
                     <UrlBtn
                         onClick={() => {
@@ -78,14 +81,15 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
                     >
                         <Text
                             text={"사진 모두 보기"}
-                            fs={"17px"}
-                            lh={"20px"}
-                            width={"auto"}
-                            fc={theme.color.seaBule}
+                            tag={"span"}
+                            cssObj={{
+                                fontSize: "17px",
+                                fontColor: theme.color.seaBule,
+                            }}
                         />
                     </UrlBtn>
-                </FlexWrapper>
-                <ImageWrapper>
+                </FlexLayout>
+                <ImageLayout>
                     {data?.map((val: any, idx: number) => {
                         return (
                             <Link
@@ -98,8 +102,8 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
                             </Link>
                         );
                     })}
-                </ImageWrapper>
-            </Wrapper>
+                </ImageLayout>
+            </Layout>
         </BoxShadow>
     );
 };

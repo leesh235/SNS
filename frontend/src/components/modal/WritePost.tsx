@@ -1,15 +1,17 @@
 import styled from "../../styles/theme-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text } from "../common/Text";
+//functions
 import theme from "../../styles/theme";
 import { obToUrl } from "../../utils/objToUrl";
 import { setWritePost } from "../../modules/action/post";
 import { setMyPosts } from "../../modules/action/posts";
-import { ModifyPost } from "./ModifyPost";
 import { setModifyPost } from "../../modules/action/post";
+//components
+import { Text } from "../common/Text";
+import { ModifyPost } from "./ModifyPost";
 
-const Wrapper = styled.main`
+const Layout = styled.main`
     width: 100%;
     height: 100vh;
     display: flex;
@@ -352,26 +354,26 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
 
     return (
         <>
-            <Wrapper onClick={closeFunc}>
+            <Layout onClick={closeFunc}>
                 <Box onSubmit={handleOnSubmit}>
                     <Top>
                         {post?.postId ? (
                             <Text
                                 text={"게시글 수정"}
-                                fs={"20px"}
-                                fw={700}
-                                lh={"24px"}
-                                ta={"center"}
-                                width={"calc(100% - 120px)"}
+                                cssObj={{
+                                    width: "calc(100% - 120px)",
+                                    fontSize: "20px",
+                                    fontWeight: 700,
+                                }}
                             />
                         ) : (
                             <Text
                                 text={"게시글 만들기"}
-                                fs={"20px"}
-                                fw={700}
-                                lh={"24px"}
-                                ta={"center"}
-                                width={"calc(100% - 120px)"}
+                                cssObj={{
+                                    width: "calc(100% - 120px)",
+                                    fontSize: "20px",
+                                    fontWeight: 700,
+                                }}
                             />
                         )}
                         <EventBtn onClick={closeFunc}>X</EventBtn>
@@ -380,10 +382,11 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                         <Image src={data?.profileImage} />
                         <Text
                             text={data?.nickName}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
-                            margin={"0 0 0 10px"}
+                            cssObj={{
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                margin: "0 0 0 10px",
+                            }}
                         />
                     </UserInfo>
                     <TextContents
@@ -399,18 +402,18 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                                 <ImageBtn htmlFor="imgOrvedio">
                                     <Text
                                         text={"사진/동영상 추가"}
-                                        fs={"17px"}
-                                        fw={500}
-                                        lh={"20px"}
-                                        ta={"center"}
-                                        width={"auto"}
+                                        tag={"span"}
+                                        cssObj={{
+                                            fontSize: "17px",
+                                            fontWeight: 500,
+                                        }}
                                     />
                                     <Text
                                         text={"또는 끌어서 놓습니다"}
-                                        fs={"12px"}
-                                        lh={"16px"}
-                                        ta={"center"}
-                                        width={"auto"}
+                                        tag={"span"}
+                                        cssObj={{
+                                            fontSize: "12px",
+                                        }}
                                     />
                                 </ImageBtn>
                             ) : (
@@ -418,19 +421,19 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                                     <ModifyBtn onClick={handleModal}>
                                         <Text
                                             text={"모두 수정"}
-                                            fs={"15px"}
-                                            fw={600}
-                                            lh={"20px"}
-                                            ta={"center"}
+                                            cssObj={{
+                                                fontSize: "15px",
+                                                fontWeight: 600,
+                                            }}
                                         />
                                     </ModifyBtn>
                                     <Addbtn htmlFor="imgOrvedio">
                                         <Text
                                             text={"사진 및 동영상 추가"}
-                                            fs={"15px"}
-                                            fw={600}
-                                            lh={"20px"}
-                                            ta={"center"}
+                                            cssObj={{
+                                                fontSize: "15px",
+                                                fontWeight: 600,
+                                            }}
                                         />
                                     </Addbtn>
                                     {fileList.map((file, idx) => {
@@ -460,25 +463,25 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                         >
                             <Text
                                 text={"사진 추가"}
-                                fs={"15px"}
-                                fw={600}
-                                lh={"20px"}
-                                ta={"center"}
+                                cssObj={{
+                                    fontSize: "15px",
+                                    fontWeight: 600,
+                                }}
                             />
                         </ClickBtn>
                     </ImageContents>
                     <Bottom>
                         <Text
                             text={post ? "저장" : "게시"}
-                            fs={"15px"}
-                            fw={600}
-                            lh={"20px"}
-                            ta={"center"}
-                            fc={theme.color.white}
+                            cssObj={{
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                fontColor: theme.color.white,
+                            }}
                         />
                     </Bottom>
                 </Box>
-            </Wrapper>
+            </Layout>
             {modal && (
                 <ModifyPost
                     fileList={fileList}

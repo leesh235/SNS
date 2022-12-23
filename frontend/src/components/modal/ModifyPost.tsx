@@ -1,9 +1,11 @@
 import styled from "../../styles/theme-components";
 import { useEffect } from "react";
-import { Text } from "../common/Text";
+//functions
 import theme from "../../styles/theme";
+//components
+import { Text } from "../common/Text";
 
-const Wrapper = styled.main`
+const Layout = styled.main`
     width: 100%;
     height: 100vh;
     display: flex;
@@ -71,7 +73,7 @@ const Middle = styled.div`
     overflow-x: hidden;
 `;
 
-const ImageWrapper = styled.div`
+const ImageLayout = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 6px;
@@ -149,23 +151,23 @@ export const ModifyPost = ({
     }, [fileList]);
 
     return (
-        <Wrapper>
+        <Layout>
             <Box>
                 <Top>
                     <Text
                         text={"사진/동영상"}
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
-                        ta={"center"}
-                        width={"100%"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                            fontColor: theme.color.white,
+                        }}
                     />
                     <CloseBtn onClick={closeFunc}>X</CloseBtn>
                 </Top>
                 <Middle>
                     {fileList?.map((val, idx) => {
                         return (
-                            <ImageWrapper key={val.id}>
+                            <ImageLayout key={val.id}>
                                 <DeleteBtn
                                     onClick={() => {
                                         deleteFunc(val.id);
@@ -174,20 +176,21 @@ export const ModifyPost = ({
                                     X
                                 </DeleteBtn>
                                 <Image src={handleUrl(val.url)} />
-                            </ImageWrapper>
+                            </ImageLayout>
                         );
                     })}
                 </Middle>
                 <Bottom onClick={closeFunc}>
                     <Text
                         text={"완료"}
-                        fs={"15px"}
-                        fw={600}
-                        ta={"center"}
-                        fc={theme.color.white}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 600,
+                            fontColor: theme.color.white,
+                        }}
                     />
                 </Bottom>
             </Box>
-        </Wrapper>
+        </Layout>
     );
 };

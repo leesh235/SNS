@@ -1,22 +1,23 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+//functions
 import { routes } from "../../utils/routes";
-import { Text } from "../common/Text";
-import { Avatar } from "../common/Image/Avatar";
-import { MoreSmallIcon } from "../../assets/icon/MoreSmallIcon";
-import { HoverBtn } from "../common/button/HoverBtn";
 import {
     setDeleteComment,
     setModifyComment,
     setCommentList,
 } from "../../modules/action/comment";
-import { CommentInput } from "../common/input/CommentInput";
 import theme from "../../styles/theme";
+//components
+import { Text } from "../common/Text";
+import { Avatar } from "../common/Image/Avatar";
+import { MoreSmallIcon } from "../../assets/icon/MoreSmallIcon";
+import { HoverBtn } from "../common/button/HoverBtn";
+import { CommentInput } from "../common/input/CommentInput";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
     width: 100%;
     min-height: 51px;
     display: flex;
@@ -45,7 +46,7 @@ const Option = styled.div`
     min-width: 36px;
 `;
 
-const BtnWrapper = styled.div`
+const BtnLayout = styled.div`
     position: absolute;
     top: 46px;
     left: 0;
@@ -78,7 +79,7 @@ const Hover = styled.div`
     cursor: pointer;
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     width: 100%;
     height: auto;
     display: grid;
@@ -159,7 +160,7 @@ export const CommentCard = ({ comment, user }: Props) => {
     }, [modal]);
 
     return (
-        <Wrapper>
+        <Layout>
             {!modify ? (
                 <>
                     <Link
@@ -181,17 +182,14 @@ export const CommentCard = ({ comment, user }: Props) => {
                         >
                             <Text
                                 text={comment.user.nickName}
-                                fs={"13px"}
-                                fw={600}
-                                lh={"16px"}
-                                width={"auto"}
+                                tag={"span"}
+                                cssObj={{ fontSize: "13px", fontWeight: 600 }}
                             />
                         </Link>
                         <Text
                             text={comment.contents}
-                            fs={"15px"}
-                            lh={"20px"}
-                            width={"auto"}
+                            tag={"span"}
+                            cssObj={{ fontSize: "15px" }}
                         />
                     </Contents>
                     <Option>
@@ -201,7 +199,7 @@ export const CommentCard = ({ comment, user }: Props) => {
                             </Hover>
                         )}
                         {modal && (
-                            <BtnWrapper>
+                            <BtnLayout>
                                 <HoverBtn
                                     text={"댓글 수정"}
                                     onClick={handleModifyOpen}
@@ -210,12 +208,12 @@ export const CommentCard = ({ comment, user }: Props) => {
                                     text={"댓글 삭제"}
                                     onClick={() => handleDelete(comment.id)}
                                 />
-                            </BtnWrapper>
+                            </BtnLayout>
                         )}
                     </Option>
                 </>
             ) : (
-                <FlexWrapper>
+                <FlexLayout>
                     <CommentInput
                         image={user?.profileImage}
                         writer={user?.writer}
@@ -225,14 +223,12 @@ export const CommentCard = ({ comment, user }: Props) => {
                     <CancleBtn onClick={handleModifyClose}>
                         <Text
                             text={"취소"}
-                            fs={"12px"}
-                            lh={"16px"}
-                            fc={theme.color.seaBule}
-                            width={"auto"}
+                            tag={"span"}
+                            cssObj={{ fontColor: theme.color.seaBule }}
                         />
                     </CancleBtn>
-                </FlexWrapper>
+                </FlexLayout>
             )}
-        </Wrapper>
+        </Layout>
     );
 };

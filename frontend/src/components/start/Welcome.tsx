@@ -1,10 +1,12 @@
 import styled from "../../styles/theme-components";
+//functions
+import theme from "../../styles/theme";
+//components
 import { BoxShadow } from "../common/styles/BoxShadow";
 import { Text } from "../common/Text";
 import { BagicButton } from "../common/button/BagicButton";
-import theme from "../../styles/theme";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +24,7 @@ const Icon = styled.div`
     margin: 6px;
 `;
 
-const GridWrapper = styled.div`
+const GridLayout = styled.div`
     display: grid;
     grid-template-columns: repeat(2, auto);
     align-items: center;
@@ -40,7 +42,7 @@ const GridWrapper = styled.div`
     }
 `;
 
-const FlexWrapper = styled.div`
+const FlexLayout = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -55,33 +57,35 @@ const FlexWrapper = styled.div`
 
 export const Welcome = () => {
     return (
-        <Wrapper>
+        <Layout>
             <Text
-                fs={"24px"}
-                fw={700}
-                lh={"28px"}
-                margin={"28px 0 32px 0"}
                 text={"이성호님, Facebook에 오신 것을 환영합니다!"}
-                width={"auto"}
+                tag={"span"}
+                cssObj={{
+                    fontSize: "24px",
+                    fontWeight: 700,
+                    margin: "28px 0 32px 0",
+                }}
             />
             <BoxShadow width={"510px"}>
-                <GridWrapper>
+                <GridLayout>
                     <div>
                         <Text
-                            fs={"20px"}
-                            fw={700}
-                            lh={"24px"}
                             text={"프로필 사진 업로드하기"}
+                            cssObj={{
+                                fontSize: "20px",
+                                fontWeight: 700,
+                            }}
                         />
                         <Text
-                            width={"266px"}
-                            fs={"17px"}
-                            lh={"20px"}
-                            fc={theme.color.lightBlack}
-                            tag={"span"}
                             text={
                                 "친구들이 회원님을 쉽게 알아볼 수 있도록 사진을 추가하세요."
                             }
+                            cssObj={{
+                                width: "266px",
+                                fontSize: "17px",
+                                fontColor: theme.color.lightBlack,
+                            }}
                         />
                         <BagicButton
                             text={"사진 추가"}
@@ -94,43 +98,48 @@ export const Welcome = () => {
                         />
                     </div>
                     <Icon />
-                </GridWrapper>
+                </GridLayout>
             </BoxShadow>
             <BoxShadow width={"510px"}>
-                <FlexWrapper>
+                <FlexLayout>
                     <Text
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
                         text={"아는 사람 찾기"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
                     <Text
-                        fs={"17px"}
-                        lh={"20px"}
-                        fc={theme.color.lightBlack}
-                        tag={"span"}
                         text={
                             "이름을 검색하거나 동창 또는 동료를 찾아볼 수 있습니다."
                         }
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "17px",
+                            fontColor: theme.color.lightBlack,
+                        }}
                     />
-                </FlexWrapper>
+                </FlexLayout>
             </BoxShadow>
             <BoxShadow width={"510px"}>
-                <FlexWrapper>
+                <FlexLayout>
                     <Text
-                        fs={"20px"}
-                        fw={700}
-                        lh={"24px"}
                         text={"개인정보 설정 알아보기"}
+                        cssObj={{
+                            fontSize: "20px",
+                            fontWeight: 700,
+                        }}
                     />
                     <Text
-                        fs={"17px"}
-                        lh={"20px"}
-                        fc={theme.color.lightBlack}
-                        tag={"span"}
                         text={
                             "Facebook에서 공유하고 싶은 내용의 공개 범위를 관리할 수 있습니다."
                         }
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "17px",
+
+                            fontColor: theme.color.lightBlack,
+                        }}
                     />
                     <BagicButton
                         text={"공개 범위 기능 둘러보기"}
@@ -141,8 +150,8 @@ export const Welcome = () => {
                             height: "40px",
                         }}
                     />
-                </FlexWrapper>
+                </FlexLayout>
             </BoxShadow>
-        </Wrapper>
+        </Layout>
     );
 };

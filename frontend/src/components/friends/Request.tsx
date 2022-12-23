@@ -1,16 +1,17 @@
 import styled from "../../styles/theme-components";
+import { useSelector } from "react-redux";
+//components
 import { Text } from "../common/Text";
 import { FriendCard } from "./FriendCard";
-import { useSelector } from "react-redux";
 
-const Wrapper = styled.article`
+const Layout = styled.article`
     width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
 `;
 
-const CardWrapper = styled.div`
+const CardLayout = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -22,19 +23,20 @@ export const Request = () => {
     );
 
     return (
-        <Wrapper>
+        <Layout>
             <Text
                 text={"친구 요청"}
-                fs={"20px"}
-                fw={700}
-                lh={"24px"}
-                margin={"0 0 16px 0"}
+                cssObj={{
+                    fontSize: "20px",
+                    fontWeight: 700,
+                    margin: "0 0 16px 0",
+                }}
             />
-            <CardWrapper>
+            <CardLayout>
                 {data?.map((val: any, idx: number) => {
                     return <FriendCard key={idx} user={val} type={"req"} />;
                 })}
-            </CardWrapper>
-        </Wrapper>
+            </CardLayout>
+        </Layout>
     );
 };

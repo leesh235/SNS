@@ -1,16 +1,18 @@
-import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
-import { Text } from "../common/Text";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+//functions
+import theme from "../../styles/theme";
 import {
     setJoinRoom,
     setLeaveRoom,
     setRoomList,
 } from "../../modules/action/chat";
+//components
+import { Text } from "../common/Text";
 import { CreateChatRoom } from "../chat/CreateChatRoom";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     position: fixed;
     top: 56px;
     right: 0;
@@ -95,14 +97,15 @@ export const ChattingList = () => {
 
     return (
         <>
-            <Wrapper>
+            <Layout>
                 <Text
                     text={"그룹 대화"}
-                    fs={"17px"}
-                    fw={600}
-                    lh={"20px"}
-                    fc={theme.color.lightBlack}
-                    margin={"0 0 10px 16px"}
+                    cssObj={{
+                        fontSize: "17px",
+                        fontWeight: 600,
+                        fontColor: theme.color.lightBlack,
+                        margin: "0 0 10px 16px",
+                    }}
                 />
                 {data?.map((val: any, idx: number) => {
                     return (
@@ -115,10 +118,11 @@ export const ChattingList = () => {
                             <Icon />
                             <Text
                                 text={val.title}
-                                fs={"15px"}
-                                fw={500}
-                                lh={"20px"}
-                                width={"auto"}
+                                tag={"span"}
+                                cssObj={{
+                                    fontSize: "15px",
+                                    fontWeight: 500,
+                                }}
                             />
                         </Menu>
                     );
@@ -127,13 +131,14 @@ export const ChattingList = () => {
                     <Icon>+</Icon>
                     <Text
                         text={"새 그룹 만들기"}
-                        fs={"15px"}
-                        fw={500}
-                        lh={"20px"}
-                        width={"auto"}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 500,
+                        }}
                     />
                 </Menu>
-            </Wrapper>
+            </Layout>
             {open && <CreateChatRoom closeFunc={handleClose} />}
         </>
     );

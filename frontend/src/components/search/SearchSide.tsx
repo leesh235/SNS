@@ -1,20 +1,20 @@
-import { useState } from "react";
 import styled from "../../styles/theme-components";
+//components
 import { Text } from "../common/Text";
 
-const Wrapper = styled.section`
+const Layout = styled.section`
     background-color: ${(props) => props.theme.color.white};
     max-width: 360px;
     min-height: calc(100vh - 56px);
 `;
 
-const TitleWrapper = styled.div`
+const TitleLayout = styled.div`
     display: flex;
     flex-direction: row;
     margin: 20px 16px 12px 16px;
 `;
 
-const MenuWrapper = styled.nav`
+const MenuLayout = styled.nav`
     display: flex;
     flex-direction: column;
     padding: 0 8px;
@@ -53,17 +53,18 @@ interface Props {
 
 export const SearchSide = ({ menu, handleMenu }: Props) => {
     return (
-        <Wrapper>
-            <TitleWrapper>
+        <Layout>
+            <TitleLayout>
                 <Text
                     text={"검색 결과"}
-                    fs={"24px"}
-                    fw={700}
-                    lh={"28px"}
-                    width={"auto"}
+                    tag={"span"}
+                    cssObj={{
+                        fontSize: "24px",
+                        fontWeight: 700,
+                    }}
                 />
-            </TitleWrapper>
-            <MenuWrapper>
+            </TitleLayout>
+            <MenuLayout>
                 {menuList.map((val, idx) => {
                     if (menu === idx) {
                         return (
@@ -77,10 +78,11 @@ export const SearchSide = ({ menu, handleMenu }: Props) => {
                                 <Icon hover={true} />
                                 <Text
                                     text={val}
-                                    fs={"17px"}
-                                    fw={500}
-                                    lh={"20px"}
-                                    width={"auto"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: "17px",
+                                        fontWeight: 500,
+                                    }}
                                 />
                             </Menu>
                         );
@@ -96,16 +98,17 @@ export const SearchSide = ({ menu, handleMenu }: Props) => {
                                 <Icon hover={false} />
                                 <Text
                                     text={val}
-                                    fs={"17px"}
-                                    fw={500}
-                                    lh={"20px"}
-                                    width={"auto"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: "17px",
+                                        fontWeight: 500,
+                                    }}
                                 />
                             </Menu>
                         );
                     }
                 })}
-            </MenuWrapper>
-        </Wrapper>
+            </MenuLayout>
+        </Layout>
     );
 };

@@ -1,9 +1,11 @@
 import styled from "../../styles/theme-components";
 import { Link } from "react-router-dom";
-import { Text } from "../common/Text";
+//functions
 import { routes } from "../../utils/routes";
+//components
+import { Text } from "../common/Text";
 
-const Wrapper = styled.article`
+const Layout = styled.article`
     max-width: 680px;
     width: 100%;
     height: auto;
@@ -56,7 +58,7 @@ export const Post = ({ post }: Props) => {
         <>
             {post?.map((val: any, idx: number) => {
                 return (
-                    <Wrapper key={val.id}>
+                    <Layout key={val.id}>
                         <Title>
                             <Link
                                 to={{
@@ -71,19 +73,19 @@ export const Post = ({ post }: Props) => {
                                 }}
                             >
                                 <Text
-                                    tag={"span"}
                                     text={val.user.nickName}
-                                    fs={"15px"}
-                                    fw={600}
-                                    lh={"20px"}
-                                    width={"auto"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: "15px",
+                                        fontWeight: 600,
+                                    }}
                                 />
                             </Link>
                         </Title>
                         <Contents>
                             {val.createdAt}-{val.contents}
                         </Contents>
-                    </Wrapper>
+                    </Layout>
                 );
             })}
         </>

@@ -1,15 +1,17 @@
-import theme from "../../styles/theme";
 import styled from "../../styles/theme-components";
-import { Text } from "../common/Text";
 import { useDispatch } from "react-redux";
+//functions
+import theme from "../../styles/theme";
 import {
     setRefuse,
     setResponse,
     setAllList,
     setRequestList,
 } from "../../modules/action/friends";
+//components
+import { Text } from "../common/Text";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
     max-width: 240px;
     max-height: 395px;
     width: 100%;
@@ -21,7 +23,7 @@ const Wrapper = styled.div`
     grid-template-rows: 60% minmax(auto, 128px);
 `;
 
-const ImageWrapper = styled.img`
+const ImageLayout = styled.img`
     min-width: 190px;
     min-height: 190px;
     width: 100%;
@@ -43,7 +45,7 @@ const UserInfo = styled.div`
     justify-content: space-between;
 `;
 
-const BtnWrapper = styled.div`
+const BtnLayout = styled.div`
     width: 100%;
     height: auto;
     display: flex;
@@ -104,11 +106,17 @@ export const FriendCard = ({ user, type }: Props) => {
     };
 
     return (
-        <Wrapper>
-            <ImageWrapper src={user.profileImage} />
+        <Layout>
+            <ImageLayout src={user.profileImage} />
             <UserInfo>
-                <Text text={user.nickName} fs={"17px"} fw={600} lh={"20px"} />
-                <BtnWrapper>
+                <Text
+                    text={user.nickName}
+                    cssObj={{
+                        fontSize: "17px",
+                        fontWeight: 600,
+                    }}
+                />
+                <BtnLayout>
                     {type === "req" && (
                         <ConfirmBtn
                             type="button"
@@ -118,11 +126,11 @@ export const FriendCard = ({ user, type }: Props) => {
                         >
                             <Text
                                 text={"확인"}
-                                fs={"15px"}
-                                fw={600}
-                                lh={"20px"}
-                                ta={"center"}
-                                fc={theme.color.white}
+                                cssObj={{
+                                    fontSize: "15px",
+                                    fontWeight: 600,
+                                    fontColor: theme.color.white,
+                                }}
                             />
                         </ConfirmBtn>
                     )}
@@ -135,15 +143,15 @@ export const FriendCard = ({ user, type }: Props) => {
                         >
                             <Text
                                 text={mode[type]}
-                                fs={"15px"}
-                                fw={600}
-                                lh={"20px"}
-                                ta={"center"}
+                                cssObj={{
+                                    fontSize: "15px",
+                                    fontWeight: 600,
+                                }}
                             />
                         </CancleBtn>
                     )}
-                </BtnWrapper>
+                </BtnLayout>
             </UserInfo>
-        </Wrapper>
+        </Layout>
     );
 };

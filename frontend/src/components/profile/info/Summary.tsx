@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+//functions
 import { setGetAbility, setGetInfo } from "../../../modules/action/userDetail";
+//components
 import { AddAbility } from "./AddAbility";
 import { AddUniversity } from "./AddUniversity";
 import { AddSchool } from "./AddSchool";
@@ -18,15 +20,30 @@ export const Summary = () => {
 
     return (
         <>
-            <Text text={"직장"} fs={"17px"} fw={600} />
+            <Text
+                text={"직장"}
+                cssObj={{ fontSize: "17px", fontWeight: 600 }}
+            />
             <AddAbility />
-            <Text text={"대학"} fs={"17px"} fw={600} />
+            <Text
+                text={"대학"}
+                cssObj={{ fontSize: "17px", fontWeight: 600 }}
+            />
             <AddUniversity />
-            <Text text={"고등학교"} fs={"17px"} fw={600} />
+            <Text
+                text={"고등학교"}
+                cssObj={{ fontSize: "17px", fontWeight: 600 }}
+            />
             <AddSchool />
-            <Text text={"전화번호"} fs={"17px"} fw={600} />
+            <Text
+                text={"전화번호"}
+                cssObj={{ fontSize: "17px", fontWeight: 600 }}
+            />
             <AddNumber />
-            <Text text={"주소"} fs={"17px"} fw={600} />
+            <Text
+                text={"주소"}
+                cssObj={{ fontSize: "17px", fontWeight: 600 }}
+            />
             <AddAddress />
         </>
     );

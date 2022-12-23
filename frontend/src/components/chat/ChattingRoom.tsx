@@ -1,6 +1,7 @@
 import styled from "../../styles/theme-components";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+//functions
 import {
     setMessageList,
     setJoinRoom,
@@ -9,10 +10,11 @@ import {
     setRoomList,
 } from "../../modules/action/chat";
 import { response, request, event } from "../../utils/socket";
+//components
 import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
     width: 338px;
     height: 100%;
     border-radius: 6px;
@@ -25,7 +27,7 @@ const Wrapper = styled.div`
     position: relative;
 `;
 
-const SideWrapper = styled.div`
+const SideLayout = styled.div`
     width: calc(200px - 30px);
     height: auto;
     padding: 15px;
@@ -110,14 +112,14 @@ const MessageList = styled.div`
     }
 `;
 
-const MyMessageWrapper = styled.div`
+const MyMessageLayout = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
 `;
 
-const MessageWrapper = styled.div`
+const MessageLayout = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -184,21 +186,21 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
 
     const createDom = (parent: any, tag: any, data: any) => {
         let list: any = document.getElementById(parent);
-        let itemWrapper = document.createElement(tag);
+        let itemLayout = document.createElement(tag);
         let name = document.createElement("div");
         let contents = document.createElement("span");
         if (user_store.data.email !== data.userId) {
-            itemWrapper.className = "message";
+            itemLayout.className = "message";
             name.innerText = `${data.nickName}`;
             contents.innerText = `${data.message}`;
         } else {
-            itemWrapper.className = "my_message";
+            itemLayout.className = "my_message";
             name.innerText = `${data.nickName}`;
             contents.innerText = `${data.message}`;
         }
-        itemWrapper.appendChild(name);
-        itemWrapper.appendChild(contents);
-        list.appendChild(itemWrapper);
+        itemLayout.appendChild(name);
+        itemLayout.appendChild(contents);
+        list.appendChild(itemLayout);
     };
 
     const handleChatting: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -248,7 +250,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
     }, []);
 
     return (
-        <Wrapper>
+        <Layout>
             <Title>
                 <Button2
                     text={`${roomName}`}
@@ -272,41 +274,45 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
                 {data?.map((val: any) => {
                     if (user_store.data.email !== val.userId)
                         return (
-                            <MessageWrapper key={val._id}>
+                            <MessageLayout key={val._id}>
                                 <Text
                                     text={val.nickName}
                                     tag={"span"}
-                                    width={"auto"}
-                                    fs={"15px"}
+                                    cssObj={{
+                                        fontSize: "15px",
+                                    }}
                                 />
                                 <Message>
                                     <Text
                                         text={val.message}
                                         tag={"span"}
-                                        width={"auto"}
-                                        fs={"15px"}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                        }}
                                     />
                                 </Message>
-                            </MessageWrapper>
+                            </MessageLayout>
                         );
                     else
                         return (
-                            <MyMessageWrapper key={val._id}>
+                            <MyMessageLayout key={val._id}>
                                 <Message>
                                     <Text
                                         text={val.message}
                                         tag={"span"}
-                                        width={"auto"}
-                                        fs={"15px"}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                        }}
                                     />
                                 </Message>
                                 <Text
                                     text={val.nickName}
                                     tag={"span"}
-                                    width={"auto"}
-                                    fs={"15px"}
+                                    cssObj={{
+                                        fontSize: "15px",
+                                    }}
                                 />
-                            </MyMessageWrapper>
+                            </MyMessageLayout>
                         );
                 })}
             </MessageList>
@@ -314,7 +320,7 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
                 <ChatInput name="chatInput" placeholder="Aa" autoFocus />
             </ChatForm>
             {open && (
-                <SideWrapper>
+                <SideLayout>
                     {/* <Button2 text={"친구 초대"} width={"100%"} />
                     <Button2 text={"이름 변경"} width={"100%"} /> */}
                     <Button2
@@ -322,8 +328,8 @@ export const ChattingRoom = ({ roomId, roomName }: Props) => {
                         width={"100%"}
                         onClick={handleDeleteRoom}
                     />
-                </SideWrapper>
+                </SideLayout>
             )}
-        </Wrapper>
+        </Layout>
     );
 };
