@@ -137,7 +137,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
             order: {
                 id: "desc",
             },
-            take: Number(take),
+            take: take ? Number(take) : 6,
             select: {
                 id: true,
                 user: {},
