@@ -14,6 +14,10 @@ export const routes = {
     auth: {
         login: "/login",
         join: "/join",
+        find: "/find",
+        code: "/code",
+        modify: "/modify",
+        refresh: "/refresh",
     },
     user_detail: {
         get_ability: "/ability",

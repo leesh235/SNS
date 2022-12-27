@@ -2,7 +2,7 @@ import { Strategy } from "passport-local";
 import { dataSource } from "../typeorm";
 import { User } from "../../entity/User.entity";
 import { Token } from "../../entity/token.entity";
-import { generateAccessToken, generateRefreshToken } from "../../utils/token";
+import jwtUtil from "../../utils/jwtUtil";
 import { comparePassword } from "../../utils/password";
 import { exist, incorrect } from "../../config/message";
 
@@ -42,14 +42,12 @@ const localVerify: (
             return done(null, false, { message: incorrect.INCORRECT_PASSWORD });
         }
 
-        const accessToken = generateAccessToken({
-            email: user.email,
-            nickName: user.nickName,
-        });
+        const accessToken = jwtUtil.access(user.email, user.nickName);
 
-        const refreshToken = generateRefreshToken();
+        const refreshToken = jwtUtil.refresh();
         const token = new Token();
         token.token = refreshToken;
+        token.email = user.email;
         const tokenId = await tokenRepository.save(token);
 
         return done(null, { accessToken, tokenId: tokenId.id });
