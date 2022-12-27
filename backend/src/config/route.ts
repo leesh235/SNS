@@ -13,6 +13,7 @@ export const baseRoutes = {
 export const routes = {
     auth: {
         login: "/login",
+        logout: "/logout",
         join: "/join",
         find: "/find",
         code: "/code",

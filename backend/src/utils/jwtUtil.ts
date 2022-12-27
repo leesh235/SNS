@@ -6,7 +6,7 @@ const tokenRepository = dataSource.getRepository(Token);
 
 const accessToken = (email: string, nickName: string) => {
     return jwt.sign({ email, nickName }, `${process.env.JWT_SECRET}`, {
-        expiresIn: "30m",
+        expiresIn: "30s",
     });
 };
 
@@ -18,11 +18,6 @@ const refreshToken = () => {
 
 const verifyAccessToken = (token: string) => {
     try {
-        if (jwt.decode(token) === null)
-            return {
-                ok: false,
-                payload: "No authorized",
-            };
         const result = jwt.verify(token, `${process.env.JWT_SECRET}`);
         return {
             ok: true,

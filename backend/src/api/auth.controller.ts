@@ -6,6 +6,10 @@ import { hashPassword } from "../utils/password";
 import { routes } from "../config/route";
 import { existUser, save } from "../services/auth.service";
 import jwtUtil from "../utils/jwtUtil";
+import { dataSource } from "../config/typeorm";
+import { Token } from "../entity/token.entity";
+
+const tokenRepository = dataSource.getRepository(Token);
 
 const router = express.Router();
 
@@ -28,6 +32,16 @@ router.post(routes.auth.login, async (req: Request, res: Response) => {
                 res.status(200).send({ accessToken: user.accessToken });
             });
         })(req, res);
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+router.get(routes.auth.logout, async (req: Request, res: Response) => {
+    try {
+        await tokenRepository.delete({ id: req.cookies?.tokenId });
+        res.clearCookie("tokenId");
+        res.status(200).send();
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -58,31 +72,35 @@ router.get(routes.auth.refresh, async (req: Request, res: Response) => {
             const accessDecoded = jwtUtil.verifyAccess(
                 req.headers.authorization?.split("Bearer ")[1]
             );
+            console.log(accessDecoded);
+            if (!accessDecoded.ok && accessDecoded.payload === "invalid token")
+                return res.status(401).send({ message: accessDecoded.payload });
 
-            if (!accessDecoded.ok && accessDecoded.payload === "No authorized")
-                res.status(401).send({ message: accessDecoded.payload });
-
-            if (
-                !accessDecoded.ok &&
-                accessDecoded.payload === "invalid token"
-            ) {
+            if (!accessDecoded.ok && accessDecoded.payload === "jwt expired") {
                 const refreshDecoded = await jwtUtil.verifyRefresh(
-                    req.cookies?.tokenId,
+                    Number(req.cookies?.tokenId),
                     accessDecoded.payload.email
                 );
                 if (!refreshDecoded) {
+                    console.log("if");
                     res.clearCookie("tokenId");
-                    res.status(401).send({ message: accessDecoded.payload });
+                    return res.status(401).send();
                 } else {
+                    console.log("else");
                     const newAccessToken = jwtUtil.access(
                         accessDecoded.payload.email,
                         accessDecoded.payload.nickName
                     );
-                    res.status(200).send({ accessToken: newAccessToken });
+                    return res
+                        .status(200)
+                        .send({ accessToken: newAccessToken });
                 }
             }
+            return res.status(400).send({
+                message: "valid token",
+            });
         } else {
-            res.status(400).send({
+            return res.status(400).send({
                 message: "Access and refresh token are need",
             });
         }
