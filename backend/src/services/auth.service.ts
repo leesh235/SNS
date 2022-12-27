@@ -1,6 +1,6 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/User.entity";
-import { generateAccessToken, generateRefreshToken } from "../utils/token";
+import jwtUtil from "../utils/jwtUtil";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -23,10 +23,7 @@ export const existUser = async (user: User) => {
 export const save = async (user: User) => {
     try {
         const result = await userRepository.save(user);
-        const accessToken = generateAccessToken({
-            email: result.email,
-            nickName: result.nickName,
-        });
+        const accessToken = jwtUtil.access(result.email, result.nickName);
         return accessToken;
     } catch (error) {
         console.log(error);
