@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+let cookieParser = require("cookie-parser");
 import { baseRoutes } from "../config/route";
 //routes
 import auth from "../api/auth.controller";
@@ -14,17 +15,18 @@ import friends from "../api/friend.controller";
 import userDetail from "../api/user_detail.controller";
 //middleware
 import { corsOptions } from "../config/cors";
-import "../config/passport";
-import { jwt_authenticate } from "../config/passport";
+import passport, { jwt_authenticate } from "../config/passport";
 
 export default async ({ app }: { app: express.Application }) => {
     app.use(express.static(`${process.env.FILE_PATH}`));
     app.use(express.static(`${process.env.POST_PATH}`));
     // app.use(cors(corsOptions));
     app.use(cors());
+    app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morgan("dev"));
+    app.use(passport);
 
     app.use(`${baseRoutes.auth}`, auth);
     app.use(`${baseRoutes.user}`, jwt_authenticate, user);
