@@ -4,7 +4,14 @@ import { exist } from "../config/message";
 import passport from "passport";
 import { hashPassword } from "../utils/password";
 import { routes } from "../config/route";
-import { existUser, save, logout } from "../services/auth.service";
+import {
+    existUser,
+    save,
+    logout,
+    createCode,
+    verifyCodeNumber,
+    modifyPassword,
+} from "../services/auth.service";
 import jwtUtil from "../utils/jwtUtil";
 
 const router = express.Router();
@@ -114,10 +121,22 @@ router.post(routes.auth.find, async (req: Request, res: Response) => {
         user.email = req.body.email;
 
         if (await existUser(user)) {
-            res.status(409).send({ message: `${exist.NOT_EXIST_ACCOUNT}` });
+            return res
+                .status(409)
+                .send({ message: `${exist.NOT_EXIST_ACCOUNT}` });
         }
 
-        res.status(200).send({ email: user.email });
+        const result = await createCode(user.email);
+
+        if (!result.status)
+            return res.status(400).send({
+                message: result.message,
+            });
+
+        res.status(200).send({
+            email: user.email,
+            codeNumber: result.codeNumber,
+        });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -125,12 +144,15 @@ router.post(routes.auth.find, async (req: Request, res: Response) => {
 
 router.post(routes.auth.code, async (req: Request, res: Response) => {
     try {
-        const email = req.body.email;
-        const codeNumber = req.body.codeNumber;
+        const { email, codeNumber }: { email: string; codeNumber: string } =
+            req.body;
 
-        console.log(email, codeNumber);
+        const result = await verifyCodeNumber(email, Number(codeNumber));
 
-        res.status(200).send({ message: "인증번호 성공" });
+        if (!result.status)
+            return res.status(404).send({ message: result.message });
+
+        res.status(200).send({ message: result.message });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -142,7 +164,7 @@ router.post(routes.auth.modify, async (req: Request, res: Response) => {
         user.email = req.body.email;
         user.password = req.body.password;
 
-        console.log(user);
+        const result = await modifyPassword(user);
 
         res.status(200).send({ message: "변경 성공" });
     } catch (error) {
