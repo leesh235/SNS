@@ -1,13 +1,13 @@
 import { Strategy } from "passport-local";
 import { dataSource } from "../typeorm";
 import { User } from "../../entity/User.entity";
-import { Token } from "../../entity/token.entity";
 import jwtUtil from "../../utils/jwtUtil";
 import { comparePassword } from "../../utils/password";
 import { exist, incorrect } from "../../config/message";
+import { redisClient } from "../redis";
+import { REFRESHTOKEN_EXPIRE } from "../../constants/times";
 
 const userRepository = dataSource.getRepository(User);
-const tokenRepository = dataSource.getRepository(Token);
 
 const LocalStrategyOptions: {
     usernameField: string;
@@ -43,14 +43,13 @@ const localVerify: (
         }
 
         const accessToken = jwtUtil.access(user.email, user.nickName);
-
         const refreshToken = jwtUtil.refresh();
-        const token = new Token();
-        token.token = refreshToken;
-        token.email = user.email;
-        const tokenId = await tokenRepository.save(token);
 
-        return done(null, { accessToken, tokenId: tokenId.id });
+        await redisClient.set(user.email, refreshToken, {
+            EX: REFRESHTOKEN_EXPIRE,
+        });
+
+        return done(null, { accessToken, refreshToken });
     } catch (error) {
         return done(error);
     }

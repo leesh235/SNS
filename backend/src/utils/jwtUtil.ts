@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
 import { dataSource } from "../config/typeorm";
 import { Token } from "../entity/token.entity";
+import { redisClient } from "../config/redis";
 
 const tokenRepository = dataSource.getRepository(Token);
 
 const accessToken = (email: string, nickName: string) => {
     return jwt.sign({ email, nickName }, `${process.env.JWT_SECRET}`, {
-        expiresIn: "30s",
+        expiresIn: "1h",
     });
 };
 
@@ -31,23 +32,19 @@ const verifyAccessToken = (token: string) => {
     }
 };
 
-const verifyRefreshToken = async (tokenId: number, email: string) => {
+const verifyRefreshToken = async (refreshToekn: string, email: string) => {
     try {
-        const dbRefreshToekn = await tokenRepository.findOne({
-            where: { email },
-        });
-        if (dbRefreshToekn?.id === tokenId) {
+        const dbRefreshToekn = await redisClient.get(email);
+        if (dbRefreshToekn === refreshToekn) {
             try {
-                jwt.verify(dbRefreshToekn.token, `${process.env.JWT_SECRET}`);
+                jwt.verify(dbRefreshToekn, `${process.env.JWT_SECRET}`);
                 return true;
             } catch (error: any) {
+                await redisClient.del(email);
                 return false;
             }
         } else return false;
     } catch (error: any) {
-        await tokenRepository.delete({
-            email,
-        });
         return false;
     }
 };
