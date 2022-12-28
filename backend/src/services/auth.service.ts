@@ -4,6 +4,7 @@ import jwtUtil from "../utils/jwtUtil";
 import { redisClient } from "../config/redis";
 import { CODE_EXPIRE } from "../constants/times";
 import { randomCodeNumber } from "../utils/random";
+import { sendMail } from "../utils/mailUtil";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -49,9 +50,10 @@ export const createCode = async (email: string) => {
             EX: CODE_EXPIRE,
         });
 
+        await sendMail(email, codeNumber);
+
         return {
             status: true,
-            codeNumber: codeNumber,
             message: "코드넘버 생성 성공",
         };
     } catch (error) {

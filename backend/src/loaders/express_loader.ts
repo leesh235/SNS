@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-let cookieParser = require("cookie-parser");
+import cookieParser from "cookie-parser";
 import { baseRoutes } from "../config/route";
 //routes
 import auth from "../api/auth.controller";

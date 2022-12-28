@@ -134,8 +134,7 @@ router.post(routes.auth.find, async (req: Request, res: Response) => {
             });
 
         res.status(200).send({
-            email: user.email,
-            codeNumber: result.codeNumber,
+            message: result.message,
         });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
