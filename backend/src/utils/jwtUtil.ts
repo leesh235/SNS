@@ -1,9 +1,5 @@
 import jwt from "jsonwebtoken";
-import { dataSource } from "../config/typeorm";
-import { Token } from "../entity/token.entity";
 import { redisClient } from "../config/redis";
-
-const tokenRepository = dataSource.getRepository(Token);
 
 const accessToken = (email: string, nickName: string) => {
     return jwt.sign({ email, nickName }, `${process.env.JWT_SECRET}`, {
