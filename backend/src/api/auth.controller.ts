@@ -159,11 +159,20 @@ router.post(routes.auth.code, async (req: Request, res: Response) => {
 
 router.post(routes.auth.modify, async (req: Request, res: Response) => {
     try {
-        const user = new User();
-        user.email = req.body.email;
-        user.password = req.body.password;
+        const {
+            email,
+            codeNumber,
+            password,
+        }: { email: string; codeNumber: string; password: string } = req.body;
 
-        const result = await modifyPassword(user);
+        const result = await modifyPassword(
+            email,
+            codeNumber,
+            await hashPassword(password)
+        );
+
+        if (!result.status)
+            return res.status(404).send({ mesaage: result.message });
 
         res.status(200).send({ message: "변경 성공" });
     } catch (error) {

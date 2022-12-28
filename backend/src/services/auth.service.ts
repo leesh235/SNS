@@ -50,6 +50,8 @@ export const createCode = async (email: string) => {
             EX: CODE_EXPIRE,
         });
 
+        await redisClient.set(`${email}_verify`, codeNumber);
+
         await sendMail(email, codeNumber);
 
         return {
@@ -77,8 +79,24 @@ export const verifyCodeNumber = async (email: string, codeNumber: number) => {
     }
 };
 
-export const modifyPassword = async (user: User) => {
+export const modifyPassword = async (
+    email: string,
+    codeNumber: string,
+    password: string
+) => {
     try {
+        if (!password) return { status: true, message: "변경 사항 없음" };
+
+        const dbCodeNumber = await redisClient.get(`${email}_code`);
+        const verifyCodeNumber = await redisClient.get(`${email}_verify`);
+
+        if (dbCodeNumber || !verifyCodeNumber)
+            return { status: false, message: "인증 확인 안함" };
+        if (codeNumber !== verifyCodeNumber)
+            return { status: false, message: "인증 확인 안함" };
+
+        await userRepository.update({ email }, { password });
+
         return { status: true, message: "변경 성공" };
     } catch (error) {
         return { status: false, message: error };
