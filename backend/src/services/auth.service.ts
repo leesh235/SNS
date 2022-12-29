@@ -5,6 +5,7 @@ import { redisClient } from "../config/redis";
 import { CODE_EXPIRE } from "../constants/times";
 import { randomCodeNumber } from "../utils/random";
 import { sendMail } from "../utils/mailUtil";
+import { hashPassword } from "../utils/password";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -46,14 +47,14 @@ export const logout = async (email: string) => {
 export const createCode = async (email: string) => {
     try {
         const codeNumber = randomCodeNumber();
+
         await redisClient.set(`${email}_code`, codeNumber, {
             EX: CODE_EXPIRE,
         });
-
         await redisClient.set(`${email}_verify`, codeNumber);
 
-        await sendMail(email, codeNumber);
-
+        // await sendMail(email, codeNumber);
+        await sendMail("leeshgh235@gmail.com", codeNumber);
         return {
             status: true,
             message: "코드넘버 생성 성공",
@@ -81,21 +82,28 @@ export const verifyCodeNumber = async (email: string, codeNumber: number) => {
 
 export const modifyPassword = async (
     email: string,
-    codeNumber: string,
+    codeNumber: number,
     password: string
 ) => {
     try {
-        if (!password) return { status: true, message: "변경 사항 없음" };
+        if (!password) {
+            await redisClient.del(`${email}_verify`);
+            return { status: true, message: "변경 사항 없음" };
+        }
 
         const dbCodeNumber = await redisClient.get(`${email}_code`);
         const verifyCodeNumber = await redisClient.get(`${email}_verify`);
 
         if (dbCodeNumber || !verifyCodeNumber)
             return { status: false, message: "인증 확인 안함" };
-        if (codeNumber !== verifyCodeNumber)
+        if (codeNumber !== Number(verifyCodeNumber))
             return { status: false, message: "인증 확인 안함" };
 
-        await userRepository.update({ email }, { password });
+        await redisClient.del(`${email}_verify`);
+        await userRepository.update(
+            { email },
+            { password: await hashPassword(password) }
+        );
 
         return { status: true, message: "변경 성공" };
     } catch (error) {

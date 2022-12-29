@@ -143,10 +143,10 @@ router.post(routes.auth.find, async (req: Request, res: Response) => {
 
 router.post(routes.auth.code, async (req: Request, res: Response) => {
     try {
-        const { email, codeNumber }: { email: string; codeNumber: string } =
+        const { email, codeNumber }: { email: string; codeNumber: number } =
             req.body;
 
-        const result = await verifyCodeNumber(email, Number(codeNumber));
+        const result = await verifyCodeNumber(email, codeNumber);
 
         if (!result.status)
             return res.status(404).send({ message: result.message });
@@ -163,18 +163,14 @@ router.post(routes.auth.modify, async (req: Request, res: Response) => {
             email,
             codeNumber,
             password,
-        }: { email: string; codeNumber: string; password: string } = req.body;
+        }: { email: string; codeNumber: number; password: string } = req.body;
 
-        const result = await modifyPassword(
-            email,
-            codeNumber,
-            await hashPassword(password)
-        );
+        const result = await modifyPassword(email, codeNumber, password);
 
         if (!result.status)
             return res.status(404).send({ mesaage: result.message });
 
-        res.status(200).send({ message: "변경 성공" });
+        res.status(200).send({ message: result.message });
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
