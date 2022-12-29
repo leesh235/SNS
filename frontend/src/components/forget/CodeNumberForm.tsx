@@ -43,7 +43,7 @@ interface Props {
     onStepClick: (id: number) => void;
 }
 
-export const ForgetForm = ({ onStepClick }: Props) => {
+export const CodeNumberForm = ({ onStepClick }: Props) => {
     const handleClick = () => {
         console.log("비밀번호 전송");
     };

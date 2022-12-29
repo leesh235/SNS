@@ -16,7 +16,12 @@ export const routes = {
 export const api = {
     auth: {
         login: "/auth/login",
+        logout: "/auth/logout",
+        refresh: "/auth/refresh",
         join: "/auth/join",
+        find: "/auth/find",
+        code: "/auth/code",
+        modify: "/auth/modify",
     },
     user: {
         login_info: "/user/login_info",

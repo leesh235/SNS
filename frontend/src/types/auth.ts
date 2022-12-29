@@ -11,3 +11,18 @@ export interface Join {
     birth: string;
     gender: "male" | "female";
 }
+
+export interface FindPassword {
+    email: string;
+}
+
+export interface VerifyCodeNumber {
+    email: string;
+    codeNumber: number;
+}
+
+export interface ModifyPassword {
+    email: string;
+    codeNumber: number;
+    password?: string;
+}
