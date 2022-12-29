@@ -3,7 +3,7 @@ import theme from "../../styles/theme";
 import { useDispatch } from "react-redux";
 //functions
 import { routes } from "../../utils/routes";
-import { setLogin } from "../../modules/action/auth";
+import { authActionCreator } from "../../modules/action/auth";
 import { authMessage } from "../../utils/message";
 import { useForm } from "../../hooks/useForm";
 import { loginValidate } from "../../utils/validate";
@@ -29,10 +29,10 @@ export const LoginForm = () => {
     const { errors, setOption, handleSubmit } = useForm({
         initValues: "",
         validate: loginValidate,
-        stateFunc: (state: any) => state.auth?.user,
+        stateFunc: (state: any) => state.auth?.login,
         onSubmit: (formData: any) => {
             dispatch(
-                setLogin({
+                authActionCreator.login({
                     email: formData?.email,
                     password: formData?.password,
                 })

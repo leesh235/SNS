@@ -2,7 +2,7 @@ import styled from "../../styles/theme-components";
 import { useDispatch } from "react-redux";
 //functions
 import theme from "../../styles/theme";
-import { setJoin } from "../../modules/action/auth";
+import { authActionCreator } from "../../modules/action/auth";
 import { useForm } from "../../hooks/useForm";
 import { calendarUtil } from "../../utils/calendar";
 //components
@@ -86,10 +86,10 @@ export const JoinForm = ({ onClose }: Props) => {
             gender: "",
         },
         validate: "",
-        stateFunc: (state: any) => state.auth?.user,
+        stateFunc: (state: any) => state.auth?.join,
         onSubmit: (formData: any) => {
             dispatch(
-                setJoin({
+                authActionCreator.join({
                     firstName: formData.value,
                     secondName: formData.value,
                     email: formData.value,
