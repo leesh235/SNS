@@ -133,11 +133,11 @@ router.post(routes.auth.find, async (req: Request, res: Response) => {
                 message: result.message,
             });
 
-        res.status(200).send({
-            message: result.message,
+        return res.status(200).send({
+            email: user.email,
         });
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
@@ -151,9 +151,9 @@ router.post(routes.auth.code, async (req: Request, res: Response) => {
         if (!result.status)
             return res.status(404).send({ message: result.message });
 
-        res.status(200).send({ message: result.message });
+        res.status(200).send({ email, codeNumber });
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
@@ -170,9 +170,9 @@ router.post(routes.auth.modify, async (req: Request, res: Response) => {
         if (!result.status)
             return res.status(404).send({ mesaage: result.message });
 
-        res.status(200).send({ message: result.message });
+        return res.status(200).send();
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
