@@ -1,12 +1,17 @@
 import styled from "../../styles/theme-components";
+import { useDispatch } from "react-redux";
 //functions
 import theme from "../../styles/theme";
 import { routes } from "../../utils/routes";
+import { useForm } from "../../hooks/useForm";
+import { authActionCreator } from "../../modules/action/auth";
+import { findPasswordValidate } from "../../utils/validate";
 //components
 import { FocusInput } from "../common/input/FocusInput";
 import { BagicButton } from "../common/button/BagicButton";
 import { BagicLink } from "../common/link/BagicLink";
 import { Text } from "../common/Text";
+import { ErrorMessage } from "../common/ErrorMessage";
 
 const Layout = styled.form`
     display: flex;
@@ -44,12 +49,31 @@ interface Props {
 }
 
 export const ForgetForm = ({ onStepClick }: Props) => {
-    const handleClick = () => {
-        console.log("비밀번호 전송");
-    };
+    const dispatch = useDispatch();
+
+    const { errors, setOption, handleSubmit } = useForm({
+        initValues: "",
+        validate: findPasswordValidate,
+        stateFunc: (state: any) => state.auth?.findPassword,
+        onSubmit: (formData: any) => {
+            dispatch(
+                authActionCreator.findPassword({
+                    email: formData?.email,
+                })
+            );
+        },
+        result: (data: any, error: any) => {
+            if (error) {
+                alert(error);
+            }
+            if (data) {
+                onStepClick(1);
+            }
+        },
+    });
 
     return (
-        <Layout>
+        <Layout onSubmit={handleSubmit}>
             <Text
                 text={"내 계정 찾기"}
                 cssObj={{
@@ -70,11 +94,15 @@ export const ForgetForm = ({ onStepClick }: Props) => {
                         margin: "0 0 16px 0",
                     }}
                 />
-
                 <FocusInput
+                    {...setOption("email")}
                     cssObj={{ width: "calc(100% - 32px)" }}
                     placeholder={"이메일 또는 전화번호"}
+                    error={errors.email}
                 />
+                {errors.email === "required" && (
+                    <ErrorMessage message="이메일을 입력하세요" />
+                )}
             </FlexLayout>
             <ButtonLayout>
                 <BagicLink
@@ -90,7 +118,7 @@ export const ForgetForm = ({ onStepClick }: Props) => {
                 />
                 <BagicButton
                     text={"검색"}
-                    onClick={handleClick}
+                    type={"submit"}
                     cssObj={{
                         width: "70px",
                         height: "36px",

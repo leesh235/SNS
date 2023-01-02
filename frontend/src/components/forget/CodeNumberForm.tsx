@@ -1,12 +1,17 @@
 import styled from "../../styles/theme-components";
+import { useDispatch, useSelector } from "react-redux";
 //functions
 import theme from "../../styles/theme";
 import { routes } from "../../utils/routes";
+import { useForm } from "../../hooks/useForm";
+import { authActionCreator } from "../../modules/action/auth";
+import { verifyCodeNumberValidate } from "../../utils/validate";
 //components
 import { FocusInput } from "../common/input/FocusInput";
 import { BagicButton } from "../common/button/BagicButton";
 import { BagicLink } from "../common/link/BagicLink";
 import { Text } from "../common/Text";
+import { ErrorMessage } from "../common/ErrorMessage";
 
 const Layout = styled.form`
     display: flex;
@@ -44,14 +49,36 @@ interface Props {
 }
 
 export const CodeNumberForm = ({ onStepClick }: Props) => {
-    const handleClick = () => {
-        console.log("비밀번호 전송");
-    };
+    const dispatch = useDispatch();
+
+    const store_email = useSelector((state: any) => state.auth?.findPassword);
+
+    const { errors, setOption, handleSubmit } = useForm({
+        initValues: "",
+        validate: verifyCodeNumberValidate,
+        stateFunc: (state: any) => state.auth?.verifyCodeNumber,
+        onSubmit: (formData: any) => {
+            dispatch(
+                authActionCreator.verifyCodeNumber({
+                    email: store_email.data?.email,
+                    codeNumber: Number(formData.codeNumber),
+                })
+            );
+        },
+        result: (data: any, error: any) => {
+            if (error) {
+                alert(error);
+            }
+            if (data) {
+                onStepClick(2);
+            }
+        },
+    });
 
     return (
-        <Layout>
+        <Layout onSubmit={handleSubmit}>
             <Text
-                text={"내 계정 찾기"}
+                text={"인증 번호 확인"}
                 cssObj={{
                     width: "calc(100% - 32px)",
                     padding: "18px 16px",
@@ -72,9 +99,14 @@ export const CodeNumberForm = ({ onStepClick }: Props) => {
                 />
 
                 <FocusInput
+                    {...setOption("codeNumber")}
                     cssObj={{ width: "calc(100% - 32px)" }}
-                    placeholder={"이메일 또는 전화번호"}
+                    placeholder={"인증 번호"}
+                    error={errors.codeNumber}
                 />
+                {errors.codeNumber === "required" && (
+                    <ErrorMessage message="인증 번호을 입력하세요" />
+                )}
             </FlexLayout>
             <ButtonLayout>
                 <BagicLink
@@ -90,7 +122,7 @@ export const CodeNumberForm = ({ onStepClick }: Props) => {
                 />
                 <BagicButton
                     text={"검색"}
-                    onClick={handleClick}
+                    type={"submit"}
                     cssObj={{
                         width: "70px",
                         height: "36px",
