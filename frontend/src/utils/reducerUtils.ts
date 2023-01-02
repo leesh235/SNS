@@ -5,17 +5,17 @@ export const reducerUtils = {
         error: null,
     }),
     loading: (prevState: any) => ({
-        loading: false,
+        loading: true,
         data: prevState,
         error: null,
     }),
     success: (data: any) => ({
-        loading: true,
+        loading: false,
         data,
         error: null,
     }),
     error: (error: any) => ({
-        loading: true,
+        loading: false,
         data: null,
         error,
     }),
