@@ -1,12 +1,11 @@
 import styled from "../../styles/theme-components";
 import theme from "../../styles/theme";
-import { useDispatch } from "react-redux";
 //functions
 import { routes } from "../../utils/routes";
 import { authActionCreator } from "../../modules/action/auth";
-import { authMessage } from "../../utils/message";
 import { useForm } from "../../hooks/useForm";
 import { loginValidate } from "../../utils/validate";
+import { useSubmit } from "../../hooks/useSubmit";
 //components
 import { FocusInput } from "../common/input/FocusInput";
 import { BagicButton } from "../common/button/BagicButton";
@@ -24,28 +23,21 @@ const Layout = styled.form`
 `;
 
 export const LoginForm = () => {
-    const dispatch = useDispatch();
+    const { handleDispatch } = useSubmit({
+        stateFunc: (state: any) => state.auth?.login,
+    });
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: "",
         validate: loginValidate,
-        stateFunc: (state: any) => state.auth?.login,
         onSubmit: (formData: any) => {
-            dispatch(
+            handleDispatch(
                 authActionCreator.login({
-                    email: formData?.email,
-                    password: formData?.password,
-                })
+                    email: formData.email,
+                    password: formData.password,
+                }),
+                "계정이 없거나 비밀번호가 틀렸습니다."
             );
-        },
-        result: (data: any, error: any) => {
-            if (error) {
-                alert(authMessage.login.login_error);
-            }
-            if (data) {
-                localStorage.setItem("token", data?.accessToken);
-                window.location.reload();
-            }
         },
     });
 
