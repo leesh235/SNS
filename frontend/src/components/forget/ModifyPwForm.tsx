@@ -58,7 +58,6 @@ export const ModifyPwForm = ({ onStepClick }: Props) => {
     const { errors, setOption, handleSubmit } = useForm({
         initValues: "",
         validate: modifyPasswordValidate,
-        stateFunc: (state: any) => state.auth?.modifyPassword,
         onSubmit: (formData: any) => {
             dispatch(
                 authActionCreator.modifyPassword({
@@ -67,14 +66,6 @@ export const ModifyPwForm = ({ onStepClick }: Props) => {
                     password: formData.password,
                 })
             );
-        },
-        result: (data: any, error: any) => {
-            if (error) {
-                alert(error);
-            }
-            if (data) {
-                // onStepClick(2);
-            }
         },
     });
 

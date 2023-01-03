@@ -1,27 +1,15 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { StoreType } from "../types/common";
 
 interface Props {
     initValues?: any;
     onSubmit: any;
-    result: any;
     validate?: any;
-    stateFunc: (state: any) => {};
 }
 
-export const useForm = ({
-    initValues,
-    onSubmit,
-    result,
-    validate = null,
-    stateFunc,
-}: Props) => {
+export const useForm = ({ initValues, onSubmit, validate = null }: Props) => {
     const [values, setValues] = useState<any>(initValues);
     const [errors, setErrors] = useState<any>({});
     const [isLoaing, setIsLoading] = useState<boolean>(false);
-
-    const { loading, data, error }: StoreType = useSelector(stateFunc);
 
     const setOption = (name: string) => {
         const onChange: React.FormEventHandler<HTMLInputElement> = (e) => {
@@ -53,12 +41,6 @@ export const useForm = ({
             }
         }
     }, [isLoaing]);
-
-    useEffect(() => {
-        if (data || error) {
-            result(data, error);
-        }
-    }, [loading]);
 
     return { errors, getValue, setValue, setOption, handleSubmit };
 };

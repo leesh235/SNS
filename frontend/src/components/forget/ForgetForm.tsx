@@ -54,21 +54,12 @@ export const ForgetForm = ({ onStepClick }: Props) => {
     const { errors, setOption, handleSubmit } = useForm({
         initValues: "",
         validate: findPasswordValidate,
-        stateFunc: (state: any) => state.auth?.findPassword,
         onSubmit: (formData: any) => {
             dispatch(
                 authActionCreator.findPassword({
                     email: formData?.email,
                 })
             );
-        },
-        result: (data: any, error: any) => {
-            if (error) {
-                alert(error);
-            }
-            if (data) {
-                onStepClick(1);
-            }
         },
     });
 

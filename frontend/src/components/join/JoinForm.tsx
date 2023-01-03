@@ -86,7 +86,6 @@ export const JoinForm = ({ onClose }: Props) => {
             gender: "",
         },
         validate: "",
-        stateFunc: (state: any) => state.auth?.join,
         onSubmit: (formData: any) => {
             dispatch(
                 authActionCreator.join({
@@ -99,15 +98,6 @@ export const JoinForm = ({ onClose }: Props) => {
                 })
             );
             onClose();
-        },
-        result: (data: any, error: any) => {
-            if (error) {
-                alert("error");
-            }
-            if (data) {
-                localStorage.setItem("token", data?.accessToken);
-                window.location.reload();
-            }
         },
     });
 

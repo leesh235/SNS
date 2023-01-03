@@ -56,7 +56,6 @@ export const CodeNumberForm = ({ onStepClick }: Props) => {
     const { errors, setOption, handleSubmit } = useForm({
         initValues: "",
         validate: verifyCodeNumberValidate,
-        stateFunc: (state: any) => state.auth?.verifyCodeNumber,
         onSubmit: (formData: any) => {
             dispatch(
                 authActionCreator.verifyCodeNumber({
@@ -64,14 +63,6 @@ export const CodeNumberForm = ({ onStepClick }: Props) => {
                     codeNumber: Number(formData.codeNumber),
                 })
             );
-        },
-        result: (data: any, error: any) => {
-            if (error) {
-                alert(error);
-            }
-            if (data) {
-                onStepClick(2);
-            }
         },
     });
 
