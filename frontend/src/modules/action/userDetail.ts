@@ -1,78 +1,73 @@
-export const GETABILITY = "user_detail/GETABILITY";
-export const GETINFO = "user_detail/GETINFO";
-export const SETABILITY = "user_detail/SETABILITY";
-export const SETUNIVERSITY = "user_detail/SETUNIVERSITY";
-export const SETSCHOOL = "user_detail/SETSCHOOL";
-export const SETNUMBER = "user_detail/SETNUMBER";
-export const SETADDRESS = "user_detail/SETADDRESS";
-export const DELETEABILITY = "user_detail/DELETEABILITY";
-export const DELETEUNIVERSITY = "user_detail/DELETEUNIVERSITY";
-export const DELETESCHOOL = "user_detail/DELETESCHOOL";
-
-export const setGetAbility = () => {
-    return {
-        type: GETABILITY,
-    };
+export const userDetailAction = {
+    getAbility: "user_detail/GETABILITY",
+    getInfo: "user_detail/GETINFO",
+    setAbility: "user_detail/SETABILITY",
+    setUuniversity: "user_detail/SETUNIVERSITY",
+    setSchool: "user_detail/SETSCHOOL",
+    setNumber: "user_detail/SETNUMBER",
+    setAddress: "user_detail/SETADDRESS",
+    deleteAbility: "user_detail/DELETEABILITY",
+    deleteUniversity: "user_detail/DELETEUNIVERSITY",
+    deleteSchool: "user_detail/DELETESCHOOL",
 };
 
-export const setGetInfo = () => {
-    return {
-        type: GETINFO,
-    };
-};
-
-export const setAbility = (data: any) => {
-    return {
-        type: SETABILITY,
-        data,
-    };
-};
-
-export const setUniversity = (data: any) => {
-    return {
-        type: SETUNIVERSITY,
-        data,
-    };
-};
-
-export const setSchool = (data: any) => {
-    return {
-        type: SETSCHOOL,
-        data,
-    };
-};
-
-export const setNumber = (data: any) => {
-    return {
-        type: SETNUMBER,
-        data,
-    };
-};
-
-export const setAddress = (data: any) => {
-    return {
-        type: SETADDRESS,
-        data,
-    };
-};
-
-export const setDeleteAbility = (data: any) => {
-    return {
-        type: DELETEABILITY,
-        data,
-    };
-};
-
-export const setDeleteUniversity = (data: any) => {
-    return {
-        type: DELETEUNIVERSITY,
-        data,
-    };
-};
-
-export const setDeleteSchool = (data: any) => {
-    return {
-        type: DELETESCHOOL,
-        data,
-    };
+export const userDetailActionCreator = {
+    getAbility: () => {
+        return {
+            type: userDetailAction.getAbility,
+        };
+    },
+    getInfo: () => {
+        return {
+            type: userDetailAction.getInfo,
+        };
+    },
+    setAbility: (data: any) => {
+        return {
+            type: userDetailAction.setAbility,
+            data,
+        };
+    },
+    setUuniversity: (data: any) => {
+        return {
+            type: userDetailAction.setUuniversity,
+            data,
+        };
+    },
+    setSchool: (data: any) => {
+        return {
+            type: userDetailAction.setSchool,
+            data,
+        };
+    },
+    setNumber: (data: any) => {
+        return {
+            type: userDetailAction.setNumber,
+            data,
+        };
+    },
+    setAddress: (data: any) => {
+        return {
+            type: userDetailAction.setAddress,
+            data,
+        };
+    },
+    deleteAbility: (data: any) => {
+        return {
+            type: userDetailAction.deleteAbility,
+            data,
+        };
+    },
+    deleteUniversity: (data: any) => {
+        return {
+            type: userDetailAction.deleteUniversity,
+            data,
+        };
+    },
+    deleteSchool: (data: any) => {
+        return {
+            type: userDetailAction.deleteSchool,
+            data,
+        };
+    },
 };

@@ -1,16 +1,19 @@
-export const LATESTIMAGE = "image/LATESTIMAGE";
-export const ALLIMAGE = "image/ALLIMAGE";
-
-export const setLatestImage = (data: any) => {
-    return {
-        type: LATESTIMAGE,
-        data,
-    };
+export const imageAction = {
+    latestImage: "image/LATESTIMAGE",
+    allImage: "image/ALLIMAGE",
 };
 
-export const setAlltImages = (data: any) => {
-    return {
-        type: ALLIMAGE,
-        data,
-    };
+export const imageActionCreator = {
+    latestImage: (data: any) => {
+        return {
+            type: imageAction.latestImage,
+            data,
+        };
+    },
+    allImage: (data: any) => {
+        return {
+            type: imageAction.allImage,
+            data,
+        };
+    },
 };

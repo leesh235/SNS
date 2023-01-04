@@ -1,4 +1,4 @@
-import { LATESTIMAGE, ALLIMAGE } from "../action/image";
+import { imageAction } from "../action/image";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -10,19 +10,19 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type } = action;
     switch (type) {
-        case LATESTIMAGE:
-        case typeUtils(LATESTIMAGE).success:
-        case typeUtils(LATESTIMAGE).error:
+        case imageAction.latestImage:
+        case typeUtils(imageAction.latestImage).success:
+        case typeUtils(imageAction.latestImage).error:
             return handleAsyncReducer(
-                LATESTIMAGE,
+                imageAction.latestImage,
                 "latestImage",
                 true
             )(state, action);
-        case ALLIMAGE:
-        case typeUtils(ALLIMAGE).success:
-        case typeUtils(ALLIMAGE).error:
+        case imageAction.allImage:
+        case typeUtils(imageAction.allImage).success:
+        case typeUtils(imageAction.allImage).error:
             return handleAsyncReducer(
-                ALLIMAGE,
+                imageAction.allImage,
                 "allImages",
                 true
             )(state, action);

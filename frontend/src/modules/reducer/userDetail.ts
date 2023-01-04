@@ -1,15 +1,4 @@
-import {
-    GETABILITY,
-    GETINFO,
-    SETABILITY,
-    SETADDRESS,
-    SETNUMBER,
-    SETSCHOOL,
-    SETUNIVERSITY,
-    DELETEABILITY,
-    DELETEUNIVERSITY,
-    DELETESCHOOL,
-} from "../action/userDetail";
+import { userDetailAction } from "../action/userDetail";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -29,79 +18,83 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type } = action;
     switch (type) {
-        case GETABILITY:
-        case typeUtils(GETABILITY).success:
-        case typeUtils(GETABILITY).error:
+        case userDetailAction.getAbility:
+        case typeUtils(userDetailAction.getAbility).success:
+        case typeUtils(userDetailAction.getAbility).error:
             return handleAsyncReducer(
-                GETABILITY,
+                userDetailAction.getAbility,
                 "ability",
                 true
             )(state, action);
-        case GETINFO:
-        case typeUtils(GETINFO).success:
-        case typeUtils(GETINFO).error:
-            return handleAsyncReducer(GETINFO, "info", true)(state, action);
-        case SETABILITY:
-        case typeUtils(SETABILITY).success:
-        case typeUtils(SETABILITY).error:
+        case userDetailAction.getInfo:
+        case typeUtils(userDetailAction.getInfo).success:
+        case typeUtils(userDetailAction.getInfo).error:
             return handleAsyncReducer(
-                SETABILITY,
+                userDetailAction.getInfo,
+                "info",
+                true
+            )(state, action);
+        case userDetailAction.setAbility:
+        case typeUtils(userDetailAction.setAbility).success:
+        case typeUtils(userDetailAction.setAbility).error:
+            return handleAsyncReducer(
+                userDetailAction.setAbility,
                 "setAbility",
                 true
             )(state, action);
-        case SETUNIVERSITY:
-        case typeUtils(SETUNIVERSITY).success:
-        case typeUtils(SETUNIVERSITY).error:
+        case userDetailAction.setUuniversity:
+        case typeUtils(userDetailAction.setUuniversity).success:
+        case typeUtils(userDetailAction.setUuniversity).error:
             return handleAsyncReducer(
-                SETUNIVERSITY,
+                userDetailAction.setUuniversity,
                 "setUniversity",
                 true
             )(state, action);
-        case SETSCHOOL:
-        case typeUtils(SETSCHOOL).success:
-        case typeUtils(SETSCHOOL).error:
+        case userDetailAction.setSchool:
+        case typeUtils(userDetailAction.setSchool).success:
+        case typeUtils(userDetailAction.setSchool).error:
             return handleAsyncReducer(
-                SETSCHOOL,
+                userDetailAction.setSchool,
                 "setSchool",
                 true
             )(state, action);
-        case SETNUMBER:
-        case typeUtils(SETNUMBER).success:
-        case typeUtils(SETNUMBER).error:
+        case userDetailAction.setNumber:
+        case typeUtils(userDetailAction.setNumber).success:
+        case typeUtils(userDetailAction.setNumber).error:
             return handleAsyncReducer(
-                SETNUMBER,
+                userDetailAction.setNumber,
                 "setNumber",
                 true
             )(state, action);
-        case SETADDRESS:
-        case typeUtils(SETADDRESS).success:
-        case typeUtils(SETADDRESS).error:
+        case userDetailAction.setAddress:
+        case typeUtils(userDetailAction.setAddress).success:
+        case typeUtils(userDetailAction.setAddress).error:
             return handleAsyncReducer(
-                SETADDRESS,
+                userDetailAction.setAddress,
                 "setAddress",
                 true
             )(state, action);
-        case DELETEABILITY:
-        case typeUtils(DELETEABILITY).success:
-        case typeUtils(DELETEABILITY).error:
+        case userDetailAction.deleteAbility:
+        case typeUtils(userDetailAction.deleteAbility).success:
+        case typeUtils(userDetailAction.deleteAbility).error:
             return handleAsyncReducer(
-                DELETEABILITY,
+                userDetailAction.deleteAbility,
                 "deleteAbility",
                 true
             )(state, action);
-        case DELETEUNIVERSITY:
-        case typeUtils(DELETEUNIVERSITY).success:
-        case typeUtils(DELETEUNIVERSITY).error:
+        case userDetailAction.deleteUniversity:
+        case typeUtils(userDetailAction.deleteUniversity).success:
+        case typeUtils(userDetailAction.deleteUniversity).error:
             return handleAsyncReducer(
-                DELETEUNIVERSITY,
+                userDetailAction.deleteUniversity,
                 "deleteUniversity",
                 true
             )(state, action);
-        case DELETESCHOOL:
-        case typeUtils(DELETESCHOOL).success:
-        case typeUtils(DELETESCHOOL).error:
+        case userDetailAction.deleteSchool:
+        case typeUtils(userDetailAction.deleteSchool).success:
+        case typeUtils(userDetailAction.deleteSchool).error:
             return handleAsyncReducer(
-                DELETESCHOOL,
+                userDetailAction.deleteSchool,
                 "deleteSchool",
                 true
             )(state, action);

@@ -1,61 +1,58 @@
-export const REQUEST = "friends/REQUEST";
-export const RESPONSE = "friends/RESPONSE";
-export const REFUSE = "friends/REFUSE";
-export const REQUESTLIST = "friends/REQUESTLIST";
-export const RESPONSELIST = "friends/RESPONSELIST";
-export const FRIENDSLIST = "friends/FRIENDSLIST";
-export const ALLLIST = "friends/ALLLIST";
-export const ISFRIEND = "friends/ISFRIEND";
-
-export const setIsFriend = (data: any) => {
-    return {
-        type: ISFRIEND,
-        data,
-    };
+export const friendsAction = {
+    request: "friends/REQUEST",
+    response: "friends/RESPONSE",
+    refuse: "friends/REFUSE",
+    requestList: "friends/REQUESTLIST",
+    responseList: "friends/RESPONSELIST",
+    friendList: "friends/FRIENDSLIST",
+    allList: "friends/ALLLIST",
+    isFriend: "friends/ISFRIEND",
 };
 
-export const setRequest = (data: any) => {
-    return {
-        type: REQUEST,
-        data,
-    };
-};
-
-export const setResponse = (data: any) => {
-    return {
-        type: RESPONSE,
-        data,
-    };
-};
-
-export const setRefuse = (data: any) => {
-    return {
-        type: REFUSE,
-        data,
-    };
-};
-
-export const setRequestList = () => {
-    return {
-        type: REQUESTLIST,
-    };
-};
-
-export const setResponseList = () => {
-    return {
-        type: RESPONSELIST,
-    };
-};
-
-export const setFriendList = (data?: any) => {
-    return {
-        type: FRIENDSLIST,
-        data,
-    };
-};
-
-export const setAllList = () => {
-    return {
-        type: ALLLIST,
-    };
+export const friendsActionCreator = {
+    isFriend: (data: any) => {
+        return {
+            type: friendsAction.isFriend,
+            data,
+        };
+    },
+    request: (data: any) => {
+        return {
+            type: friendsAction.request,
+            data,
+        };
+    },
+    response: (data: any) => {
+        return {
+            type: friendsAction.response,
+            data,
+        };
+    },
+    refuse: (data: any) => {
+        return {
+            type: friendsAction.refuse,
+            data,
+        };
+    },
+    requestList: () => {
+        return {
+            type: friendsAction.requestList,
+        };
+    },
+    responseList: () => {
+        return {
+            type: friendsAction.responseList,
+        };
+    },
+    friendList: (data?: any) => {
+        return {
+            type: friendsAction.friendList,
+            data,
+        };
+    },
+    allList: () => {
+        return {
+            type: friendsAction.allList,
+        };
+    },
 };

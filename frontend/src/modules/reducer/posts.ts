@@ -1,4 +1,4 @@
-import { ALLPOSTS, MYPOSTS, LIKEPOSTS, FRIENDSPOSTS } from "../action/posts";
+import { postsAction } from "../action/posts";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -12,14 +12,14 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case ALLPOSTS:
-        case typeUtils(ALLPOSTS).error:
+        case postsAction.allPosts:
+        case typeUtils(postsAction.allPosts).error:
             return handleAsyncReducer(
-                ALLPOSTS,
+                postsAction.allPosts,
                 "allPosts",
                 true
             )(state, action);
-        case typeUtils(ALLPOSTS).success:
+        case typeUtils(postsAction.allPosts).success:
             return {
                 ...state,
                 allPosts: {
@@ -28,31 +28,27 @@ const reducer = (state = initialState, action: any) => {
                     data,
                 },
             };
-        case MYPOSTS:
-        case typeUtils(MYPOSTS).success:
-        case typeUtils(MYPOSTS).error:
-            return handleAsyncReducer(MYPOSTS, "myPosts", true)(state, action);
-        case LIKEPOSTS:
-        case typeUtils(LIKEPOSTS).success:
-        case typeUtils(LIKEPOSTS).error:
+        case postsAction.myPosts:
+        case typeUtils(postsAction.myPosts).success:
+        case typeUtils(postsAction.myPosts).error:
             return handleAsyncReducer(
-                LIKEPOSTS,
+                postsAction.myPosts,
+                "myPosts",
+                true
+            )(state, action);
+        case postsAction.likePosts:
+        case typeUtils(postsAction.likePosts).success:
+        case typeUtils(postsAction.likePosts).error:
+            return handleAsyncReducer(
+                postsAction.likePosts,
                 "likePosts",
                 true
             )(state, action);
-        case FRIENDSPOSTS:
-        case typeUtils(FRIENDSPOSTS).success:
-        case typeUtils(FRIENDSPOSTS).error:
+        case postsAction.friendsPosts:
+        case typeUtils(postsAction.friendsPosts).success:
+        case typeUtils(postsAction.friendsPosts).error:
             return handleAsyncReducer(
-                FRIENDSPOSTS,
-                "friendsPosts",
-                true
-            )(state, action);
-        case FRIENDSPOSTS:
-        case typeUtils(FRIENDSPOSTS).success:
-        case typeUtils(FRIENDSPOSTS).error:
-            return handleAsyncReducer(
-                FRIENDSPOSTS,
+                postsAction.friendsPosts,
                 "friendsPosts",
                 true
             )(state, action);

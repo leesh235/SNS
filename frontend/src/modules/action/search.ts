@@ -1,24 +1,26 @@
-export const SEARCHALL = "search/SEARCHALL";
-export const SEARCHPOST = "search/SEARCHPOST";
-export const SEARCHPEOPLE = "search/SEARCHPEOPLE";
-
-export const setSearchAll = (data: any) => {
-    return {
-        type: SEARCHALL,
-        data,
-    };
+export const searchAction = {
+    all: "search/SEARCHALL",
+    post: "search/SEARCHPOST",
+    people: "search/SEARCHPEOPLE",
 };
 
-export const setSearchPost = (data: any) => {
-    return {
-        type: SEARCHPOST,
-        data,
-    };
-};
-
-export const setSearchPeople = (data: any) => {
-    return {
-        type: SEARCHPEOPLE,
-        data,
-    };
+export const searchActionCreator = {
+    all: (data: any) => {
+        return {
+            type: searchAction.all,
+            data,
+        };
+    },
+    post: (data: any) => {
+        return {
+            type: searchAction.post,
+            data,
+        };
+    },
+    people: (data: any) => {
+        return {
+            type: searchAction.people,
+            data,
+        };
+    },
 };

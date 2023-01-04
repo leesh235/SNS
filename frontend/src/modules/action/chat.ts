@@ -1,55 +1,53 @@
-export const ROOMLIST = "chat/ROOMLIST";
-export const MESSAGELIST = "chat/MESSAGELIST";
-export const JOINROOM = "chat/JOINROOM";
-export const JOINROOMLIST = "chat/JOINROOMLIST";
-export const LEAVEROOM = "chat/LEAVEROOM";
-export const CREATEGROUPROOM = "chat/CREATEGROUPROOM";
-export const DELETEROOM = "chat/DELETEROOM";
-
-export const setRoomList = () => {
-    return {
-        type: ROOMLIST,
-    };
+export const chatAction = {
+    roomList: "chat/ROOMLIST",
+    messageList: "chat/MESSAGELIST",
+    joinRoom: "chat/JOINROOM",
+    joinRoomList: "chat/JOINROOMLIST",
+    leaveRoom: "chat/LEAVEROOM",
+    createGroupRoom: "chat/CREATEGROUPROOM",
+    deleteRoom: "chat/DELETEROOM",
 };
 
-export const setMessageList = (data: any) => {
-    return {
-        type: MESSAGELIST,
-        data,
-    };
-};
-
-export const setJoinRoom = (data: any) => {
-    return {
-        type: JOINROOM,
-        data,
-    };
-};
-
-export const setJoinRoomList = (data: any) => {
-    return {
-        type: JOINROOMLIST,
-        data,
-    };
-};
-
-export const setLeaveRoom = (data: any) => {
-    return {
-        type: LEAVEROOM,
-        data,
-    };
-};
-
-export const setCreateGroupRoom = (data: any) => {
-    return {
-        type: CREATEGROUPROOM,
-        data,
-    };
-};
-
-export const setDeleteRoom = (data: any) => {
-    return {
-        type: DELETEROOM,
-        data,
-    };
+export const chatActionCreator = {
+    roomList: () => {
+        return {
+            type: chatAction.roomList,
+        };
+    },
+    messageList: (data: any) => {
+        return {
+            type: chatAction.messageList,
+            data,
+        };
+    },
+    joinRoom: (data: any) => {
+        return {
+            type: chatAction.joinRoom,
+            data,
+        };
+    },
+    joinRoomList: (data: any) => {
+        return {
+            type: chatAction.joinRoomList,
+            data,
+        };
+    },
+    leaveRoom: (data: any) => {
+        return {
+            type: chatAction.leaveRoom,
+            data,
+        };
+    },
+    createGroupRoom: (data: any) => {
+        return {
+            type: chatAction.createGroupRoom,
+            data,
+        };
+    },
+    deleteRoom: (data: any) => {
+        return {
+            type: chatAction.deleteRoom,
+            data,
+        };
+    },
 };

@@ -1,48 +1,55 @@
 import { createPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
 import { userDetailApi } from "../../lib";
-import {
-    GETABILITY,
-    GETINFO,
-    SETABILITY,
-    SETADDRESS,
-    SETNUMBER,
-    SETSCHOOL,
-    SETUNIVERSITY,
-    DELETEABILITY,
-    DELETESCHOOL,
-    DELETEUNIVERSITY,
-} from "../action/userDetail";
+import { userDetailAction } from "../action/userDetail";
 
-const get_ability = createPromise(GETABILITY, userDetailApi.getAbility);
-const get_info = createPromise(GETINFO, userDetailApi.getInfo);
-const set_ability = createPromise(SETABILITY, userDetailApi.setAbility);
+const get_ability = createPromise(
+    userDetailAction.getAbility,
+    userDetailApi.getAbility
+);
+const get_info = createPromise(userDetailAction.getInfo, userDetailApi.getInfo);
+const set_ability = createPromise(
+    userDetailAction.setAbility,
+    userDetailApi.setAbility
+);
 const set_university = createPromise(
-    SETUNIVERSITY,
+    userDetailAction.setUuniversity,
     userDetailApi.setUniversity
 );
-const set_school = createPromise(SETSCHOOL, userDetailApi.setSchool);
-const set_number = createPromise(SETNUMBER, userDetailApi.setNumber);
-const set_address = createPromise(SETADDRESS, userDetailApi.setAddress);
+const set_school = createPromise(
+    userDetailAction.setSchool,
+    userDetailApi.setSchool
+);
+const set_number = createPromise(
+    userDetailAction.setNumber,
+    userDetailApi.setNumber
+);
+const set_address = createPromise(
+    userDetailAction.setAddress,
+    userDetailApi.setAddress
+);
 const delete_ability = createPromise(
-    DELETEABILITY,
+    userDetailAction.deleteAbility,
     userDetailApi.deleteAbility
 );
 const delete_university = createPromise(
-    DELETEUNIVERSITY,
+    userDetailAction.deleteUniversity,
     userDetailApi.deleteUniversity
 );
-const delete_school = createPromise(DELETESCHOOL, userDetailApi.deleteSchool);
+const delete_school = createPromise(
+    userDetailAction.deleteSchool,
+    userDetailApi.deleteSchool
+);
 
 export function* userDetailSaga() {
-    yield takeEvery(GETABILITY, get_ability);
-    yield takeEvery(GETINFO, get_info);
-    yield takeEvery(SETABILITY, set_ability);
-    yield takeEvery(SETUNIVERSITY, set_university);
-    yield takeEvery(SETSCHOOL, set_school);
-    yield takeEvery(SETNUMBER, set_number);
-    yield takeEvery(SETADDRESS, set_address);
-    yield takeEvery(DELETEABILITY, delete_ability);
-    yield takeEvery(DELETEUNIVERSITY, delete_university);
-    yield takeEvery(DELETESCHOOL, delete_school);
+    yield takeEvery(userDetailAction.getAbility, get_ability);
+    yield takeEvery(userDetailAction.getInfo, get_info);
+    yield takeEvery(userDetailAction.setAbility, set_ability);
+    yield takeEvery(userDetailAction.setUuniversity, set_university);
+    yield takeEvery(userDetailAction.setSchool, set_school);
+    yield takeEvery(userDetailAction.setNumber, set_number);
+    yield takeEvery(userDetailAction.setAddress, set_address);
+    yield takeEvery(userDetailAction.deleteAbility, delete_ability);
+    yield takeEvery(userDetailAction.deleteUniversity, delete_university);
+    yield takeEvery(userDetailAction.deleteSchool, delete_school);
 }

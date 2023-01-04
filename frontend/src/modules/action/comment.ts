@@ -1,32 +1,33 @@
-export const COMMENTLIST = "comment/COMMENTLIST";
-export const WRITE = "comment/WRITE";
-export const MODIFY = "comment/MODIFY";
-export const DELETE = "comment/DELETE";
-
-export const setCommentList = (data: any) => {
-    return {
-        type: COMMENTLIST,
-        data,
-    };
+export const chatAction = {
+    list: "comment/COMMENTLIST",
+    write: "comment/WRITE",
+    modify: "comment/MODIFY",
+    delete: "comment/DELETE",
 };
 
-export const setWriteComment = (data: any) => {
-    return {
-        type: WRITE,
-        data,
-    };
-};
-
-export const setModifyComment = (data: any) => {
-    return {
-        type: MODIFY,
-        data,
-    };
-};
-
-export const setDeleteComment = (data: any) => {
-    return {
-        type: DELETE,
-        data,
-    };
+export const chatActionCreator = {
+    list: (data: any) => {
+        return {
+            type: chatAction.list,
+            data,
+        };
+    },
+    write: (data: any) => {
+        return {
+            type: chatAction.write,
+            data,
+        };
+    },
+    modify: (data: any) => {
+        return {
+            type: chatAction.modify,
+            data,
+        };
+    },
+    delete: (data: any) => {
+        return {
+            type: chatAction.delete,
+            data,
+        };
+    },
 };

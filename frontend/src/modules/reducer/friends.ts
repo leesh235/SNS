@@ -1,13 +1,4 @@
-import {
-    REQUEST,
-    RESPONSE,
-    REQUESTLIST,
-    RESPONSELIST,
-    FRIENDSLIST,
-    REFUSE,
-    ALLLIST,
-    ISFRIEND,
-} from "../action/friends";
+import { friendsAction } from "../action/friends";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -25,54 +16,70 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type } = action;
     switch (type) {
-        case ISFRIEND:
-        case typeUtils(ISFRIEND).success:
-        case typeUtils(ISFRIEND).error:
+        case friendsAction.isFriend:
+        case typeUtils(friendsAction.isFriend).success:
+        case typeUtils(friendsAction.isFriend).error:
             return handleAsyncReducer(
-                ISFRIEND,
+                friendsAction.isFriend,
                 "isFriend",
                 true
             )(state, action);
-        case REQUEST:
-        case typeUtils(REQUEST).success:
-        case typeUtils(REQUEST).error:
-            return handleAsyncReducer(REQUEST, "req", true)(state, action);
-        case RESPONSE:
-        case typeUtils(RESPONSE).success:
-        case typeUtils(RESPONSE).error:
-            return handleAsyncReducer(RESPONSE, "res", true)(state, action);
-        case REFUSE:
-        case typeUtils(REFUSE):
-        case typeUtils(REFUSE):
-            return handleAsyncReducer(REFUSE, "refuse", true)(state, action);
-        case REQUESTLIST:
-        case typeUtils(REQUESTLIST).success:
-        case typeUtils(REQUESTLIST).error:
+        case friendsAction.request:
+        case typeUtils(friendsAction.request).success:
+        case typeUtils(friendsAction.request).error:
             return handleAsyncReducer(
-                REQUESTLIST,
+                friendsAction.request,
+                "req",
+                true
+            )(state, action);
+        case friendsAction.response:
+        case typeUtils(friendsAction.response).success:
+        case typeUtils(friendsAction.response).error:
+            return handleAsyncReducer(
+                friendsAction.response,
+                "res",
+                true
+            )(state, action);
+        case friendsAction.refuse:
+        case typeUtils(friendsAction.refuse):
+        case typeUtils(friendsAction.refuse):
+            return handleAsyncReducer(
+                friendsAction.refuse,
+                "refuse",
+                true
+            )(state, action);
+        case friendsAction.requestList:
+        case typeUtils(friendsAction.requestList).success:
+        case typeUtils(friendsAction.requestList).error:
+            return handleAsyncReducer(
+                friendsAction.requestList,
                 "req_list",
                 true
             )(state, action);
-        case RESPONSELIST:
-        case typeUtils(RESPONSELIST).success:
-        case typeUtils(RESPONSELIST).error:
+        case friendsAction.responseList:
+        case typeUtils(friendsAction.responseList).success:
+        case typeUtils(friendsAction.responseList).error:
             return handleAsyncReducer(
-                RESPONSELIST,
+                friendsAction.responseList,
                 "res_list",
                 true
             )(state, action);
-        case FRIENDSLIST:
-        case typeUtils(FRIENDSLIST).success:
-        case typeUtils(FRIENDSLIST).error:
+        case friendsAction.friendList:
+        case typeUtils(friendsAction.friendList).success:
+        case typeUtils(friendsAction.friendList).error:
             return handleAsyncReducer(
-                FRIENDSLIST,
+                friendsAction.friendList,
                 "friend_list",
                 true
             )(state, action);
-        case ALLLIST:
-        case typeUtils(ALLLIST).success:
-        case typeUtils(ALLLIST).error:
-            return handleAsyncReducer(ALLLIST, "all", true)(state, action);
+        case friendsAction.allList:
+        case typeUtils(friendsAction.allList).success:
+        case typeUtils(friendsAction.allList).error:
+            return handleAsyncReducer(
+                friendsAction.allList,
+                "all",
+                true
+            )(state, action);
         default:
             return state;
     }

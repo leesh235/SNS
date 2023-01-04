@@ -1,10 +1,4 @@
-import {
-    PROFILE,
-    INTRODUCE,
-    PROFILEIMAGE,
-    COVERIMAGE,
-    LOGININFO,
-} from "../action/user";
+import { userAction } from "../action/user";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -16,28 +10,44 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case LOGININFO:
-        case typeUtils(LOGININFO).success:
-        case typeUtils(LOGININFO).error:
+        case userAction.loginInfo:
+        case typeUtils(userAction.loginInfo).success:
+        case typeUtils(userAction.loginInfo).error:
             return handleAsyncReducer(
-                LOGININFO,
+                userAction.loginInfo,
                 "loginInfo",
                 true
             )(state, action);
-        case PROFILE:
-        case typeUtils(PROFILE).success:
-        case typeUtils(PROFILE).error:
-            return handleAsyncReducer(PROFILE, "profile", true)(state, action);
-        case INTRODUCE:
-        case typeUtils(INTRODUCE).error:
-            return handleAsyncReducer(PROFILE, "profile", true)(state, action);
-        case PROFILEIMAGE:
-        case typeUtils(PROFILEIMAGE).error:
-            return handleAsyncReducer(PROFILE, "profile", true)(state, action);
-        case COVERIMAGE:
-        case typeUtils(COVERIMAGE).error:
-            return handleAsyncReducer(PROFILE, "profile", true)(state, action);
-        case typeUtils(INTRODUCE).success:
+        case userAction.profile:
+        case typeUtils(userAction.profile).success:
+        case typeUtils(userAction.profile).error:
+            return handleAsyncReducer(
+                userAction.profile,
+                "profile",
+                true
+            )(state, action);
+        case userAction.introduce:
+        case typeUtils(userAction.introduce).error:
+            return handleAsyncReducer(
+                userAction.profile,
+                "profile",
+                true
+            )(state, action);
+        case userAction.profileImage:
+        case typeUtils(userAction.profileImage).error:
+            return handleAsyncReducer(
+                userAction.profile,
+                "profile",
+                true
+            )(state, action);
+        case userAction.coverImage:
+        case typeUtils(userAction.coverImage).error:
+            return handleAsyncReducer(
+                userAction.profile,
+                "profile",
+                true
+            )(state, action);
+        case typeUtils(userAction.introduce).success:
             return {
                 ...state,
                 profile: {
@@ -49,7 +59,7 @@ const reducer = (state = initialState, action: any) => {
                     },
                 },
             };
-        case typeUtils(PROFILEIMAGE).success:
+        case typeUtils(userAction.profileImage).success:
             return {
                 ...state,
                 profile: {
@@ -61,7 +71,7 @@ const reducer = (state = initialState, action: any) => {
                     },
                 },
             };
-        case typeUtils(COVERIMAGE).success:
+        case typeUtils(userAction.coverImage).success:
             return {
                 ...state,
                 profile: {

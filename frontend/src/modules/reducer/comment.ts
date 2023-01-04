@@ -1,4 +1,4 @@
-import { COMMENTLIST, WRITE, MODIFY, DELETE } from "../action/comment";
+import { chatAction } from "../action/comment";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -12,26 +12,38 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type } = action;
     switch (type) {
-        case COMMENTLIST:
-        case typeUtils(COMMENTLIST).success:
-        case typeUtils(COMMENTLIST).error:
+        case chatAction.list:
+        case typeUtils(chatAction.list).success:
+        case typeUtils(chatAction.list).error:
             return handleAsyncReducer(
-                COMMENTLIST,
+                chatAction.list,
                 "commentList",
                 true
             )(state, action);
-        case WRITE:
-        case typeUtils(WRITE).success:
-        case typeUtils(WRITE).error:
-            return handleAsyncReducer(WRITE, "write", true)(state, action);
-        case MODIFY:
-        case typeUtils(MODIFY).success:
-        case typeUtils(MODIFY).error:
-            return handleAsyncReducer(MODIFY, "modify", true)(state, action);
-        case DELETE:
-        case typeUtils(DELETE).success:
-        case typeUtils(DELETE).error:
-            return handleAsyncReducer(DELETE, "delete", true)(state, action);
+        case chatAction.write:
+        case typeUtils(chatAction.write).success:
+        case typeUtils(chatAction.write).error:
+            return handleAsyncReducer(
+                chatAction.write,
+                "write",
+                true
+            )(state, action);
+        case chatAction.modify:
+        case typeUtils(chatAction.modify).success:
+        case typeUtils(chatAction.modify).error:
+            return handleAsyncReducer(
+                chatAction.modify,
+                "modify",
+                true
+            )(state, action);
+        case chatAction.delete:
+        case typeUtils(chatAction.delete).success:
+        case typeUtils(chatAction.delete).error:
+            return handleAsyncReducer(
+                chatAction.delete,
+                "delete",
+                true
+            )(state, action);
         default:
             return state;
     }

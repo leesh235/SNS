@@ -1,12 +1,4 @@
-import {
-    ROOMLIST,
-    MESSAGELIST,
-    JOINROOM,
-    JOINROOMLIST,
-    LEAVEROOM,
-    CREATEGROUPROOM,
-    DELETEROOM,
-} from "../action/chat";
+import { chatAction } from "../action/chat";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -22,49 +14,49 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case ROOMLIST:
-        case typeUtils(ROOMLIST).success:
-        case typeUtils(ROOMLIST).error:
+        case chatAction.roomList:
+        case typeUtils(chatAction.roomList).success:
+        case typeUtils(chatAction.roomList).error:
             return handleAsyncReducer(
-                ROOMLIST,
+                chatAction.roomList,
                 "roomList",
                 true
             )(state, action);
-        case MESSAGELIST:
-        case typeUtils(MESSAGELIST).success:
-        case typeUtils(MESSAGELIST).error:
+        case chatAction.messageList:
+        case typeUtils(chatAction.messageList).success:
+        case typeUtils(chatAction.messageList).error:
             return handleAsyncReducer(
-                MESSAGELIST,
+                chatAction.messageList,
                 "messageList",
                 true
             )(state, action);
-        case CREATEGROUPROOM:
-        case typeUtils(CREATEGROUPROOM).success:
-        case typeUtils(CREATEGROUPROOM).error:
+        case chatAction.createGroupRoom:
+        case typeUtils(chatAction.createGroupRoom).success:
+        case typeUtils(chatAction.createGroupRoom).error:
             return handleAsyncReducer(
-                CREATEGROUPROOM,
+                chatAction.createGroupRoom,
                 "createGroupRoom",
                 true
             )(state, action);
-        case DELETEROOM:
-        case typeUtils(DELETEROOM).success:
-        case typeUtils(DELETEROOM).error:
+        case chatAction.deleteRoom:
+        case typeUtils(chatAction.deleteRoom).success:
+        case typeUtils(chatAction.deleteRoom).error:
             return handleAsyncReducer(
-                DELETEROOM,
+                chatAction.deleteRoom,
                 "deleteRoom",
                 true
             )(state, action);
-        case JOINROOM:
+        case chatAction.joinRoom:
             return {
                 ...state,
                 joinRoom: data,
             };
-        case JOINROOMLIST:
+        case chatAction.joinRoomList:
             return {
                 ...state,
                 joinRoomList: [...state.joinRoomList, data],
             };
-        case LEAVEROOM:
+        case chatAction.leaveRoom:
             const arr = state.joinRoomList.filter((val) => {
                 return val["roomId"] !== data;
             });

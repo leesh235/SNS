@@ -1,50 +1,49 @@
 import { GetPost, DeletePost } from "../../types/post";
 
-export const WRITEPOST = "post/WRITEPOST";
-export const POSTDETAILS = "post/POSTDETAILS";
-export const POSTDETAIL = "post/POSTDETAIL";
-export const MODIFYPOST = "post/MODIFYPOST";
-export const DELETEPOST = "post/DELETEPOST";
-export const LIKE = "post/LIKE";
-
-export const setPostDetails = (data: any) => {
-    return {
-        type: POSTDETAILS,
-        data,
-    };
+export const postAction = {
+    write: "post/WRITEPOST",
+    list: "post/POSTDETAILS",
+    detail: "post/POSTDETAIL",
+    modify: "post/MODIFYPOST",
+    delete: "post/DELETEPOST",
+    like: "post/LIKE",
 };
 
-export const setPostDetail = (data: GetPost) => {
-    return {
-        type: POSTDETAIL,
-        data,
-    };
-};
-
-export const setWritePost = (data: any) => {
-    return {
-        type: WRITEPOST,
-        data,
-    };
-};
-
-export const setModifyPost = (data: any) => {
-    return {
-        type: MODIFYPOST,
-        data,
-    };
-};
-
-export const setDeletePost = (data: DeletePost) => {
-    return {
-        type: DELETEPOST,
-        data,
-    };
-};
-
-export const setLike = (data: any) => {
-    return {
-        type: LIKE,
-        data,
-    };
+export const postActionCreator = {
+    write: (data: any) => {
+        return {
+            type: postAction.write,
+            data,
+        };
+    },
+    list: (data: any) => {
+        return {
+            type: postAction.list,
+            data,
+        };
+    },
+    detail: (data: GetPost) => {
+        return {
+            type: postAction.detail,
+            data,
+        };
+    },
+    modify: (data: any) => {
+        return {
+            type: postAction.modify,
+            data,
+        };
+    },
+    delete: (data: DeletePost) => {
+        return {
+            type: postAction.delete,
+            data,
+        };
+    },
+    like: (data: any) => {
+        return {
+            type: postAction.like,
+            data,
+        };
+    },
 };

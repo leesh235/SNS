@@ -1,11 +1,4 @@
-import {
-    POSTDETAILS,
-    POSTDETAIL,
-    WRITEPOST,
-    MODIFYPOST,
-    DELETEPOST,
-    LIKE,
-} from "../action/post";
+import { postAction } from "../action/post";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
@@ -19,14 +12,14 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case POSTDETAILS:
-        case typeUtils(POSTDETAILS).error:
+        case postAction.list:
+        case typeUtils(postAction.list).error:
             return handleAsyncReducer(
-                POSTDETAILS,
+                postAction.list,
                 "postDetails",
                 true
             )(state, action);
-        case typeUtils(POSTDETAILS).success:
+        case typeUtils(postAction.list).success:
             return {
                 ...state,
                 postDetails: {
@@ -35,23 +28,22 @@ const reducer = (state = initialState, action: any) => {
                     data,
                 },
             };
-        case POSTDETAIL:
-        case typeUtils(POSTDETAIL).success:
-        case typeUtils(POSTDETAIL).error:
+        case postAction.detail:
+        case typeUtils(postAction.detail).success:
+        case typeUtils(postAction.detail).error:
             return handleAsyncReducer(
-                POSTDETAIL,
+                postAction.detail,
                 "postDetail",
                 true
             )(state, action);
-        case WRITEPOST:
-        case typeUtils(WRITEPOST).error:
+        case postAction.write:
+        case typeUtils(postAction.write).error:
             return handleAsyncReducer(
-                WRITEPOST,
+                postAction.write,
                 "postDetails",
                 true
             )(state, action);
-        case typeUtils(WRITEPOST).success:
-            console.log(data);
+        case typeUtils(postAction.write).success:
             return {
                 ...state,
                 postDetails: {
@@ -62,14 +54,14 @@ const reducer = (state = initialState, action: any) => {
                     },
                 },
             };
-        case MODIFYPOST:
-        case typeUtils(MODIFYPOST).error:
+        case postAction.modify:
+        case typeUtils(postAction.modify).error:
             return handleAsyncReducer(
-                MODIFYPOST,
+                postAction.modify,
                 "modifyPost",
                 true
             )(state, action);
-        case typeUtils(MODIFYPOST).success:
+        case typeUtils(postAction.modify).success:
             return {
                 ...state,
                 postDetails: {
@@ -80,14 +72,14 @@ const reducer = (state = initialState, action: any) => {
                     },
                 },
             };
-        case DELETEPOST:
-        case typeUtils(DELETEPOST).error:
+        case postAction.delete:
+        case typeUtils(postAction.delete).error:
             return handleAsyncReducer(
-                DELETEPOST,
+                postAction.delete,
                 "postDetails",
                 true
             )(state, action);
-        case typeUtils(DELETEPOST).success:
+        case typeUtils(postAction.delete).success:
             let newData: any = state.postDetails.data;
             delete newData?.[data.id];
             return {
@@ -97,10 +89,14 @@ const reducer = (state = initialState, action: any) => {
                     data: newData,
                 },
             };
-        case LIKE:
-        case typeUtils(LIKE).error:
-            return handleAsyncReducer(LIKE, "postDetails", true)(state, action);
-        case typeUtils(LIKE).success:
+        case postAction.like:
+        case typeUtils(postAction.like).error:
+            return handleAsyncReducer(
+                postAction.like,
+                "postDetails",
+                true
+            )(state, action);
+        case typeUtils(postAction.like).success:
             return {
                 ...state,
                 postDetails: {

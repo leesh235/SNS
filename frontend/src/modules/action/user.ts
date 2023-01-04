@@ -1,41 +1,41 @@
-import { Introduce, UserImage } from "../../types/user";
+import { Introduce } from "../../types/user";
 
-export const PROFILE = "user/PROFILE";
-export const LOGININFO = "user/LOGININFO";
-export const INTRODUCE = "user/INTRODUCE";
-export const PROFILEIMAGE = "user/PROFILEIMAGE";
-export const COVERIMAGE = "user/COVERIMAGE";
-
-export const setProfile = (data: any) => {
-    return {
-        type: PROFILE,
-        data,
-    };
+export const userAction = {
+    profile: "user/PROFILE",
+    loginInfo: "user/LOGININFO",
+    introduce: "user/INTRODUCE",
+    profileImage: "user/PROFILEIMAGE",
+    coverImage: "user/COVERIMAGE",
 };
 
-export const setLogInInfo = () => {
-    return {
-        type: LOGININFO,
-    };
-};
-
-export const setIntroduce = (data: Introduce) => {
-    return {
-        type: INTRODUCE,
-        data,
-    };
-};
-
-export const setProfileImage = (data: any) => {
-    return {
-        type: PROFILEIMAGE,
-        data,
-    };
-};
-
-export const setCoverImage = (data: any) => {
-    return {
-        type: COVERIMAGE,
-        data,
-    };
+export const userActionCreator = {
+    profile: (data: any) => {
+        return {
+            type: userAction.profile,
+            data,
+        };
+    },
+    logInInfo: () => {
+        return {
+            type: userAction.loginInfo,
+        };
+    },
+    introduce: (data: Introduce) => {
+        return {
+            type: userAction.introduce,
+            data,
+        };
+    },
+    profileImage: (data: any) => {
+        return {
+            type: userAction.profileImage,
+            data,
+        };
+    },
+    coverImage: (data: any) => {
+        return {
+            type: userAction.coverImage,
+            data,
+        };
+    },
 };
