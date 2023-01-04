@@ -2,59 +2,49 @@ import { backend } from "./axios";
 import { api } from "../utils/routes";
 
 export const getAbility = async () => {
-    const res = await backend.get(api.userDetail.get_ability);
-    return res.data;
+    return await backend.get(api.userDetail.get_ability);
 };
 
 export const getInfo = async () => {
-    const res = await backend.get(api.userDetail.get_info);
-    return res.data;
+    return await backend.get(api.userDetail.get_info);
 };
 
 export const setAbility = async (formData: any) => {
-    const res = await backend.post(api.userDetail.set_ability, { ...formData });
-    return res.data;
+    return await backend.post(api.userDetail.set_ability, { ...formData });
 };
 
 export const setUniversity = async (formData: any) => {
-    const res = await backend.post(api.userDetail.set_university, {
+    return await backend.post(api.userDetail.set_university, {
         ...formData,
     });
-    return res.data;
 };
 
 export const setSchool = async (formData: any) => {
-    const res = await backend.post(api.userDetail.set_school, { ...formData });
-    return res.data;
+    return await backend.post(api.userDetail.set_school, { ...formData });
 };
 
 export const setNumber = async (formData: any) => {
-    const res = await backend.post(api.userDetail.set_number, { ...formData });
-    return res.data;
+    return await backend.post(api.userDetail.set_number, { ...formData });
 };
 
 export const setAddress = async (formData: any) => {
-    const res = await backend.post(api.userDetail.set_address, { ...formData });
-    return res.data;
+    return await backend.post(api.userDetail.set_address, { ...formData });
 };
 
 export const deleteAbility = async (formData: any) => {
-    const res = await backend.post(api.userDetail.delete_ability, {
+    return await backend.post(api.userDetail.delete_ability, {
         ...formData,
     });
-    return res.data;
 };
 
 export const deleteUniversity = async (formData: any) => {
-    const res = await backend.post(api.userDetail.delete_university, {
+    return await backend.post(api.userDetail.delete_university, {
         ...formData,
     });
-    return res.data;
 };
 
 export const deleteSchool = async (formData: any) => {
-    const res = await backend.post(api.userDetail.delete_school, {
+    return await backend.post(api.userDetail.delete_school, {
         ...formData,
     });
-    return res.data;
 };

@@ -8,37 +8,40 @@ import {
     ModifyPassword,
 } from "../types/auth";
 
-export const joinFunc = async (formData: Join) => {
-    const res = await backend.post(api.auth.join, { ...formData });
-    return res.data;
+const join = async (formData: Join) => {
+    return await backend.post(api.auth.join, { ...formData });
 };
 
-export const loginFunc = async (formData: Login) => {
-    const res = await backend.post(api.auth.login, { ...formData });
-    return res.data;
+const login = async (formData: Login) => {
+    return await backend.post(api.auth.login, { ...formData });
 };
 
-export const logoutFunc = async () => {
-    const res = await backend.get(api.auth.logout);
-    return res.data;
+const logout = async () => {
+    return await backend.get(api.auth.logout);
 };
 
-export const refreshFunc = async () => {
-    const res = await backend.get(api.auth.refresh);
-    return res.data;
+const refresh = async () => {
+    return await backend.get(api.auth.refresh);
 };
 
-export const findPasswordFunc = async (formData: FindPassword) => {
-    const res = await backend.post(api.auth.find, { ...formData });
-    return res.data;
+const find = async (formData: FindPassword) => {
+    return await backend.post(api.auth.find, { ...formData });
 };
 
-export const verifyCodeNumberFunc = async (formData: VerifyCodeNumber) => {
-    const res = await backend.post(api.auth.code, { ...formData });
-    return res.data;
+const verify = async (formData: VerifyCodeNumber) => {
+    return await backend.post(api.auth.code, { ...formData });
 };
 
-export const modifyPasswordFunc = async (formData: ModifyPassword) => {
-    const res = await backend.post(api.auth.modify, { ...formData });
-    return res.data;
+const modify = async (formData: ModifyPassword) => {
+    return await backend.post(api.auth.modify, { ...formData });
+};
+
+export default {
+    join,
+    login,
+    logout,
+    refresh,
+    find,
+    verify,
+    modify,
 };

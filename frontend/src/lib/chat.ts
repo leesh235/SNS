@@ -2,23 +2,19 @@ import { websocket } from "./axios";
 import { api } from "../utils/routes";
 
 export const getRoomList = async () => {
-    const { data } = await websocket.get(api.chat.getRoomList);
-    return data;
+    return await websocket.get(api.chat.getRoomList);
 };
 
 export const getMessageList = async (formData: any) => {
-    const { data } = await websocket.get(api.chat.getMessageList, {
+    return await websocket.get(api.chat.getMessageList, {
         params: formData,
     });
-    return data;
 };
 
 export const setGroupChattingRoom = async (formData: any) => {
-    const { data } = await websocket.post(api.chat.create_room, formData);
-    return data;
+    return await websocket.post(api.chat.create_room, formData);
 };
 
 export const deleteRoom = async (formData: any) => {
-    const { data } = await websocket.post(api.chat.deleteRoom, formData);
-    return data;
+    return await websocket.post(api.chat.deleteRoom, formData);
 };
