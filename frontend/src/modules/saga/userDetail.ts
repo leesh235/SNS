@@ -1,17 +1,6 @@
 import { createPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
-import {
-    getAbility,
-    getInfo,
-    setAbility,
-    setAddress,
-    setNumber,
-    setSchool,
-    setUniversity,
-    deleteAbility,
-    deleteUniversity,
-    deleteSchool,
-} from "../../lib/userDetail";
+import { userDetailApi } from "../../lib";
 import {
     GETABILITY,
     GETINFO,
@@ -25,16 +14,25 @@ import {
     DELETEUNIVERSITY,
 } from "../action/userDetail";
 
-const get_ability = createPromise(GETABILITY, getAbility);
-const get_info = createPromise(GETINFO, getInfo);
-const set_ability = createPromise(SETABILITY, setAbility);
-const set_university = createPromise(SETUNIVERSITY, setUniversity);
-const set_school = createPromise(SETSCHOOL, setSchool);
-const set_number = createPromise(SETNUMBER, setNumber);
-const set_address = createPromise(SETADDRESS, setAddress);
-const delete_ability = createPromise(DELETEABILITY, deleteAbility);
-const delete_university = createPromise(DELETEUNIVERSITY, deleteUniversity);
-const delete_school = createPromise(DELETESCHOOL, deleteSchool);
+const get_ability = createPromise(GETABILITY, userDetailApi.getAbility);
+const get_info = createPromise(GETINFO, userDetailApi.getInfo);
+const set_ability = createPromise(SETABILITY, userDetailApi.setAbility);
+const set_university = createPromise(
+    SETUNIVERSITY,
+    userDetailApi.setUniversity
+);
+const set_school = createPromise(SETSCHOOL, userDetailApi.setSchool);
+const set_number = createPromise(SETNUMBER, userDetailApi.setNumber);
+const set_address = createPromise(SETADDRESS, userDetailApi.setAddress);
+const delete_ability = createPromise(
+    DELETEABILITY,
+    userDetailApi.deleteAbility
+);
+const delete_university = createPromise(
+    DELETEUNIVERSITY,
+    userDetailApi.deleteUniversity
+);
+const delete_school = createPromise(DELETESCHOOL, userDetailApi.deleteSchool);
 
 export function* userDetailSaga() {
     yield takeEvery(GETABILITY, get_ability);

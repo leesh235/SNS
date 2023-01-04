@@ -1,18 +1,12 @@
 import { createPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
-import {
-    getPostsFunc,
-    getMyPostsFunc,
-    getBookmarkPostsFunc,
-    getFriendsPostsFunc,
-    getLikePostsFunc,
-} from "../../lib/posts";
+import { postsApi } from "../../lib";
 import { ALLPOSTS, MYPOSTS, LIKEPOSTS, FRIENDSPOSTS } from "../action/posts";
 
-const posts = createPromise(ALLPOSTS, getPostsFunc);
-const myPosts = createPromise(MYPOSTS, getMyPostsFunc);
-const likePosts = createPromise(LIKEPOSTS, getLikePostsFunc);
-const friendsPosts = createPromise(FRIENDSPOSTS, getFriendsPostsFunc);
+const posts = createPromise(ALLPOSTS, postsApi.posts);
+const myPosts = createPromise(MYPOSTS, postsApi.myPosts);
+const likePosts = createPromise(LIKEPOSTS, postsApi.likePosts);
+const friendsPosts = createPromise(FRIENDSPOSTS, postsApi.friendsPosts);
 
 export function* postsSaga() {
     yield takeEvery(ALLPOSTS, posts);

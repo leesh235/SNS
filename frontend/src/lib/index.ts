@@ -1,21 +1,19 @@
-import authApi from "./auth";
-import chatApi from "./chat";
-import commentApi from "./comment";
-import friendsApi from "./friends";
-import postApi from "./post";
-import postsApi from "./posts";
-import searchApi from "./search";
-import userApi from "./user";
-import userDetailApi from "./userDetail";
+import auth from "./auth";
+import chat from "./chat";
+import comment from "./comment";
+import friends from "./friends";
+import post from "./post";
+import posts from "./posts";
+import search from "./search";
+import user from "./user";
+import userDetail from "./userDetail";
 
-export default {
-    authApi,
-    chatApi,
-    commentApi,
-    friendsApi,
-    postApi,
-    postsApi,
-    searchApi,
-    userApi,
-    userDetailApi,
-};
+export const authApi = auth;
+export const chatApi = chat;
+export const commentApi = comment;
+export const friendsApi = friends;
+export const postApi = post;
+export const postsApi = posts;
+export const searchApi = search;
+export const userApi = user;
+export const userDetailApi = userDetail;

@@ -1,15 +1,11 @@
 import { createPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
-import {
-    searchAllFunc,
-    searchPostFunc,
-    searchPeopleFunc,
-} from "../../lib/search";
+import { searchApi } from "../../lib";
 import { SEARCHALL, SEARCHPOST, SEARCHPEOPLE } from "../action/search";
 
-const searchAll = createPromise(SEARCHALL, searchAllFunc);
-const searchPost = createPromise(SEARCHPOST, searchPostFunc);
-const searchPeople = createPromise(SEARCHPEOPLE, searchPeopleFunc);
+const searchAll = createPromise(SEARCHALL, searchApi.searchAll);
+const searchPost = createPromise(SEARCHPOST, searchApi.searchPost);
+const searchPeople = createPromise(SEARCHPEOPLE, searchApi.searchPeople);
 
 export function* searchSaga() {
     yield takeEvery(SEARCHALL, searchAll);

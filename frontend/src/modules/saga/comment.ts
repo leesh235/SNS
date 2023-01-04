@@ -1,12 +1,12 @@
 import { createPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
-import { listFunc, writeFunc, modifyFunc, deleteFunc } from "../../lib/comment";
+import { commentApi } from "../../lib/index";
 import { COMMENTLIST, WRITE, MODIFY, DELETE } from "../action/comment";
 
-const list = createPromise(COMMENTLIST, listFunc);
-const write = createPromise(WRITE, writeFunc);
-const modify = createPromise(MODIFY, modifyFunc);
-const delete_commente = createPromise(DELETE, deleteFunc);
+const list = createPromise(COMMENTLIST, commentApi.list);
+const write = createPromise(WRITE, commentApi.write);
+const modify = createPromise(MODIFY, commentApi.modify);
+const delete_commente = createPromise(DELETE, commentApi.remove);
 
 export function* commentSaga() {
     yield takeEvery(COMMENTLIST, list);
