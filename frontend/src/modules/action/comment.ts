@@ -1,32 +1,32 @@
-export const chatAction = {
+export const commentAction = {
     list: "comment/COMMENTLIST",
     write: "comment/WRITE",
     modify: "comment/MODIFY",
     delete: "comment/DELETE",
 };
 
-export const chatActionCreator = {
+export const commentActionCreator = {
     list: (data: any) => {
         return {
-            type: chatAction.list,
+            type: commentAction.list,
             data,
         };
     },
     write: (data: any) => {
         return {
-            type: chatAction.write,
+            type: commentAction.write,
             data,
         };
     },
     modify: (data: any) => {
         return {
-            type: chatAction.modify,
+            type: commentAction.modify,
             data,
         };
     },
     delete: (data: any) => {
         return {
-            type: chatAction.delete,
+            type: commentAction.delete,
             data,
         };
     },
