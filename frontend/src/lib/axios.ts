@@ -7,6 +7,7 @@ export const backend = axios.create({
     headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
+    withCredentials: true,
 });
 
 export const websocket = axios.create({

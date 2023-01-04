@@ -20,8 +20,7 @@ import passport, { jwt_authenticate } from "../config/passport";
 export default async ({ app }: { app: express.Application }) => {
     app.use(express.static(`${process.env.FILE_PATH}`));
     app.use(express.static(`${process.env.POST_PATH}`));
-    // app.use(cors(corsOptions));
-    app.use(cors());
+    app.use(cors(corsOptions));
     app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
