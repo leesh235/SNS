@@ -2,26 +2,35 @@ import { backend } from "./axios";
 import { api } from "../utils/routes";
 import { GetPost, Like, DeletePost } from "../types/post";
 
-export const postDetailsFunc = async (formData: any) => {
+const postDetails = async (formData: any) => {
     return await backend.get(api.postIds.ids, { params: formData });
 };
 
-export const postFunc = async (formData: GetPost) => {
+const post = async (formData: GetPost) => {
     return await backend.get(api.post.get, { params: formData });
 };
 
-export const writePostFunc = async (formData: any) => {
+const write = async (formData: any) => {
     return await backend.post(api.post.write, formData);
 };
 
-export const modifyPostFunc = async (formData: any) => {
+const modify = async (formData: any) => {
     return await backend.put(api.post.modify, formData);
 };
 
-export const deletePostFunc = async (formData: DeletePost) => {
+const remove = async (formData: DeletePost) => {
     return await backend.delete(api.post.delete, { params: formData });
 };
 
-export const likeFunc = async (formData: any) => {
+const like = async (formData: any) => {
     return await backend.post(api.post.like, { ...formData });
+};
+
+export default {
+    postDetails,
+    post,
+    write,
+    modify,
+    remove,
+    like,
 };
