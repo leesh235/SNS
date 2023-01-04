@@ -11,9 +11,9 @@ export const authAction = {
     login: "auth/LOGIN",
     logout: "auth/LOGOUT",
     refresh: "auth/REFRESH",
-    findPassword: "auth/FIND_PASSWORD",
-    verifyCodeNumber: "auth/VERIFY_CODENUMBER",
-    modifyPassword: "auth/MODIFY_PASSWORD",
+    find: "auth/FIND",
+    verify: "auth/VERIFY",
+    modify: "auth/MODIFY",
 };
 
 export const authActionCreator = {
@@ -39,21 +39,21 @@ export const authActionCreator = {
             type: authAction.refresh,
         };
     },
-    findPassword: (data: FindPassword) => {
+    find: (data: FindPassword) => {
         return {
-            type: authAction.findPassword,
+            type: authAction.find,
             data,
         };
     },
-    verifyCodeNumber: (data: VerifyCodeNumber) => {
+    verify: (data: VerifyCodeNumber) => {
         return {
-            type: authAction.verifyCodeNumber,
+            type: authAction.verify,
             data,
         };
     },
-    modifyPassword: (data: ModifyPassword) => {
+    modify: (data: ModifyPassword) => {
         return {
-            type: authAction.modifyPassword,
+            type: authAction.modify,
             data,
         };
     },

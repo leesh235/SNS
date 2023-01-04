@@ -51,14 +51,14 @@ interface Props {
 export const CodeNumberForm = ({ onStepClick }: Props) => {
     const dispatch = useDispatch();
 
-    const store_email = useSelector((state: any) => state.auth?.findPassword);
+    const store_email = useSelector((state: any) => state.auth?.find);
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: "",
         validate: verifyCodeNumberValidate,
         onSubmit: (formData: any) => {
             dispatch(
-                authActionCreator.verifyCodeNumber({
+                authActionCreator.verify({
                     email: store_email.data?.email,
                     codeNumber: Number(formData.codeNumber),
                 })

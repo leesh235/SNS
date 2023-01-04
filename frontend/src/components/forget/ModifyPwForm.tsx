@@ -52,7 +52,7 @@ export const ModifyPwForm = ({ onStepClick }: Props) => {
     const dispatch = useDispatch();
 
     const { loading, data, error } = useSelector(
-        (state: any) => state.auth?.verifyCodeNumber
+        (state: any) => state.auth?.verify
     );
 
     const { errors, setOption, handleSubmit } = useForm({
@@ -60,7 +60,7 @@ export const ModifyPwForm = ({ onStepClick }: Props) => {
         validate: modifyPasswordValidate,
         onSubmit: (formData: any) => {
             dispatch(
-                authActionCreator.modifyPassword({
+                authActionCreator.modify({
                     email: data?.email,
                     codeNumber: Number(data?.password),
                     password: formData.password,

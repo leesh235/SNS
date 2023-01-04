@@ -56,7 +56,7 @@ export const ForgetForm = ({ onStepClick }: Props) => {
         validate: findPasswordValidate,
         onSubmit: (formData: any) => {
             dispatch(
-                authActionCreator.findPassword({
+                authActionCreator.find({
                     email: formData?.email,
                 })
             );

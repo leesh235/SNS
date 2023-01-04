@@ -1,36 +1,22 @@
-import { createPromise } from "../../utils/asyncUtils";
+import { createPromise, createJWTPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
-import {
-    loginFunc,
-    joinFunc,
-    logoutFunc,
-    refreshFunc,
-    findPasswordFunc,
-    verifyCodeNumberFunc,
-    modifyPasswordFunc,
-} from "../../lib/auth";
 import { authAction } from "../action/auth";
+import apies from "../../lib/index";
 
-const join = createPromise(authAction.join, joinFunc);
-const login = createPromise(authAction.login, loginFunc);
-const logout = createPromise(authAction.logout, logoutFunc);
-const refresh = createPromise(authAction.refresh, refreshFunc);
-const findPassword = createPromise(authAction.findPassword, findPasswordFunc);
-const verifyCodeNumber = createPromise(
-    authAction.verifyCodeNumber,
-    verifyCodeNumberFunc
-);
-const modifyPassword = createPromise(
-    authAction.modifyPassword,
-    modifyPasswordFunc
-);
+const join = createJWTPromise(authAction.join, apies.authApi.join);
+const login = createJWTPromise(authAction.login, apies.authApi.login);
+const logout = createPromise(authAction.logout, apies.authApi.logout);
+const refresh = createPromise(authAction.refresh, apies.authApi.refresh);
+const find = createPromise(authAction.find, apies.authApi.find);
+const verify = createPromise(authAction.verify, apies.authApi.verify);
+const modify = createPromise(authAction.modify, apies.authApi.modify);
 
 export function* authSaga() {
     yield takeEvery(authAction.join, join);
     yield takeEvery(authAction.login, login);
     yield takeEvery(authAction.logout, logout);
     yield takeEvery(authAction.refresh, refresh);
-    yield takeEvery(authAction.findPassword, findPassword);
-    yield takeEvery(authAction.verifyCodeNumber, verifyCodeNumber);
-    yield takeEvery(authAction.modifyPassword, modifyPassword);
+    yield takeEvery(authAction.find, find);
+    yield takeEvery(authAction.verify, verify);
+    yield takeEvery(authAction.modify, modify);
 }

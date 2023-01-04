@@ -7,9 +7,9 @@ const initialState = {
     login: reducerUtils.initial(null),
     logout: reducerUtils.initial(null),
     refresh: reducerUtils.initial(null),
-    findPassword: reducerUtils.initial(null),
-    verifyCodeNumber: reducerUtils.initial(null),
-    modifyPassword: reducerUtils.initial(null),
+    find: reducerUtils.initial(null),
+    verify: reducerUtils.initial(null),
+    modify: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -47,28 +47,28 @@ const reducer = (state = initialState, action: any) => {
                 "refresh",
                 true
             )(state, action);
-        case authAction.findPassword:
-        case typeUtils(authAction.findPassword).success:
-        case typeUtils(authAction.findPassword).error:
+        case authAction.find:
+        case typeUtils(authAction.find).success:
+        case typeUtils(authAction.find).error:
             return handleAsyncReducer(
-                authAction.findPassword,
-                "findPassword",
+                authAction.find,
+                "find",
                 true
             )(state, action);
-        case authAction.verifyCodeNumber:
-        case typeUtils(authAction.verifyCodeNumber).success:
-        case typeUtils(authAction.verifyCodeNumber).error:
+        case authAction.verify:
+        case typeUtils(authAction.verify).success:
+        case typeUtils(authAction.verify).error:
             return handleAsyncReducer(
-                authAction.verifyCodeNumber,
-                "verifyCodeNumber",
+                authAction.verify,
+                "verify",
                 true
             )(state, action);
-        case authAction.modifyPassword:
-        case typeUtils(authAction.modifyPassword).success:
-        case typeUtils(authAction.modifyPassword).error:
+        case authAction.modify:
+        case typeUtils(authAction.modify).success:
+        case typeUtils(authAction.modify).error:
             return handleAsyncReducer(
-                authAction.modifyPassword,
-                "modifyPassword",
+                authAction.modify,
+                "modify",
                 true
             )(state, action);
         default:
