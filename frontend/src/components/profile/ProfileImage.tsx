@@ -2,7 +2,7 @@ import styled from "../../styles/theme-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ImageCard } from "./image/ImageCard";
-import { setAlltImages } from "../../modules/action/image";
+import { imageActionCreator } from "../../modules/action/image";
 import { useParams } from "react-router-dom";
 
 const Wrapper = styled.section`
@@ -22,7 +22,7 @@ export const ProfileImage = ({}: Props) => {
     );
 
     useEffect(() => {
-        dispatch(setAlltImages({ email }));
+        dispatch(imageActionCreator.allImage({ email }));
     }, [email]);
 
     return (

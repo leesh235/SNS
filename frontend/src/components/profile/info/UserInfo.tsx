@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 //functions
-import { setGetInfo } from "../../../modules/action/userDetail";
+import { userDetailActionCreator } from "../../../modules/action/userDetail";
 //components
 import { AddNumber } from "./AddNumber";
 import { AddAddress } from "./AddAddress";
@@ -11,7 +11,7 @@ export const UserInfo = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setGetInfo());
+        dispatch(userDetailActionCreator.getInfo());
     }, []);
 
     return (

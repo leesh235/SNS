@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 //functions
 import { routes } from "../../../utils/routes";
-import { setDeletePost, setLike } from "../../../modules/action/post";
-import { setWriteComment } from "../../../modules/action/comment";
+import { postActionCreator } from "../../../modules/action/post";
+import { commentActionCreator } from "../../../modules/action/comment";
 import theme from "../../../styles/theme";
-import { setMyPosts } from "../../../modules/action/posts";
+import { postsActionCreator } from "../../../modules/action/posts";
 //components
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { WritePost } from "../../modal/WritePost";
@@ -174,13 +174,13 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                 "휴지통으로 보내시겠습니까?(30일 후에 영구 삭제됩니다.)"
             )
         ) {
-            dispatch(setDeletePost({ postId }));
-            dispatch(setMyPosts({ email: user.email }));
+            dispatch(postActionCreator.delete({ postId }));
+            dispatch(postsActionCreator.myPosts({ email: user.email }));
         }
     };
 
     const handleLike = () => {
-        dispatch(setLike({ postId }));
+        dispatch(postActionCreator.like({ postId }));
     };
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -190,7 +190,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
         console.log(e.currentTarget?.comment?.value);
 
         dispatch(
-            setWriteComment({
+            commentActionCreator.write({
                 postId: postId,
                 contents: e.currentTarget.comment.value,
             })

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 //functions
-import { setGetAbility } from "../../../modules/action/userDetail";
+import { userDetailActionCreator } from "../../../modules/action/userDetail";
 //components
 import { AddAbility } from "./AddAbility";
 import { AddUniversity } from "./AddUniversity";
@@ -12,7 +12,7 @@ export const Ability = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setGetAbility());
+        dispatch(userDetailActionCreator.getAbility());
     }, []);
 
     return (

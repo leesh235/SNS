@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 //functions
 import theme from "../../styles/theme";
 import { obToUrl } from "../../utils/objToUrl";
-import { setWritePost } from "../../modules/action/post";
-import { setMyPosts } from "../../modules/action/posts";
-import { setModifyPost } from "../../modules/action/post";
+import { postActionCreator } from "../../modules/action/post";
+import { postsActionCreator } from "../../modules/action/posts";
 //components
 import { Text } from "../common/Text";
 import { ModifyPost } from "./ModifyPost";
@@ -326,12 +325,12 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
         if (post?.files) {
             formData.append("postId", `${post?.postId}`);
             formData.append("urls", JSON.stringify(deleteFileList));
-            dispatch(setModifyPost(formData));
+            dispatch(postActionCreator.modify(formData));
         } else {
-            dispatch(setWritePost(formData));
+            dispatch(postActionCreator.write(formData));
         }
         setTimeout(() => {
-            dispatch(setMyPosts({ email: data.email }));
+            dispatch(postsActionCreator.myPosts({ email: data.email }));
         }, 100);
 
         setClose(false);

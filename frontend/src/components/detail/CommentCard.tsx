@@ -4,11 +4,7 @@ import { useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 //functions
 import { routes } from "../../utils/routes";
-import {
-    setDeleteComment,
-    setModifyComment,
-    setCommentList,
-} from "../../modules/action/comment";
+import { commentActionCreator } from "../../modules/action/comment";
 import theme from "../../styles/theme";
 //components
 import { Text } from "../common/Text";
@@ -134,21 +130,21 @@ export const CommentCard = ({ comment, user }: Props) => {
         e.preventDefault();
         console.log(e.currentTarget?.comment?.value);
         dispatch(
-            setModifyComment({
+            commentActionCreator.modify({
                 id: comment.id,
                 contents: e.currentTarget.comment.value,
             })
         );
         setTimeout(() => {
-            dispatch(setCommentList({ postId: Number(postId) }));
+            dispatch(commentActionCreator.list({ postId: Number(postId) }));
         }, 500);
         handleModifyClose();
     };
 
     const handleDelete = (id: number) => {
         if (window.confirm("댓글을 삭제하시겠습니까?")) {
-            dispatch(setDeleteComment({ id }));
-            dispatch(setCommentList({ postId: Number(postId) }));
+            dispatch(commentActionCreator.delete({ id }));
+            dispatch(commentActionCreator.list({ postId: Number(postId) }));
         }
     };
 

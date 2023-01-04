@@ -2,8 +2,8 @@ import styled from "../../../styles/theme-components";
 import { useInfiniteScroll } from "../../../hooks/useInfiniteScroll";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMyPosts } from "../../../modules/action/posts";
-import { setPostDetails } from "../../../modules/action/post";
+import { postsActionCreator } from "../../../modules/action/posts";
+import { postActionCreator } from "../../../modules/action/post";
 import { GridCard } from "../card/GridCard";
 
 const Wrapper = styled.div`
@@ -34,8 +34,13 @@ export const PostGridCard = ({}: Props) => {
     });
 
     useEffect(() => {
-        dispatch(setPostDetails({ type: "my", take: count * 8 + 8 }));
-        dispatch(setMyPosts({ email: user?.email, take: count * 8 + 8 }));
+        dispatch(postActionCreator.list({ type: "my", take: count * 8 + 8 }));
+        dispatch(
+            postsActionCreator.myPosts({
+                email: user?.email,
+                take: count * 8 + 8,
+            })
+        );
     }, [count]);
 
     return (

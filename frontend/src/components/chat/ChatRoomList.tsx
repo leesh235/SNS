@@ -2,7 +2,7 @@ import styled from "../../styles/theme-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { ChattingRoom } from "./ChattingRoom";
-import { setRoomList } from "../../modules/action/chat";
+import { chatActionCreator } from "../../modules/action/chat";
 import { ChatIcon } from "./ChatIcon";
 
 const Wrapper = styled.section`
@@ -50,7 +50,7 @@ export const ChatRoomList = () => {
     const store_room = useSelector((state: any) => state.chat.joinRoom);
 
     useEffect(() => {
-        dispatch(setRoomList());
+        dispatch(chatActionCreator.roomList());
     }, [store_room]);
 
     return (

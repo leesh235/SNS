@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //functions
 import theme from "../../../styles/theme";
-import { setIntroduce } from "../../../modules/action/user";
+import { userActionCreator } from "../../../modules/action/user";
 //components
 import { Text } from "../../common/Text";
 import { Button2 } from "../../common/button/Button2";
@@ -93,7 +93,7 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
     const writeIntroduce: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         const { introduce } = e.currentTarget;
-        dispatch(setIntroduce({ introduce: introduce.value }));
+        dispatch(userActionCreator.introduce({ introduce: introduce.value }));
         setOpenIntro(false);
     };
 

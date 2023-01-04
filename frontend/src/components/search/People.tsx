@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 //functions
 import { routes } from "../../utils/routes";
-import { setRequest } from "../../modules/action/friends";
+import { friendsActionCreator } from "../../modules/action/friends";
 //components
 import { Text } from "../common/Text";
 
@@ -72,7 +72,7 @@ export const People = ({ people }: Props) => {
 
     const handleFriend = (email: string) => {
         console.log("친구신청: ", email);
-        dispatch(setRequest({ friend_email: email }));
+        dispatch(friendsActionCreator.request({ friend_email: email }));
     };
 
     return (

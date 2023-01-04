@@ -2,12 +2,8 @@ import styled from "../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //functions
-import { setFriendList } from "../../modules/action/friends";
-import {
-    setCreateGroupRoom,
-    setJoinRoom,
-    setRoomList,
-} from "../../modules/action/chat";
+import { friendsActionCreator } from "../../modules/action/friends";
+import { chatActionCreator } from "../../modules/action/chat";
 import theme from "../../styles/theme";
 //components
 import { Text } from "../common/Text";
@@ -152,14 +148,14 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
     };
 
     const handleCreateGroupRoom = () => {
-        dispatch(setCreateGroupRoom({ select: selectNickName }));
-        dispatch(setRoomList());
-        dispatch(setJoinRoom({ id: data?._id }));
+        dispatch(chatActionCreator.createGroupRoom({ select: selectNickName }));
+        dispatch(chatActionCreator.roomList());
+        dispatch(chatActionCreator.joinRoom({ id: data?._id }));
         closeFunc();
     };
 
     useEffect(() => {
-        dispatch(setFriendList({ select, search }));
+        dispatch(friendsActionCreator.friendList({ select, search }));
     }, [select, search]);
 
     return (

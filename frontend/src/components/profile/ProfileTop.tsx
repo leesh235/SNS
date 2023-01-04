@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 //functions
 import theme from "../../styles/theme";
-import { setCoverImage } from "../../modules/action/user";
+import { userActionCreator } from "../../modules/action/user";
 //components
 import { SetProfileImage } from "../modal/SetProfileImage";
 import { CustomImage } from "../modal/CustomImage";
@@ -233,7 +233,7 @@ export const ProfileTop = () => {
             formData.append("mode", "cover");
             formData.append("streamfile", cImgFile);
 
-            dispatch(setCoverImage(formData));
+            dispatch(userActionCreator.coverImage(formData));
             setCImg("");
         }
     };

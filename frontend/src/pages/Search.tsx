@@ -3,11 +3,7 @@ import queryString from "query-string";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-    setSearchAll,
-    setSearchPost,
-    setSearchPeople,
-} from "../modules/action/search";
+import { searchActionCreator } from "../modules/action/search";
 import { SearchSide } from "../components/search/SearchSide";
 import { SearchAll } from "../components/search/SearchAll";
 
@@ -39,11 +35,11 @@ const Search = () => {
 
     useEffect(() => {
         if (menu === 0) {
-            dispatch(setSearchAll({ search: query?.word }));
+            dispatch(searchActionCreator.all({ search: query?.word }));
         } else if (menu === 1) {
-            dispatch(setSearchPost({ search: query?.word }));
+            dispatch(searchActionCreator.post({ search: query?.word }));
         } else if (menu === 2) {
-            dispatch(setSearchPeople({ search: query?.word }));
+            dispatch(searchActionCreator.people({ search: query?.word }));
         }
     }, [menu, query?.word]);
 

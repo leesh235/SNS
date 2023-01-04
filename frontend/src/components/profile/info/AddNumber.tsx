@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //functions
-import { setGetInfo, setNumber } from "../../../modules/action/userDetail";
+import { userDetailActionCreator } from "../../../modules/action/userDetail";
 import theme from "../../../styles/theme";
 //components
 import { Text } from "../../common/Text";
@@ -137,9 +137,9 @@ export const AddNumber = () => {
     const handleSave: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         const { number } = e.currentTarget;
-        dispatch(setNumber({ number: number.value }));
+        dispatch(userDetailActionCreator.setNumber({ number: number.value }));
         setTimeout(() => {
-            dispatch(setGetInfo());
+            dispatch(userDetailActionCreator.getInfo());
         }, 1);
         setOpen(false);
     };

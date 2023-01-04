@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //functions
-import { setGetInfo, setAddress } from "../../../modules/action/userDetail";
+import { userDetailActionCreator } from "../../../modules/action/userDetail";
 import theme from "../../../styles/theme";
 //components
 import { Text } from "../../common/Text";
@@ -141,9 +141,11 @@ export const AddAddress = () => {
     const handleSave: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         const { address } = e.currentTarget;
-        dispatch(setAddress({ address: address.value }));
+        dispatch(
+            userDetailActionCreator.setAbility({ address: address.value })
+        );
         setTimeout(() => {
-            dispatch(setGetInfo());
+            dispatch(userDetailActionCreator.getAbility());
         }, 1);
         setOpen(false);
     };

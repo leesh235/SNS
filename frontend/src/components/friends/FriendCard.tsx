@@ -2,12 +2,7 @@ import styled from "../../styles/theme-components";
 import { useDispatch } from "react-redux";
 //functions
 import theme from "../../styles/theme";
-import {
-    setRefuse,
-    setResponse,
-    setAllList,
-    setRequestList,
-} from "../../modules/action/friends";
+import { friendsActionCreator } from "../../modules/action/friends";
 //components
 import { Text } from "../common/Text";
 
@@ -90,18 +85,18 @@ export const FriendCard = ({ user, type }: Props) => {
     const handleConfirm = (id: number) => {
         console.log("ok: ", id);
         if (window.confirm(`친구 수락을 하시겠습니까?`)) {
-            dispatch(setResponse({ id }));
-            dispatch(setAllList());
-            dispatch(setRequestList());
+            dispatch(friendsActionCreator.response({ id }));
+            dispatch(friendsActionCreator.allList());
+            dispatch(friendsActionCreator.requestList());
         }
     };
 
     const handleCancle = (id: number) => {
         console.log("cancle: ", id);
         if (window.confirm(`${mode[type]} 하시겠습니까?`)) {
-            dispatch(setRefuse({ id }));
-            dispatch(setAllList());
-            dispatch(setRequestList());
+            dispatch(friendsActionCreator.refuse({ id }));
+            dispatch(friendsActionCreator.allList());
+            dispatch(friendsActionCreator.requestList());
         }
     };
 

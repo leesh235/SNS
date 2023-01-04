@@ -1,12 +1,7 @@
 import styled from "../styles/theme-components";
 import { useState, useEffect } from "react";
 import { batch, useDispatch } from "react-redux";
-import {
-    setRequestList,
-    setResponseList,
-    setFriendList,
-    setAllList,
-} from "../modules/action/friends";
+import { friendsActionCreator } from "../modules/action/friends";
 import { FriendsSide } from "../components/friends/FriendsSide";
 import { FriendsHome } from "../components/friends/FriendsHome";
 import { Request } from "../components/friends/Request";
@@ -39,10 +34,12 @@ const Friends = () => {
 
     useEffect(() => {
         batch(() => {
-            dispatch(setAllList());
-            dispatch(setRequestList());
-            dispatch(setResponseList());
-            dispatch(setFriendList({ select: [], search: "" }));
+            dispatch(friendsActionCreator.allList());
+            dispatch(friendsActionCreator.requestList());
+            dispatch(friendsActionCreator.responseList());
+            dispatch(
+                friendsActionCreator.friendList({ select: [], search: "" })
+            );
         });
     }, [menu]);
 

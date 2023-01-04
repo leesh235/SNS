@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 //functions
 import theme from "../../styles/theme";
-import {
-    setJoinRoom,
-    setLeaveRoom,
-    setRoomList,
-} from "../../modules/action/chat";
+import { chatActionCreator } from "../../modules/action/chat";
 //components
 import { Text } from "../common/Text";
 import { CreateChatRoom } from "../chat/CreateChatRoom";
@@ -87,12 +83,12 @@ export const ChattingList = () => {
     };
 
     const handleOpenRoom = (id: string) => {
-        dispatch(setJoinRoom({ id }));
-        dispatch(setLeaveRoom(id));
+        dispatch(chatActionCreator.joinRoom({ id }));
+        dispatch(chatActionCreator.leaveRoom(id));
     };
 
     useEffect(() => {
-        dispatch(setRoomList());
+        dispatch(chatActionCreator.roomList());
     }, []);
 
     return (

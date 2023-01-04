@@ -3,8 +3,8 @@ import { PostCard } from "../profile/card/PostCard";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
-import { setAllPosts, setLikePosts } from "../../modules/action/posts";
-import { setPostDetails } from "../../modules/action/post";
+import { postsActionCreator } from "../../modules/action/posts";
+import { postActionCreator } from "../../modules/action/post";
 import { useLocation } from "react-router-dom";
 import { routes } from "../../utils/routes";
 
@@ -38,11 +38,15 @@ export const PostList = ({}: Props) => {
 
     useEffect(() => {
         if (location.pathname === routes.home) {
-            dispatch(setPostDetails({ type: "all", take: count * 4 + 4 }));
-            dispatch(setAllPosts({ take: count * 4 + 4 }));
+            dispatch(
+                postActionCreator.list({ type: "all", take: count * 4 + 4 })
+            );
+            dispatch(postsActionCreator.allPosts({ take: count * 4 + 4 }));
         } else if (location.pathname === routes.like) {
-            dispatch(setPostDetails({ type: "like", take: count * 4 + 4 }));
-            dispatch(setLikePosts({ take: count * 4 + 4 }));
+            dispatch(
+                postActionCreator.list({ type: "like", take: count * 4 + 4 })
+            );
+            dispatch(postsActionCreator.likePosts({ take: count * 4 + 4 }));
         }
     }, [count, location.pathname]);
 

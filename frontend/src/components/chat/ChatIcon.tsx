@@ -2,11 +2,7 @@ import styled from "../../styles/theme-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { ChattingRoom } from "./ChattingRoom";
-import {
-    setRoomList,
-    setJoinRoom,
-    setLeaveRoom,
-} from "../../modules/action/chat";
+import { chatActionCreator } from "../../modules/action/chat";
 
 const Wrapper = styled.div`
     width: 50px;
@@ -60,8 +56,8 @@ export const ChatIcon = ({ id, title }: Props) => {
 
     const handleOpenRoom = () => {
         if (!closeHover) {
-            dispatch(setJoinRoom({ id }));
-            dispatch(setLeaveRoom(id));
+            dispatch(chatActionCreator.joinRoom({ id }));
+            dispatch(chatActionCreator.leaveRoom(id));
         }
     };
 
@@ -74,7 +70,7 @@ export const ChatIcon = ({ id, title }: Props) => {
     };
 
     const handleClose = () => {
-        dispatch(setLeaveRoom(id));
+        dispatch(chatActionCreator.leaveRoom(id));
     };
 
     return (

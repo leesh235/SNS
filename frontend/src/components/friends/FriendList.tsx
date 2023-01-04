@@ -33,7 +33,6 @@ export const FriendList = () => {
                 }}
             />
             <CardLayout>
-                {" "}
                 {data?.map((val: any, idx: number) => {
                     return <FriendCard key={idx} user={val} type={"friend"} />;
                 })}

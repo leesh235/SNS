@@ -4,8 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 //functions
 import theme from "../styles/theme";
-import { setProfile } from "../modules/action/user";
-import { setIsFriend } from "../modules/action/friends";
+import { userActionCreator } from "../modules/action/user";
+import { friendsActionCreator } from "../modules/action/friends";
 import { useObserver } from "../hooks/useObserver";
 //components
 import { Text } from "../components/common/Text";
@@ -91,8 +91,8 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        dispatch(setProfile({ email }));
-        dispatch(setIsFriend({ email }));
+        dispatch(userActionCreator.profile({ email }));
+        dispatch(friendsActionCreator.isFriend({ email }));
     }, [email]);
 
     useEffect(() => {}, [check]);

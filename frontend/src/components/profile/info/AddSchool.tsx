@@ -1,11 +1,7 @@
 import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-    setGetAbility,
-    setSchool,
-    setDeleteSchool,
-} from "../../../modules/action/userDetail";
+import { userDetailActionCreator } from "../../../modules/action/userDetail";
 //functions
 import theme from "../../../styles/theme";
 //components
@@ -155,9 +151,9 @@ export const AddSchool = () => {
         setOpenBtn(false);
         if (window.confirm("고등학교 정보를 삭제하시겠습니까?")) {
             console.log("삭제");
-            dispatch(setDeleteSchool({ id }));
+            dispatch(userDetailActionCreator.deleteSchool({ id }));
             setTimeout(() => {
-                dispatch(setGetAbility());
+                dispatch(userDetailActionCreator.getAbility());
             }, 10);
         }
     };
@@ -166,9 +162,9 @@ export const AddSchool = () => {
         e.preventDefault();
         const { school } = e.currentTarget;
         console.log(school.value);
-        dispatch(setSchool({ name: school.value }));
+        dispatch(userDetailActionCreator.setSchool({ name: school.value }));
         setTimeout(() => {
-            dispatch(setGetAbility());
+            dispatch(userDetailActionCreator.getAbility());
         }, 10);
         setOpen(false);
     };

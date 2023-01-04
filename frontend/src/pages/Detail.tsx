@@ -2,8 +2,8 @@ import styled from "../styles/theme-components";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { setPostDetail } from "../modules/action/post";
-import { setCommentList } from "../modules/action/comment";
+import { postActionCreator } from "../modules/action/post";
+import { commentActionCreator } from "../modules/action/comment";
 import { ImageView } from "../components/detail/ImageView";
 import { TextView } from "../components/detail/TextView";
 
@@ -23,8 +23,8 @@ const Detail = () => {
 
     useEffect(() => {
         if (postId) {
-            dispatch(setPostDetail({ postId: Number(postId) }));
-            dispatch(setCommentList({ postId: Number(postId) }));
+            dispatch(postActionCreator.detail({ postId: Number(postId) }));
+            dispatch(commentActionCreator.list({ postId: Number(postId) }));
         }
     }, []);
 

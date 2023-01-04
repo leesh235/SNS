@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 //functions
 import { routes } from "../../utils/routes";
-import { setWriteComment, setCommentList } from "../../modules/action/comment";
-import { setLike, setPostDetail } from "../../modules/action/post";
+import { commentActionCreator } from "../../modules/action/comment";
+import { postActionCreator } from "../../modules/action/post";
 import theme from "../../styles/theme";
 //components
 import { Text } from "../common/Text";
@@ -140,13 +140,13 @@ export const TextView = () => {
         console.log(e.currentTarget?.comment?.value);
 
         dispatch(
-            setWriteComment({
+            commentActionCreator.write({
                 postId: data.id,
                 contents: e.currentTarget.comment.value,
             })
         );
         setTimeout(() => {
-            dispatch(setCommentList({ postId: Number(postId) }));
+            dispatch(commentActionCreator.list({ postId: Number(postId) }));
         }, 50);
         e.currentTarget.comment.value = "";
     };
@@ -160,9 +160,9 @@ export const TextView = () => {
     };
 
     const handleLike = () => {
-        dispatch(setLike({ postId: Number(postId) }));
+        dispatch(postActionCreator.like({ postId: Number(postId) }));
         setTimeout(() => {
-            dispatch(setPostDetail({ postId: Number(postId) }));
+            dispatch(postActionCreator.detail({ postId: Number(postId) }));
         }, 50);
     };
 
