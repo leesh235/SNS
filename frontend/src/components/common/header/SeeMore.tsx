@@ -1,7 +1,11 @@
 import styled from "../../../styles/theme-components";
 import { useEffect } from "react";
-import { Button2 } from "../button/Button2";
+import { useDispatch } from "react-redux";
+//functions
 import { logOut } from "../../../utils/authUtils";
+import { authActionCreator } from "../../../modules/action/auth";
+//components
+import { Button2 } from "../button/Button2";
 
 const Wrapper = styled.div`
     width: calc(200px - 30px);
@@ -26,6 +30,13 @@ interface Props {
 }
 
 export const SeeMore = ({ closeFunc }: Props) => {
+    const dispatch = useDispatch();
+
+    const handleClick = () => {
+        dispatch(authActionCreator.logout());
+        logOut();
+    };
+
     useEffect(() => {
         window.addEventListener("click", closeFunc);
         return () => {
@@ -37,7 +48,11 @@ export const SeeMore = ({ closeFunc }: Props) => {
         <Wrapper>
             <div></div>
             <div>
-                <Button2 text={"로그아웃"} width={"100%"} onClick={logOut} />
+                <Button2
+                    text={"로그아웃"}
+                    width={"100%"}
+                    onClick={handleClick}
+                />
             </div>
         </Wrapper>
     );
