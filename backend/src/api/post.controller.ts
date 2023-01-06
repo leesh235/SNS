@@ -1,11 +1,5 @@
 import express from "express";
-import {
-    find,
-    save,
-    setLike,
-    modify,
-    delete_post,
-} from "../services/post.service";
+import { find, save, setLike, modify, remove } from "../services/post.service";
 import { postUpload } from "../config/multer";
 import { fail, success, exist } from "../config/message";
 import { routes } from "../config/route";
@@ -27,7 +21,7 @@ router.get(routes.post.get, async (req, res) => {
 });
 
 //게시글 작성
-router.post(routes.post.write, postUpload.array("images"), async (req, res) => {
+router.post(routes.post.set, postUpload.array("images"), async (req, res) => {
     try {
         res.status(200).send(await save(req));
     } catch (error) {
@@ -48,7 +42,7 @@ router.put(routes.post.modify, postUpload.array("images"), async (req, res) => {
 //게시글 삭제
 router.delete(routes.post.delete, async (req, res) => {
     try {
-        res.status(200).send(await delete_post(req));
+        res.status(200).send(await remove(req));
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

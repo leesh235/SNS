@@ -230,6 +230,26 @@ export const setLike = async (req: any) => {
     }
 };
 
+export const remove = async (req: any) => {
+    try {
+        const {
+            query: { postId },
+            user: { email },
+        } = req;
+        const id = Number(postId);
+
+        await postRepository.softDelete({
+            id,
+            user: { email },
+        });
+
+        return { id: postId };
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
+
 export const save_file = async (req: any, fileName: string) => {
     try {
         const {
@@ -247,25 +267,5 @@ export const save_file = async (req: any, fileName: string) => {
         return result.id;
     } catch (error) {
         return null;
-    }
-};
-
-export const delete_post = async (req: any) => {
-    try {
-        const {
-            query: { postId },
-            user: { email },
-        } = req;
-        const id = Number(postId);
-
-        await postRepository.softDelete({
-            id,
-            user: { email },
-        });
-
-        return { id: postId };
-    } catch (error) {
-        console.log(error);
-        return false;
     }
 };

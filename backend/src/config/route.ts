@@ -44,12 +44,17 @@ export const routes = {
     },
     post: {
         get: "/",
-        write: "/write",
-        modify: "/modify",
-        delete: "/delete",
+        set: "/",
+        modify: "/",
+        delete: "/",
         like: "/like",
     },
     posts: {
+        allList: "/list",
+        myList: "/list/my",
+        likeList: "/list/like",
+        friendsList: "/list/friends",
+
         all_ist: "/",
         like_list: "/like",
         bookmark_list: "/bookmark",
