@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { User } from "../entity/User.entity";
-import { exist } from "../config/message";
 import passport from "passport";
 import { hashPassword } from "../utils/password";
 import { routes } from "../config/route";

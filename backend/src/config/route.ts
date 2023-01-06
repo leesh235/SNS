@@ -2,6 +2,7 @@ export const baseRoutes = {
     auth: "/api/auth",
     user: "/api/user",
     user_detail: "/api/user_detail",
+    image: "/api/image",
     post: "/api/post",
     posts: "/api/posts",
     comment: "/api/comment",
@@ -41,6 +42,10 @@ export const routes = {
         all_image: "/all_image",
         latest_image: "/latest_image",
         people: "/people",
+    },
+    image: {
+        set: "/",
+        array: "/array",
     },
     post: {
         get: "/",

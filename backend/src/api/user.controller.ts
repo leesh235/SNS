@@ -1,7 +1,6 @@
 import express from "express";
 import { routes } from "../config/route";
 import { upload } from "../config/multer";
-import { fail, success } from "../config/message";
 import {
     save_image,
     save_introduce,
