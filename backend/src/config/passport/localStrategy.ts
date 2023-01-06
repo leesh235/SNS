@@ -3,7 +3,6 @@ import { dataSource } from "../typeorm";
 import { User } from "../../entity/User.entity";
 import jwtUtil from "../../utils/jwtUtil";
 import { comparePassword } from "../../utils/password";
-import { exist, incorrect } from "../../config/message";
 import { redisClient } from "../redis";
 import { REFRESHTOKEN_EXPIRE } from "../../constants/times";
 
@@ -35,11 +34,13 @@ const localVerify: (
         });
 
         if (!user) {
-            return done(null, false, { message: exist.NOT_EXIST_ACCOUNT });
+            return done(null, false, {
+                message: "존재하지 않거나 정보가 잘못되었습니다.",
+            });
         }
 
         if (!(await comparePassword(password, user.password))) {
-            return done(null, false, { message: incorrect.INCORRECT_PASSWORD });
+            return done(null, false, { message: "비밀번호가 다릅니다." });
         }
 
         const accessToken = jwtUtil.access(user.email, user.nickName);

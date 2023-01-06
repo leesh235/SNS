@@ -1,7 +1,6 @@
 import express from "express";
 import { find, save, setLike, modify, remove } from "../services/post.service";
 import { postUpload } from "../config/multer";
-import { fail, success, exist } from "../config/message";
 import { routes } from "../config/route";
 
 const router = express.Router();
@@ -13,7 +12,7 @@ router.get(routes.post.get, async (req, res) => {
         if (post !== null) {
             res.status(200).send(post);
         } else {
-            res.status(404).send({ message: `${exist.NOT_EXIST_POST}` });
+            res.status(404).send({ message: `존재하지 않으 게시글입니다.` });
         }
     } catch (error) {
         res.status(500).send({ message: `${error}` });

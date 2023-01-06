@@ -41,7 +41,7 @@ router.post(
             if (await save_image(req)) {
                 res.status(200).send({ ...(await getUserImage(req)) });
             } else {
-                res.status(409).send({ message: `${fail.SAVE_IMAGE}` });
+                res.status(409).send({ message: `이미지 저장 성공` });
             }
         } catch (error) {
             res.status(500).send({ message: `${error}` });
@@ -55,7 +55,7 @@ router.post(routes.user.set_introduce, async (req, res) => {
         if (await save_introduce(req)) {
             res.status(200).send({ introduction: req.body.introduce });
         } else {
-            res.status(409).send({ message: `${fail.SAVE_INTRODUCE}` });
+            res.status(409).send({ message: `자기소개 저장 성공` });
         }
     } catch (error) {
         res.status(500).send({ message: `${error}` });

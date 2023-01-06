@@ -67,7 +67,7 @@ router.post(routes.auth.join, async (req: Request, res: Response) => {
         user.nickName = req.body.firstName + req.body.secondName;
 
         if (!existUser(user)) {
-            res.status(409).send({ message: `${exist.EXIST_ACCOUNT}` });
+            res.status(409).send({ message: `이미 존재하는 계정입니다.` });
         }
 
         res.status(200).send({ accessToken: await save(user) });
@@ -123,7 +123,7 @@ router.post(routes.auth.find, async (req: Request, res: Response) => {
         if (await existUser(user)) {
             return res
                 .status(409)
-                .send({ message: `${exist.NOT_EXIST_ACCOUNT}` });
+                .send({ message: `존재하지 않거나 정보가 잘못되었습니다.` });
         }
 
         const result = await createCode(user.email);
