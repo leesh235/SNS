@@ -1,8 +1,8 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/user.entity";
-import { University } from "../entity/university";
+import { University } from "../entity/university.entity";
 import { Ability } from "../entity/ability.entity";
-import { School } from "../entity/school";
+import { School } from "../entity/school.entity";
 
 const userRepository = dataSource.getRepository(User);
 const userAbilityRepository = dataSource.getRepository(Ability);

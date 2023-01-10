@@ -13,8 +13,8 @@ import { Friends } from "./friends.entity";
 import { Post } from "./post.entity";
 import { Comment } from "./comment.entity";
 import { Likes } from "./likes.entity";
-import { School } from "./school";
-import { University } from "./university";
+import { School } from "./school.entity";
+import { University } from "./university.entity";
 import { Ability } from "./ability.entity";
 import { Files } from "./files.entity";
 
