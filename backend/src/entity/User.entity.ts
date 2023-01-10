@@ -15,6 +15,7 @@ import { Comment } from "./comment.entity";
 import { Likes } from "./likes.entity";
 import { School } from "./school";
 import { University } from "./university";
+import { Ability } from "./ability.entity";
 import { Files } from "./files.entity";
 
 @Entity("user")
@@ -54,7 +55,7 @@ export class User {
     coverImage: string;
 
     @Column({ type: "varchar", name: "profile_img", nullable: true })
-    profileImg: string;
+    profileImage: string;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
     createdAt: Date | undefined;
@@ -70,6 +71,9 @@ export class User {
 
     @OneToOne(() => University, (university) => university.user)
     university: University;
+
+    @OneToOne(() => Ability, (ability) => ability.user)
+    ability: Ability;
 
     @OneToMany(() => Post, (post) => post.user)
     post: Post[];
