@@ -1,6 +1,6 @@
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { dataSource } from "../typeorm";
-import { User } from "../../entity/User.entity";
+import { User } from "../../entity/user.entity";
 
 const userRepository = dataSource.getRepository(User);
 

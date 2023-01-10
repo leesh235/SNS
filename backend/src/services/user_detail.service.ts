@@ -1,13 +1,13 @@
 import { dataSource } from "../config/typeorm";
-import { UserInfo } from "../entity/User_Info.entity";
-import { UserAbiliy } from "../entity/User_ability";
-import { UserUniversity } from "../entity/User_university";
-import { UserSchool } from "../entity/User_school";
+import { User } from "../entity/user.entity";
+import { University } from "../entity/university";
+import { Ability } from "../entity/ability.entity";
+import { School } from "../entity/school";
 
-const userInfoRepository = dataSource.getRepository(UserInfo);
-const userAbilityRepository = dataSource.getRepository(UserAbiliy);
-const userUniversityRepository = dataSource.getRepository(UserUniversity);
-const userSchoolRepository = dataSource.getRepository(UserSchool);
+const userRepository = dataSource.getRepository(User);
+const userAbilityRepository = dataSource.getRepository(Ability);
+const userUniversityRepository = dataSource.getRepository(University);
+const userSchoolRepository = dataSource.getRepository(School);
 
 export const findInfo = async (req: any) => {
     try {
@@ -15,31 +15,20 @@ export const findInfo = async (req: any) => {
             user: { email },
         } = req;
 
-        const find = await userInfoRepository.findOne({
-            relations: { user: true },
+        const find = await userRepository.findOne({
             where: {
-                user: { email },
+                email,
             },
             select: {
-                id: true,
                 number: true,
                 address: true,
-                user: {
-                    email: true,
-                    birth: true,
-                    gender: true,
-                },
+                email: true,
+                birth: true,
+                gender: true,
             },
         });
 
-        if (find)
-            return {
-                number: find?.number,
-                address: find?.address,
-                email: find?.user.email,
-                gender: find?.user.gender,
-                birth: find?.user.birth,
-            };
+        if (find) return find;
         else
             return {
                 number: null,
@@ -92,8 +81,8 @@ export const saveAbility = async (req: any) => {
             body: { name, position, address, startDate, endDate },
         } = req;
 
-        const ability = new UserAbiliy();
-        ability.job = name;
+        const ability = new Ability();
+        ability.name = name;
         ability.position = position;
         ability.address = address;
         ability.start = startDate;
@@ -125,8 +114,8 @@ export const saveUniversity = async (req: any) => {
             body: { name, major, degree, startDate, endDate, status },
         } = req;
 
-        const university = new UserUniversity();
-        university.university = name;
+        const university = new University();
+        university.name = name;
         university.major = major;
         university.degree = degree;
         university.status = status;
@@ -161,8 +150,8 @@ export const saveSchool = async (req: any) => {
             body: { name, startDate, endDate, status },
         } = req;
 
-        const userSchool = new UserSchool();
-        userSchool.school = name;
+        const userSchool = new School();
+        userSchool.name = name;
         userSchool.status = status;
         userSchool.start = startDate;
         userSchool.end = endDate;
@@ -194,28 +183,8 @@ export const saveNumber = async (req: any) => {
             user: { email },
             body: { number },
         } = req;
-        const userInfo = new UserInfo();
-        userInfo.number = number;
-        userInfo.user = email;
 
-        const find = await userInfoRepository.findOne({
-            relations: { user: true },
-            where: {
-                user: {
-                    email,
-                },
-            },
-        });
-
-        let result: any;
-        if (find) {
-            result = await userInfoRepository.update(
-                { id: find.id },
-                { number }
-            );
-        } else {
-            result = await userInfoRepository.save(userInfo);
-        }
+        await userRepository.update({ email }, { number });
 
         return true;
     } catch (error) {
@@ -230,28 +199,8 @@ export const saveAddress = async (req: any) => {
             user: { email },
             body: { address },
         } = req;
-        const userInfo = new UserInfo();
-        userInfo.address = address;
-        userInfo.user = email;
 
-        const find = await userInfoRepository.findOne({
-            relations: { user: true },
-            where: {
-                user: {
-                    email,
-                },
-            },
-        });
-
-        let result: any;
-        if (find) {
-            result = await userInfoRepository.update(
-                { id: find.id },
-                { address }
-            );
-        } else {
-            result = await userInfoRepository.save(userInfo);
-        }
+        await userRepository.update({ email }, { address });
 
         return true;
     } catch (error) {

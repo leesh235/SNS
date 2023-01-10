@@ -1,9 +1,7 @@
 import { In, Not, Like } from "typeorm";
 import { dataSource } from "../config/typeorm";
-import { Friends } from "../entity/Friends.entity";
-import { Request_friend } from "../entity/Request_friend";
+import { Friends } from "../entity/friends.entity";
 
-const requestFriendsRepository = dataSource.getRepository(Request_friend);
 const friendsRepository = dataSource.getRepository(Friends);
 
 export const request = async (req: any) => {
@@ -15,22 +13,22 @@ export const request = async (req: any) => {
 
         const exist = await friendsRepository.findOne({
             relations: {
-                userOne: true,
-                userTwo: true,
+                requestUser: true,
+                responseUser: true,
             },
             where: [
-                { userOne: { email: friend_email } },
-                { userTwo: { email: friend_email } },
+                { requestUser: { email: friend_email } },
+                { responseUser: { email: friend_email } },
             ],
         });
 
         if (exist) return false;
 
-        const friends = new Request_friend();
-        friends.fromUser = email;
-        friends.toUser = friend_email;
+        const friends = new Friends();
+        friends.requestUser = email;
+        friends.responseUser = friend_email;
 
-        await requestFriendsRepository.save(friends);
+        await friendsRepository.save(friends);
 
         return true;
     } catch (error) {
@@ -46,26 +44,16 @@ export const response = async (req: any) => {
             user: { email },
         } = req;
 
-        const request: any = await requestFriendsRepository.findOne({
-            relations: { toUser: true, fromUser: true },
+        const request: any = await friendsRepository.findOne({
             where: { id },
             select: {
-                id: true,
-                toUser: { email: true },
-                fromUser: { email: true },
+                status: true,
             },
         });
 
-        const friend = new Friends();
-        friend.userOne = request?.fromUser.email;
-        friend.userTwo = email;
+        if (request.status) false;
 
-        await friendsRepository.save(friend);
-
-        await requestFriendsRepository.delete({
-            id,
-            toUser: { email },
-        });
+        await friendsRepository.update({ id }, { status: true });
 
         return true;
     } catch (error) {
@@ -81,9 +69,9 @@ export const refuse = async (req: any) => {
             user: { email },
         } = req;
 
-        await requestFriendsRepository.delete({
+        await friendsRepository.delete({
             id,
-            toUser: { email },
+            responseUser: { email },
         });
 
         return true;
@@ -100,8 +88,8 @@ export const get_is_friend = async (req: any) => {
         } = req;
 
         const result = await friendsRepository.findOne({
-            relations: { userOne: true, userTwo: true },
-            where: [{ userOne: { email } }, { userTwo: { email } }],
+            relations: { requestUser: true, responseUser: true },
+            where: [{ requestUser: { email } }, { responseUser: { email } }],
         });
 
         if (!result) return false;
@@ -124,18 +112,18 @@ export const findAll = async (req: any) => {
         if (select !== undefined) NotIn = select;
 
         const friendList = await friendsRepository.find({
-            relations: { userOne: true, userTwo: true },
+            relations: { requestUser: true, responseUser: true },
             where: [
                 {
-                    userOne: { email },
-                    userTwo: {
+                    requestUser: { email },
+                    responseUser: {
                         email: Not(In(NotIn)),
                         nickName: Like(`%${search}%`),
                     },
                 },
                 {
-                    userTwo: { email },
-                    userOne: {
+                    responseUser: { email },
+                    requestUser: {
                         email: Not(In(NotIn)),
                         nickName: Like(`%${search}%`),
                     },
@@ -144,8 +132,16 @@ export const findAll = async (req: any) => {
             select: {
                 id: true,
                 createdAt: true,
-                userOne: { email: true, nickName: true, profileImage: true },
-                userTwo: { email: true, nickName: true, profileImage: true },
+                requestUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+                responseUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
             },
             order: {
                 createdAt: "desc",
@@ -185,16 +181,24 @@ export const findRequest = async (req: any, mode: "request" | "response") => {
             user: { email },
         } = req;
 
-        const list = await requestFriendsRepository.find({
+        const list = await friendsRepository.find({
             relations: {
-                toUser: true,
-                fromUser: true,
+                requestUser: true,
+                responseUser: true,
             },
-            where: [{ fromUser: { email } }, { toUser: { email } }],
+            where: [{ responseUser: { email } }, { requestUser: { email } }],
             select: {
                 id: true,
-                fromUser: { email: true, nickName: true, profileImage: true },
-                toUser: { email: true, nickName: true, profileImage: true },
+                responseUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+                requestUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
             },
             order: {
                 createdAt: "desc",
@@ -226,17 +230,25 @@ export const findAllList = async (req: any) => {
             user: { email },
         } = req;
 
-        const list = await requestFriendsRepository.find({
+        const list = await friendsRepository.find({
             relations: {
-                toUser: true,
-                fromUser: true,
+                requestUser: true,
+                responseUser: true,
             },
-            where: [{ toUser: { email } }, { fromUser: { email } }],
+            where: [{ requestUser: { email } }, { responseUser: { email } }],
             select: {
                 id: true,
                 createdAt: true,
-                toUser: { email: true, nickName: true, profileImage: true },
-                fromUser: { email: true, nickName: true, profileImage: true },
+                requestUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+                responseUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
             },
             order: {
                 createdAt: "desc",
@@ -266,13 +278,21 @@ export const findAllList = async (req: any) => {
         });
 
         const friendList = await friendsRepository.find({
-            relations: { userOne: true, userTwo: true },
-            where: [{ userOne: { email } }, { userTwo: { email } }],
+            relations: { requestUser: true, responseUser: true },
+            where: [{ requestUser: { email } }, { responseUser: { email } }],
             select: {
                 id: true,
                 createdAt: true,
-                userOne: { email: true, nickName: true, profileImage: true },
-                userTwo: { email: true, nickName: true, profileImage: true },
+                requestUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+                responseUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
             },
             order: {
                 createdAt: "desc",

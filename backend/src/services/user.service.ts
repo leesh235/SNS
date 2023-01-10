@@ -1,11 +1,11 @@
 import { dataSource } from "../config/typeorm";
-import { User } from "../entity/User.entity";
-import { FileUrl } from "../entity/file_url.entity";
+import { User } from "../entity/user.entity";
+import { Files } from "../entity/files.entity";
 import { getFilePath, fileNameFunc } from "../utils/fileFunction";
 import { Like } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
-const fileRepository = dataSource.getRepository(FileUrl);
+const fileRepository = dataSource.getRepository(Files);
 
 export const user_detail = async (req: any) => {
     try {
@@ -122,31 +122,31 @@ export const getAllImages = async (req: any) => {
             query: { email },
         } = req;
 
-        const images = await fileRepository.find({
-            relations: { post: true },
-            where: {
-                post: { deletedAt: undefined, user: { email } },
-            },
-            select: {
-                post: {
-                    id: true,
-                },
-                user: {},
-                id: true,
-                fileName: true,
-                date: true,
-            },
-        });
+        // const images = await fileRepository.find({
+        //     relations: { post: true },
+        //     where: {
+        //         post: { deletedAt: undefined, user: { email } },
+        //     },
+        //     select: {
+        //         post: {
+        //             id: true,
+        //         },
+        //         user: {},
+        //         id: true,
+        //         fileName: true,
+        //         date: true,
+        //     },
+        // });
 
         let result: any[] = [];
-        images.forEach((val, idx) => {
-            const { id, post, fileName, date } = val;
-            result.push({
-                id,
-                postId: post.id,
-                url: fileNameFunc(email, { id, date, fileName }),
-            });
-        });
+        // images.forEach((val, idx) => {
+        //     const { id, post, fileName, date } = val;
+        //     result.push({
+        //         id,
+        //         postId: post.id,
+        //         url: fileNameFunc(email, { id, date, fileName }),
+        //     });
+        // });
 
         return result;
     } catch (error) {
@@ -161,31 +161,31 @@ export const getLatestImage = async (req: any) => {
             query: { email },
         } = req;
 
-        const images = await fileRepository.find({
-            relations: { post: true },
-            where: {
-                post: { deletedAt: undefined, user: { email } },
-            },
-            select: {
-                id: true,
-                fileName: true,
-                date: true,
-                post: {
-                    id: true,
-                },
-            },
-            take: 6,
-        });
+        // const images = await fileRepository.find({
+        //     relations: { post: true },
+        //     where: {
+        //         post: { deletedAt: undefined, user: { email } },
+        //     },
+        //     select: {
+        //         id: true,
+        //         fileName: true,
+        //         date: true,
+        //         post: {
+        //             id: true,
+        //         },
+        //     },
+        //     take: 6,
+        // });
 
         let result: any[] = [];
-        images.forEach((val, idx) => {
-            const { id, post, fileName, date } = val;
-            result.push({
-                id,
-                postId: post.id,
-                url: fileNameFunc(email, { id, date, fileName }),
-            });
-        });
+        // images.forEach((val, idx) => {
+        //     const { id, post, fileName, date } = val;
+        //     result.push({
+        //         id,
+        //         postId: post.id,
+        //         url: fileNameFunc(email, { id, date, fileName }),
+        //     });
+        // });
 
         return result;
     } catch (error) {

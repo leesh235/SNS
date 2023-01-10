@@ -1,6 +1,6 @@
 import { dataSource } from "../config/typeorm";
-import { User } from "../entity/User.entity";
-import { Post } from "../entity/Post.entity";
+import { User } from "../entity/user.entity";
+import { Post } from "../entity/post.entity";
 import { Like } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);

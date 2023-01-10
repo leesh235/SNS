@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { User } from "../entity/User.entity";
+import { User } from "../entity/user.entity";
 import passport from "passport";
 import { hashPassword } from "../utils/password";
 import { routes } from "../config/route";

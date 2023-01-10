@@ -1,6 +1,6 @@
 import { Strategy } from "passport-local";
 import { dataSource } from "../typeorm";
-import { User } from "../../entity/User.entity";
+import { User } from "../../entity/user.entity";
 import jwtUtil from "../../utils/jwtUtil";
 import { comparePassword } from "../../utils/password";
 import { redisClient } from "../redis";

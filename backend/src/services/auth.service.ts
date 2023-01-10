@@ -1,5 +1,5 @@
 import { dataSource } from "../config/typeorm";
-import { User } from "../entity/User.entity";
+import { User } from "../entity/user.entity";
 import jwtUtil from "../utils/jwtUtil";
 import { redisClient } from "../config/redis";
 import { CODE_EXPIRE } from "../constants/times";
