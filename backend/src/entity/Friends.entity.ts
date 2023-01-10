@@ -5,27 +5,29 @@ import {
     ManyToOne,
     JoinColumn,
     CreateDateColumn,
-    UpdateDateColumn,
 } from "typeorm";
-import { User } from "./User.entity";
+import { User } from "./user.entity";
 
 @Entity("friends")
 export class Friends {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
+
+    @Column({ default: false })
+    status!: boolean;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
-    createdAt: Date | undefined;
+    createdAt!: Date | undefined;
 
-    @ManyToOne((type) => User, (userOne) => userOne.friendOne, {
+    @ManyToOne(() => User, (user) => user.requestUser, {
         onDelete: "CASCADE",
     })
-    @JoinColumn({ name: "userOne", referencedColumnName: "email" })
-    userOne: User;
+    @JoinColumn({ name: "request_user", referencedColumnName: "email" })
+    requestUser!: User;
 
-    @ManyToOne((type) => User, (userTwo) => userTwo.friendTwo, {
+    @ManyToOne(() => User, (user) => user.responseUser, {
         onDelete: "CASCADE",
     })
-    @JoinColumn({ name: "userTwo", referencedColumnName: "email" })
-    userTwo: User;
+    @JoinColumn({ name: "response_user", referencedColumnName: "email" })
+    responseUser!: User;
 }

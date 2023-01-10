@@ -5,21 +5,21 @@ import {
     OneToOne,
     JoinColumn,
 } from "typeorm";
-import { User } from "./User.entity";
+import { User } from "./user.entity";
 
-@Entity("user_ability")
-export class UserAbiliy {
+@Entity("university")
+export class University {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({ type: "varchar", nullable: true })
-    job: string;
+    name!: string;
 
     @Column({ type: "varchar", nullable: true })
-    position: string;
+    major: string;
 
     @Column({ type: "varchar", nullable: true })
-    address: string;
+    degree: string;
 
     @Column({ type: "varchar", nullable: true })
     start: string;
@@ -27,9 +27,12 @@ export class UserAbiliy {
     @Column({ type: "varchar", nullable: true })
     end: string;
 
-    @OneToOne((type) => User, (user) => user.ability, {
+    @Column({ type: "varchar", nullable: true, default: true })
+    status: boolean;
+
+    @OneToOne((type) => User, (user) => user.university, {
         onDelete: "CASCADE",
     })
     @JoinColumn()
-    user: User;
+    user!: User;
 }

@@ -5,15 +5,15 @@ import {
     OneToOne,
     JoinColumn,
 } from "typeorm";
-import { User } from "./User.entity";
+import { User } from "./user.entity";
 
-@Entity("user_school")
-export class UserSchool {
+@Entity("school")
+export class School {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column({ type: "varchar", nullable: true })
-    school: string;
+    name!: string;
 
     @Column({ type: "varchar", nullable: true, default: true })
     status: boolean;
@@ -26,5 +26,5 @@ export class UserSchool {
 
     @OneToOne((type) => User, (user) => user.school, { onDelete: "CASCADE" })
     @JoinColumn()
-    user: User;
+    user!: User;
 }

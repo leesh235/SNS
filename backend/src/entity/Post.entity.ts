@@ -10,9 +10,9 @@ import {
     ManyToOne,
 } from "typeorm";
 import { Comment } from "./comment.entity";
-import { User } from "./User.entity";
-import { Likes } from "./Likes.entity";
-import { FileUrl } from "./file_url.entity";
+import { User } from "./user.entity";
+import { Likes } from "./likes.entity";
+import { Files } from "./files.entity";
 
 @Entity("post")
 export class Post {
@@ -20,30 +20,27 @@ export class Post {
     id!: number;
 
     @Column({ type: "varchar" })
-    contents: string;
-
-    @Column({ type: "varchar" })
-    files: string;
+    contents!: string;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
-    createdAt: Date | undefined;
+    createdAt!: Date | undefined;
 
     @UpdateDateColumn({ type: "timestamp", name: "update_date" })
-    updatedAt: Date | undefined;
+    updatedAt!: Date | undefined;
 
     @DeleteDateColumn({ type: "timestamp", name: "delete_date" })
-    deletedAt: Date | undefined;
+    deletedAt!: Date | undefined;
 
-    @OneToMany((type) => Comment, (comment) => comment.post)
+    @OneToMany(() => Comment, (comment) => comment.post)
     comment: Comment;
 
-    @OneToMany((type) => Likes, (likes) => likes.post)
+    @OneToMany(() => Likes, (likes) => likes.post)
     likes: Likes;
 
-    @OneToMany((type) => FileUrl, (fileUrl) => fileUrl.post)
-    fileUrl: FileUrl[];
+    @OneToMany(() => Files, (files) => files.user)
+    files: Files[];
 
-    @ManyToOne((type) => User, (user) => user.post, { onDelete: "CASCADE" })
+    @ManyToOne(() => User, (user) => user.post, { onDelete: "CASCADE" })
     @JoinColumn({ name: "writer", referencedColumnName: "email" })
-    user: User;
+    user!: User;
 }

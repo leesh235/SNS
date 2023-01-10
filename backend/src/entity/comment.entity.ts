@@ -8,8 +8,8 @@ import {
     JoinColumn,
     ManyToOne,
 } from "typeorm";
-import { Post } from "./Post.entity";
-import { User } from "./User.entity";
+import { Post } from "./post.entity";
+import { User } from "./user.entity";
 
 @Entity("comment")
 export class Comment {
@@ -20,25 +20,23 @@ export class Comment {
     contents!: string;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
-    createdAt: Date | undefined;
+    createdAt!: Date | undefined;
 
     @UpdateDateColumn({ type: "timestamp", name: "update_date" })
-    updatedAt: Date | undefined;
+    updatedAt!: Date | undefined;
 
     @DeleteDateColumn({ type: "timestamp", name: "delete_date" })
-    deletedAt: Date | undefined;
+    deletedAt!: Date | undefined;
 
     @ManyToOne((type) => Post, (post) => post.comment, {
-        nullable: false,
         onDelete: "CASCADE",
     })
-    @JoinColumn({ name: "postId", referencedColumnName: "id" })
-    post: Post;
+    @JoinColumn({ name: "post_id", referencedColumnName: "id" })
+    post!: Post;
 
-    @ManyToOne((type) => User, (user) => user.comment, {
-        nullable: false,
+    @ManyToOne(() => User, (user) => user.comment, {
         onDelete: "CASCADE",
     })
     @JoinColumn({ name: "writer", referencedColumnName: "email" })
-    user: User;
+    user!: User;
 }

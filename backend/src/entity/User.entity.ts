@@ -9,16 +9,13 @@ import {
     PrimaryColumn,
 } from "typeorm";
 import { Gender } from "../config/enums";
-import { UserInfo } from "./User_Info.entity";
-import { Friends } from "./Friends.entity";
-import { Post } from "./Post.entity";
+import { Friends } from "./friends.entity";
+import { Post } from "./post.entity";
 import { Comment } from "./comment.entity";
-import { Likes } from "./Likes.entity";
-import { FileUrl } from "./file_url.entity";
-import { Request_friend } from "./Request_friend";
-import { UserAbiliy } from "./User_ability";
-import { UserUniversity } from "./User_university";
-import { UserSchool } from "./User_school";
+import { Likes } from "./likes.entity";
+import { School } from "./school";
+import { University } from "./university";
+import { Files } from "./files.entity";
 
 @Entity("user")
 export class User {
@@ -48,10 +45,16 @@ export class User {
     introduction: string;
 
     @Column({ type: "varchar", nullable: true })
-    coverImage: string;
+    number: string;
 
     @Column({ type: "varchar", nullable: true })
-    profileImage: string;
+    address: string;
+
+    @Column({ type: "varchar", name: "cover_img", nullable: true })
+    coverImage: string;
+
+    @Column({ type: "varchar", name: "profile_img", nullable: true })
+    profileImg: string;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
     createdAt: Date | undefined;
@@ -62,39 +65,27 @@ export class User {
     @DeleteDateColumn({ type: "timestamp", name: "delete_date" })
     deletedAt: Date | undefined;
 
-    @OneToOne((type) => UserInfo, (userInfo) => userInfo.user)
-    userInfo: UserInfo;
+    @OneToOne(() => School, (school) => school.user)
+    school: School;
 
-    @OneToOne((type) => UserInfo, (ability) => ability.user)
-    ability: UserAbiliy;
+    @OneToOne(() => University, (university) => university.user)
+    university: University;
 
-    @OneToOne((type) => UserInfo, (university) => university.user)
-    university: UserUniversity;
-
-    @OneToOne((type) => UserInfo, (school) => school.user)
-    school: UserSchool;
-
-    @OneToMany((type) => Post, (post) => post.user)
+    @OneToMany(() => Post, (post) => post.user)
     post: Post[];
 
-    @OneToMany((type) => Post, (comment) => comment.user)
+    @OneToMany(() => Comment, (comment) => comment.user)
     comment: Comment[];
 
-    @OneToMany((type) => Likes, (likes) => likes.user)
+    @OneToMany(() => Likes, (likes) => likes.user)
     likes: Likes[];
 
-    @OneToMany((type) => FileUrl, (fileUrl) => fileUrl.user)
-    fileUrl: FileUrl[];
+    @OneToMany(() => Files, (files) => files.user)
+    files: Files[];
 
-    @OneToMany((type) => Request_friend, (fromFriend) => fromFriend.fromUser)
-    fromFriend: Request_friend[];
+    @OneToMany(() => Friends, (friends) => friends.requestUser)
+    requestUser: Friends[];
 
-    @OneToMany((type) => Request_friend, (toFriend) => toFriend.toUser)
-    toFriend: Request_friend[];
-
-    @OneToMany((type) => Friends, (friendOne) => friendOne.userOne)
-    friendOne: Friends[];
-
-    @OneToMany((type) => Friends, (friendTwo) => friendTwo.userTwo)
-    friendTwo: Friends[];
+    @OneToMany(() => Friends, (friends) => friends.responseUser)
+    responseUser: Friends[];
 }

@@ -1,24 +1,17 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    ManyToOne,
-    JoinColumn,
-} from "typeorm";
-import { LikeStatus } from "../config/enums";
-import { Post } from "./Post.entity";
-import { User } from "./User.entity";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Post } from "./post.entity";
+import { User } from "./user.entity";
 
 @Entity("likes")
 export class Likes {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @ManyToOne((type) => Post, (post) => post.likes, { onDelete: "CASCADE" })
-    @JoinColumn({ name: "postId", referencedColumnName: "id" })
-    post: Post;
+    @ManyToOne(() => Post, (post) => post.likes, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "post_id", referencedColumnName: "id" })
+    post!: Post;
 
-    @ManyToOne((type) => User, (user) => user.likes, { onDelete: "CASCADE" })
-    @JoinColumn({ name: "userId", referencedColumnName: "email" })
-    user: User;
+    @ManyToOne(() => User, (user) => user.likes, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "user_id", referencedColumnName: "email" })
+    user!: User;
 }
