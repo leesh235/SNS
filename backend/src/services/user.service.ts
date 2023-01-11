@@ -1,17 +1,30 @@
 import { dataSource } from "../config/typeorm";
 import { User } from "../entity/user.entity";
+import { University } from "../entity/university.entity";
+import { Ability } from "../entity/ability.entity";
+import { School } from "../entity/school.entity";
+import { Post } from "../entity/post.entity";
 import { Files } from "../entity/files.entity";
-import { getFilePath, fileNameFunc } from "../utils/fileFunction";
-import { Like } from "typeorm";
+import { Likes } from "../entity/likes.entity";
+import { Comment } from "../entity/comment.entity";
+import { IsNull, Not } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
-const fileRepository = dataSource.getRepository(Files);
+const abilityRepository = dataSource.getRepository(Ability);
+const universityRepository = dataSource.getRepository(University);
+const schoolRepository = dataSource.getRepository(School);
+const postRepository = dataSource.getRepository(Post);
+const filesRepository = dataSource.getRepository(Files);
+const likesRepository = dataSource.getRepository(Likes);
+const commentRepository = dataSource.getRepository(Comment);
 
-export const user_detail = async (req: any) => {
+export const getProfile = async (req: any) => {
     try {
-        const { email } = req.query;
+        const {
+            query: { email },
+        } = req;
 
-        const result = await userRepository.findOne({
+        const find = await userRepository.findOne({
             where: {
                 email,
                 deletedAt: undefined,
@@ -19,208 +32,121 @@ export const user_detail = async (req: any) => {
             select: {
                 email: true,
                 nickName: true,
-                birth: true,
                 coverImage: true,
                 profileImage: true,
+                introduce: true,
                 gender: true,
+                birth: true,
                 createdAt: true,
-                introduction: true,
             },
         });
 
-        return result;
+        return { ok: true, data: find };
     } catch (error) {
-        console.log(error);
-        return {};
+        return { ok: false, data: error };
     }
 };
 
-export const save_image = async (req: any) => {
-    try {
-        const {
-            user,
-            body: { mode },
-        } = req;
-
-        let setData = {};
-
-        if (mode === "profile") {
-            setData = { profileImage: getFilePath(req) };
-        } else if (mode === "cover") {
-            setData = { coverImage: getFilePath(req) };
-        } else {
-            return false;
-        }
-
-        await dataSource
-            .createQueryBuilder()
-            .update(User)
-            .set(setData)
-            .where({ email: user.email })
-            .execute();
-
-        return true;
-    } catch (error) {
-        return false;
-    }
-};
-
-export const save_introduce = async (req: any) => {
-    try {
-        const {
-            user,
-            body: { introduce },
-        } = req;
-
-        await dataSource
-            .createQueryBuilder()
-            .update(User)
-            .set({ introduction: introduce })
-            .where({ email: user.email })
-            .execute();
-
-        return true;
-    } catch (error) {
-        console.log(error);
-        return false;
-    }
-};
-
-export const getUserImage = async (req: any) => {
-    try {
-        const {
-            user,
-            body: { mode },
-        } = req;
-
-        let select = {};
-
-        if (mode === "profile") {
-            select = { profileImage: true };
-        } else if (mode === "cover") {
-            select = { coverImage: true };
-        }
-
-        const findUser = await userRepository.findOne({
-            where: [
-                { email: user.email },
-                {
-                    deletedAt: undefined,
-                },
-            ],
-            select,
-        });
-        return findUser;
-    } catch (error) {
-        return null;
-    }
-};
-
-export const getAllImages = async (req: any) => {
+export const getInfo = async (req: any) => {
     try {
         const {
             query: { email },
         } = req;
 
-        // const images = await fileRepository.find({
-        //     relations: { post: true },
-        //     where: {
-        //         post: { deletedAt: undefined, user: { email } },
-        //     },
-        //     select: {
-        //         post: {
-        //             id: true,
-        //         },
-        //         user: {},
-        //         id: true,
-        //         fileName: true,
-        //         date: true,
-        //     },
-        // });
-
-        let result: any[] = [];
-        // images.forEach((val, idx) => {
-        //     const { id, post, fileName, date } = val;
-        //     result.push({
-        //         id,
-        //         postId: post.id,
-        //         url: fileNameFunc(email, { id, date, fileName }),
-        //     });
-        // });
-
-        return result;
-    } catch (error) {
-        console.log(error);
-        return [];
-    }
-};
-
-export const getLatestImage = async (req: any) => {
-    try {
-        const {
-            query: { email },
-        } = req;
-
-        // const images = await fileRepository.find({
-        //     relations: { post: true },
-        //     where: {
-        //         post: { deletedAt: undefined, user: { email } },
-        //     },
-        //     select: {
-        //         id: true,
-        //         fileName: true,
-        //         date: true,
-        //         post: {
-        //             id: true,
-        //         },
-        //     },
-        //     take: 6,
-        // });
-
-        let result: any[] = [];
-        // images.forEach((val, idx) => {
-        //     const { id, post, fileName, date } = val;
-        //     result.push({
-        //         id,
-        //         postId: post.id,
-        //         url: fileNameFunc(email, { id, date, fileName }),
-        //     });
-        // });
-
-        return result;
-    } catch (error) {
-        console.log(error);
-        return [];
-    }
-};
-
-export const getPeople = async (req: any) => {
-    try {
-        const { name } = req.query;
-
-        let where = {};
-        if (name) {
-            where = {
-                deletedAt: undefined,
-                nickName: Like(`%${name}%`),
-            };
-        } else {
-            where = {
-                deletedAt: undefined,
-            };
-        }
-
-        const people = await userRepository.find({
-            where,
+        const ability = await abilityRepository.findOne({
+            where: { user: { email } },
             select: {
-                email: true,
-                nickName: true,
-                profileImage: true,
+                id: true,
+                name: true,
+                position: true,
+                address: true,
+                start: true,
+                end: true,
+            },
+        });
+        const university = await universityRepository.findOne({
+            where: { user: { email } },
+            select: {
+                id: true,
+                name: true,
+                major: true,
+                degree: true,
+                start: true,
+                end: true,
+            },
+        });
+        const school = await schoolRepository.findOne({
+            where: { user: { email } },
+            select: {
+                id: true,
+                name: true,
+                status: true,
+                start: true,
+                end: true,
             },
         });
 
-        return people;
+        return { ok: true, data: { ability, school, university } };
     } catch (error) {
-        return [];
+        return { ok: false, data: error };
+    }
+};
+
+//수정예정
+export const getPosts = async (req: any) => {
+    try {
+        const {
+            query: { email },
+            body: { take },
+        } = req;
+
+        const posts = await postRepository.find({
+            relations: {
+                comment: true,
+                likes: true,
+                files: true,
+            },
+            where: { user: { email }, deletedAt: undefined },
+            select: {
+                id: true,
+                contents: true,
+                createdAt: true,
+                comment: { id: true },
+                likes: { id: true },
+                files: { id: true, imageUrl: true },
+            },
+            take,
+        });
+
+        return { ok: true, data: posts };
+    } catch (error) {
+        return { ok: false, data: error };
+    }
+};
+
+export const getImages = async (req: any) => {
+    try {
+        const {
+            query: { email },
+        } = req;
+
+        const files = await filesRepository.find({
+            where: { user: { email }, post: { id: Not(IsNull()) } },
+            select: {
+                id: true,
+                imageUrl: true,
+                post: {
+                    id: true,
+                },
+            },
+        });
+
+        const returnValue: any[] = files.map((file) => {
+            return { id: file.id, url: file.imageUrl, postId: file.post.id };
+        });
+
+        return { ok: true, data: returnValue };
+    } catch (error) {
+        return { ok: false, data: error };
     }
 };
