@@ -29,7 +29,7 @@ export default async ({ app }: { app: express.Application }) => {
     app.use(passport);
 
     app.use(`${baseRoutes.auth}`, auth);
-    app.use(`${baseRoutes.image}`, image);
+    app.use(`${baseRoutes.image}`, jwt_authenticate, image);
     app.use(`${baseRoutes.user}`, jwt_authenticate, user);
     app.use(`${baseRoutes.user_detail}`, jwt_authenticate, userDetail);
     app.use(`${baseRoutes.post}`, jwt_authenticate, post);
