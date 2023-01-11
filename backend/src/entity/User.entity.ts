@@ -44,7 +44,7 @@ export class User {
     birth!: string;
 
     @Column({ type: "varchar", nullable: true })
-    introduction: string;
+    introduce: string;
 
     @Column({ type: "varchar", nullable: true })
     number: string;
