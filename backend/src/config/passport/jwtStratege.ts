@@ -29,6 +29,7 @@ const jwtVerify = async (payload: any, done: any) => {
                 introduction: true,
                 coverImage: true,
                 profileImage: true,
+                grade: true,
             },
         });
 
