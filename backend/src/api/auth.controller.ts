@@ -65,13 +65,18 @@ router.post(routes.auth.join, async (req: Request, res: Response) => {
         user.gender = req.body.gender;
         user.nickName = req.body.firstName + req.body.secondName;
 
-        if (!existUser(user)) {
-            res.status(409).send({ message: `이미 존재하는 계정입니다.` });
-        }
+        if (!existUser(user))
+            return res
+                .status(409)
+                .send({ message: `이미 존재하는 계정입니다.` });
 
-        res.status(200).send({ accessToken: await save(user) });
+        const result = await save(user);
+
+        if (!result.ok) return res.status(400).send({ message: result.data });
+
+        return res.status(200).send({ accessToken: result.data });
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 

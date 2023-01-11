@@ -29,9 +29,10 @@ export const save = async (user: User) => {
     try {
         const result = await userRepository.save(user);
         const accessToken = jwtUtil.access(result.email, result.nickName);
-        return accessToken;
+
+        return { ok: true, data: accessToken };
     } catch (error) {
-        return false;
+        return { ok: false, date: error };
     }
 };
 
