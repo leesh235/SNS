@@ -15,7 +15,7 @@ import {
 const router = express.Router();
 
 //유저 프로필
-router.get(routes.user.profile, async (req, res) => {
+router.get(routes.profile.profile, async (req, res) => {
     try {
         res.status(200).send(req.user);
     } catch (error) {
@@ -24,7 +24,7 @@ router.get(routes.user.profile, async (req, res) => {
 });
 
 //유저 프로필 ****************************삭제
-router.get(routes.user.login_info, async (req, res) => {
+router.get(routes.profile.login_info, async (req, res) => {
     try {
         res.status(200).send(req.user);
     } catch (error) {
@@ -33,7 +33,7 @@ router.get(routes.user.login_info, async (req, res) => {
 });
 
 //커버 사진 등록
-router.post(routes.user.coverimage, async (req, res) => {
+router.post(routes.profile.coverimage, async (req, res) => {
     try {
         res.status(200).send(await saveCoverImage(req));
     } catch (error) {
@@ -42,7 +42,7 @@ router.post(routes.user.coverimage, async (req, res) => {
 });
 
 //프로필 사진 등록
-router.post(routes.user.profileimage, async (req, res) => {
+router.post(routes.profile.profileimage, async (req, res) => {
     try {
         res.status(200).send(await saveProfileImage(req));
     } catch (error) {
@@ -51,7 +51,7 @@ router.post(routes.user.profileimage, async (req, res) => {
 });
 
 //프로필 정보 변경(소개글, 폰넘버)
-router.patch(routes.user.introduce, async (req, res) => {
+router.patch(routes.profile.introduce, async (req, res) => {
     try {
         res.status(200).send(await saveIntroduce(req));
     } catch (error) {
@@ -60,7 +60,7 @@ router.patch(routes.user.introduce, async (req, res) => {
 });
 
 //프로필 직업 추가/수정
-router.post(routes.user.ability, async (req, res) => {
+router.post(routes.profile.ability, async (req, res) => {
     try {
         res.status(200).send(await saveAbility(req));
     } catch (error) {
@@ -69,7 +69,7 @@ router.post(routes.user.ability, async (req, res) => {
 });
 
 //프로필 직업 삭제
-router.delete(routes.user.ability, async (req, res) => {
+router.delete(routes.profile.ability, async (req, res) => {
     try {
         res.status(200).send(await removeAbility(req));
     } catch (error) {
@@ -78,7 +78,7 @@ router.delete(routes.user.ability, async (req, res) => {
 });
 
 //프로필 고등학교 관련 api
-router.post(routes.user.school, async (req, res) => {
+router.post(routes.profile.school, async (req, res) => {
     try {
         res.status(200).send(await saveSchool(req));
     } catch (error) {
@@ -86,7 +86,7 @@ router.post(routes.user.school, async (req, res) => {
     }
 });
 
-router.patch(routes.user.school, async (req, res) => {
+router.patch(routes.profile.school, async (req, res) => {
     try {
         res.status(200).send(await removeSchool(req));
     } catch (error) {
@@ -94,7 +94,7 @@ router.patch(routes.user.school, async (req, res) => {
     }
 });
 
-router.delete(routes.user.school, async (req, res) => {
+router.delete(routes.profile.school, async (req, res) => {
     try {
         res.status(200).send();
     } catch (error) {
@@ -103,7 +103,7 @@ router.delete(routes.user.school, async (req, res) => {
 });
 
 //프로필 대학교 관련 api
-router.post(routes.user.university, async (req, res) => {
+router.post(routes.profile.university, async (req, res) => {
     try {
         res.status(200).send(await saveUniversity(req));
     } catch (error) {
@@ -111,7 +111,7 @@ router.post(routes.user.university, async (req, res) => {
     }
 });
 
-router.delete(routes.user.university, async (req, res) => {
+router.delete(routes.profile.university, async (req, res) => {
     try {
         res.status(200).send(await removeUniversity(req));
     } catch (error) {
