@@ -1,13 +1,13 @@
 import { dataSource } from "../config/typeorm";
-import { Post } from "../entity/Post.entity";
-import { Likes } from "../entity/Likes.entity";
-import { FileUrl } from "../entity/file_url.entity";
+import { Post } from "../entity/post.entity";
+import { Likes } from "../entity/likes.entity";
+import { Files } from "../entity/files.entity";
 import { deleteFile, fileNameFunc } from "../utils/fileFunction";
 import { In, IsNull } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
-const fileRepository = dataSource.getRepository(FileUrl);
+const fileRepository = dataSource.getRepository(Files);
 
 export const find = async (req: any, paramId?: number) => {
     try {
@@ -15,13 +15,12 @@ export const find = async (req: any, paramId?: number) => {
             query: { postId },
             user: { email },
         } = req;
-        const id = Number(postId) || paramId;
+        const id = Number(postId);
 
         const post = await postRepository.findOne({
             relations: {
                 user: true,
                 likes: true,
-                fileUrl: true,
                 comment: true,
             },
             where: {
@@ -46,11 +45,6 @@ export const find = async (req: any, paramId?: number) => {
                         email: true,
                     },
                 },
-                fileUrl: {
-                    id: true,
-                    fileName: true,
-                    date: true,
-                },
             },
             order: {
                 createdAt: "desc",
@@ -70,12 +64,12 @@ export const find = async (req: any, paramId?: number) => {
 
         if (post) {
             let images: any[] = [];
-            post.fileUrl.forEach((val, idx) => {
-                images.push({
-                    id: val.id,
-                    url: fileNameFunc(email, val),
-                });
-            });
+            // post.fileUrl.forEach((val, idx) => {
+            //     images.push({
+            //         id: val.id,
+            //         url: fileNameFunc(email, val),
+            //     });
+            // });
             let result = {
                 postId: post.id,
                 userId: post.user.email,
@@ -103,7 +97,7 @@ export const find = async (req: any, paramId?: number) => {
 export const save = async (req: any) => {
     try {
         const {
-            user: { email },
+            user: { email, nickName, profileImage },
             body: { contents, date },
         } = req;
         const post = new Post();
@@ -113,12 +107,24 @@ export const save = async (req: any) => {
 
         const postSave = await postRepository.save(post);
 
-        await fileRepository.update(
-            { user: { email }, date },
-            { post: { id: postSave.id } }
-        );
+        // await fileRepository.update(
+        //     { user: { email }, date },
+        //     { post: { id: postSave.id } }
+        // );
 
-        let result: any = await find(req, postSave.id);
+        const result: any = {
+            postId: postSave.id,
+            userId: email,
+            writer: nickName,
+            profileImage,
+            contents,
+            createdAt: postSave.createdAt,
+            images: [],
+            files: postSave.files,
+            likequantity: 0,
+            commentquantity: 0,
+            likeStatus: false,
+        };
 
         return { [postSave.id]: result };
     } catch (error) {
@@ -143,26 +149,24 @@ export const modify = async (req: any) => {
             const idArr = images.map((val: { id: number; url: string }) => {
                 return val.id;
             });
-            const result = await fileRepository.delete({
-                user: { email },
-                post: { id },
-                id: In(idArr),
-            });
-            console.log("result: ", result);
+            // await fileRepository.delete({
+            //     user: { email },
+            //     post: { id },
+            //     id: In(idArr),
+            // });
         }
 
         if (files) {
-            await fileRepository.update(
-                { user: { email }, date, post: { id: IsNull() } },
-                { post: { id } }
-            );
+            // await fileRepository.update(
+            //     { user: { email }, date, post: { id: IsNull() } },
+            //     { post: { id } }
+            // );
         }
 
         let result: any = await find(req, id);
 
         return { id: [id], data: result };
     } catch (error) {
-        console.log("modify: ", error);
         return false;
     }
 };
@@ -257,10 +261,10 @@ export const save_file = async (req: any, fileName: string) => {
             body: { date },
         } = req;
 
-        const files = new FileUrl();
+        const files = new Files();
         files.fileName = fileName;
-        files.user = email;
-        files.date = date;
+        // files.user = email;
+        // files.date = date;
 
         const result = await fileRepository.save(files);
         req.fileId = result.id;

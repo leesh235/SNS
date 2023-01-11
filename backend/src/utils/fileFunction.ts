@@ -44,19 +44,20 @@ export const mikdirPosts = (req: any) => {
     }
 };
 
-export const deleteFile = (images: any) => {
-    console.log(images);
-    images.forEach((url: any) => {
-        let imgPath = `${process.env.POST_PATH}${url.url.split("5000")[1]}`;
-        let dirId = url.url.split("/")[4];
-        let dirPath = `${imgPath.split(dirId)[0]}${dirId}`;
-        if (fs.readFileSync(imgPath)) {
-            fs.unlinkSync(imgPath);
-        }
-        if (fs.readdirSync(dirPath).length === 0) {
-            fs.removeSync(dirPath);
-        }
-    });
+export const deleteFile = (files: any) => {
+    const dirPath = `${files[0].destination}`;
+    if (fs.readdirSync(dirPath).length === 0) {
+        fs.removeSync(dirPath);
+        return false;
+    } else {
+        files.forEach((file: any) => {
+            const imgPath = `${file.destination}/${file.fileName}`;
+            if (fs.readFileSync(imgPath)) {
+                fs.unlinkSync(imgPath);
+            }
+        });
+        return true;
+    }
 };
 
 export const fileNameFunc = (

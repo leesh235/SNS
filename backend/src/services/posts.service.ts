@@ -1,6 +1,6 @@
 import { dataSource } from "../config/typeorm";
-import { Post } from "../entity/Post.entity";
-import { Likes } from "../entity/Likes.entity";
+import { Post } from "../entity/post.entity";
+import { Likes } from "../entity/likes.entity";
 import { PostMode } from "../config/enums";
 import { findAllModeUtil } from "../utils/typeormUtil";
 import { fileNameFunc } from "../utils/fileFunction";
@@ -21,7 +21,7 @@ export const findDetails = async (req: any, mode?: PostMode) => {
             relations: {
                 user: true,
                 likes: true,
-                fileUrl: true,
+                // fileUrl: true,
                 comment: true,
             },
             where,
@@ -44,11 +44,11 @@ export const findDetails = async (req: any, mode?: PostMode) => {
                         email: true,
                     },
                 },
-                fileUrl: {
-                    id: true,
-                    fileName: true,
-                    date: true,
-                },
+                // fileUrl: {
+                //     id: true,
+                //     fileName: true,
+                //     date: true,
+                // },
             },
             order: {
                 id: "desc",
@@ -130,7 +130,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
             relations: {
                 user: true,
                 likes: true,
-                fileUrl: true,
+                // fileUrl: true,
                 comment: true,
             },
             where,
@@ -141,7 +141,7 @@ export const findAll = async (req: any, mode?: PostMode) => {
             select: {
                 id: true,
                 user: {},
-                fileUrl: {},
+                // fileUrl: {},
                 likes: {},
                 comment: {},
             },
@@ -168,7 +168,7 @@ export const user_posts = async (req: any) => {
             relations: {
                 user: true,
                 likes: true,
-                fileUrl: true,
+                // fileUrl: true,
                 comment: true,
             },
             where: {
@@ -193,9 +193,9 @@ export const user_posts = async (req: any) => {
                 likes: {
                     id: true,
                 },
-                fileUrl: {
-                    fileName: true,
-                },
+                // fileUrl: {
+                //     fileName: true,
+                // },
             },
         });
 

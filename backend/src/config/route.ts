@@ -44,12 +44,13 @@ export const routes = {
         people: "/people",
     },
     image: {
-        set: "/",
+        single: "/",
         array: "/array",
+        remove: "/",
     },
     post: {
         get: "/",
-        set: "/",
+        set: "/write",
         modify: "/",
         delete: "/",
         like: "/like",

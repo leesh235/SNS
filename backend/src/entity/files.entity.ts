@@ -4,6 +4,7 @@ import {
     Column,
     ManyToOne,
     JoinColumn,
+    CreateDateColumn,
 } from "typeorm";
 import { User } from "./user.entity";
 import { Post } from "./post.entity";
@@ -20,7 +21,13 @@ export class Files {
     originamName!: string;
 
     @Column({ type: "varchar", nullable: false })
+    destination!: string;
+
+    @Column({ type: "varchar", nullable: false })
     imageUrl!: string;
+
+    @CreateDateColumn({ type: "timestamp", name: "create_date" })
+    createdAt!: Date;
 
     @ManyToOne(() => User, (user) => user.post, { onDelete: "CASCADE" })
     @JoinColumn({ name: "user_id", referencedColumnName: "email" })

@@ -1,10 +1,12 @@
 import multer from "multer";
-import { User } from "../entity/User.entity";
+import path from "path";
+import fs from "fs-extra";
+import { v4 as uuidv4 } from "uuid";
+import { User } from "../entity/user.entity";
 import { existFile, mikdirPosts } from "../utils/fileFunction";
 import { save_file } from "../services/post.service";
-import path from "path";
 
-let storage = multer.diskStorage({
+let storages = multer.diskStorage({
     destination: (req, file, cb) => {
         const { email } = req.user as User;
         existFile(req, file);
@@ -30,5 +32,27 @@ let postStorage = multer.diskStorage({
     },
 });
 
-export let upload = multer({ storage: storage });
+export let upload = multer({ storage: storages });
 export let postUpload = multer({ storage: postStorage });
+
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const date = new Date();
+        const yearDir = `${process.env.FILE_PATH}/${date.getFullYear()}`;
+        const fileDir = `${process.env.FILE_PATH}/${date.getFullYear()}/${
+            date.getMonth() + 1
+        }`;
+
+        if (!fs.existsSync(yearDir)) fs.mkdirSync(yearDir);
+        if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir);
+
+        cb(null, fileDir);
+    },
+    filename: (req, file, cb) => {
+        const uuid = uuidv4();
+        const ext = path.extname(file.originalname);
+        cb(null, `${uuid}.${ext}`);
+    },
+});
+
+export let uploads = multer({ storage: storage });

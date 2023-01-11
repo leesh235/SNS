@@ -13,6 +13,7 @@ import chatting from "../api/chatting.controller";
 import search from "../api/search.controller";
 import friends from "../api/friend.controller";
 import userDetail from "../api/user_detail.controller";
+import image from "../api/image.controller";
 //middleware
 import { corsOptions } from "../config/cors";
 import passport, { jwt_authenticate } from "../config/passport";
@@ -28,6 +29,7 @@ export default async ({ app }: { app: express.Application }) => {
     app.use(passport);
 
     app.use(`${baseRoutes.auth}`, auth);
+    app.use(`${baseRoutes.image}`, image);
     app.use(`${baseRoutes.user}`, jwt_authenticate, user);
     app.use(`${baseRoutes.user_detail}`, jwt_authenticate, userDetail);
     app.use(`${baseRoutes.post}`, jwt_authenticate, post);
