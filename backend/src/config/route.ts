@@ -38,15 +38,14 @@ export const routes = {
         login_info: "/login_info",
         set_image: "/image",
         set_introduce: "/introduce",
-        friends: "/friends",
-        all_image: "/all_image",
-        latest_image: "/latest_image",
         people: "/people",
     },
     image: {
         single: "/",
         array: "/array",
         remove: "/",
+        latest: "/latest",
+        all: "/all",
     },
     post: {
         get: "/",
