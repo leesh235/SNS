@@ -8,7 +8,7 @@ import {
     OneToMany,
     PrimaryColumn,
 } from "typeorm";
-import { Gender } from "../config/enums";
+import { Gender, Grade } from "../config/enums";
 import { Friends } from "./friends.entity";
 import { Post } from "./post.entity";
 import { Comment } from "./comment.entity";
@@ -32,7 +32,8 @@ export class User {
     @Column({
         type: "enum",
         nullable: false,
-        enum: Gender,
+        enum: Grade,
+        default: Grade.USER,
     })
     gender!: Gender;
 
@@ -56,6 +57,9 @@ export class User {
 
     @Column({ type: "varchar", name: "profile_img", nullable: true })
     profileImage: string;
+
+    @Column({ type: "enum", nullable: false, enum: Gender })
+    grade: string;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
     createdAt: Date | undefined;
