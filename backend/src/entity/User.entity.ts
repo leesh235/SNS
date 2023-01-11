@@ -32,8 +32,7 @@ export class User {
     @Column({
         type: "enum",
         nullable: false,
-        enum: Grade,
-        default: Grade.USER,
+        enum: Gender,
     })
     gender!: Gender;
 
@@ -58,7 +57,7 @@ export class User {
     @Column({ type: "varchar", name: "profile_img", nullable: true })
     profileImage: string;
 
-    @Column({ type: "enum", nullable: false, enum: Gender })
+    @Column({ type: "enum", nullable: false, enum: Grade, default: Grade.USER })
     grade: string;
 
     @CreateDateColumn({ type: "timestamp", name: "create_date" })
