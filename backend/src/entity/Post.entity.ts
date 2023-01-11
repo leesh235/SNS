@@ -37,7 +37,7 @@ export class Post {
     @OneToMany(() => Likes, (likes) => likes.post)
     likes: Likes;
 
-    @OneToMany(() => Files, (files) => files.user)
+    @OneToMany(() => Files, (files) => files.post)
     files: Files[];
 
     @ManyToOne(() => User, (user) => user.post, { onDelete: "CASCADE" })
