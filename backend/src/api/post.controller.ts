@@ -1,6 +1,5 @@
 import express from "express";
 import { find, save, setLike, modify, remove } from "../services/post.service";
-import { postUpload } from "../config/multer";
 import { routes } from "../config/route";
 
 const router = express.Router();
@@ -8,40 +7,45 @@ const router = express.Router();
 //해당 게시글
 router.get(routes.post.get, async (req, res) => {
     try {
-        const post = await find(req);
-        if (post !== null) {
-            res.status(200).send(post);
-        } else {
-            res.status(404).send({ message: `존재하지 않으 게시글입니다.` });
-        }
+        const result = await find(req);
+
+        return res.status(200).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //게시글 작성
-router.post(routes.post.set, postUpload.array("images"), async (req, res) => {
+router.post(routes.post.write, async (req, res) => {
     try {
-        res.status(200).send(await save(req));
+        const result = await save(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(204).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //게시글 수정
-router.put(routes.post.modify, postUpload.array("images"), async (req, res) => {
+router.patch(routes.post.modify, async (req, res) => {
     try {
-        console.log(req.files);
-        res.status(200).send(await modify(req));
+        const result = await modify(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(204).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //게시글 삭제
-router.delete(routes.post.delete, async (req, res) => {
+router.delete(routes.post.remove, async (req, res) => {
     try {
-        res.status(200).send(await remove(req));
+        const result = await remove(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(204).send(result.data);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -51,7 +55,9 @@ router.delete(routes.post.delete, async (req, res) => {
 router.post(routes.post.like, async (req, res) => {
     try {
         const result = await setLike(req);
-        res.status(200).send({ ...result });
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(204).send(result.data);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

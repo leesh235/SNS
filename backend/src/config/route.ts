@@ -23,7 +23,7 @@ export const routes = {
     },
     user: {
         detail: "/",
-        posts: "/post/",
+        posts: "/posts/",
         images: "/images/",
         info: "/info/",
     },
@@ -46,10 +46,10 @@ export const routes = {
         all: "/all",
     },
     post: {
-        get: "/",
-        set: "/write",
+        write: "/",
         modify: "/",
-        delete: "/",
+        get: "/",
+        remove: "/",
         like: "/like",
     },
     posts: {
