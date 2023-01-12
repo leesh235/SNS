@@ -22,17 +22,29 @@ export class Post {
     @Column({ type: "varchar" })
     contents!: string;
 
-    @CreateDateColumn({ type: "timestamp", name: "create_date" })
-    createdAt!: Date | undefined;
+    @CreateDateColumn({
+        type: "timestamp",
+        name: "create_date",
+        nullable: true,
+    })
+    createdAt!: Date;
 
-    @UpdateDateColumn({ type: "timestamp", name: "update_date" })
-    updatedAt!: Date | undefined;
+    @UpdateDateColumn({
+        type: "timestamp",
+        name: "update_date",
+        nullable: true,
+    })
+    updatedAt!: Date;
 
-    @DeleteDateColumn({ type: "timestamp", name: "delete_date" })
-    deletedAt!: Date | undefined;
+    @DeleteDateColumn({
+        type: "timestamp",
+        name: "delete_date",
+        nullable: true,
+    })
+    deletedAt!: Date;
 
     @OneToMany(() => Comment, (comment) => comment.post)
-    comment: Comment;
+    comment: Comment[];
 
     @OneToMany(() => Likes, (likes) => likes.post)
     likes: Likes;
