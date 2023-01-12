@@ -2,6 +2,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs-extra";
 import { v4 as uuidv4 } from "uuid";
+import { mikdirUtil } from "../utils/fileUtil";
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -11,8 +12,8 @@ let storage = multer.diskStorage({
             date.getMonth() + 1
         }`;
 
-        if (!fs.existsSync(yearDir)) fs.mkdirSync(yearDir);
-        if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir);
+        mikdirUtil(yearDir);
+        mikdirUtil(fileDir);
 
         cb(null, fileDir);
     },

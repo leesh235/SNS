@@ -1,7 +1,7 @@
 import { Between, IsNull } from "typeorm";
 import { dataSource } from "../config/typeorm";
 import { Files } from "../entity/files.entity";
-import { deleteFile } from "../utils/fileFunction";
+import { deleteFileUtil } from "../utils/fileUtil";
 import { lastDayList } from "../utils/dateUtil";
 import { Grade } from "../config/enums";
 
@@ -128,7 +128,7 @@ export const remove = async (req: any) => {
             },
         });
 
-        if (!deleteFile(find)) return false;
+        if (!deleteFileUtil(find)) return false;
 
         await fileRepository.delete({
             user: { email: IsNull() },
