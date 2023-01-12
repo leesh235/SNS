@@ -53,18 +53,11 @@ export const routes = {
         like: "/like",
     },
     posts: {
-        allList: "/list",
-        myList: "/list/my",
-        likeList: "/list/like",
-        friendsList: "/list/friends",
-
-        all_ist: "/",
-        like_list: "/like",
-        bookmark_list: "/bookmark",
-        my_list: "/my",
-        user_list: "/user",
-        friends_list: "/friends",
-        ids: "/ids",
+        all: "/",
+        like: "/like",
+        bookmark: "/bookmark",
+        my: "/my",
+        user: "/user",
     },
     comment: {
         get: "/",
