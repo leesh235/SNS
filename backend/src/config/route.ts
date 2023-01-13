@@ -72,13 +72,13 @@ export const routes = {
         friend: "/friend",
     },
     friend: {
-        is_friend: "/is_friend",
+        isFriend: "/",
+        friendList: "/list",
+        refuse: "/",
         request: "/request",
+        requestList: "/request/list",
         response: "/response",
-        request_list: "/request_list",
-        response_list: "/response_list",
-        friend_list: "/friend_list",
-        refuse: "/refuse",
+        responseList: "/response/list",
         all: "/all",
     },
 };

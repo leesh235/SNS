@@ -1,39 +1,27 @@
 import { In, Not, Like } from "typeorm";
 import { dataSource } from "../config/typeorm";
 import { Friends } from "../entity/friends.entity";
+import { Likes } from "../entity/likes.entity";
 
 const friendsRepository = dataSource.getRepository(Friends);
 
 export const request = async (req: any) => {
     try {
         const {
-            body: { friend_email },
+            body: { friendEmail },
             user: { email },
         } = req;
 
-        const exist = await friendsRepository.findOne({
-            relations: {
-                requestUser: true,
-                responseUser: true,
-            },
-            where: [
-                { requestUser: { email: friend_email } },
-                { responseUser: { email: friend_email } },
-            ],
-        });
-
-        if (exist) return false;
-
         const friends = new Friends();
         friends.requestUser = email;
-        friends.responseUser = friend_email;
+        friends.responseUser = friendEmail;
 
-        await friendsRepository.save(friends);
+        const save = await friendsRepository.save(friends);
 
-        return true;
+        return { ok: true, data: save };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -44,28 +32,22 @@ export const response = async (req: any) => {
             user: { email },
         } = req;
 
-        const request: any = await friendsRepository.findOne({
-            where: { id },
-            select: {
-                status: true,
-            },
-        });
+        await friendsRepository.update(
+            { id, responseUser: { email } },
+            { status: true }
+        );
 
-        if (request.status) false;
-
-        await friendsRepository.update({ id }, { status: true });
-
-        return true;
+        return { ok: true, data: null };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };
 
 export const refuse = async (req: any) => {
     try {
         const {
-            body: { id },
+            query: { id },
             user: { email },
         } = req;
 
@@ -74,108 +56,45 @@ export const refuse = async (req: any) => {
             responseUser: { email },
         });
 
-        return true;
+        return { ok: true, data: null };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };
 
-export const get_is_friend = async (req: any) => {
+export const getIsFriend = async (req: any) => {
     try {
         const {
-            query: { email },
+            query: { friendEmail },
+            user: { email },
         } = req;
 
         const result = await friendsRepository.findOne({
             relations: { requestUser: true, responseUser: true },
-            where: [{ requestUser: { email } }, { responseUser: { email } }],
-        });
-
-        if (!result) return false;
-
-        return true;
-    } catch (error) {
-        console.log(error);
-        return false;
-    }
-};
-
-export const findAll = async (req: any) => {
-    try {
-        const {
-            query: { select, search },
-            user: { email },
-        } = req;
-
-        let NotIn: any[] = [];
-        if (select !== undefined) NotIn = select;
-
-        const friendList = await friendsRepository.find({
-            relations: { requestUser: true, responseUser: true },
             where: [
                 {
                     requestUser: { email },
-                    responseUser: {
-                        email: Not(In(NotIn)),
-                        nickName: Like(`%${search}%`),
-                    },
+                    responseUser: { email: friendEmail },
+                    status: true,
                 },
                 {
+                    requestUser: { email: friendEmail },
                     responseUser: { email },
-                    requestUser: {
-                        email: Not(In(NotIn)),
-                        nickName: Like(`%${search}%`),
-                    },
+                    status: true,
                 },
             ],
-            select: {
-                id: true,
-                createdAt: true,
-                requestUser: {
-                    email: true,
-                    nickName: true,
-                    profileImage: true,
-                },
-                responseUser: {
-                    email: true,
-                    nickName: true,
-                    profileImage: true,
-                },
-            },
-            order: {
-                createdAt: "desc",
-            },
         });
 
-        let result: any[] = [];
-
-        friendList.map((val: any) => {
-            const { id, userOne, userTwo } = val;
-            const userEmail =
-                userOne.email === email ? userTwo.email : userOne.email;
-            const userNickName =
-                userOne.email === email ? userTwo.nickName : userOne.nickName;
-            const userProfileImage =
-                userOne.email === email
-                    ? userTwo.profileImage
-                    : userOne.profileImage;
-            result.push({
-                id,
-                email: userEmail,
-                nickName: userNickName,
-                profileImage: userProfileImage,
-            });
-        });
-
-        return result;
+        if (!result) return { ok: false, data: { isFriend: false } };
+        return { ok: true, data: { isFriend: true } };
     } catch (error) {
         console.log(error);
-        return [];
+        return { ok: false, data: error };
     }
 };
 
-export const findRequest = async (req: any, mode: "request" | "response") => {
+export const findRequest = async (req: any) => {
     try {
         const {
             user: { email },
@@ -186,7 +105,7 @@ export const findRequest = async (req: any, mode: "request" | "response") => {
                 requestUser: true,
                 responseUser: true,
             },
-            where: [{ responseUser: { email } }, { requestUser: { email } }],
+            where: { requestUser: { email }, status: false },
             select: {
                 id: true,
                 responseUser: {
@@ -194,6 +113,44 @@ export const findRequest = async (req: any, mode: "request" | "response") => {
                     nickName: true,
                     profileImage: true,
                 },
+            },
+            order: {
+                createdAt: "desc",
+            },
+        });
+
+        const result: any[] = [];
+        if (list.length === 0)
+            list.forEach((val: any) => {
+                const { id, responseUser } = val;
+                result.push({
+                    id,
+                    email: responseUser.email,
+                    nickName: responseUser.nickName,
+                    profileImage: responseUser.profileImage,
+                });
+            });
+
+        return { ok: true, data: result };
+    } catch (error) {
+        return { ok: false, data: error };
+    }
+};
+
+export const findResponse = async (req: any) => {
+    try {
+        const {
+            user: { email },
+        } = req;
+
+        const list = await friendsRepository.find({
+            relations: {
+                requestUser: true,
+                responseUser: true,
+            },
+            where: { responseUser: { email }, status: false },
+            select: {
+                id: true,
                 requestUser: {
                     email: true,
                     nickName: true,
@@ -205,22 +162,72 @@ export const findRequest = async (req: any, mode: "request" | "response") => {
             },
         });
 
-        let result: any[] = [];
-
-        list.forEach((val: any) => {
-            const { id, fromUser, toUser } = val;
-            const user = mode === "request" ? fromUser : toUser;
-            result.push({
-                id,
-                email: user.email,
-                nickName: user.nickName,
-                profileImage: user.profileImage,
+        const result: any[] = [];
+        if (list.length === 0)
+            list.forEach((val: any) => {
+                const { id, requestUser } = val;
+                result.push({
+                    id,
+                    email: requestUser.email,
+                    nickName: requestUser.nickName,
+                    profileImage: requestUser.profileImage,
+                });
             });
+
+        return { ok: true, data: result };
+    } catch (error) {
+        return { ok: false, data: error };
+    }
+};
+
+export const findFriends = async (req: any) => {
+    try {
+        const {
+            user: { email },
+        } = req;
+
+        const friend1 = await friendsRepository.find({
+            relations: { requestUser: true, responseUser: true },
+            where: {
+                status: true,
+                requestUser: {
+                    email,
+                },
+            },
+            select: {
+                id: true,
+                responseUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+            },
         });
 
-        return result;
+        const friend2 = await friendsRepository.find({
+            relations: { requestUser: true, responseUser: true },
+            where: {
+                status: true,
+                responseUser: {
+                    email,
+                },
+            },
+            select: {
+                id: true,
+                requestUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+            },
+        });
+
+        const result: any[] = [...friend1, ...friend2];
+
+        return { ok: true, data: result };
     } catch (error) {
-        return [];
+        console.log(error);
+        return { ok: false, data: error };
     }
 };
 
@@ -230,20 +237,14 @@ export const findAllList = async (req: any) => {
             user: { email },
         } = req;
 
-        const list = await friendsRepository.find({
+        const request = await friendsRepository.find({
             relations: {
                 requestUser: true,
                 responseUser: true,
             },
-            where: [{ requestUser: { email } }, { responseUser: { email } }],
+            where: { requestUser: { email }, status: false },
             select: {
                 id: true,
-                createdAt: true,
-                requestUser: {
-                    email: true,
-                    nickName: true,
-                    profileImage: true,
-                },
                 responseUser: {
                     email: true,
                     nickName: true,
@@ -253,42 +254,29 @@ export const findAllList = async (req: any) => {
             order: {
                 createdAt: "desc",
             },
-            take: 4,
         });
 
-        let requestList: any[] = [];
-        let responseList: any[] = [];
-
-        list.forEach((val: any) => {
-            const { id, fromUser, toUser } = val;
-            if (fromUser.email === email)
+        const requestList: any[] = [];
+        if (request.length === 0)
+            request.forEach((val: any) => {
+                const { id, responseUser } = val;
                 requestList.push({
                     id,
-                    email: fromUser.email,
-                    nickName: fromUser.nickName,
-                    profileImage: fromUser.profileImage,
+                    email: responseUser.email,
+                    nickName: responseUser.nickName,
+                    profileImage: responseUser.profileImage,
                 });
-            else
-                responseList.push({
-                    id,
-                    email: toUser.email,
-                    nickName: toUser.nickName,
-                    profileImage: toUser.profileImage,
-                });
-        });
+            });
 
-        const friendList = await friendsRepository.find({
-            relations: { requestUser: true, responseUser: true },
-            where: [{ requestUser: { email } }, { responseUser: { email } }],
+        const response = await friendsRepository.find({
+            relations: {
+                requestUser: true,
+                responseUser: true,
+            },
+            where: { responseUser: { email }, status: false },
             select: {
                 id: true,
-                createdAt: true,
                 requestUser: {
-                    email: true,
-                    nickName: true,
-                    profileImage: true,
-                },
-                responseUser: {
                     email: true,
                     nickName: true,
                     profileImage: true,
@@ -299,35 +287,65 @@ export const findAllList = async (req: any) => {
             },
         });
 
-        let friends: any[] = [];
-
-        friendList.forEach((val: any) => {
-            const { id, userOne, userTwo } = val;
-            const userEmail =
-                userOne.email === email ? userTwo.email : userOne.email;
-            const userNickName =
-                userOne.email === email ? userTwo.nickName : userOne.nickName;
-            const userProfileImage =
-                userOne.email === email
-                    ? userTwo.profileImage
-                    : userOne.profileImage;
-            friends.push({
-                id,
-                email: userEmail,
-                nickName: userNickName,
-                profileImage: userProfileImage,
+        const responseList: any[] = [];
+        if (response.length === 0)
+            response.forEach((val: any) => {
+                const { id, requestUser } = val;
+                responseList.push({
+                    id,
+                    email: requestUser.email,
+                    nickName: requestUser.nickName,
+                    profileImage: requestUser.profileImage,
+                });
             });
+
+        const friend1 = await friendsRepository.find({
+            relations: { requestUser: true, responseUser: true },
+            where: {
+                status: true,
+                requestUser: {
+                    email,
+                },
+            },
+            select: {
+                id: true,
+                responseUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+            },
         });
 
-        let result = {
+        const friend2 = await friendsRepository.find({
+            relations: { requestUser: true, responseUser: true },
+            where: {
+                status: true,
+                responseUser: {
+                    email,
+                },
+            },
+            select: {
+                id: true,
+                requestUser: {
+                    email: true,
+                    nickName: true,
+                    profileImage: true,
+                },
+            },
+        });
+
+        const friendsList: any[] = [...friend1, ...friend2];
+
+        const result: any = {
             requestList,
             responseList,
-            friends,
+            friendsList,
         };
 
-        return result;
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
-        return {};
+        return { ok: false, data: error };
     }
 };
