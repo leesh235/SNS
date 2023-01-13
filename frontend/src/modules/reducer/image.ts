@@ -31,7 +31,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(imageAction.remove).success:
         case typeUtils(imageAction.remove).error:
             return handleAsyncReducer(
-                imageAction.array,
+                imageAction.remove,
                 "remove",
                 true
             )(state, action);
