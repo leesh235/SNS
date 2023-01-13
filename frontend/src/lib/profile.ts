@@ -1,14 +1,6 @@
 import { backend } from "./axios";
 import { api } from "../utils/routes";
-import {
-    Introduce,
-    UserImage,
-    Job,
-    School,
-    University,
-    DeleteInfo,
-    Take,
-} from "../types/lib/profile";
+import { Introduce, UserImage, Take } from "../types/lib/profile";
 
 const logInInfo = async () => {
     return await backend.get(api.profile.login_info);
@@ -38,30 +30,6 @@ const modifyProfileimage = async (data: UserImage) => {
     return await backend.post(api.profile.profileimage, data);
 };
 
-const addJob = async (data: Job) => {
-    return await backend.post(api.profile.ability, data);
-};
-
-const removeJob = async (data: DeleteInfo) => {
-    return await backend.delete(api.profile.ability, { params: data });
-};
-
-const addSchool = async (data: School) => {
-    return await backend.post(api.profile.school, data);
-};
-
-const removeSchool = async (data: DeleteInfo) => {
-    return await backend.delete(api.profile.school, { params: data });
-};
-
-const addUniversity = async (data: University) => {
-    return await backend.post(api.profile.university, data);
-};
-
-const removeUniversity = async (data: DeleteInfo) => {
-    return await backend.delete(api.profile.university, { params: data });
-};
-
 export default {
     logInInfo,
     profile,
@@ -70,10 +38,4 @@ export default {
     modifyProfileimage,
     getLatestImage,
     getAllImage,
-    addJob,
-    removeJob,
-    addSchool,
-    removeSchool,
-    addUniversity,
-    removeUniversity,
 };

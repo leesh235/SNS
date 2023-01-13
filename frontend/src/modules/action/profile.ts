@@ -1,12 +1,4 @@
-import {
-    Introduce,
-    UserImage,
-    Job,
-    School,
-    University,
-    DeleteInfo,
-    Take,
-} from "../../types/lib/profile";
+import { Introduce, UserImage, Take } from "../../types/lib/profile";
 
 export const userAction = {
     profile: "user/PROFILE",
@@ -16,12 +8,6 @@ export const userAction = {
     coverImage: "user/COVERIMAGE",
     latestImage: "user/LATEST_IMAGE",
     allImage: "user/ALL_IMAGE",
-    addJob: "user/ADD_JOB",
-    addSchool: "user/ADD_SCHOOL",
-    addUniversity: "user/ADD_UNIVERSITY",
-    removeJob: "user/REMOVE_JOB",
-    removeSchool: "user/REMOVE_SCHOOL",
-    removeUniversity: "user/REMOVE_UNIVERSITY",
 };
 
 export const userActionCreator = {
@@ -61,42 +47,6 @@ export const userActionCreator = {
     modifyCoverimage: (data: UserImage) => {
         return {
             type: userAction.coverImage,
-            data,
-        };
-    },
-    addJob: (data: Job) => {
-        return {
-            type: userAction.addJob,
-            data,
-        };
-    },
-    addSchool: (data: School) => {
-        return {
-            type: userAction.addSchool,
-            data,
-        };
-    },
-    addUniversity: (data: University) => {
-        return {
-            type: userAction.addUniversity,
-            data,
-        };
-    },
-    removeJob: (data: DeleteInfo) => {
-        return {
-            type: userAction.removeJob,
-            data,
-        };
-    },
-    removeSchool: (data: DeleteInfo) => {
-        return {
-            type: userAction.removeSchool,
-            data,
-        };
-    },
-    removeUniversity: (data: DeleteInfo) => {
-        return {
-            type: userAction.removeUniversity,
             data,
         };
     },

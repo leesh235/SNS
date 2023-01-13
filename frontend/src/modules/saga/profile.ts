@@ -23,22 +23,6 @@ const latestImage = createPromise(
 );
 const allImage = createPromise(userAction.allImage, profileApi.getAllImage);
 
-const addJob = createPromise(userAction.addJob, profileApi.addJob);
-const addSchool = createPromise(userAction.addSchool, profileApi.addSchool);
-const addUniversity = createPromise(
-    userAction.addUniversity,
-    profileApi.addUniversity
-);
-const removeJob = createPromise(userAction.removeJob, profileApi.removeJob);
-const removeSchool = createPromise(
-    userAction.removeSchool,
-    profileApi.removeSchool
-);
-const removeUniversity = createPromise(
-    userAction.removeUniversity,
-    profileApi.removeUniversity
-);
-
 export function* userSaga() {
     yield takeEvery(userAction.profile, profile);
     yield takeEvery(userAction.introduce, introduce);
@@ -47,11 +31,4 @@ export function* userSaga() {
     yield takeEvery(userAction.loginInfo, loginInfo);
     yield takeEvery(userAction.latestImage, latestImage);
     yield takeEvery(userAction.allImage, allImage);
-
-    yield takeEvery(userAction.addJob, addJob);
-    yield takeEvery(userAction.addSchool, addSchool);
-    yield takeEvery(userAction.addUniversity, addUniversity);
-    yield takeEvery(userAction.removeJob, removeJob);
-    yield takeEvery(userAction.removeSchool, removeSchool);
-    yield takeEvery(userAction.removeUniversity, removeUniversity);
 }

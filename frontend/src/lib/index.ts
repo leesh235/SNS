@@ -8,6 +8,7 @@ import search from "./search";
 import profile from "./profile";
 import user from "./user";
 import image from "./image";
+import information from "./information";
 
 export const authApi = auth;
 export const chatApi = chat;
@@ -19,3 +20,4 @@ export const searchApi = search;
 export const profileApi = profile;
 export const userApi = user;
 export const imageApi = image;
+export const informationApi = information;
