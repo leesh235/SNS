@@ -33,12 +33,13 @@ export const routes = {
         coverimage: "/coverimage",
         profileimage: "/profileimage",
         introduce: "/introduce",
-        people: "/people",
+        latest: "/image/latest",
+        all: "/image/all",
+    },
+    information: {
         ability: "/ability",
         university: "/university",
         school: "/school",
-        latest: "/image/latest",
-        all: "/image/all",
     },
     image: {
         single: "/",
