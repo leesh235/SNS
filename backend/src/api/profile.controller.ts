@@ -17,105 +17,124 @@ const router = express.Router();
 //유저 프로필
 router.get(routes.profile.profile, async (req, res) => {
     try {
-        res.status(200).send(req.user);
+        return res.status(200).send(req.user);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //유저 프로필 ****************************삭제
 router.get(routes.profile.login_info, async (req, res) => {
     try {
-        res.status(200).send(req.user);
+        return res.status(200).send(req.user);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //커버 사진 등록
 router.post(routes.profile.coverimage, async (req, res) => {
     try {
-        res.status(200).send(await saveCoverImage(req));
+        const result = await saveCoverImage(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //프로필 사진 등록
 router.post(routes.profile.profileimage, async (req, res) => {
     try {
-        res.status(200).send(await saveProfileImage(req));
+        const result = await saveProfileImage(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //프로필 정보 변경(소개글, 폰넘버)
 router.patch(routes.profile.introduce, async (req, res) => {
     try {
-        res.status(200).send(await saveIntroduce(req));
+        const result = await saveIntroduce(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //프로필 직업 추가/수정
 router.post(routes.profile.ability, async (req, res) => {
     try {
-        res.status(200).send(await saveAbility(req));
+        const result = await saveAbility(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //프로필 직업 삭제
 router.delete(routes.profile.ability, async (req, res) => {
     try {
-        res.status(200).send(await removeAbility(req));
+        const result = await removeAbility(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //프로필 고등학교 관련 api
 router.post(routes.profile.school, async (req, res) => {
     try {
-        res.status(200).send(await saveSchool(req));
-    } catch (error) {
-        res.status(500).send({ message: `${error}` });
-    }
-});
+        const result = await saveSchool(req);
 
-router.patch(routes.profile.school, async (req, res) => {
-    try {
-        res.status(200).send(await removeSchool(req));
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 router.delete(routes.profile.school, async (req, res) => {
     try {
-        res.status(200).send();
+        const result = await removeSchool(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //프로필 대학교 관련 api
 router.post(routes.profile.university, async (req, res) => {
     try {
-        res.status(200).send(await saveUniversity(req));
+        const result = await saveUniversity(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 router.delete(routes.profile.university, async (req, res) => {
     try {
-        res.status(200).send(await removeUniversity(req));
+        const result = await removeUniversity(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 

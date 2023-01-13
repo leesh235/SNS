@@ -23,13 +23,13 @@ export const saveCoverImage = async (req: any) => {
             select: { id: true, imageUrl: true },
         });
 
-        if (!file) return false;
+        if (!file) return { ok: false, data: { coverImage: "" } };
 
         await userRepository.update({ email }, { coverImage: file?.imageUrl });
 
-        return { coverImage: file?.imageUrl };
+        return { ok: true, data: { coverImage: file?.imageUrl } };
     } catch (error) {
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -45,16 +45,16 @@ export const saveProfileImage = async (req: any) => {
             select: { id: true, imageUrl: true },
         });
 
-        if (!file) return false;
+        if (!file) return { ok: false, data: { profileImage: "" } };
 
         await userRepository.update(
             { email },
             { profileImage: file?.imageUrl }
         );
 
-        return { profileImage: file?.imageUrl };
+        return { ok: true, data: { profileImage: file?.imageUrl } };
     } catch (error) {
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -67,10 +67,10 @@ export const saveIntroduce = async (req: any) => {
 
         await userRepository.update({ email }, { ...body });
 
-        return body;
+        return { ok: true, data: body };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -81,27 +81,21 @@ export const saveAbility = async (req: any) => {
             body,
         } = req;
 
-        const find = await abilityRepository.findOne({
-            where: { user: { email } },
-        });
+        const abilityObj = new Ability();
+        abilityObj.name = body.name;
+        abilityObj.address = body.address;
+        abilityObj.position = body.position;
+        abilityObj.start = body.start;
+        abilityObj.end = body.end;
+        abilityObj.user = email;
+        if (body.id) abilityObj.id = body.id;
 
-        if (find) {
-            await abilityRepository.update({ id: find.id }, { ...body });
+        const ability = await abilityRepository.save(abilityObj);
 
-            return body;
-        } else {
-            const abilityObj: Ability = {
-                user: email,
-                ...body,
-            };
-
-            const ability = await abilityRepository.save(abilityObj);
-
-            return ability;
-        }
+        return { ok: true, data: ability };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -114,9 +108,9 @@ export const removeAbility = async (req: any) => {
 
         await abilityRepository.delete({ id, user: { email } });
 
-        return { name: "", position: "", address: "", start: "", end: "" };
+        return { ok: true, data: { id } };
     } catch (error) {
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -131,21 +125,19 @@ export const saveSchool = async (req: any) => {
             where: { user: { email } },
         });
 
-        if (find) {
-            await schoolRepository.update({ id: find.id }, { ...body });
-            return body;
-        } else {
-            const schollObj: School = {
-                user: email,
-                ...body,
-            };
+        const schollObj = new School();
+        schollObj.name = body.name;
+        schollObj.start = body.start;
+        schollObj.end = body.end;
+        schollObj.status = body.status;
+        schollObj.user = email;
+        if (body.id) schollObj.id = body.id;
 
-            const school = await schoolRepository.save(schollObj);
+        const school = await schoolRepository.save(schollObj);
 
-            return school;
-        }
+        return { ok: true, data: school };
     } catch (error) {
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -158,9 +150,9 @@ export const removeSchool = async (req: any) => {
 
         await schoolRepository.delete({ id, user: { email } });
 
-        return { name: "", status: "", start: "", end: "" };
+        return { ok: true, data: { id } };
     } catch (error) {
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -175,21 +167,21 @@ export const saveUniversity = async (req: any) => {
             where: { user: { email } },
         });
 
-        if (find) {
-            await universityRepository.update({ id: find.id }, { ...body });
-            return body;
-        } else {
-            const universityObj: University = {
-                user: email,
-                ...body,
-            };
+        const universityObj = new University();
+        universityObj.name = body.name;
+        universityObj.major = body.major;
+        universityObj.degree = body.degree;
+        universityObj.start = body.start;
+        universityObj.end = body.end;
+        universityObj.user = email;
+        universityObj.status = body.status;
+        if (body.id) universityObj.id = body.id;
 
-            const university = await universityRepository.save(universityObj);
+        const university = await universityRepository.save(universityObj);
 
-            return university;
-        }
+        return { ok: true, data: university };
     } catch (error) {
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -202,8 +194,8 @@ export const removeUniversity = async (req: any) => {
 
         await universityRepository.delete({ id, user: { email } });
 
-        return { name: "", marjor: "", degree: "", start: "", end: "" };
+        return { ok: true, data: { id } };
     } catch (error) {
-        return false;
+        return { ok: false, data: error };
     }
 };
