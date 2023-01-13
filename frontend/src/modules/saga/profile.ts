@@ -17,6 +17,12 @@ const coverImage = createPromise(
     profileApi.modifyCoverimage
 );
 const loginInfo = createPromise(userAction.loginInfo, profileApi.logInInfo);
+const latestImage = createPromise(
+    userAction.latestImage,
+    profileApi.getLatestImage
+);
+const allImage = createPromise(userAction.allImage, profileApi.getAllImage);
+
 const addJob = createPromise(userAction.addJob, profileApi.addJob);
 const addSchool = createPromise(userAction.addSchool, profileApi.addSchool);
 const addUniversity = createPromise(
@@ -39,6 +45,9 @@ export function* userSaga() {
     yield takeEvery(userAction.profileImage, profileImage);
     yield takeEvery(userAction.coverImage, coverImage);
     yield takeEvery(userAction.loginInfo, loginInfo);
+    yield takeEvery(userAction.latestImage, latestImage);
+    yield takeEvery(userAction.allImage, allImage);
+
     yield takeEvery(userAction.addJob, addJob);
     yield takeEvery(userAction.addSchool, addSchool);
     yield takeEvery(userAction.addUniversity, addUniversity);

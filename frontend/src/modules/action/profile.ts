@@ -5,6 +5,7 @@ import {
     School,
     University,
     DeleteInfo,
+    Take,
 } from "../../types/lib/profile";
 
 export const userAction = {
@@ -13,12 +14,14 @@ export const userAction = {
     introduce: "user/INTRODUCE",
     profileImage: "user/PROFILEIMAGE",
     coverImage: "user/COVERIMAGE",
-    addJob: "user/ADDJOB",
-    addSchool: "user/ADDSCHOOL",
-    addUniversity: "user/ADDUNIVERSITY",
-    removeJob: "user/REMOVEJOB",
-    removeSchool: "user/REMOVESCHOOL",
-    removeUniversity: "user/REMOVEUNIVERSITY",
+    latestImage: "user/LATEST_IMAGE",
+    allImage: "user/ALL_IMAGE",
+    addJob: "user/ADD_JOB",
+    addSchool: "user/ADD_SCHOOL",
+    addUniversity: "user/ADD_UNIVERSITY",
+    removeJob: "user/REMOVE_JOB",
+    removeSchool: "user/REMOVE_SCHOOL",
+    removeUniversity: "user/REMOVE_UNIVERSITY",
 };
 
 export const userActionCreator = {
@@ -33,6 +36,17 @@ export const userActionCreator = {
         };
     },
     modifyIntroduce: (data: Introduce) => {
+        return {
+            type: userAction.introduce,
+            data,
+        };
+    },
+    getLatestImage: () => {
+        return {
+            type: userAction.introduce,
+        };
+    },
+    getAllImage: (data: Take) => {
         return {
             type: userAction.introduce,
             data,

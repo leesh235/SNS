@@ -37,6 +37,24 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
 
+        case userAction.latestImage:
+        case typeUtils(userAction.latestImage).success:
+        case typeUtils(userAction.latestImage).error:
+            return handleAsyncReducer(
+                userAction.latestImage,
+                "latestImage",
+                true
+            )(state, action);
+
+        case userAction.allImage:
+        case typeUtils(userAction.allImage).success:
+        case typeUtils(userAction.allImage).error:
+            return handleAsyncReducer(
+                userAction.allImage,
+                "allImage",
+                true
+            )(state, action);
+
         case userAction.introduce:
         case typeUtils(userAction.introduce).success:
         case typeUtils(userAction.introduce).error:

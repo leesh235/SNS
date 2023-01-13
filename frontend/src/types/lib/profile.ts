@@ -8,6 +8,10 @@ export interface UserImage {
     id: number;
 }
 
+export interface Take {
+    take?: number;
+}
+
 export interface Job {
     name: string;
     address?: string;

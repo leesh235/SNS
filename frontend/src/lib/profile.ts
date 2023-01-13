@@ -7,6 +7,7 @@ import {
     School,
     University,
     DeleteInfo,
+    Take,
 } from "../types/lib/profile";
 
 const logInInfo = async () => {
@@ -19,6 +20,14 @@ const profile = async () => {
 
 const modifyIntroduce = async (data: Introduce) => {
     return await backend.post(api.profile.introduce, data);
+};
+
+const getLatestImage = async () => {
+    return await backend.get(api.profile.introduce);
+};
+
+const getAllImage = async (data: Take) => {
+    return await backend.get(api.profile.introduce, { params: data });
 };
 
 const modifyCoverimage = async (data: UserImage) => {
@@ -59,6 +68,8 @@ export default {
     modifyIntroduce,
     modifyCoverimage,
     modifyProfileimage,
+    getLatestImage,
+    getAllImage,
     addJob,
     removeJob,
     addSchool,
