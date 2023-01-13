@@ -3,7 +3,6 @@ export const postsAction = {
     myPosts: "posts/MYPOSTS",
     likePosts: "posts/LIKEPOSTS",
     friendsPosts: "posts/FRIENDSPOSTS",
-    postDetails: "posts/POSTDETAILS",
 };
 
 export const postsActionCreator = {

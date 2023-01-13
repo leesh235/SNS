@@ -1,12 +1,19 @@
 import { postAction } from "../action/post";
+import { postsAction } from "../action/posts";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
-    postDetails: reducerUtils.initial(null),
-    postDetail: reducerUtils.initial(null),
-    deletePost: reducerUtils.initial(null),
-    modifyPost: reducerUtils.initial(null),
+    allPosts: reducerUtils.initial([]),
+    myPosts: reducerUtils.initial([]),
+    likePosts: reducerUtils.initial([]),
+    friendsPosts: reducerUtils.initial([]),
+
+    write: reducerUtils.initial(null),
+    detail: reducerUtils.initial(null),
+    modify: reducerUtils.initial(null),
+    delete: reducerUtils.initial(null),
+    like: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -17,84 +24,82 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(postAction.detail).error:
             return handleAsyncReducer(
                 postAction.detail,
-                "postDetail",
+                "detail",
                 true
             )(state, action);
+
         case postAction.write:
+        case typeUtils(postAction.write).success:
         case typeUtils(postAction.write).error:
             return handleAsyncReducer(
                 postAction.write,
-                "postDetails",
+                "write",
                 true
             )(state, action);
-        case typeUtils(postAction.write).success:
-            return {
-                ...state,
-                postDetails: {
-                    ...state.postDetails,
-                    data: {
-                        ...state.postDetails.data,
-                        ...data,
-                    },
-                },
-            };
+
         case postAction.modify:
+        case typeUtils(postAction.modify).success:
         case typeUtils(postAction.modify).error:
             return handleAsyncReducer(
                 postAction.modify,
-                "modifyPost",
+                "modify",
                 true
             )(state, action);
-        case typeUtils(postAction.modify).success:
-            return {
-                ...state,
-                postDetails: {
-                    ...state.postDetails,
-                    data: {
-                        ...state.postDetails.data,
-                        [data?.id]: data.data,
-                    },
-                },
-            };
+
         case postAction.delete:
+        case typeUtils(postAction.delete).success:
         case typeUtils(postAction.delete).error:
             return handleAsyncReducer(
                 postAction.delete,
-                "postDetails",
+                "delete",
                 true
             )(state, action);
-        case typeUtils(postAction.delete).success:
-            let newData: any = state.postDetails.data;
-            delete newData?.[data.id];
-            return {
-                ...state,
-                postDetails: {
-                    ...state.postDetails,
-                    data: newData,
-                },
-            };
+
         case postAction.like:
+        case typeUtils(postAction.like).success:
         case typeUtils(postAction.like).error:
             return handleAsyncReducer(
                 postAction.like,
-                "postDetails",
+                "like",
                 true
             )(state, action);
-        case typeUtils(postAction.like).success:
-            return {
-                ...state,
-                postDetails: {
-                    ...state.postDetails,
-                    data: {
-                        ...state.postDetails.data,
-                        [data.postId]: {
-                            ...state.postDetails.data[data.postId],
-                            likeStatus: data.status,
-                            likequantity: data.quantity,
-                        },
-                    },
-                },
-            };
+
+        case postsAction.allPosts:
+        case typeUtils(postsAction.allPosts).success:
+        case typeUtils(postsAction.allPosts).error:
+            return handleAsyncReducer(
+                postsAction.allPosts,
+                "allPosts",
+                true
+            )(state, action);
+
+        case postsAction.likePosts:
+        case typeUtils(postsAction.likePosts).success:
+        case typeUtils(postsAction.likePosts).error:
+            return handleAsyncReducer(
+                postsAction.likePosts,
+                "likePosts",
+                true
+            )(state, action);
+
+        case postsAction.myPosts:
+        case typeUtils(postsAction.myPosts).success:
+        case typeUtils(postsAction.myPosts).error:
+            return handleAsyncReducer(
+                postsAction.myPosts,
+                "myPosts",
+                true
+            )(state, action);
+
+        case postsAction.friendsPosts:
+        case typeUtils(postsAction.friendsPosts).success:
+        case typeUtils(postsAction.friendsPosts).error:
+            return handleAsyncReducer(
+                postsAction.friendsPosts,
+                "friendsPosts",
+                true
+            )(state, action);
+
         default:
             return state;
     }

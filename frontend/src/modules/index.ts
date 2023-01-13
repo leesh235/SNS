@@ -4,7 +4,6 @@ import { all } from "@redux-saga/core/effects";
 import auth from "./reducer/auth";
 import user from "./reducer/profile";
 import post from "./reducer/post";
-import posts from "./reducer/posts";
 import image from "./reducer/image";
 import search from "./reducer/search";
 import friends from "./reducer/friends";
@@ -27,7 +26,6 @@ export const rootReducer = combineReducers({
     auth,
     user,
     post,
-    posts,
     image,
     search,
     friends,

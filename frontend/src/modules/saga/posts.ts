@@ -8,7 +8,7 @@ const myPosts = createPromise(postsAction.myPosts, postsApi.myPosts);
 const likePosts = createPromise(postsAction.likePosts, postsApi.likePosts);
 const friendsPosts = createPromise(
     postsAction.friendsPosts,
-    postsApi.friendsPosts
+    postsApi.userPosts
 );
 
 export function* postsSaga() {
