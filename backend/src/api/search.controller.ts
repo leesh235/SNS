@@ -1,5 +1,10 @@
 import express from "express";
-import { find } from "../services/search.service";
+import {
+    findAll,
+    findPosts,
+    findPeople,
+    findFriends,
+} from "../services/search.service";
 import { routes } from "../config/route";
 
 const router = express.Router();
@@ -7,47 +12,48 @@ const router = express.Router();
 //모두 검색
 router.get(routes.search.all, async (req, res) => {
     try {
-        const {
-            query: { search },
-        } = req;
-        res.status(200).send(await find(search, "all"));
+        const result = await findAll(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
-//게시글 검샘
+//게시글 검색
 router.get(routes.search.post, async (req, res) => {
     try {
-        const {
-            query: { search },
-        } = req;
-        res.status(200).send(await find(search, "post"));
+        const result = await findPosts(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //사람 검색
 router.get(routes.search.people, async (req, res) => {
     try {
-        const {
-            query: { search },
-        } = req;
-        res.status(200).send(await find(search, "people"));
+        const result = await findPeople(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //친구 검색
 router.get(routes.search.friend, async (req, res) => {
     try {
-        const { query } = req;
-        console.log(query);
-        res.status(200).send({ message: "search.friend" });
+        const result = await findFriends(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
