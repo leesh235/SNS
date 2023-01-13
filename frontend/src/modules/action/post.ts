@@ -1,4 +1,4 @@
-import { GetPost, DeletePost } from "../../types/post";
+import { GetPost, DeletePost } from "../../types/lib/post";
 
 export const postAction = {
     write: "post/WRITEPOST",

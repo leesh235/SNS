@@ -4,7 +4,7 @@ import {
     FindPassword,
     VerifyCodeNumber,
     ModifyPassword,
-} from "../../types/auth";
+} from "../../types/lib/auth";
 
 export const authAction = {
     join: "auth/JOIN",

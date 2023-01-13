@@ -1,4 +1,4 @@
-import { Introduce } from "../../types/user";
+import { Introduce } from "../../types/lib/profile";
 
 export const userAction = {
     profile: "user/PROFILE",
