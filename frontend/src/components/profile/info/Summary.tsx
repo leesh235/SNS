@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 //functions
-import { userDetailActionCreator } from "../../../modules/action/userDetail";
+import { userDetailActionCreator } from "../../../modules/action/user";
 //components
 import { AddAbility } from "./AddAbility";
 import { AddUniversity } from "./AddUniversity";

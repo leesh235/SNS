@@ -1,8 +1,13 @@
-import { GetPost, DeletePost } from "../../types/lib/post";
+import {
+    GetPost,
+    DeletePost,
+    WritePost,
+    MpdifyPost,
+    Like,
+} from "../../types/lib/post";
 
 export const postAction = {
     write: "post/WRITEPOST",
-    list: "post/POSTDETAILS",
     detail: "post/POSTDETAIL",
     modify: "post/MODIFYPOST",
     delete: "post/DELETEPOST",
@@ -10,15 +15,9 @@ export const postAction = {
 };
 
 export const postActionCreator = {
-    write: (data: any) => {
+    write: (data: WritePost) => {
         return {
             type: postAction.write,
-            data,
-        };
-    },
-    list: (data: any) => {
-        return {
-            type: postAction.list,
             data,
         };
     },
@@ -28,7 +27,7 @@ export const postActionCreator = {
             data,
         };
     },
-    modify: (data: any) => {
+    modify: (data: MpdifyPost) => {
         return {
             type: postAction.modify,
             data,
@@ -40,7 +39,7 @@ export const postActionCreator = {
             data,
         };
     },
-    like: (data: any) => {
+    like: (data: Like) => {
         return {
             type: postAction.like,
             data,

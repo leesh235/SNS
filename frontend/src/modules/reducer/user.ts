@@ -3,85 +3,51 @@ import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
-    profile: reducerUtils.initial(null),
-    loginInfo: reducerUtils.initial(null),
+    detail: reducerUtils.initial(null),
+    info: reducerUtils.initial(null),
+    images: reducerUtils.initial(null),
+    posts: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type, data } = action;
+    const { type } = action;
     switch (type) {
-        case userAction.loginInfo:
-        case typeUtils(userAction.loginInfo).success:
-        case typeUtils(userAction.loginInfo).error:
+        case userAction.detail:
+        case typeUtils(userAction.detail).success:
+        case typeUtils(userAction.detail).error:
             return handleAsyncReducer(
-                userAction.loginInfo,
-                "loginInfo",
+                userAction.detail,
+                "detail",
                 true
             )(state, action);
-        case userAction.profile:
-        case typeUtils(userAction.profile).success:
-        case typeUtils(userAction.profile).error:
+
+        case userAction.info:
+        case typeUtils(userAction.info).success:
+        case typeUtils(userAction.info).error:
             return handleAsyncReducer(
-                userAction.profile,
-                "profile",
+                userAction.info,
+                "info",
                 true
             )(state, action);
-        case userAction.introduce:
-        case typeUtils(userAction.introduce).error:
+
+        case userAction.images:
+        case typeUtils(userAction.images).success:
+        case typeUtils(userAction.images).error:
             return handleAsyncReducer(
-                userAction.profile,
-                "profile",
+                userAction.images,
+                "images",
                 true
             )(state, action);
-        case userAction.profileImage:
-        case typeUtils(userAction.profileImage).error:
+
+        case userAction.posts:
+        case typeUtils(userAction.posts).success:
+        case typeUtils(userAction.posts).error:
             return handleAsyncReducer(
-                userAction.profile,
-                "profile",
+                userAction.posts,
+                "posts",
                 true
             )(state, action);
-        case userAction.coverImage:
-        case typeUtils(userAction.coverImage).error:
-            return handleAsyncReducer(
-                userAction.profile,
-                "profile",
-                true
-            )(state, action);
-        case typeUtils(userAction.introduce).success:
-            return {
-                ...state,
-                profile: {
-                    ...state.profile,
-                    data: {
-                        ...state.profile.data,
-                        introduction:
-                            reducerUtils.success(data).data.introduction,
-                    },
-                },
-            };
-        case typeUtils(userAction.profileImage).success:
-            return {
-                ...state,
-                profile: {
-                    ...state.profile,
-                    data: {
-                        ...state.profile.data,
-                        profileImage:
-                            reducerUtils.success(data).data.profileImage,
-                    },
-                },
-            };
-        case typeUtils(userAction.coverImage).success:
-            return {
-                ...state,
-                profile: {
-                    ...state.profile,
-                    data: {
-                        ...state.profile.data,
-                        coverImage: reducerUtils.success(data).data.coverImage,
-                    },
-                },
-            };
+
         default:
             return state;
     }

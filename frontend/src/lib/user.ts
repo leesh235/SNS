@@ -10,7 +10,7 @@ const getInfo = async (data: UserEmail) => {
     return await backend.get(api.user.posts, { params: data });
 };
 
-const setImages = async (data: UserEmail) => {
+const getImages = async (data: UserEmail) => {
     return await backend.get(api.user.images, { params: data });
 };
 
@@ -21,6 +21,6 @@ const getPosts = async (data: UserEmail) => {
 export default {
     getDetail,
     getInfo,
-    setImages,
+    getImages,
     getPosts,
 };

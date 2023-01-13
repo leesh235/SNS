@@ -8,29 +8,29 @@ const response = createPromise(
     friendsAction.response,
     friendsApi.responseFriend
 );
-const request_list = createPromise(
+const requestList = createPromise(
     friendsAction.requestList,
-    friendsApi.requestFriendList
+    friendsApi.requestList
 );
-const response_list = createPromise(
+const responseList = createPromise(
     friendsAction.responseList,
-    friendsApi.responseFriendList
+    friendsApi.responseList
 );
-const friend_list = createPromise(
+const friendList = createPromise(
     friendsAction.friendList,
     friendsApi.friendList
 );
 const refuse = createPromise(friendsAction.refuse, friendsApi.refuseFriend);
-const all_list = createPromise(friendsAction.allList, friendsApi.allFriendList);
-const is_firend = createPromise(friendsAction.isFriend, friendsApi.isFriend);
+const allList = createPromise(friendsAction.allList, friendsApi.allList);
+const isFriend = createPromise(friendsAction.isFriend, friendsApi.isFriend);
 
 export function* friendsSaga() {
     yield takeEvery(friendsAction.request, request);
     yield takeEvery(friendsAction.response, response);
-    yield takeEvery(friendsAction.requestList, request_list);
-    yield takeEvery(friendsAction.responseList, response_list);
-    yield takeEvery(friendsAction.friendList, friend_list);
+    yield takeEvery(friendsAction.requestList, requestList);
+    yield takeEvery(friendsAction.responseList, responseList);
+    yield takeEvery(friendsAction.friendList, friendList);
     yield takeEvery(friendsAction.refuse, refuse);
-    yield takeEvery(friendsAction.allList, all_list);
-    yield takeEvery(friendsAction.isFriend, is_firend);
+    yield takeEvery(friendsAction.allList, allList);
+    yield takeEvery(friendsAction.isFriend, isFriend);
 }

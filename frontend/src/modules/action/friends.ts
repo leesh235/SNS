@@ -1,3 +1,5 @@
+import { IsFriend, Request, Response, Refuse } from "../../types/lib/friends";
+
 export const friendsAction = {
     request: "friends/REQUEST",
     response: "friends/RESPONSE",
@@ -10,25 +12,25 @@ export const friendsAction = {
 };
 
 export const friendsActionCreator = {
-    isFriend: (data: any) => {
+    isFriend: (data: IsFriend) => {
         return {
             type: friendsAction.isFriend,
             data,
         };
     },
-    request: (data: any) => {
+    request: (data: Request) => {
         return {
             type: friendsAction.request,
             data,
         };
     },
-    response: (data: any) => {
+    response: (data: Response) => {
         return {
             type: friendsAction.response,
             data,
         };
     },
-    refuse: (data: any) => {
+    refuse: (data: Refuse) => {
         return {
             type: friendsAction.refuse,
             data,
@@ -44,10 +46,9 @@ export const friendsActionCreator = {
             type: friendsAction.responseList,
         };
     },
-    friendList: (data?: any) => {
+    friendList: () => {
         return {
             type: friendsAction.friendList,
-            data,
         };
     },
     allList: () => {

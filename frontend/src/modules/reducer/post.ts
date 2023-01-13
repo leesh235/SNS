@@ -12,22 +12,6 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case postAction.list:
-        case typeUtils(postAction.list).error:
-            return handleAsyncReducer(
-                postAction.list,
-                "postDetails",
-                true
-            )(state, action);
-        case typeUtils(postAction.list).success:
-            return {
-                ...state,
-                postDetails: {
-                    ...state.postDetails,
-                    loading: false,
-                    data,
-                },
-            };
         case postAction.detail:
         case typeUtils(postAction.detail).success:
         case typeUtils(postAction.detail).error:

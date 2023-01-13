@@ -1,40 +1,33 @@
-import { Introduce } from "../../types/lib/profile";
+import { UserEmail } from "../../types/lib/user";
 
 export const userAction = {
-    profile: "user/PROFILE",
-    loginInfo: "user/LOGININFO",
-    introduce: "user/INTRODUCE",
-    profileImage: "user/PROFILEIMAGE",
-    coverImage: "user/COVERIMAGE",
+    detail: "user/DETAIL",
+    info: "user/INFO",
+    images: "user/IMAGES",
+    posts: "user/POSTS",
 };
 
 export const userActionCreator = {
-    profile: (data: any) => {
+    detail: (data: UserEmail) => {
         return {
-            type: userAction.profile,
+            type: userAction.detail,
             data,
         };
     },
-    logInInfo: () => {
+    info: (data: UserEmail) => {
         return {
-            type: userAction.loginInfo,
+            type: userAction.info,
         };
     },
-    introduce: (data: Introduce) => {
+    images: (data: UserEmail) => {
         return {
-            type: userAction.introduce,
+            type: userAction.images,
             data,
         };
     },
-    profileImage: (data: any) => {
+    posts: (data: UserEmail) => {
         return {
-            type: userAction.profileImage,
-            data,
-        };
-    },
-    coverImage: (data: any) => {
-        return {
-            type: userAction.coverImage,
+            type: userAction.posts,
             data,
         };
     },

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //functions
 import theme from "../../../styles/theme";
-import { userActionCreator } from "../../../modules/action/user";
+import { userActionCreator } from "../../../modules/action/profile";
 //components
 import { Text } from "../../common/Text";
 import { Button2 } from "../../common/button/Button2";

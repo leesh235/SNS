@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 //functions
 import theme from "../../styles/theme";
-import { userActionCreator } from "../../modules/action/user";
+import { userActionCreator } from "../../modules/action/profile";
 //components
 import { SetProfileImage } from "../modal/SetProfileImage";
 import { CustomImage } from "../modal/CustomImage";

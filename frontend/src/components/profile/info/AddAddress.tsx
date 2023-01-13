@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //functions
-import { userDetailActionCreator } from "../../../modules/action/userDetail";
+import { userDetailActionCreator } from "../../../modules/action/user";
 import theme from "../../../styles/theme";
 //components
 import { Text } from "../../common/Text";
