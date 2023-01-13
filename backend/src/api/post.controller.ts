@@ -9,7 +9,8 @@ router.get(routes.post.get, async (req, res) => {
     try {
         const result = await find(req);
 
-        return res.status(200).send(result.data);
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -21,7 +22,7 @@ router.post(routes.post.write, async (req, res) => {
         const result = await save(req);
 
         if (result.ok) return res.status(200).send(result.data);
-        return res.status(204).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -33,7 +34,7 @@ router.patch(routes.post.modify, async (req, res) => {
         const result = await modify(req);
 
         if (result.ok) return res.status(200).send(result.data);
-        return res.status(204).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -45,7 +46,7 @@ router.delete(routes.post.remove, async (req, res) => {
         const result = await remove(req);
 
         if (result.ok) return res.status(200).send(result.data);
-        return res.status(204).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -57,7 +58,7 @@ router.post(routes.post.like, async (req, res) => {
         const result = await setLike(req);
 
         if (result.ok) return res.status(200).send(result.data);
-        return res.status(204).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }

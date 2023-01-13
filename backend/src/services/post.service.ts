@@ -3,89 +3,66 @@ import { Post } from "../entity/post.entity";
 import { Likes } from "../entity/likes.entity";
 import { Files } from "../entity/files.entity";
 import { Comment } from "../entity/comment.entity";
-import { deleteFile, fileNameFunc } from "../utils/fileFunction";
-import { In, IsNull } from "typeorm";
+import { In } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
 const fileRepository = dataSource.getRepository(Files);
 const commentRepository = dataSource.getRepository(Comment);
 
-export const find = async (req: any, paramId?: number) => {
+export const find = async (req: any) => {
     try {
         const {
             query: { postId },
-            user: { email },
+            // user: { email },
         } = req;
-        const id = Number(postId);
 
-        const post = await postRepository.findOne({
-            relations: {
-                user: true,
-                files: true,
-                comment: true,
-                likes: true,
-            },
-            where: {
-                id,
-                user: { email },
-                deletedAt: undefined,
-            },
-            select: {
-                id: true,
-                contents: true,
-                createdAt: true,
-                user: {
-                    email: true,
-                    nickName: true,
-                    profileImage: true,
-                },
-                files: {
-                    id: true,
-                    imageUrl: true,
-                },
-                comment: {
-                    id: true,
-                },
-                likes: {
-                    id: true,
-                },
-            },
-            order: {
-                createdAt: "desc",
-            },
-        });
+        const likeQb = likesRepository
+            .createQueryBuilder("likes")
+            .subQuery()
+            .select([
+                "likes.post_id AS postId",
+                "COUNT(likes.post_id) AS likeQuantity",
+            ])
+            .from(Likes, "likes")
+            .groupBy("likes.post_id")
+            .getQuery();
 
-        const isLike = await likesRepository.findOne({
-            relations: { post: true, user: true },
-            where: {
-                post: { id },
-                user: { email },
-            },
-            select: {
-                id: true,
-            },
-        });
+        const commentQb = commentRepository
+            .createQueryBuilder()
+            .subQuery()
+            .select([
+                "comment.post_id AS postId",
+                "COUNT(comment.post_id) AS commentQuantity",
+            ])
+            .from(Comment, "comment")
+            .groupBy("comment.post_id")
+            .getQuery();
 
-        if (post) {
-            const result: any = {
-                postId: post.id,
-                userId: post.user.email,
-                writer: post.user.nickName,
-                profileImage: post.user.profileImage,
-                contents: post.contents,
-                createdAt: post.createdAt,
-                images: post.files,
-                likequantity: (post?.likes as any).length,
-                commentquantity: (post?.comment as any).length,
-                likeStatus: isLike === null ? false : true,
-            };
+        const find = await postRepository
+            .createQueryBuilder("post")
+            .leftJoinAndSelect("post.user", "user")
+            .leftJoinAndSelect(commentQb, "comment", "post.id = comment.postId")
+            .leftJoinAndSelect(likeQb, "like", "post.id = like.postId")
+            .select([
+                "post.id AS id",
+                "post.contents AS contents",
+                "post.create_date AS createAt",
+                "user.email AS email",
+                "user.nickName AS nickName",
+                "user.profileImage AS profileImage",
+                "IFNULL(comment.commentQuantity, 0) AS commentQuantity",
+                "IFNULL(like.likeQuantity, 0) AS likeQuantity",
+            ])
+            .where("post.id = :postId ", {
+                postId: Number(postId),
+            })
+            .orderBy("post.create_date", "DESC")
+            .getRawMany();
 
-            return { ok: true, data: result };
-        } else {
-            return { ok: true, data: "없는 게시글입니다." };
-        }
+        return { ok: true, data: { ...find, likeStatus: false } };
     } catch (error) {
+        console.log(error);
         return { ok: false, data: error };
     }
 };
@@ -214,7 +191,7 @@ export const setLike = async (req: any) => {
 
             return { ok: true, data: { isLike: false } };
         } else {
-            await likesRepository.save(likes);
+            await likesRepository.insert(likes);
 
             return { ok: true, data: { isLike: true } };
         }
