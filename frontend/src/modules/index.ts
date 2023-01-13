@@ -21,6 +21,7 @@ import { friendsSaga } from "./saga/friends";
 import { commentSaga } from "./saga/comment";
 import { chatSaga } from "./saga/chat";
 import { userDetailSaga } from "./saga/userDetail";
+import { imageSaga } from "./saga/image";
 
 export const rootReducer = combineReducers({
     auth,
@@ -46,5 +47,6 @@ export function* rootSaga() {
         commentSaga(),
         chatSaga(),
         userDetailSaga(),
+        imageSaga(),
     ]);
 }

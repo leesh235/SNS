@@ -3,27 +3,36 @@ import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
-    latestImage: reducerUtils.initial([]),
-    allImages: reducerUtils.initial([]),
+    single: reducerUtils.initial(null),
+    array: reducerUtils.initial(null),
+    remove: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
     const { type } = action;
     switch (type) {
-        case imageAction.latestImage:
-        case typeUtils(imageAction.latestImage).success:
-        case typeUtils(imageAction.latestImage).error:
+        case imageAction.single:
+        case typeUtils(imageAction.single).success:
+        case typeUtils(imageAction.single).error:
             return handleAsyncReducer(
-                imageAction.latestImage,
-                "latestImage",
+                imageAction.single,
+                "single",
                 true
             )(state, action);
-        case imageAction.allImage:
-        case typeUtils(imageAction.allImage).success:
-        case typeUtils(imageAction.allImage).error:
+        case imageAction.array:
+        case typeUtils(imageAction.array).success:
+        case typeUtils(imageAction.array).error:
             return handleAsyncReducer(
-                imageAction.allImage,
-                "allImages",
+                imageAction.array,
+                "array",
+                true
+            )(state, action);
+        case imageAction.remove:
+        case typeUtils(imageAction.remove).success:
+        case typeUtils(imageAction.remove).error:
+            return handleAsyncReducer(
+                imageAction.array,
+                "remove",
                 true
             )(state, action);
         default:
