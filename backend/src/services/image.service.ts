@@ -51,61 +51,6 @@ export const fileArrayUpload = async (req: any) => {
     }
 };
 
-export const getLatestImage = async (req: any) => {
-    try {
-        const { user } = req;
-
-        const latestImgArr = await fileRepository.find({
-            where: { post: { user: user.email, deletedAt: undefined } },
-            select: {
-                id: true,
-                imageUrl: true,
-                post: {
-                    id: true,
-                },
-            },
-            take: 6,
-        });
-
-        const returnValue: any[] = latestImgArr.map((val) => {
-            return { id: val.id, postId: val.post.id, url: val.imageUrl };
-        });
-
-        return returnValue;
-    } catch (error) {
-        return false;
-    }
-};
-
-export const getAllImage = async (req: any) => {
-    try {
-        const {
-            user,
-            query: { take },
-        } = req;
-
-        const allImgArr = await fileRepository.find({
-            where: { post: { user: user.email, deletedAt: undefined } },
-            select: {
-                id: true,
-                imageUrl: true,
-                post: {
-                    id: true,
-                },
-            },
-            take: take || 6,
-        });
-
-        const returnValue: any[] = allImgArr.map((val) => {
-            return { id: val.id, postId: val.post.id, url: val.imageUrl };
-        });
-
-        return returnValue;
-    } catch (error) {
-        return false;
-    }
-};
-
 export const remove = async (req: any) => {
     try {
         const { user } = req;

@@ -37,13 +37,13 @@ export const routes = {
         ability: "/ability",
         university: "/university",
         school: "/school",
+        latest: "/image/latest",
+        all: "/image/all",
     },
     image: {
         single: "/",
         array: "/array",
         remove: "/",
-        latest: "/latest",
-        all: "/all",
     },
     post: {
         write: "/",

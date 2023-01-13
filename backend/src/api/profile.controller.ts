@@ -4,6 +4,8 @@ import {
     saveCoverImage,
     saveProfileImage,
     saveIntroduce,
+    getAllImage,
+    getLatestImage,
     saveAbility,
     removeAbility,
     saveSchool,
@@ -65,6 +67,24 @@ router.patch(routes.profile.introduce, async (req, res) => {
         return res.status(500).send(result.data);
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
+    }
+});
+
+//모든 이미지 목록
+router.get(routes.profile.all, async (req, res) => {
+    try {
+        res.status(200).send(await getAllImage(req));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
+    }
+});
+
+//최근 이미지 목록
+router.get(routes.profile.latest, async (req, res) => {
+    try {
+        res.status(200).send(await getLatestImage(req));
+    } catch (error) {
+        res.status(500).send({ message: `${error}` });
     }
 });
 
