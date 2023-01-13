@@ -28,10 +28,10 @@ export const findAll = async (req: any) => {
             },
         });
 
-        return result;
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
-        return [];
+        return { ok: false, data: error };
     }
 };
 
@@ -49,10 +49,10 @@ export const save = async (req: any) => {
 
         await commentRepository.save(comment);
 
-        return true;
+        return { ok: true, data: comment };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };
 
@@ -65,14 +65,14 @@ export const modify = async (req: any) => {
 
         await commentRepository.update({ id, user: { email } }, { contents });
 
-        return true;
+        return { ok: true, data: { id, contents } };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };
 
-export const delete_comment = async (req: any) => {
+export const remove = async (req: any) => {
     try {
         const {
             user: { email },
@@ -84,9 +84,9 @@ export const delete_comment = async (req: any) => {
             user: { email },
         });
 
-        return true;
+        return { ok: true, data: { id } };
     } catch (error) {
         console.log(error);
-        return false;
+        return { ok: false, data: error };
     }
 };

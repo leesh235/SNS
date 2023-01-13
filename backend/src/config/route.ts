@@ -61,10 +61,9 @@ export const routes = {
     },
     comment: {
         get: "/",
-        write: "/write",
-        modify: "/modify",
-        delete: "/delete",
-        like: "/like",
+        write: "/",
+        modify: "/",
+        delete: "/",
     },
     search: {
         all: "/all",
