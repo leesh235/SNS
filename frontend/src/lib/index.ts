@@ -7,6 +7,7 @@ import posts from "./posts";
 import search from "./search";
 import profile from "./profile";
 import user from "./user";
+import image from "./image";
 
 export const authApi = auth;
 export const chatApi = chat;
@@ -17,3 +18,4 @@ export const postsApi = posts;
 export const searchApi = search;
 export const profileApi = profile;
 export const userApi = user;
+export const imageApi = image;

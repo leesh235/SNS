@@ -1,19 +1,27 @@
+import { SingleImage, ArrayImage } from "../../types/lib/image";
+
 export const imageAction = {
-    latestImage: "image/LATESTIMAGE",
-    allImage: "image/ALLIMAGE",
+    single: "image/SINGLE",
+    array: "image/ARRAY",
+    remove: "image/REMOVE",
 };
 
 export const imageActionCreator = {
-    latestImage: (data: any) => {
+    single: (data: SingleImage) => {
         return {
-            type: imageAction.latestImage,
+            type: imageAction.single,
             data,
         };
     },
-    allImage: (data: any) => {
+    array: (data: ArrayImage) => {
         return {
-            type: imageAction.allImage,
+            type: imageAction.array,
             data,
+        };
+    },
+    remove: () => {
+        return {
+            type: imageAction.remove,
         };
     },
 };
