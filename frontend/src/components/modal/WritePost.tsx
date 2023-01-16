@@ -335,7 +335,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
             dispatch(postActionCreator.write({ contents: contents.value }));
         }
         setTimeout(() => {
-            dispatch(postsActionCreator.myPosts({ email: data.email }));
+            dispatch(postsActionCreator.myPosts({}));
         }, 100);
 
         setClose(false);

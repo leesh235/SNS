@@ -36,7 +36,6 @@ export const PostFlexCard = ({}: Props) => {
         dispatch(postsActionCreator.myPosts({ take: count * 4 + 4 }));
         dispatch(
             postsActionCreator.myPosts({
-                email: user?.email,
                 take: count * 4 + 4,
             })
         );

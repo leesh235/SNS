@@ -175,7 +175,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
             )
         ) {
             dispatch(postActionCreator.delete({ postId }));
-            dispatch(postsActionCreator.myPosts({ email: user.email }));
+            dispatch(postsActionCreator.myPosts({}));
         }
     };
 

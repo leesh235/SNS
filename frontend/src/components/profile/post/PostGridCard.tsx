@@ -36,7 +36,6 @@ export const PostGridCard = ({}: Props) => {
         dispatch(postsActionCreator.myPosts({ take: count * 8 + 8 }));
         dispatch(
             postsActionCreator.myPosts({
-                email: user?.email,
                 take: count * 8 + 8,
             })
         );
