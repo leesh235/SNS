@@ -3,9 +3,9 @@ import theme from "../../styles/theme";
 //functions
 import { routes } from "../../utils/routes";
 import { authActionCreator } from "../../modules/action/auth";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../hooks/common/useForm";
 import { loginValidate } from "../../utils/validate";
-import { useSubmit } from "../../hooks/useSubmit";
+import { useSubmit } from "../../hooks/common/useSubmit";
 //components
 import { FocusInput } from "../common/input/FocusInput";
 import { BagicButton } from "../common/button/BagicButton";

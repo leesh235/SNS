@@ -1,7 +1,7 @@
 import styled from "../../styles/theme-components";
 import { useRef } from "react";
 //functions
-import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { useInfiniteScroll } from "../../hooks/common/useInfiniteScroll";
 import { useGetList } from "../../hooks/common/useGetList";
 //components
 import { PostCard } from "../profile/card/PostCard";

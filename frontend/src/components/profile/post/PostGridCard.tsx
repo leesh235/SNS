@@ -1,5 +1,5 @@
 import styled from "../../../styles/theme-components";
-import { useInfiniteScroll } from "../../../hooks/useInfiniteScroll";
+import { useInfiniteScroll } from "../../../hooks/common/useInfiniteScroll";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postsActionCreator } from "../../../modules/action/posts";

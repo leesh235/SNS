@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 //functions
 import theme from "../../styles/theme";
 import { authActionCreator } from "../../modules/action/auth";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../hooks/common/useForm";
 import { calendarUtil } from "../../utils/calendar";
 //components
 import { BagicButton } from "../common/button/BagicButton";

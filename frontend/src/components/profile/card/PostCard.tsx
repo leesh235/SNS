@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 //functions
 import { routes } from "../../../utils/routes";
-import { postActionCreator } from "../../../modules/action/post";
 import { commentActionCreator } from "../../../modules/action/comment";
-import { postsActionCreator } from "../../../modules/action/posts";
 import { useGetDetail } from "../../../hooks/common/useGetDetail";
 import { useModal } from "../../../hooks/common/useModal";
+import { usePostFunc } from "../../../hooks/post/usePostFunc";
+import { getDate } from "../../../utils/dateUtil";
 //components
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { WritePost } from "../../modal/WritePost";
@@ -146,27 +146,14 @@ interface Props {
 export const PostCard = ({ postId, endView = undefined }: Props) => {
     const dispatch = useDispatch();
 
-    const buttonModal = useModal();
-    const modifyModal = useModal();
-
     const user = useSelector((state: any) => state?.user?.loginInfo?.data);
 
     const { post } = useGetDetail("allPosts", postId);
 
-    const handleDeleteBtn = () => {
-        if (
-            window.confirm(
-                "휴지통으로 보내시겠습니까?(30일 후에 영구 삭제됩니다.)"
-            )
-        ) {
-            dispatch(postActionCreator.delete({ postId }));
-            dispatch(postsActionCreator.myPosts({}));
-        }
-    };
+    const buttonModal = useModal();
+    const modifyModal = useModal();
 
-    const handleLike = () => {
-        dispatch(postActionCreator.like({ postId }));
-    };
+    const { handleLike, handleDelete } = usePostFunc(postId);
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
         e
@@ -207,14 +194,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                     />
                     <FlexLayout>
                         <Text
-                            text={`${post?.createAt}`}
-                            tag={"span"}
-                            cssObj={{
-                                fontSize: "12px",
-                            }}
-                        />
-                        <Text
-                            text={"시간"}
+                            text={getDate(post.createAt)}
                             tag={"span"}
                             cssObj={{
                                 fontSize: "12px",
@@ -243,7 +223,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                             />
                             <HoverBtn
                                 text={"게시물 삭제"}
-                                onClick={handleDeleteBtn}
+                                onClick={handleDelete}
                             />
                         </CloseEventBtn>
                     )}

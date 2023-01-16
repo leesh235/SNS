@@ -1,7 +1,7 @@
 import styled from "../../../styles/theme-components";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useInfiniteScroll } from "../../../hooks/useInfiniteScroll";
+import { useInfiniteScroll } from "../../../hooks/common/useInfiniteScroll";
 import { PostCard } from "../card/PostCard";
 import { postsActionCreator } from "../../../modules/action/posts";
 

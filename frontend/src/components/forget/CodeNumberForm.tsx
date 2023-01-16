@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 //functions
 import theme from "../../styles/theme";
 import { routes } from "../../utils/routes";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../hooks/common/useForm";
 import { authActionCreator } from "../../modules/action/auth";
 import { verifyCodeNumberValidate } from "../../utils/validate";
 //components

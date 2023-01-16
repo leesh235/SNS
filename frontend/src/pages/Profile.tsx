@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import theme from "../styles/theme";
 import { profileActionCreator } from "../modules/action/profile";
 import { friendsActionCreator } from "../modules/action/friends";
-import { useObserver } from "../hooks/useObserver";
+import { useObserver } from "../hooks/common/useObserver";
 //components
 import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
