@@ -19,8 +19,7 @@ router.get(routes.profile.profile, async (req, res) => {
     }
 });
 
-//유저 프로필 ****************************삭제
-router.get(routes.profile.login_info, async (req, res) => {
+router.get(routes.profile.simple, async (req, res) => {
     try {
         return res.status(200).send(req.user);
     } catch (error) {

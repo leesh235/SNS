@@ -29,7 +29,7 @@ export const routes = {
         info: "/info/",
     },
     profile: {
-        login_info: "/login_info",
+        simple: "/simple",
         profile: "/profile",
         coverimage: "/coverimage",
         profileimage: "/profileimage",
