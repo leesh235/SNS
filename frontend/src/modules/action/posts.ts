@@ -1,3 +1,4 @@
+import { Take } from "../../types/lib/post";
 export const postsAction = {
     allPosts: "posts/ALLPOSTS",
     myPosts: "posts/MYPOSTS",
@@ -6,27 +7,28 @@ export const postsAction = {
 };
 
 export const postsActionCreator = {
-    allPosts: (data: any) => {
+    allPosts: (data: Take) => {
         return {
             type: postsAction.allPosts,
             data,
         };
     },
-    myPosts: (data: any) => {
+    myPosts: (data: Take) => {
         return {
             type: postsAction.myPosts,
             data,
         };
     },
-    likePosts: (data: any) => {
+    likePosts: (data: Take) => {
         return {
             type: postsAction.likePosts,
             data,
         };
     },
-    friendsPosts: () => {
+    friendsPosts: (data: Take) => {
         return {
             type: postsAction.friendsPosts,
+            data,
         };
     },
 };

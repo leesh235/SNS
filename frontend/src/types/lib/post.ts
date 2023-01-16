@@ -20,3 +20,7 @@ export interface DeletePost {
 export interface Like {
     postId: number;
 }
+
+export interface Take {
+    take?: number;
+}

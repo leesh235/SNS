@@ -4,10 +4,10 @@ import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
-    allPosts: reducerUtils.initial([]),
-    myPosts: reducerUtils.initial([]),
-    likePosts: reducerUtils.initial([]),
-    friendsPosts: reducerUtils.initial([]),
+    allPosts: reducerUtils.initial(null),
+    myPosts: reducerUtils.initial(null),
+    likePosts: reducerUtils.initial(null),
+    friendsPosts: reducerUtils.initial(null),
 
     write: reducerUtils.initial(null),
     detail: reducerUtils.initial(null),

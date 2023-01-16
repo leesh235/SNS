@@ -1,24 +1,25 @@
 import { backend } from "./axios";
 import { api } from "../utils/routes";
+import { Take } from "../types/lib/post";
 
-const posts = async () => {
-    return await backend.get(api.posts.all);
+const posts = async (data: Take) => {
+    return await backend.get(api.posts.all, { params: data });
 };
 
-const myPosts = async () => {
-    return await backend.get(api.posts.my);
+const myPosts = async (data: Take) => {
+    return await backend.get(api.posts.my, { params: data });
 };
 
-const userPosts = async () => {
-    return await backend.get(api.posts.user);
+const userPosts = async (data: Take) => {
+    return await backend.get(api.posts.user, { params: data });
 };
 
-const likePosts = async () => {
-    return await backend.get(api.posts.like);
+const likePosts = async (data: Take) => {
+    return await backend.get(api.posts.like, { params: data });
 };
 
-const bookmarkPosts = async () => {
-    return await backend.get(api.posts.bookmark);
+const bookmarkPosts = async (data: Take) => {
+    return await backend.get(api.posts.bookmark, { params: data });
 };
 
 export default {
