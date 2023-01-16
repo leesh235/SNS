@@ -2,7 +2,7 @@ import styled from "../../styles/theme-components";
 import theme from "../../styles/theme";
 //functions
 import { routes } from "../../utils/routes";
-import { useModal } from "../../hooks/useModal";
+import { useModal } from "../../hooks/common/useModal";
 //components
 import { BagicButton } from "../common/button/BagicButton";
 import { JoinForm } from "../join/JoinForm";
@@ -39,7 +39,7 @@ const Line = styled.div`
 `;
 
 export const LogInBox = () => {
-    const { modal, onModalClick } = useModal();
+    const { modal, handleModal } = useModal();
 
     return (
         <>
@@ -49,7 +49,7 @@ export const LogInBox = () => {
                     <Line />
                     <BagicButton
                         text={"새 계정 만들기"}
-                        onClick={onModalClick}
+                        onClick={handleModal}
                         cssObj={{
                             width: "144px",
                             height: "48px",
@@ -62,7 +62,7 @@ export const LogInBox = () => {
             </Layout>
             {modal && (
                 <ModalLayout>
-                    <JoinForm onClose={onModalClick} />
+                    <JoinForm onClose={handleModal} />
                 </ModalLayout>
             )}
         </>

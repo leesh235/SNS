@@ -66,7 +66,7 @@ const GenderLayout = styled.div`
 `;
 
 interface Props {
-    onClose: () => void;
+    onClose: any;
 }
 
 export const JoinForm = ({ onClose }: Props) => {
