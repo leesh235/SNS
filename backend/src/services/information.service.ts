@@ -7,6 +7,39 @@ const abilityRepository = dataSource.getRepository(Ability);
 const schoolRepository = dataSource.getRepository(School);
 const universityRepository = dataSource.getRepository(University);
 
+export const find = async (req: any) => {
+    try {
+        const {
+            user: { email },
+        } = req;
+        const ability = await abilityRepository.findOne({
+            relations: { user: true },
+            where: {
+                user: { email },
+            },
+        });
+
+        const school = await schoolRepository.findOne({
+            relations: { user: true },
+            where: {
+                user: { email },
+            },
+        });
+
+        const university = await universityRepository.findOne({
+            relations: { user: true },
+            where: {
+                user: { email },
+            },
+        });
+
+        return { ok: true, data: { ability, school, university } };
+    } catch (error) {
+        console.log(error);
+        return { ok: false, data: error };
+    }
+};
+
 export const saveAbility = async (req: any) => {
     try {
         const {

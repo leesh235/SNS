@@ -1,6 +1,7 @@
 export const baseRoutes = {
     auth: "/api/auth",
     profile: "/api/profile",
+    information: "/api/info",
     user: "/api/user",
     image: "/api/image",
     post: "/api/post",
@@ -37,6 +38,7 @@ export const routes = {
         all: "/image/all",
     },
     information: {
+        get: "/",
         ability: "/ability",
         university: "/university",
         school: "/school",

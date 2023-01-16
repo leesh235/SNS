@@ -1,6 +1,7 @@
 import express from "express";
 import { routes } from "../config/route";
 import {
+    find,
     saveAbility,
     removeAbility,
     saveSchool,
@@ -10,6 +11,18 @@ import {
 } from "../services/information.service";
 
 const router = express.Router();
+
+//프로필 정보 가져오기
+router.get(routes.information.get, async (req, res) => {
+    try {
+        const result = await find(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
+    } catch (error) {
+        return res.status(500).send({ message: `${error}` });
+    }
+});
 
 //프로필 직업 추가/수정
 router.post(routes.information.ability, async (req, res) => {
