@@ -28,7 +28,7 @@ interface StyleProps {
 interface Props extends StyleProps {
     text: string;
     type: "submit" | "button" | "reset";
-    onClick?: () => void;
+    onClick?: React.MouseEventHandler;
 }
 
 export const Button2 = ({
