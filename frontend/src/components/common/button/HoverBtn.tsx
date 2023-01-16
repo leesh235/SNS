@@ -1,13 +1,15 @@
 import styled from "../../../styles/theme-components";
-import { Text } from "../Text";
 
-const Button = styled.div<StyleProps>`
+const Button = styled.button<StyleProps>`
     display: flex;
     flex-direction: row;
     align-items: center;
     width: ${(props) => props.width};
     height: ${(props) => props.height};
     border-radius: 6px;
+    font-size: ${(props) => props.fontSize || "12px"};
+    font-weight: ${(props) => props.fontWeight || 400};
+    color: ${(props) => props.fontColor};
     background-color: ${(props) => props.theme.color.white};
     :hover {
         background-color: ${(props) => props.theme.color.gray};
@@ -18,10 +20,13 @@ const Button = styled.div<StyleProps>`
 interface StyleProps {
     width?: string;
     height?: string;
+    fontSize?: string;
+    fontWeight?: number;
+    fontColor?: string;
 }
 
 interface Props extends StyleProps {
-    onClick?: () => void;
+    onClick?: React.MouseEventHandler;
     text: string;
     fs?: string;
     fm?: string;
@@ -29,15 +34,14 @@ interface Props extends StyleProps {
 
 export const HoverBtn = ({ text, onClick, width, height, fs, fm }: Props) => {
     return (
-        <Button onClick={onClick} width={width} height={height}>
-            <Text
-                text={text}
-                cssObj={{
-                    fontSize: fs,
-                    fontWeight: 500,
-                    margin: fm,
-                }}
-            />
+        <Button
+            onClick={onClick}
+            width={width}
+            height={height}
+            fontSize={fs}
+            fontWeight={500}
+        >
+            {text}
         </Button>
     );
 };

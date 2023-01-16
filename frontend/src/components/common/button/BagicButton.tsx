@@ -28,7 +28,7 @@ const Wrapper = styled.button<StyleProps>`
 interface Props {
     text?: string;
     type?: "submit" | "button" | "reset";
-    onClick?: () => void;
+    onClick?: React.MouseEventHandler;
     cssObj?: {
         width?: string;
         height?: string;
