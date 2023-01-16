@@ -16,19 +16,19 @@ const coverImage = createPromise(
     profileAction.coverImage,
     profileApi.modifyCoverimage
 );
-const loginInfo = createPromise(profileAction.loginInfo, profileApi.logInInfo);
+const simple = createPromise(profileAction.simple, profileApi.logInInfo);
 const latestImage = createPromise(
     profileAction.latestImage,
     profileApi.getLatestImage
 );
 const allImage = createPromise(profileAction.allImage, profileApi.getAllImage);
 
-export function* userSaga() {
+export function* profileSaga() {
     yield takeEvery(profileAction.profile, profile);
     yield takeEvery(profileAction.introduce, introduce);
     yield takeEvery(profileAction.profileImage, profileImage);
     yield takeEvery(profileAction.coverImage, coverImage);
-    yield takeEvery(profileAction.loginInfo, loginInfo);
+    yield takeEvery(profileAction.simple, simple);
     yield takeEvery(profileAction.latestImage, latestImage);
     yield takeEvery(profileAction.allImage, allImage);
 }

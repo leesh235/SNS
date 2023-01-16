@@ -166,7 +166,7 @@ const rightData = [<AppIcon />, <MessageIcon />, <BellIcon />, <ArrowDIcon />];
 export const Header = () => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.loginInfo
+        (state: any) => state.profile?.simple
     );
 
     const [click, setClick] = useState<number>(0);
@@ -183,8 +183,8 @@ export const Header = () => {
     };
 
     useEffect(() => {
-        if (data === null) dispatch(profileActionCreator.logInInfo());
-    }, []);
+        dispatch(profileActionCreator.simple());
+    }, [dispatch]);
 
     return (
         <Layout>

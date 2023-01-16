@@ -3,7 +3,7 @@ import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
-    loginInfo: reducerUtils.initial(null),
+    simple: reducerUtils.initial(null),
     profile: reducerUtils.initial(null),
     introduce: reducerUtils.initial(null),
     profileImage: reducerUtils.initial(null),
@@ -13,12 +13,12 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
-        case profileAction.loginInfo:
-        case typeUtils(profileAction.loginInfo).success:
-        case typeUtils(profileAction.loginInfo).error:
+        case profileAction.simple:
+        case typeUtils(profileAction.simple).success:
+        case typeUtils(profileAction.simple).error:
             return handleAsyncReducer(
-                profileAction.loginInfo,
-                "loginInfo",
+                profileAction.simple,
+                "simple",
                 true
             )(state, action);
 

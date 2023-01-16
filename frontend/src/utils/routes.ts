@@ -30,7 +30,7 @@ export const api = {
         info: "/user/info/",
     },
     profile: {
-        login_info: "/profile/login_info",
+        simple: "/profile/simple",
         profile: "/profile",
         coverimage: "/profile/coverimage",
         profileimage: "/profile/profileimage",

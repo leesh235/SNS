@@ -3,7 +3,7 @@ import { api } from "../utils/routes";
 import { Introduce, UserImage, Take } from "../types/lib/profile";
 
 const logInInfo = async () => {
-    return await backend.get(api.profile.login_info);
+    return await backend.get(api.profile.simple);
 };
 
 const profile = async () => {

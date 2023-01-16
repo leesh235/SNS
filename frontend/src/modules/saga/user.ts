@@ -8,7 +8,7 @@ const info = createPromise(userAction.info, userApi.getInfo);
 const images = createPromise(userAction.images, userApi.getImages);
 const posts = createPromise(userAction.posts, userApi.getPosts);
 
-export function* userDetailSaga() {
+export function* userSaga() {
     yield takeEvery(userAction.detail, detail);
     yield takeEvery(userAction.info, info);
     yield takeEvery(userAction.images, images);

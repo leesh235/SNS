@@ -85,7 +85,7 @@ interface Props {}
 export const SideMenu = ({}: Props) => {
     const location = useLocation();
     const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.loginInfo
+        (state: any) => state?.profile?.simple
     );
 
     useEffect(() => {}, [location?.state]);
