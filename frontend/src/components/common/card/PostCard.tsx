@@ -12,14 +12,14 @@ import { usePostFunc } from "../../../hooks/post/usePostFunc";
 import { getDate } from "../../../utils/dateUtil";
 //components
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
-import { WritePost } from "../../modal/WritePost";
-import { Text } from "../../common/Text";
-import { Button2 } from "../../common/button/Button2";
-import { CloseEventBtn } from "../../common/button/CloseEventBtn";
-import { CommentBtn } from "../../common/button/CommentBtn";
-import { CommentInput } from "../../common/input/CommentInput";
-import { HoverBtn } from "../../common/button/HoverBtn";
-import { ModalLayout } from "../../common/styles/ModalLayout";
+import { WritePost } from "./WritePost";
+import { Text } from "../Text";
+import { Button2 } from "../button/Button2";
+import { CloseEventBtn } from "../button/CloseEventBtn";
+import { CommentBtn } from "../button/CommentBtn";
+import { CommentInput } from "../input/CommentInput";
+import { HoverBtn } from "../button/HoverBtn";
+import { ModalLayout } from "../styles/ModalLayout";
 
 const Layout = styled.article`
     width: 100%;

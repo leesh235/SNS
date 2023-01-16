@@ -1,9 +1,9 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 //functions
-import theme from "../../styles/theme";
+import theme from "../../../styles/theme";
 //components
-import { Text } from "../common/Text";
+import { Text } from "../Text";
 
 const Layout = styled.main`
     width: 100%;

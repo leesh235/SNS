@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import theme from "../../styles/theme";
 import { profileActionCreator } from "../../modules/action/profile";
 //components
-import { SetProfileImage } from "../modal/SetProfileImage";
-import { CustomImage } from "../modal/CustomImage";
-import { SelectImage } from "../modal/SelectImage";
+import { SetProfileImage } from "../common/card/SetProfileImage";
+import { CustomImage } from "../common/card/CustomImage";
+import { SelectImage } from "../common/card/SelectImage";
 import { Text } from "../common/Text";
 import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";

@@ -3,7 +3,7 @@ import { useInfiniteScroll } from "../../../hooks/common/useInfiniteScroll";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postsActionCreator } from "../../../modules/action/posts";
-import { GridCard } from "../card/GridCard";
+import { GridCard } from "../../common/card/GridCard";
 
 const Wrapper = styled.div`
     margin-top: 15px;

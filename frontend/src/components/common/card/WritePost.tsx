@@ -1,13 +1,13 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //functions
-import theme from "../../styles/theme";
-import { obToUrl } from "../../utils/objToUrl";
-import { postActionCreator } from "../../modules/action/post";
-import { postsActionCreator } from "../../modules/action/posts";
+import theme from "../../../styles/theme";
+import { obToUrl } from "../../../utils/objToUrl";
+import { postActionCreator } from "../../../modules/action/post";
+import { postsActionCreator } from "../../../modules/action/posts";
 //components
-import { Text } from "../common/Text";
+import { Text } from "../Text";
 import { ModifyPost } from "./ModifyPost";
 
 const Layout = styled.form`

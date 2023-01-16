@@ -1,13 +1,13 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 //functions
-import { base64ToImage } from "../../utils/base64Func";
-import theme from "../../styles/theme";
+import { base64ToImage } from "../../../utils/base64Func";
+import theme from "../../../styles/theme";
 //components
-import { Text } from "../common/Text";
-import { AvatarEditor } from "../common/AvatarEditor";
-import { imageActionCreator } from "../../modules/action/image";
+import { Text } from "../Text";
+import { AvatarEditor } from "../AvatarEditor";
+import { imageActionCreator } from "../../../modules/action/image";
 
 const Layout = styled.main`
     width: 100%;

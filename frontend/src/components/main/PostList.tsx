@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useInfiniteScroll } from "../../hooks/common/useInfiniteScroll";
 import { useGetList } from "../../hooks/common/useGetList";
 //components
-import { PostCard } from "../profile/card/PostCard";
+import { PostCard } from "../common/card/PostCard";
 
 const Wrapper = styled.section`
     display: grid;

@@ -2,8 +2,8 @@ import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
 import { useEffect, RefObject } from "react";
 import { useSelector } from "react-redux";
-import { Avatar } from "../../common/Image/Avatar";
-import { Text } from "../../common/Text";
+import { Avatar } from "../Image/Avatar";
+import { Text } from "../Text";
 import { routes } from "../../../utils/routes";
 
 const Wrapper = styled.div`

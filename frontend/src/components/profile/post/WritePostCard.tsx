@@ -7,7 +7,7 @@ import { IconButton } from "../../common/button/IconButton";
 import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 import { InputButton } from "../../common/button/InputButton";
-import { WritePost } from "../../modal/WritePost";
+import { WritePost } from "../../common/card/WritePost";
 
 const FlexLayout = styled.div`
     width: calc(100% - 32px);
