@@ -13,50 +13,60 @@ const router = express.Router();
 //전체 리스트
 router.get(routes.posts.all, async (req, res) => {
     try {
-        const allList = await findAll(req);
-        res.status(200).send(allList);
+        const result = await findAll(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //내 게시글 리스트
 router.get(routes.posts.my, async (req, res) => {
     try {
-        const allList = await findMy(req);
-        res.status(200).send(allList);
+        const result = await findMy(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //좋아요 리스트
 router.get(routes.posts.like, async (req, res) => {
     try {
-        const allList = await findLike(req);
-        res.status(200).send(allList);
+        const result = await findLike(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //즐겨찾기 리스트
 router.get(routes.posts.bookmark, async (req, res) => {
     try {
-        const allList = await findBookmark(req);
-        res.status(200).send(allList);
+        const result = await findBookmark(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 
 //유저 게시글 리스트
 router.get(routes.posts.user, async (req, res) => {
     try {
-        const allList = await findUserList(req);
-        res.status(200).send(allList);
+        const result = await findUserList(req);
+
+        if (result.ok) return res.status(200).send(result.data);
+        return res.status(500).send(result.data);
     } catch (error) {
-        res.status(500).send({ message: `${error}` });
+        return res.status(500).send({ message: `${error}` });
     }
 });
 

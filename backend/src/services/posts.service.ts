@@ -1,6 +1,5 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/post.entity";
-import { Likes } from "../entity/likes.entity";
 
 const postRepository = dataSource.getRepository(Post);
 
@@ -15,8 +14,8 @@ export const findAll = async (req: any) => {
                 "post.id AS id",
                 "post.contents AS contents",
                 "post.create_date AS createAt",
-                "user.email AS email",
-                "user.nickName AS nickName",
+                "user.email AS userId",
+                "user.nickName AS writer",
                 "user.profileImage AS profileImage",
                 "count(comment.post_id) AS commentQuantity",
                 "count(likes.post_id) AS likeQuantity",
@@ -25,7 +24,14 @@ export const findAll = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        return { ok: true, data: findList };
+        const result: any = {};
+
+        findList.forEach(
+            (val) =>
+                (result[val.id] = { ...val, likeStatus: false, images: [] })
+        );
+
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
@@ -58,7 +64,14 @@ export const findMy = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        return { ok: true, data: findList };
+        const result: any = {};
+
+        findList.forEach(
+            (val) =>
+                (result[val.id] = { ...val, likeStatus: false, images: [] })
+        );
+
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
@@ -91,7 +104,14 @@ export const findLike = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        return { ok: true, data: findList };
+        const result: any = {};
+
+        findList.forEach(
+            (val) =>
+                (result[val.id] = { ...val, likeStatus: false, images: [] })
+        );
+
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
@@ -123,7 +143,14 @@ export const findBookmark = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        return { ok: true, data: findList };
+        const result: any = {};
+
+        findList.forEach(
+            (val) =>
+                (result[val.id] = { ...val, likeStatus: false, images: [] })
+        );
+
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
@@ -156,7 +183,14 @@ export const findUserList = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        return { ok: true, data: findList };
+        const result: any = {};
+
+        findList.forEach(
+            (val) =>
+                (result[val.id] = { ...val, likeStatus: false, images: [] })
+        );
+
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
