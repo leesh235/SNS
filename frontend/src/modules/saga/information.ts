@@ -3,6 +3,10 @@ import { takeEvery } from "redux-saga/effects";
 import { informationApi } from "../../lib";
 import { informationAction } from "../action/information";
 
+const getInfo = createPromise(
+    informationAction.getInfo,
+    informationApi.getInfo
+);
 const addJob = createPromise(informationAction.addJob, informationApi.addJob);
 const addSchool = createPromise(
     informationAction.addSchool,
@@ -26,6 +30,7 @@ const removeUniversity = createPromise(
 );
 
 export function* userSaga() {
+    yield takeEvery(informationAction.getInfo, getInfo);
     yield takeEvery(informationAction.addJob, addJob);
     yield takeEvery(informationAction.addSchool, addSchool);
     yield takeEvery(informationAction.addUniversity, addUniversity);

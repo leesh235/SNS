@@ -1,6 +1,6 @@
 import { Introduce, UserImage, Take } from "../../types/lib/profile";
 
-export const userAction = {
+export const profileAction = {
     profile: "user/PROFILE",
     loginInfo: "user/LOGININFO",
     introduce: "user/INTRODUCE",
@@ -10,43 +10,43 @@ export const userAction = {
     allImage: "user/ALL_IMAGE",
 };
 
-export const userActionCreator = {
+export const profileActionCreator = {
     profile: () => {
         return {
-            type: userAction.profile,
+            type: profileAction.profile,
         };
     },
     logInInfo: () => {
         return {
-            type: userAction.loginInfo,
+            type: profileAction.loginInfo,
         };
     },
     modifyIntroduce: (data: Introduce) => {
         return {
-            type: userAction.introduce,
+            type: profileAction.introduce,
             data,
         };
     },
     getLatestImage: () => {
         return {
-            type: userAction.introduce,
+            type: profileAction.introduce,
         };
     },
     getAllImage: (data: Take) => {
         return {
-            type: userAction.introduce,
+            type: profileAction.introduce,
             data,
         };
     },
     modifyProfileimage: (data: UserImage) => {
         return {
-            type: userAction.profileImage,
+            type: profileAction.profileImage,
             data,
         };
     },
     modifyCoverimage: (data: UserImage) => {
         return {
-            type: userAction.coverImage,
+            type: profileAction.coverImage,
             data,
         };
     },

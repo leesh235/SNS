@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useInfiniteScroll } from "../../../hooks/useInfiniteScroll";
 import { PostCard } from "../card/PostCard";
 import { postsActionCreator } from "../../../modules/action/posts";
-import { postActionCreator } from "../../../modules/action/post";
 
 const Wrapper = styled.article`
     display: flex;
@@ -34,7 +33,7 @@ export const PostFlexCard = ({}: Props) => {
     });
 
     useEffect(() => {
-        dispatch(postActionCreator.list({ type: "my", take: count * 4 + 4 }));
+        dispatch(postsActionCreator.myPosts({ take: count * 4 + 4 }));
         dispatch(
             postsActionCreator.myPosts({
                 email: user?.email,

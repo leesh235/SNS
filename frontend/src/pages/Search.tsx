@@ -35,11 +35,11 @@ const Search = () => {
 
     useEffect(() => {
         if (menu === 0) {
-            dispatch(searchActionCreator.all({ search: query?.word }));
+            dispatch(searchActionCreator.all({ word: `${query?.word}` }));
         } else if (menu === 1) {
-            dispatch(searchActionCreator.post({ search: query?.word }));
+            dispatch(searchActionCreator.post({ word: `${query?.word}` }));
         } else if (menu === 2) {
-            dispatch(searchActionCreator.people({ search: query?.word }));
+            dispatch(searchActionCreator.people({ word: `${query?.word}` }));
         }
     }, [menu, query?.word]);
 

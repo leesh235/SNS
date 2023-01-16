@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 //functions
-import { userDetailActionCreator } from "../../../modules/action/user";
+import { userActionCreator } from "../../../modules/action/user";
 //components
 import { AddAbility } from "./AddAbility";
 import { AddUniversity } from "./AddUniversity";
@@ -14,8 +14,7 @@ export const Summary = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(userDetailActionCreator.getAbility());
-        dispatch(userDetailActionCreator.getInfo());
+        dispatch(userActionCreator.detail({ email: "" }));
     }, []);
 
     return (

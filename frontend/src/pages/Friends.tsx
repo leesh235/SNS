@@ -37,9 +37,7 @@ const Friends = () => {
             dispatch(friendsActionCreator.allList());
             dispatch(friendsActionCreator.requestList());
             dispatch(friendsActionCreator.responseList());
-            dispatch(
-                friendsActionCreator.friendList({ select: [], search: "" })
-            );
+            dispatch(friendsActionCreator.friendList());
         });
     }, [menu]);
 

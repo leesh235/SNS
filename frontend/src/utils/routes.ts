@@ -31,14 +31,17 @@ export const api = {
     },
     profile: {
         login_info: "/profile/login_info",
-        profile: "/profile/profile",
+        profile: "/profile",
         coverimage: "/profile/coverimage",
         profileimage: "/profile/profileimage",
         introduce: "/profile/introduce",
         people: "/profile/people",
-        ability: "/profile/ability",
-        university: "/profile/university",
-        school: "/profile/school",
+    },
+    info: {
+        get: "/info",
+        ability: "/info/ability",
+        university: "/info/university",
+        school: "/info/school",
     },
     image: {
         single: "/image/",

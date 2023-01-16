@@ -3,6 +3,7 @@ import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 const initialState = {
+    getInfo: reducerUtils.initial(null),
     addJob: reducerUtils.initial(null),
     addSchool: reducerUtils.initial(null),
     addUniversity: reducerUtils.initial(null),
@@ -14,6 +15,15 @@ const initialState = {
 const reducer = (state = initialState, action: any) => {
     const { type, data } = action;
     switch (type) {
+        case informationAction.getInfo:
+        case typeUtils(informationAction.getInfo).success:
+        case typeUtils(informationAction.getInfo).error:
+            return handleAsyncReducer(
+                informationAction.getInfo,
+                "getInfo",
+                true
+            )(state, action);
+
         case informationAction.addJob:
         case typeUtils(informationAction.addJob).success:
         case typeUtils(informationAction.addJob).error:

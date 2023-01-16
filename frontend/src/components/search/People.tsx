@@ -72,7 +72,7 @@ export const People = ({ people }: Props) => {
 
     const handleFriend = (email: string) => {
         console.log("친구신청: ", email);
-        dispatch(friendsActionCreator.request({ friend_email: email }));
+        dispatch(friendsActionCreator.request({ friendEmail: email }));
     };
 
     return (

@@ -155,7 +155,7 @@ export const CreateChatRoom = ({ closeFunc }: Props) => {
     };
 
     useEffect(() => {
-        dispatch(friendsActionCreator.friendList({ select, search }));
+        dispatch(friendsActionCreator.friendList());
     }, [select, search]);
 
     return (

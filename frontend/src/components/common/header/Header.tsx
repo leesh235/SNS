@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //functions
 import { routes } from "../../../utils/routes";
-import { userActionCreator } from "../../../modules/action/profile";
+import { profileActionCreator } from "../../../modules/action/profile";
 //components
 import { LogoIcon } from "../../../assets/icon/LogoIcon";
 import { AppIcon } from "../../../assets/icon/AppIcon";
@@ -183,7 +183,7 @@ export const Header = () => {
     };
 
     useEffect(() => {
-        if (data === null) dispatch(userActionCreator.logInInfo());
+        if (data === null) dispatch(profileActionCreator.logInInfo());
     }, []);
 
     return (

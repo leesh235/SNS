@@ -1,3 +1,3 @@
 export interface Search {
-    word: string;
+    word?: string;
 }

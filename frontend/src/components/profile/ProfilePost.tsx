@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 //functions
-import { imageActionCreator } from "../../modules/action/image";
+import { profileActionCreator } from "../../modules/action/profile";
 //components
 import { IntroduceCard } from "./post/IntroduceCard";
 import { WritePostCard } from "./post/WritePostCard";
@@ -65,7 +65,7 @@ export const ProfilePost = ({ handleUrl, check }: Props) => {
 
     useEffect(() => {
         batch(() => {
-            dispatch(imageActionCreator.latestImage({ email }));
+            dispatch(profileActionCreator.getLatestImage());
         });
     }, [email]);
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 //functions
-import { userDetailActionCreator } from "../../../modules/action/user";
+import { profileActionCreator } from "../../../modules/action/profile";
 //components
 import { AddAbility } from "./AddAbility";
 import { AddUniversity } from "./AddUniversity";
@@ -12,7 +12,7 @@ export const Ability = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(userDetailActionCreator.getAbility());
+        dispatch(profileActionCreator.profile());
     }, []);
 
     return (

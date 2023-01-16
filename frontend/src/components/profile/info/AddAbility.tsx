@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //functions
-import { userDetailActionCreator } from "../../../modules/action/user";
+import { informationActionCreator } from "../../../modules/action/information";
 import theme from "../../../styles/theme";
 //components
 import { Text } from "../../common/Text";
@@ -151,9 +151,9 @@ export const AddAbility = () => {
         setOpenBtn(false);
         if (window.confirm("직장 정보를 삭제하시겠습니까?")) {
             console.log("삭제");
-            dispatch(userDetailActionCreator.deleteAbility({ id }));
+            dispatch(informationActionCreator.removeJob({ id }));
             setTimeout(() => {
-                dispatch(userDetailActionCreator.getAbility());
+                dispatch(informationActionCreator.getInfo());
             }, 10);
         }
     };
@@ -163,14 +163,14 @@ export const AddAbility = () => {
         const { job, position, address } = e.currentTarget;
         console.log(job.value, position.value, address.value);
         dispatch(
-            userDetailActionCreator.setAbility({
+            informationActionCreator.addJob({
                 name: job.value,
                 position: position.value,
                 address: address.value,
             })
         );
         setTimeout(() => {
-            dispatch(userDetailActionCreator.getAbility());
+            dispatch(informationActionCreator.getInfo());
         }, 10);
         setOpen(false);
     };

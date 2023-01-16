@@ -38,14 +38,10 @@ export const PostList = ({}: Props) => {
 
     useEffect(() => {
         if (location.pathname === routes.home) {
-            dispatch(
-                postActionCreator.list({ type: "all", take: count * 4 + 4 })
-            );
+            dispatch(postsActionCreator.allPosts({ take: count * 4 + 4 }));
             dispatch(postsActionCreator.allPosts({ take: count * 4 + 4 }));
         } else if (location.pathname === routes.like) {
-            dispatch(
-                postActionCreator.list({ type: "like", take: count * 4 + 4 })
-            );
+            dispatch(postsActionCreator.allPosts({ take: count * 4 + 4 }));
             dispatch(postsActionCreator.likePosts({ take: count * 4 + 4 }));
         }
     }, [count, location.pathname]);

@@ -6,6 +6,7 @@ import {
 } from "../../types/lib/information";
 
 export const informationAction = {
+    getInfo: "information/GET_INFO",
     addJob: "information/ADD_JOB",
     addSchool: "information/ADD_SCHOOL",
     addUniversity: "information/ADD_UNIVERSITY",
@@ -15,6 +16,11 @@ export const informationAction = {
 };
 
 export const informationActionCreator = {
+    getInfo: () => {
+        return {
+            type: informationAction.getInfo,
+        };
+    },
     addJob: (data: Job) => {
         return {
             type: informationAction.addJob,

@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //functions
-import { userDetailActionCreator } from "../../../modules/action/user";
+import { profileActionCreator } from "../../../modules/action/profile";
 import theme from "../../../styles/theme";
 //components
 import { Text } from "../../common/Text";
@@ -142,10 +142,10 @@ export const AddAddress = () => {
         e.preventDefault();
         const { address } = e.currentTarget;
         dispatch(
-            userDetailActionCreator.setAbility({ address: address.value })
+            profileActionCreator.modifyIntroduce({ address: address.value })
         );
         setTimeout(() => {
-            dispatch(userDetailActionCreator.getAbility());
+            dispatch(profileActionCreator.profile());
         }, 1);
         setOpen(false);
     };

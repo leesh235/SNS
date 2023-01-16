@@ -324,10 +324,15 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
 
         if (post?.files) {
             formData.append("postId", `${post?.postId}`);
-            formData.append("urls", JSON.stringify(deleteFileList));
-            dispatch(postActionCreator.modify(formData));
+            formData.append("images", JSON.stringify(deleteFileList));
+            dispatch(
+                postActionCreator.modify({
+                    postId: post?.postId,
+                    contents: contents.value,
+                })
+            );
         } else {
-            dispatch(postActionCreator.write(formData));
+            dispatch(postActionCreator.write({ contents: contents.value }));
         }
         setTimeout(() => {
             dispatch(postsActionCreator.myPosts({ email: data.email }));

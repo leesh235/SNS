@@ -7,7 +7,7 @@ import theme from "../../styles/theme";
 //components
 import { Text } from "../common/Text";
 import { AvatarEditor } from "../common/AvatarEditor";
-import { userActionCreator } from "../../modules/action/profile";
+import { imageActionCreator } from "../../modules/action/image";
 
 const Layout = styled.main`
     width: 100%;
@@ -114,9 +114,9 @@ export const CustomImage = ({ closeFunc, onClick, image }: Props) => {
         );
         const formData = new FormData();
         formData.append("mode", "profile");
-        formData.append("streamfile", file);
+        formData.append("image", file);
 
-        dispatch(userActionCreator.profileImage(formData));
+        dispatch(imageActionCreator.single({ image: file }));
         closeFunc();
     };
     return (

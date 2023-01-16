@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //functions
-import { userDetailActionCreator } from "../../../modules/action/user";
+import { informationActionCreator } from "../../../modules/action/information";
 import theme from "../../../styles/theme";
 //components
 import { Text } from "../../common/Text";
@@ -151,9 +151,9 @@ export const AddUniversity = () => {
         setOpenBtn(false);
         if (window.confirm("대학 정보를 삭제하시겠습니까?")) {
             console.log("삭제");
-            dispatch(userDetailActionCreator.deleteUniversity({ id }));
+            dispatch(informationActionCreator.removeUniversity({ id }));
             setTimeout(() => {
-                dispatch(userDetailActionCreator.getAbility());
+                dispatch(informationActionCreator.getInfo());
             }, 10);
         }
     };
@@ -163,14 +163,14 @@ export const AddUniversity = () => {
         const { university, major, degree } = e.currentTarget;
         console.log(university.value, major.value, degree.value);
         dispatch(
-            userDetailActionCreator.setUuniversity({
+            informationActionCreator.addUniversity({
                 name: university.value,
                 major: major.value,
                 degree: degree.value,
             })
         );
         setTimeout(() => {
-            dispatch(userDetailActionCreator.getAbility());
+            dispatch(informationActionCreator.getInfo());
         }, 10);
         setOpen(false);
     };
