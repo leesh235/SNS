@@ -10,12 +10,12 @@ import { useObserver } from "../hooks/common/useObserver";
 //components
 import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
-import { ProfilePost } from "../components/profile/ProfilePost";
-import { ProfileInfo } from "../components/profile/ProfileInfo";
-import { ProfileImage } from "../components/profile/ProfileImage";
+import { ProfilePost } from "../components/profile/post/ProfilePost";
+import { ProfileInfo } from "../components/profile/info/ProfileInfo";
+import { ProfileImage } from "../components/profile/image/ProfileImage";
 import { ProfileTop } from "../components/profile/ProfileTop";
-import { ProfileFriend } from "../components/profile/ProfileFriend";
-import { ProfileVideo } from "../components/profile/ProfileVideo";
+import { ProfileFriend } from "../components/profile/friend/ProfileFriend";
+import { ProfileVideo } from "../components/profile/video/ProfileVideo";
 import { ProfileCheckIn } from "../components/profile/ProfileCheckIn";
 
 const Layout = styled.main`

@@ -1,5 +1,5 @@
-import styled from "../../styles/theme-components";
-import { FriendCard } from "./friend/FriendCard";
+import styled from "../../../styles/theme-components";
+import { FriendCard } from "./FriendCard";
 
 const Wrapper = styled.section`
     width: 908px;

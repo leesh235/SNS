@@ -1,5 +1,5 @@
-import styled from "../../styles/theme-components";
-import { VideoCard } from "./video/VideoCard";
+import styled from "../../../styles/theme-components";
+import { VideoCard } from "./VideoCard";
 
 const Wrapper = styled.section`
     width: 908px;

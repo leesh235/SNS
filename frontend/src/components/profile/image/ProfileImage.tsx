@@ -1,8 +1,8 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ImageCard } from "./image/ImageCard";
-import { profileActionCreator } from "../../modules/action/profile";
+import { ImageCard } from "./ImageCard";
+import { profileActionCreator } from "../../../modules/action/profile";
 import { useParams } from "react-router-dom";
 
 const Wrapper = styled.section`

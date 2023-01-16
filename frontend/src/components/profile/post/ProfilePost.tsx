@@ -1,17 +1,17 @@
-import styled from "../../styles/theme-components";
+import styled from "../../../styles/theme-components";
 import { batch } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 //functions
-import { profileActionCreator } from "../../modules/action/profile";
+import { profileActionCreator } from "../../../modules/action/profile";
 //components
-import { IntroduceCard } from "./post/IntroduceCard";
-import { WritePostCard } from "./post/WritePostCard";
-import { PostListCard } from "./post/PostListCard";
-import { BoxShadow } from "../common/styles/BoxShadow";
-import { Text } from "../common/Text";
-import { LatestImageCard } from "./post/LatestImageCard";
+import { IntroduceCard } from "./IntroduceCard";
+import { WritePostCard } from "./WritePostCard";
+import { PostListCard } from "./PostListCard";
+import { BoxShadow } from "../../common/styles/BoxShadow";
+import { Text } from "../../common/Text";
+import { LatestImageCard } from "./LatestImageCard";
 
 const Layout = styled.section`
     width: 908px;
