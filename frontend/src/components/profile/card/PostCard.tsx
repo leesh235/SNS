@@ -1,13 +1,15 @@
 import styled from "../../../styles/theme-components";
-import { useEffect, useState, RefObject } from "react";
+import theme from "../../../styles/theme";
+import { RefObject } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 //functions
 import { routes } from "../../../utils/routes";
 import { postActionCreator } from "../../../modules/action/post";
 import { commentActionCreator } from "../../../modules/action/comment";
-import theme from "../../../styles/theme";
 import { postsActionCreator } from "../../../modules/action/posts";
+import { useGetDetail } from "../../../hooks/common/useGetDetail";
+import { useModal } from "../../../hooks/common/useModal";
 //components
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { WritePost } from "../../modal/WritePost";
@@ -17,6 +19,7 @@ import { CloseEventBtn } from "../../common/button/CloseEventBtn";
 import { CommentBtn } from "../../common/button/CommentBtn";
 import { CommentInput } from "../../common/input/CommentInput";
 import { HoverBtn } from "../../common/button/HoverBtn";
+import { ModalLayout } from "../../common/styles/ModalLayout";
 
 const Layout = styled.article`
     width: 100%;
@@ -142,31 +145,13 @@ interface Props {
 
 export const PostCard = ({ postId, endView = undefined }: Props) => {
     const dispatch = useDispatch();
-    const [openBtn, setOpenBtn] = useState<boolean>(false);
-    const [openModal, setOpenModal] = useState<boolean>(false);
+
+    const buttonModal = useModal();
+    const modifyModal = useModal();
 
     const user = useSelector((state: any) => state?.user?.loginInfo?.data);
 
-    const post = useSelector(
-        (state: any) => state?.post?.postDetails?.data?.[`${postId}`]
-    );
-
-    const handleBtnOpen = () => {
-        setOpenBtn(true);
-    };
-
-    const handleBtnClose = () => {
-        if (openBtn) setOpenBtn(false);
-    };
-
-    const handleModalOpen = () => {
-        setOpenModal(true);
-    };
-
-    const handleModalClose: React.MouseEventHandler = (e) => {
-        if (e.target !== e.currentTarget) return;
-        if (openModal) setOpenModal(false);
-    };
+    const { post } = useGetDetail("allPosts", postId);
 
     const handleDeleteBtn = () => {
         if (
@@ -201,15 +186,13 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
         e.currentTarget.comment.value = "";
     };
 
-    useEffect(() => {}, []);
-
     return (
         <>
             <Layout ref={endView}>
                 <TopLayout>
                     <Link
                         to={{
-                            pathname: `${routes.userInfo}${post?.userId}`,
+                            pathname: `${routes.userInfo}${post?.id}`,
                         }}
                         state={post?.userId}
                     >
@@ -224,7 +207,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                     />
                     <FlexLayout>
                         <Text
-                            text={`${post?.createdAt}`}
+                            text={`${post?.createAt}`}
                             tag={"span"}
                             cssObj={{
                                 fontSize: "12px",
@@ -239,15 +222,15 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                         />
                     </FlexLayout>
                     {post?.userId === user?.email ? (
-                        <Hover onClick={handleBtnOpen}>
+                        <Hover onClick={buttonModal.handleModal}>
                             <MoreIcon />
                         </Hover>
                     ) : (
                         <div></div>
                     )}
-                    {openBtn && (
+                    {buttonModal.modal && (
                         <CloseEventBtn
-                            closeFunc={handleBtnClose}
+                            closeFunc={buttonModal.handleModal}
                             width={"344px"}
                             height={"auto"}
                             top={"57px"}
@@ -256,7 +239,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                         >
                             <HoverBtn
                                 text={"게시물 수정"}
-                                onClick={handleModalOpen}
+                                onClick={modifyModal.handleModal}
                             />
                             <HoverBtn
                                 text={"게시물 삭제"}
@@ -320,7 +303,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                 </Link>
                 <Quantity>
                     <Text
-                        text={`좋아요 ${post?.likequantity}개`}
+                        text={`좋아요 ${post?.likeQuantity}개`}
                         tag={"span"}
                         cssObj={{
                             fontSize: "15px",
@@ -328,7 +311,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                         }}
                     />
                     <Text
-                        text={`댓글 ${post?.commentquantity}개`}
+                        text={`댓글 ${post?.commentQuantity}개`}
                         tag={"span"}
                         cssObj={{
                             fontSize: "15px",
@@ -354,12 +337,13 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                     width={"calc(100% - 20px)"}
                 />
             </Layout>
-            {openModal && (
-                <WritePost
-                    closeFunc={handleModalClose}
-                    setClose={setOpenModal}
-                    post={post}
-                />
+            {modifyModal.modal && (
+                <ModalLayout onClosClick={modifyModal.handleModal}>
+                    <WritePost
+                        closeFunc={modifyModal.handleModal}
+                        post={post}
+                    />
+                </ModalLayout>
             )}
         </>
     );
