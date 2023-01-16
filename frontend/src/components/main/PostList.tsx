@@ -1,12 +1,10 @@
 import styled from "../../styles/theme-components";
-import { PostCard } from "../profile/card/PostCard";
-import { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useRef } from "react";
+//functions
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
-import { postsActionCreator } from "../../modules/action/posts";
-import { postActionCreator } from "../../modules/action/post";
-import { useLocation } from "react-router-dom";
-import { routes } from "../../utils/routes";
+import { useGetList } from "../../hooks/common/useGetList";
+//components
+import { PostCard } from "../profile/card/PostCard";
 
 const Wrapper = styled.section`
     display: grid;
@@ -17,17 +15,10 @@ const Wrapper = styled.section`
     margin: 16px 0;
 `;
 
-interface Props {}
-
-export const PostList = ({}: Props) => {
-    const location = useLocation();
-    const dispatch = useDispatch();
+export const PostList = () => {
     const target = useRef<HTMLDivElement>(null);
 
-    const key = location.pathname === routes.home ? "allPosts" : "likePosts";
-    const { loading, data, error } = useSelector(
-        (state: any) => state.posts?.[key]
-    );
+    const { loading, data, error } = useGetList();
 
     const { count } = useInfiniteScroll({
         target: target,
@@ -36,28 +27,17 @@ export const PostList = ({}: Props) => {
         pageSize: 4,
     });
 
-    useEffect(() => {
-        if (location.pathname === routes.home) {
-            dispatch(postsActionCreator.allPosts({ take: count * 4 + 4 }));
-            dispatch(postsActionCreator.allPosts({ take: count * 4 + 4 }));
-        } else if (location.pathname === routes.like) {
-            dispatch(postsActionCreator.allPosts({ take: count * 4 + 4 }));
-            dispatch(postsActionCreator.likePosts({ take: count * 4 + 4 }));
-        }
-    }, [count, location.pathname]);
-
-    if (data?.length !== 0)
-        return (
-            <Wrapper>
-                {data?.map((val: any, idx: number) => {
-                    return idx === data.length - 1 ? (
-                        <PostCard key={idx} endView={target} postId={val} />
-                    ) : (
-                        <PostCard key={idx} postId={val} />
-                    );
-                })}
-                {loading && <div>Loading...</div>}
-            </Wrapper>
-        );
-    else return <div>게시글이 없습니다</div>;
+    if (loading) return <div>loading...</div>;
+    if (!data) return <div>게시글이 없습니다</div>;
+    return (
+        <Wrapper>
+            {Object.keys(data)?.map((val: any, idx: number) => {
+                return idx === data.length - 1 ? (
+                    <PostCard key={idx} endView={target} postId={val} />
+                ) : (
+                    <PostCard key={idx} postId={val} />
+                );
+            })}
+        </Wrapper>
+    );
 };
