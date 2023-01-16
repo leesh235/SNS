@@ -10,22 +10,7 @@ import { postsActionCreator } from "../../modules/action/posts";
 import { Text } from "../common/Text";
 import { ModifyPost } from "./ModifyPost";
 
-const Layout = styled.main`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 900;
-`;
-
-const Box = styled.form`
+const Layout = styled.form`
     width: 500px;
     min-height: 418px;
     height: auto;
@@ -93,7 +78,7 @@ const ImageContents = styled.article`
     justify-content: center;
 `;
 
-const ImageBox = styled.div`
+const ImageLayout = styled.div`
     width: 450px;
     height: auto;
     min-height: 221px;
@@ -233,7 +218,7 @@ const ClickBtn = styled.div`
 
 interface Props {
     closeFunc: any;
-    setClose: any;
+    setClose?: any;
     post?: {
         postId: number;
         userId: string;
@@ -338,7 +323,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
             dispatch(postsActionCreator.myPosts({}));
         }, 100);
 
-        setClose(false);
+        closeFunc();
     };
 
     const handleUrl = (url: any) => {
@@ -358,133 +343,131 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
 
     return (
         <>
-            <Layout onClick={closeFunc}>
-                <Box onSubmit={handleOnSubmit}>
-                    <Top>
-                        {post?.postId ? (
-                            <Text
-                                text={"게시글 수정"}
-                                cssObj={{
-                                    width: "calc(100% - 120px)",
-                                    fontSize: "20px",
-                                    fontWeight: 700,
-                                }}
-                            />
-                        ) : (
-                            <Text
-                                text={"게시글 만들기"}
-                                cssObj={{
-                                    width: "calc(100% - 120px)",
-                                    fontSize: "20px",
-                                    fontWeight: 700,
-                                }}
-                            />
-                        )}
-                        <EventBtn onClick={closeFunc}>X</EventBtn>
-                    </Top>
-                    <UserInfo>
-                        <Image src={data?.profileImage} />
+            <Layout onSubmit={handleOnSubmit}>
+                <Top>
+                    {post?.postId ? (
                         <Text
-                            text={data?.nickName}
+                            text={"게시글 수정"}
                             cssObj={{
-                                fontSize: "15px",
-                                fontWeight: 600,
-                                margin: "0 0 0 10px",
+                                width: "calc(100% - 120px)",
+                                fontSize: "20px",
+                                fontWeight: 700,
                             }}
                         />
-                    </UserInfo>
-                    <TextContents
-                        name="contents"
-                        required
-                        defaultValue={post?.contents}
-                        placeholder="무슨 생각을 하고 계신가요?"
-                    />
-                    {open && (
-                        <ImageBox>
-                            <CloseBtn onClick={handleOpen}>X</CloseBtn>
-                            {fileList.length === 0 ? (
-                                <ImageBtn htmlFor="imgOrvedio">
-                                    <Text
-                                        text={"사진/동영상 추가"}
-                                        tag={"span"}
-                                        cssObj={{
-                                            fontSize: "17px",
-                                            fontWeight: 500,
-                                        }}
-                                    />
-                                    <Text
-                                        text={"또는 끌어서 놓습니다"}
-                                        tag={"span"}
-                                        cssObj={{
-                                            fontSize: "12px",
-                                        }}
-                                    />
-                                </ImageBtn>
-                            ) : (
-                                <ImagePreview>
-                                    <ModifyBtn onClick={handleModal}>
-                                        <Text
-                                            text={"모두 수정"}
-                                            cssObj={{
-                                                fontSize: "15px",
-                                                fontWeight: 600,
-                                            }}
-                                        />
-                                    </ModifyBtn>
-                                    <Addbtn htmlFor="imgOrvedio">
-                                        <Text
-                                            text={"사진 및 동영상 추가"}
-                                            cssObj={{
-                                                fontSize: "15px",
-                                                fontWeight: 600,
-                                            }}
-                                        />
-                                    </Addbtn>
-                                    {fileList.map((file, idx) => {
-                                        return (
-                                            <SelectImage
-                                                key={idx}
-                                                src={handleUrl(file.url)}
-                                            ></SelectImage>
-                                        );
-                                    })}
-                                </ImagePreview>
-                            )}
-                        </ImageBox>
+                    ) : (
+                        <Text
+                            text={"게시글 만들기"}
+                            cssObj={{
+                                width: "calc(100% - 120px)",
+                                fontSize: "20px",
+                                fontWeight: 700,
+                            }}
+                        />
                     )}
-                    <input
-                        type="file"
-                        id="imgOrvedio"
-                        name="images"
-                        onChange={handleImageOnChange}
-                        multiple
+                    <EventBtn onClick={closeFunc}>X</EventBtn>
+                </Top>
+                <UserInfo>
+                    <Image src={data?.profileImage} />
+                    <Text
+                        text={data?.nickName}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 600,
+                            margin: "0 0 0 10px",
+                        }}
                     />
-                    <ImageContents>
-                        <ClickBtn
-                            onClick={() => {
-                                if (!open) handleOpen();
-                            }}
-                        >
-                            <Text
-                                text={"사진 추가"}
-                                cssObj={{
-                                    fontSize: "15px",
-                                    fontWeight: 600,
-                                }}
-                            />
-                        </ClickBtn>
-                    </ImageContents>
-                    <Bottom>
+                </UserInfo>
+                <TextContents
+                    name="contents"
+                    required
+                    defaultValue={post?.contents}
+                    placeholder="무슨 생각을 하고 계신가요?"
+                />
+                {open && (
+                    <ImageLayout>
+                        <CloseBtn onClick={handleOpen}>X</CloseBtn>
+                        {fileList.length === 0 ? (
+                            <ImageBtn htmlFor="imgOrvedio">
+                                <Text
+                                    text={"사진/동영상 추가"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: "17px",
+                                        fontWeight: 500,
+                                    }}
+                                />
+                                <Text
+                                    text={"또는 끌어서 놓습니다"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: "12px",
+                                    }}
+                                />
+                            </ImageBtn>
+                        ) : (
+                            <ImagePreview>
+                                <ModifyBtn onClick={handleModal}>
+                                    <Text
+                                        text={"모두 수정"}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                        }}
+                                    />
+                                </ModifyBtn>
+                                <Addbtn htmlFor="imgOrvedio">
+                                    <Text
+                                        text={"사진 및 동영상 추가"}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                        }}
+                                    />
+                                </Addbtn>
+                                {fileList.map((file, idx) => {
+                                    return (
+                                        <SelectImage
+                                            key={idx}
+                                            src={handleUrl(file.url)}
+                                        ></SelectImage>
+                                    );
+                                })}
+                            </ImagePreview>
+                        )}
+                    </ImageLayout>
+                )}
+                <input
+                    type="file"
+                    id="imgOrvedio"
+                    name="images"
+                    onChange={handleImageOnChange}
+                    multiple
+                />
+                <ImageContents>
+                    <ClickBtn
+                        onClick={() => {
+                            if (!open) handleOpen();
+                        }}
+                    >
                         <Text
-                            text={post ? "저장" : "게시"}
+                            text={"사진 추가"}
                             cssObj={{
                                 fontSize: "15px",
                                 fontWeight: 600,
-                                fontColor: theme.color.white,
                             }}
                         />
-                    </Bottom>
-                </Box>
+                    </ClickBtn>
+                </ImageContents>
+                <Bottom>
+                    <Text
+                        text={post ? "저장" : "게시"}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 600,
+                            fontColor: theme.color.white,
+                        }}
+                    />
+                </Bottom>
             </Layout>
             {modal && (
                 <ModifyPost
