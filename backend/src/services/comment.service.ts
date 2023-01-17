@@ -9,7 +9,7 @@ export const findAll = async (req: any) => {
             query: { postId },
         } = req;
 
-        const result = await commentRepository.find({
+        const find = await commentRepository.find({
             relations: { post: true, user: true },
             where: { deletedAt: undefined, post: { id: Number(postId) } },
             select: {
@@ -27,6 +27,10 @@ export const findAll = async (req: any) => {
                 createdAt: "desc",
             },
         });
+
+        const result: any = {};
+
+        find.forEach((val) => (result[val.id] = { ...val, ...val.user }));
 
         return { ok: true, data: result };
     } catch (error) {
@@ -47,9 +51,9 @@ export const save = async (req: any) => {
         comment.post = postId;
         comment.contents = contents;
 
-        await commentRepository.save(comment);
+        const saveComment = await commentRepository.save(comment);
 
-        return { ok: true, data: comment };
+        return { ok: true, data: saveComment };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
