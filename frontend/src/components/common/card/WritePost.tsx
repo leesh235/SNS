@@ -234,7 +234,7 @@ interface Props {
 export const WritePost = ({ closeFunc, setClose, post }: Props) => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.profile
+        (state: any) => state?.profile?.profile
     );
 
     const [fileList, setFileList] = useState<{ id: number; url: any }[]>(
