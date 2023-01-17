@@ -181,16 +181,16 @@ export const AddAddress = () => {
                     <div>
                         <HoverButton
                             text={"취소"}
-                            color={theme.color.gray}
-                            width={"62px"}
+                            cssObj={{ width: "62px" }}
                             onClick={handleClose}
-                            type={"button"}
                         />
                         <HoverButton
                             text={"저장"}
-                            color={theme.color.seaBule}
-                            fc={theme.color.white}
-                            width={"62px"}
+                            cssObj={{
+                                width: "62px",
+                                fontColor: theme.color.white,
+                                color: theme.color.seaBule,
+                            }}
                             type={"submit"}
                         />
                     </div>

@@ -214,12 +214,14 @@ export const AddUniversity = () => {
                         <ButtonLayout>
                             <HoverButton
                                 text={"대학 수정"}
-                                width={"120px"}
+                                cssObj={{ width: "120px" }}
                                 onClick={handleModify}
                             />
                             <HoverButton
                                 text={"대학 삭제"}
-                                width={"120px"}
+                                cssObj={{
+                                    width: "120px",
+                                }}
                                 onClick={() => {
                                     handleDelete(data?.university?.id);
                                 }}
@@ -251,16 +253,16 @@ export const AddUniversity = () => {
                     <div>
                         <HoverButton
                             text={"취소"}
-                            color={theme.color.gray}
-                            width={"62px"}
+                            cssObj={{ width: "62px" }}
                             onClick={handleClose}
-                            type={"button"}
                         />
                         <HoverButton
                             text={"저장"}
-                            color={theme.color.seaBule}
-                            fc={theme.color.white}
-                            width={"62px"}
+                            cssObj={{
+                                width: "62px",
+                                fontColor: theme.color.white,
+                                color: theme.color.seaBule,
+                            }}
                             type={"submit"}
                         />
                     </div>

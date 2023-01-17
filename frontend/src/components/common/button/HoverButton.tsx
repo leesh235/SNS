@@ -1,16 +1,16 @@
-import theme from "../../../styles/theme";
 import styled from "../../../styles/theme-components";
 
 const Wrapper = styled.button<StyleProps>`
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
+    width: 100%;
+    max-width: ${(props) => props.width || "334px"};
+    height: ${(props) => props.height || "32px"};
     padding: 0 16px;
     border: none;
     border-radius: 6px;
-    background-color: ${(props) => props.color};
-    font-size: ${(props) => props.fs};
-    font-weight: ${(props) => props.fw};
-    color: ${(props) => props.fc};
+    background-color: ${(props) => props.color || props.theme.color.white};
+    font-size: ${(props) => props.fontSize || "15px"};
+    font-weight: ${(props) => props.fontWeight || 600};
+    color: ${(props) => props.fontColor || props.theme.color.lightBlack};
     :hover {
         background-color: ${(props) => props.theme.color.lightGray};
     }
@@ -19,52 +19,28 @@ const Wrapper = styled.button<StyleProps>`
 interface StyleProps {
     width?: string;
     height?: string;
-    fs?: string;
-    fw?: number;
-    fc?: string;
+    fontSize?: string;
+    fontWeight?: number;
+    fontColor?: string;
     color?: string;
 }
 
-interface Props extends StyleProps {
+interface Props {
     text: string;
-    type: "submit" | "button" | "reset";
+    type?: "submit" | "button" | "reset";
     onClick?: React.MouseEventHandler;
+    cssObj?: StyleProps;
 }
 
 export const HoverButton = ({
-    text,
-    type,
-    width,
-    height,
-    fs,
-    fw,
-    fc,
-    color,
+    cssObj,
     onClick,
+    text = "버튼",
+    type = "button",
 }: Props) => {
     return (
-        <Wrapper
-            type={type}
-            width={width}
-            height={height}
-            fs={fs}
-            fw={fw}
-            fc={fc}
-            color={color}
-            onClick={onClick}
-        >
+        <Wrapper {...cssObj} type={type} onClick={onClick}>
             {text}
         </Wrapper>
     );
-};
-
-HoverButton.defaultProps = {
-    text: "버튼",
-    type: "button",
-    width: "183px",
-    height: "32px",
-    fs: "15px",
-    fw: 600,
-    color: theme.color.white,
-    fc: theme.color.lightBlack,
 };

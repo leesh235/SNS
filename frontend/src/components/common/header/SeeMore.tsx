@@ -48,11 +48,7 @@ export const SeeMore = ({ closeFunc }: Props) => {
         <Wrapper>
             <div></div>
             <div>
-                <HoverButton
-                    text={"로그아웃"}
-                    width={"100%"}
-                    onClick={handleClick}
-                />
+                <HoverButton text={"로그아웃"} onClick={handleClick} />
             </div>
         </Wrapper>
     );

@@ -187,12 +187,13 @@ export const TextView = () => {
                 <OptionView>
                     <HoverButton
                         text={"좋아요"}
-                        fc={data?.likeStatus && theme.color.seaBule}
-                        width={"90%"}
+                        cssObj={{
+                            fontColor: data?.likeStatus && theme.color.seaBule,
+                        }}
                         onClick={handleLike}
                     />
                     <Label width={"90%"} />
-                    <HoverButton text={"공유하기"} width={"90%"} />
+                    <HoverButton text={"공유하기"} />
                 </OptionView>
             </Middle>
             <Bottom>

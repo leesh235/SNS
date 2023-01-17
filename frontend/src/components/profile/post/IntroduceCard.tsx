@@ -149,12 +149,10 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                                 />
                                 <HoverButton
                                     text={"소개 추가"}
-                                    color={theme.color.gray}
-                                    fs={"15px"}
-                                    fw={600}
-                                    fc={theme.color.black}
-                                    width={"95%"}
-                                    height={"36px"}
+                                    cssObj={{
+                                        fontColor: theme.color.black,
+                                        color: theme.color.gray,
+                                    }}
                                     onClick={openIntroduce}
                                 />
                             </>
@@ -173,24 +171,20 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                     <>
                         <HoverButton
                             text={"상세 정보 수정"}
-                            color={theme.color.gray}
-                            fs={"15px"}
-                            fw={600}
-                            fc={theme.color.black}
-                            width={"95%"}
-                            height={"36px"}
+                            cssObj={{
+                                fontColor: theme.color.black,
+                                color: theme.color.gray,
+                            }}
                             onClick={() => {
                                 handleUrl({ id: 1 });
                             }}
                         />
                         <HoverButton
                             text={"대표 사진 추가"}
-                            color={theme.color.gray}
-                            fs={"15px"}
-                            fw={600}
-                            fc={theme.color.black}
-                            width={"95%"}
-                            height={"36px"}
+                            cssObj={{
+                                fontColor: theme.color.black,
+                                color: theme.color.gray,
+                            }}
                         />
                     </>
                 )}

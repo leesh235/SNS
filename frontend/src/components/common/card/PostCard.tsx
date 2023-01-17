@@ -168,7 +168,6 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                     {post?.userId === user?.email && (
                         <SeeMoreLayout>
                             <HoverButton
-                                width="334px"
                                 text={"게시물 수정"}
                                 onClick={modifyModal.handleModal}
                             />
@@ -220,12 +219,13 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                 <ButtonLayout>
                     <HoverButton
                         text={"좋아요"}
-                        width={"100%"}
                         onClick={handleLike}
-                        fc={post?.likeStatus ? theme.color.seaBule : ""}
+                        cssObj={{
+                            fontColor: post?.likeStatus && theme.color.seaBule,
+                        }}
                     />
                     <Label />
-                    <HoverButton text={"공유하기"} width={"100%"} />
+                    <HoverButton text={"공유하기"} />
                 </ButtonLayout>
 
                 <CommentInput

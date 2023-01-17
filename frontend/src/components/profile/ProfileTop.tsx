@@ -353,29 +353,23 @@ export const ProfileTop = () => {
                             <div>
                                 <HoverButton
                                     text={"친구"}
-                                    color={
-                                        isFriend?.data
-                                            ? theme.color.seaBule
-                                            : theme.color.gray
-                                    }
-                                    fs={"15px"}
-                                    fw={600}
-                                    fc={
-                                        isFriend?.data
+                                    cssObj={{
+                                        width: "76px",
+                                        fontColor: isFriend?.data
                                             ? theme.color.white
-                                            : theme.color.black
-                                    }
-                                    width={"76px"}
-                                    height={"36px"}
+                                            : theme.color.black,
+                                        color: isFriend?.data
+                                            ? theme.color.seaBule
+                                            : theme.color.gray,
+                                    }}
                                 />
                                 <HoverButton
                                     text={"메세지 보내기"}
-                                    color={theme.color.gray}
-                                    fs={"15px"}
-                                    fw={600}
-                                    fc={theme.color.black}
-                                    width={"140px"}
-                                    height={"36px"}
+                                    cssObj={{
+                                        width: "140px",
+                                        fontColor: theme.color.black,
+                                        color: theme.color.gray,
+                                    }}
                                 />
                             </div>
                         )}
