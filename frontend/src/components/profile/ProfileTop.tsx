@@ -3,15 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 //functions
 import theme from "../../styles/theme";
-import { profileActionCreator } from "../../modules/action/profile";
 //components
 import { SetProfileImage } from "../common/card/SetProfileImage";
 import { CustomImage } from "../common/card/CustomImage";
 import { SelectImage } from "../common/card/SelectImage";
 import { Text } from "../common/Text";
-import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
 import { Button2 } from "../common/button/Button2";
+import { SeeMoreLayout } from "../common/SeeMoreLayout";
 
 const Layout = styled.section`
     background-color: ${(props) => props.theme.color.white};
@@ -312,14 +311,7 @@ export const ProfileTop = () => {
                             </CoverImageButtonLayout>
                         )}
                         {cImgBtnopen && (
-                            <CloseEventBtn
-                                closeFunc={handleCloseCImg}
-                                width={"328px"}
-                                height={"auto"}
-                                bottom={"-72px"}
-                                right={"30px"}
-                                zIndenx={"9"}
-                            >
+                            <SeeMoreLayout>
                                 <HoverBtn
                                     text={"사진 선택"}
                                     onClick={handleOpenCImgModal}
@@ -330,7 +322,7 @@ export const ProfileTop = () => {
                                 >
                                     사진 업로드
                                 </Label>
-                            </CloseEventBtn>
+                            </SeeMoreLayout>
                         )}
                     </ImageShadow>
                 </Top>
@@ -342,18 +334,12 @@ export const ProfileTop = () => {
                         ></Image>
                     </UserImage>
                     {pImgBtnopen && (
-                        <CloseEventBtn
-                            closeFunc={handleClosePImg}
-                            width={"328px"}
-                            height={"auto"}
-                            bottom={"-66px"}
-                            left={"-88px"}
-                        >
+                        <SeeMoreLayout>
                             <HoverBtn
                                 text={"사진 추가"}
                                 onClick={handleOpenPImgModal}
                             />
-                        </CloseEventBtn>
+                        </SeeMoreLayout>
                     )}
                     <FlexLayout>
                         <Text

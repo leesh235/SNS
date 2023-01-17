@@ -1,7 +1,6 @@
 import styled from "../../styles/theme-components";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
 //functions
 import { routes } from "../../utils/routes";
 import { commentActionCreator } from "../../modules/action/comment";
@@ -12,10 +11,9 @@ import { Text } from "../common/Text";
 import { Button2 } from "../common/button/Button2";
 import { CommentInput } from "../common/input/CommentInput";
 import { CommentBtn } from "../common/button/CommentBtn";
-import { MoreIcon } from "../../assets/icon/MoreIcon";
-import { CloseEventBtn } from "../common/button/CloseEventBtn";
 import { HoverBtn } from "../common/button/HoverBtn";
 import { CommentList } from "./CommentList";
+import { SeeMoreLayout } from "../common/SeeMoreLayout";
 
 const Layout = styled.section`
     width: 100%;
@@ -127,7 +125,6 @@ const Hover = styled.div`
 export const TextView = () => {
     const { postId } = useParams<{ postId: string }>();
     const dispatch = useDispatch();
-    const [open, setOpen] = useState<boolean>(false);
 
     const { loading, data, error } = useSelector(
         (state: any) => state?.post?.postDetail
@@ -149,14 +146,6 @@ export const TextView = () => {
             dispatch(commentActionCreator.list({ postId: Number(postId) }));
         }, 50);
         e.currentTarget.comment.value = "";
-    };
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
     };
 
     const handleLike = () => {
@@ -187,21 +176,10 @@ export const TextView = () => {
                             <Text text={`${data?.createdAt}`} tag={"span"} />
                             <Text text={"시간"} tag={"span"} />
                         </FlexLayout>
-                        <Hover onClick={handleOpen}>
-                            <MoreIcon />
-                        </Hover>
-                        {open && (
-                            <CloseEventBtn
-                                closeFunc={handleClose}
-                                width={"344px"}
-                                height={"auto"}
-                                top={"48px"}
-                                right={"0px"}
-                            >
-                                <HoverBtn text={"게시물 수정"} />
-                                <HoverBtn text={"게시물 삭제"} />
-                            </CloseEventBtn>
-                        )}
+                        <SeeMoreLayout>
+                            <HoverBtn text={"게시물 수정"} />
+                            <HoverBtn text={"게시물 삭제"} />
+                        </SeeMoreLayout>
                     </UserInfo>
                     <Contents>
                         <Text text={data?.contents} tag={"span"} />
