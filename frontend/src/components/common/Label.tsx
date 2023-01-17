@@ -1,6 +1,6 @@
-import styled from "../../../styles/theme-components";
+import styled from "../../styles/theme-components";
 
-const Wrapper = styled.label<StyleProps>`
+const Layout = styled.label<Props>`
     width: ${(props) => `calc(${props.width} - 32px)`};
     height: ${(props) => props.height};
     padding: 0 16px;
@@ -18,22 +18,20 @@ const Wrapper = styled.label<StyleProps>`
     cursor: pointer;
 `;
 
-interface StyleProps {
+interface Props {
     width?: string;
     height?: string;
+    htmlFor?: string;
 }
 
-interface Props extends StyleProps {}
-
-export const CommentBtn = ({ width, height }: Props) => {
+export const Label = ({
+    width = "100%",
+    height = "32px",
+    htmlFor = "comment",
+}: Props) => {
     return (
-        <Wrapper width={width} height={height} htmlFor="comment">
+        <Layout width={width} height={height} htmlFor={htmlFor}>
             댓글 달기
-        </Wrapper>
+        </Layout>
     );
-};
-
-CommentBtn.defaultProps = {
-    width: "100%",
-    height: "32px",
 };

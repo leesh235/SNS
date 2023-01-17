@@ -11,20 +11,20 @@ import { useModal } from "../../../hooks/common/useModal";
 import { usePostFunc } from "../../../hooks/post/usePostFunc";
 import { getDate } from "../../../utils/dateUtil";
 //components
-import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { WritePost } from "./WritePost";
 import { Text } from "../Text";
-import { Button2 } from "../button/Button2";
-import { CloseEventBtn } from "../button/CloseEventBtn";
-import { CommentBtn } from "../button/CommentBtn";
+import { HoverButton } from "../button/HoverButton";
+import { Label } from "../Label";
 import { CommentInput } from "../input/CommentInput";
-import { HoverBtn } from "../button/HoverBtn";
 import { ModalLayout } from "../styles/ModalLayout";
+import { ImageLayout } from "../Image/ImageLayout";
+import { SeeMoreLayout } from "../SeeMoreLayout";
 
 const Layout = styled.article`
     width: 100%;
     max-width: 590px;
     height: auto;
+    padding: 10px;
     border-radius: 8px;
     background-color: ${(props) => props.theme.color.white};
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 4px 8px rgb(0 0 0 / 10%);
@@ -36,10 +36,10 @@ const Layout = styled.article`
     }
 `;
 
-const TopLayout = styled.div`
-    width: calc(100% - 32px);
+const WriterInfo = styled.div`
+    width: 100%;
     height: 40px;
-    padding: 12px 16px 10px 16px;
+    margin-bottom: 15px;
     display: grid;
     grid-template-columns: 40px auto 36px;
     grid-template-rows: repeat(2, 20px);
@@ -53,50 +53,17 @@ const TopLayout = styled.div`
         grid-column: 3 / span 1;
         grid-row: 1 / span 2;
     }
-    position: relative;
 `;
 
-const FlexLayout = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`;
-
-const ContentsLayout = styled.div`
+const Contents = styled.div`
     width: 100%;
-    padding: 4px 0px 16px 0px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 `;
 
-const ImagesLayout = styled.div<{ cnt?: any }>`
+const ButtonLayout = styled.div`
     width: 100%;
-    height: ${(props) => (props.cnt > 1 ? "590px" : "100%")};
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-content: space-between;
-    position: relative;
-`;
-
-const Image = styled.img<{ cnt?: any }>`
-    width: ${(props) => `calc(${99 / props.cnt}%)`};
-    height: ${(props) => `calc(${99 / props.cnt}%)`};
-    max-height: 500px;
-`;
-
-const ImageShadow = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: calc(99% / 2);
-    height: calc(99% / 2);
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: rgba(96, 103, 112, 0.5);
-`;
-
-const BottomLayout = styled.div`
-    width: calc(100% - 20px);
     height: 40px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -108,13 +75,13 @@ const BottomLayout = styled.div`
 `;
 
 const Quantity = styled.div`
-    width: calc(100% - 20px);
+    width: 100%;
     height: 22px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 10px;
+    margin-bottom: 10px;
 `;
 
 const Icon = styled.img<{ size: string; margin?: string }>`
@@ -146,11 +113,10 @@ interface Props {
 export const PostCard = ({ postId, endView = undefined }: Props) => {
     const dispatch = useDispatch();
 
-    const user = useSelector((state: any) => state?.user?.loginInfo?.data);
+    const user = useSelector((state: any) => state?.profile?.simple?.data);
 
     const { post } = useGetDetail("allPosts", postId);
 
-    const buttonModal = useModal();
     const modifyModal = useModal();
 
     const { handleLike, handleDelete } = usePostFunc(postId);
@@ -176,7 +142,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
     return (
         <>
             <Layout ref={endView}>
-                <TopLayout>
+                <WriterInfo>
                     <Link
                         to={{
                             pathname: `${routes.userInfo}${post?.id}`,
@@ -192,43 +158,29 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                             fontWeight: 600,
                         }}
                     />
-                    <FlexLayout>
-                        <Text
-                            text={getDate(post.createAt)}
-                            tag={"span"}
-                            cssObj={{
-                                fontSize: "12px",
-                            }}
-                        />
-                    </FlexLayout>
-                    {post?.userId === user?.email ? (
-                        <Hover onClick={buttonModal.handleModal}>
-                            <MoreIcon />
-                        </Hover>
-                    ) : (
-                        <div></div>
-                    )}
-                    {buttonModal.modal && (
-                        <CloseEventBtn
-                            closeFunc={buttonModal.handleModal}
-                            width={"344px"}
-                            height={"auto"}
-                            top={"57px"}
-                            right={"16px"}
-                            zIndenx={"9"}
-                        >
-                            <HoverBtn
+                    <Text
+                        text={getDate(post.createAt)}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "12px",
+                        }}
+                    />
+                    {post?.userId === user?.email && (
+                        <SeeMoreLayout>
+                            <HoverButton
+                                width="334px"
                                 text={"게시물 수정"}
                                 onClick={modifyModal.handleModal}
                             />
-                            <HoverBtn
+                            <HoverButton
                                 text={"게시물 삭제"}
                                 onClick={handleDelete}
                             />
-                        </CloseEventBtn>
+                        </SeeMoreLayout>
                     )}
-                </TopLayout>
-                <ContentsLayout>
+                </WriterInfo>
+
+                <Contents>
                     <Text
                         text={`${post?.contents}`}
                         cssObj={{
@@ -237,55 +189,19 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                             margin: "0 16px",
                         }}
                     />
-                </ContentsLayout>
-                <Link
-                    to={{
-                        pathname: `${routes.detail}${post?.postId}`,
-                    }}
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        maxHeight: "590px",
-                    }}
-                >
                     {post?.images && (
-                        <ImagesLayout cnt={post?.images.length}>
-                            {post?.images.map((val: any, idx: number) => {
-                                if (idx < 4)
-                                    return (
-                                        <Image
-                                            key={val.id}
-                                            cnt={
-                                                post?.images &&
-                                                post?.images?.length > 1
-                                                    ? 2
-                                                    : 1
-                                            }
-                                            src={`${val.url}`}
-                                        />
-                                    );
-                            })}
-                            {post?.images.length > 4 && (
-                                <ImageShadow>
-                                    <Text
-                                        text={`+${post?.images.length - 4}장`}
-                                        tag={"span"}
-                                        cssObj={{
-                                            fontWeight: 550,
-                                            fontColor: theme.color.white,
-                                            fontSize: "45px",
-                                        }}
-                                    />
-                                </ImageShadow>
-                            )}
-                        </ImagesLayout>
+                        <ImageLayout
+                            post={{ postId: post.postId, images: post.images }}
+                        />
                     )}
-                </Link>
+                </Contents>
+
                 <Quantity>
                     <Text
                         text={`좋아요 ${post?.likeQuantity}개`}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "15px",
                             margin: "0 16px",
                         }}
@@ -294,21 +210,23 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                         text={`댓글 ${post?.commentQuantity}개`}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "15px",
                             margin: "0 16px",
                         }}
                     />
                 </Quantity>
-                <BottomLayout>
-                    <Button2
+
+                <ButtonLayout>
+                    <HoverButton
                         text={"좋아요"}
                         width={"100%"}
                         onClick={handleLike}
                         fc={post?.likeStatus ? theme.color.seaBule : ""}
                     />
-                    <CommentBtn />
-                    <Button2 text={"공유하기"} width={"100%"} />
-                </BottomLayout>
+                    <Label />
+                    <HoverButton text={"공유하기"} width={"100%"} />
+                </ButtonLayout>
 
                 <CommentInput
                     image={user?.profileImage}

@@ -8,8 +8,7 @@ import { SetProfileImage } from "../common/card/SetProfileImage";
 import { CustomImage } from "../common/card/CustomImage";
 import { SelectImage } from "../common/card/SelectImage";
 import { Text } from "../common/Text";
-import { HoverBtn } from "../common/button/HoverBtn";
-import { Button2 } from "../common/button/Button2";
+import { HoverButton } from "../common/button/HoverButton";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
 
 const Layout = styled.section`
@@ -312,7 +311,7 @@ export const ProfileTop = () => {
                         )}
                         {cImgBtnopen && (
                             <SeeMoreLayout>
-                                <HoverBtn
+                                <HoverButton
                                     text={"사진 선택"}
                                     onClick={handleOpenCImgModal}
                                 />
@@ -335,7 +334,7 @@ export const ProfileTop = () => {
                     </UserImage>
                     {pImgBtnopen && (
                         <SeeMoreLayout>
-                            <HoverBtn
+                            <HoverButton
                                 text={"사진 추가"}
                                 onClick={handleOpenPImgModal}
                             />
@@ -352,7 +351,7 @@ export const ProfileTop = () => {
                         />
                         {loginInfo?.data?.email !== data?.email && (
                             <div>
-                                <Button2
+                                <HoverButton
                                     text={"친구"}
                                     color={
                                         isFriend?.data
@@ -369,7 +368,7 @@ export const ProfileTop = () => {
                                     width={"76px"}
                                     height={"36px"}
                                 />
-                                <Button2
+                                <HoverButton
                                     text={"메세지 보내기"}
                                     color={theme.color.gray}
                                     fs={"15px"}

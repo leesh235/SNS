@@ -6,7 +6,7 @@ import theme from "../../../styles/theme";
 import { profileActionCreator } from "../../../modules/action/profile";
 //components
 import { Text } from "../../common/Text";
-import { Button2 } from "../../common/button/Button2";
+import { HoverButton } from "../../common/button/HoverButton";
 import { BoxShadow } from "../../common/styles/BoxShadow";
 
 const Layout = styled.div`
@@ -147,7 +147,7 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                                         margin: "8px 0",
                                     }}
                                 />
-                                <Button2
+                                <HoverButton
                                     text={"소개 추가"}
                                     color={theme.color.gray}
                                     fs={"15px"}
@@ -171,7 +171,7 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                 )}
                 {userInfo?.data?.email === loginInfo?.data?.email && (
                     <>
-                        <Button2
+                        <HoverButton
                             text={"상세 정보 수정"}
                             color={theme.color.gray}
                             fs={"15px"}
@@ -183,7 +183,7 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
                                 handleUrl({ id: 1 });
                             }}
                         />
-                        <Button2
+                        <HoverButton
                             text={"대표 사진 추가"}
                             color={theme.color.gray}
                             fs={"15px"}

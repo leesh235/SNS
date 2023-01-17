@@ -7,7 +7,7 @@ import theme from "../../../styles/theme";
 //components
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
-import { Button2 } from "../../common/button/Button2";
+import { HoverButton } from "../../common/button/HoverButton";
 import { Input4 } from "../../common/input/Input4";
 
 const AddButtonLayout = styled.div`
@@ -175,14 +175,14 @@ export const AddNumber = () => {
                 />
                 <ButtonFlexLayout>
                     <div>
-                        <Button2
+                        <HoverButton
                             text={"취소"}
                             color={theme.color.gray}
                             width={"62px"}
                             onClick={handleClose}
                             type={"button"}
                         />
-                        <Button2
+                        <HoverButton
                             text={"저장"}
                             color={theme.color.seaBule}
                             fc={theme.color.white}

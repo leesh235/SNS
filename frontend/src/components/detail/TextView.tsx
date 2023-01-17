@@ -8,10 +8,9 @@ import { postActionCreator } from "../../modules/action/post";
 import theme from "../../styles/theme";
 //components
 import { Text } from "../common/Text";
-import { Button2 } from "../common/button/Button2";
+import { HoverButton } from "../common/button/HoverButton";
 import { CommentInput } from "../common/input/CommentInput";
-import { CommentBtn } from "../common/button/CommentBtn";
-import { HoverBtn } from "../common/button/HoverBtn";
+import { Label } from "../common/Label";
 import { CommentList } from "./CommentList";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
 
@@ -177,8 +176,8 @@ export const TextView = () => {
                             <Text text={"시간"} tag={"span"} />
                         </FlexLayout>
                         <SeeMoreLayout>
-                            <HoverBtn text={"게시물 수정"} />
-                            <HoverBtn text={"게시물 삭제"} />
+                            <HoverButton text={"게시물 수정"} />
+                            <HoverButton text={"게시물 삭제"} />
                         </SeeMoreLayout>
                     </UserInfo>
                     <Contents>
@@ -186,14 +185,14 @@ export const TextView = () => {
                     </Contents>
                 </PostView>
                 <OptionView>
-                    <Button2
+                    <HoverButton
                         text={"좋아요"}
                         fc={data?.likeStatus && theme.color.seaBule}
                         width={"90%"}
                         onClick={handleLike}
                     />
-                    <CommentBtn width={"90%"} />
-                    <Button2 text={"공유하기"} width={"90%"} />
+                    <Label width={"90%"} />
+                    <HoverButton text={"공유하기"} width={"90%"} />
                 </OptionView>
             </Middle>
             <Bottom>

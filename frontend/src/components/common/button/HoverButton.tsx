@@ -31,7 +31,7 @@ interface Props extends StyleProps {
     onClick?: React.MouseEventHandler;
 }
 
-export const Button2 = ({
+export const HoverButton = ({
     text,
     type,
     width,
@@ -58,7 +58,7 @@ export const Button2 = ({
     );
 };
 
-Button2.defaultProps = {
+HoverButton.defaultProps = {
     text: "버튼",
     type: "button",
     width: "183px",

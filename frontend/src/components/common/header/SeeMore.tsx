@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../../utils/authUtils";
 import { authActionCreator } from "../../../modules/action/auth";
 //components
-import { Button2 } from "../button/Button2";
+import { HoverButton } from "../button/HoverButton";
 
 const Wrapper = styled.div`
     width: calc(200px - 30px);
@@ -48,7 +48,7 @@ export const SeeMore = ({ closeFunc }: Props) => {
         <Wrapper>
             <div></div>
             <div>
-                <Button2
+                <HoverButton
                     text={"로그아웃"}
                     width={"100%"}
                     onClick={handleClick}

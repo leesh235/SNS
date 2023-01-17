@@ -10,7 +10,7 @@ import theme from "../../styles/theme";
 import { Text } from "../common/Text";
 import { Avatar } from "../common/Image/Avatar";
 import { MoreSmallIcon } from "../../assets/icon/MoreSmallIcon";
-import { HoverBtn } from "../common/button/HoverBtn";
+import { HoverButton } from "../common/button/HoverButton";
 import { CommentInput } from "../common/input/CommentInput";
 
 const Layout = styled.div`
@@ -196,11 +196,11 @@ export const CommentCard = ({ comment, user }: Props) => {
                         )}
                         {modal && (
                             <BtnLayout>
-                                <HoverBtn
+                                <HoverButton
                                     text={"댓글 수정"}
                                     onClick={handleModifyOpen}
                                 />
-                                <HoverBtn
+                                <HoverButton
                                     text={"댓글 삭제"}
                                     onClick={() => handleDelete(comment.id)}
                                 />
