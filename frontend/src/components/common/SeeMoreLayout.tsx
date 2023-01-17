@@ -1,8 +1,5 @@
 import styled from "../../styles/theme-components";
-import { useEffect } from "react";
 import { useModal } from "../../hooks/common/useModal";
-import { HoverBtn } from "./button/HoverBtn";
-import { CloseEventBtn } from "./button/CloseEventBtn";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Layout = styled.div`
