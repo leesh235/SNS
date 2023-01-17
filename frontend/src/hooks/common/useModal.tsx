@@ -7,7 +7,18 @@ export const useModal = () => {
         setModal(!modal);
     };
 
-    useEffect(() => {}, [modal]);
+    const ListenerModal = (e: MouseEvent) => {
+        if (modal) setModal(false);
+    };
 
-    return { modal, handleModal };
+    useEffect(() => {
+        if (!modal) return;
+
+        window.addEventListener("click", ListenerModal);
+        return () => {
+            window.removeEventListener("click", ListenerModal);
+        };
+    }, [modal]);
+
+    return { modal, handleModal, ListenerModal };
 };
