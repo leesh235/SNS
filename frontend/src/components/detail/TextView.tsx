@@ -192,13 +192,14 @@ export const TextView = () => {
                         }}
                         onClick={handleLike}
                     />
-                    <Label width={"90%"} />
+                    <Label width={"90%"} htmlFor={`${data.id}_comment`} />
                     <HoverButton text={"공유하기"} />
                 </OptionView>
             </Middle>
             <Bottom>
                 <CommentList />
                 <CommentInput
+                    id={`${data.id}_comment`}
                     image={data?.profileImage}
                     writer={data?.writer}
                     onSubmit={handleOnSubmit}
