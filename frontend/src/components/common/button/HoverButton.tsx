@@ -10,6 +10,7 @@ const Wrapper = styled.button<StyleProps>`
     background-color: ${(props) => props.color || props.theme.color.white};
     font-size: ${(props) => props.fontSize || "15px"};
     font-weight: ${(props) => props.fontWeight || 600};
+    text-align: ${(props) => props.textAlign || "center"};
     color: ${(props) => props.fontColor || props.theme.color.lightBlack};
     :hover {
         background-color: ${(props) => props.theme.color.lightGray};
@@ -23,6 +24,7 @@ interface StyleProps {
     fontWeight?: number;
     fontColor?: string;
     color?: string;
+    textAlign?: string;
 }
 
 interface Props {
