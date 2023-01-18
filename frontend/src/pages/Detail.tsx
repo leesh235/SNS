@@ -31,7 +31,7 @@ const Detail = () => {
     return (
         <Wrapper>
             <ImageView />
-            <TextView />
+            <TextView postId={postId} />
         </Wrapper>
     );
 };

@@ -161,11 +161,11 @@ export const CommentCard = ({ comment, user }: Props) => {
                 <>
                     <Link
                         to={{
-                            pathname: `${routes.userInfo}${comment.user.email}`,
+                            pathname: `${routes.userInfo}${comment.email}`,
                         }}
                     >
                         <Avatar
-                            src={comment.user.profileImage}
+                            src={comment.profileImage}
                             radius={32}
                             margin={"0 6px 0 0 "}
                         />
@@ -173,11 +173,11 @@ export const CommentCard = ({ comment, user }: Props) => {
                     <Contents>
                         <Link
                             to={{
-                                pathname: `${routes.userInfo}${comment.user.email}`,
+                                pathname: `${routes.userInfo}${comment.email}`,
                             }}
                         >
                             <Text
-                                text={comment.user.nickName}
+                                text={comment.nickName}
                                 tag={"span"}
                                 cssObj={{ fontSize: "13px", fontWeight: 600 }}
                             />
@@ -189,7 +189,7 @@ export const CommentCard = ({ comment, user }: Props) => {
                         />
                     </Contents>
                     <Option>
-                        {user.email === comment.user.email && (
+                        {user.email === comment.email && (
                             <Hover onClick={handleModalOpen}>
                                 <MoreSmallIcon />
                             </Hover>
@@ -211,6 +211,7 @@ export const CommentCard = ({ comment, user }: Props) => {
             ) : (
                 <FlexLayout>
                     <CommentInput
+                        id={`${postId}_comment`}
                         image={user?.profileImage}
                         writer={user?.writer}
                         onSubmit={handleModify}

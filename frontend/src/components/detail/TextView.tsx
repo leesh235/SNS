@@ -6,6 +6,7 @@ import { routes } from "../../utils/routes";
 import { commentActionCreator } from "../../modules/action/comment";
 import { postActionCreator } from "../../modules/action/post";
 import theme from "../../styles/theme";
+import { getDate } from "../../utils/dateUtil";
 //components
 import { Text } from "../common/Text";
 import { HoverButton } from "../common/button/HoverButton";
@@ -13,6 +14,7 @@ import { CommentInput } from "../common/input/CommentInput";
 import { Label } from "../common/Label";
 import { CommentList } from "./CommentList";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
+import { useEffect } from "react";
 
 const Layout = styled.section`
     width: 100%;
@@ -121,12 +123,12 @@ const Hover = styled.div`
     cursor: pointer;
 `;
 
-export const TextView = () => {
-    const { postId } = useParams<{ postId: string }>();
+export const TextView = ({ postId }: { postId?: string }) => {
+    // const { postId } = useParams<{ postId: string }>();
     const dispatch = useDispatch();
 
     const { loading, data, error } = useSelector(
-        (state: any) => state?.post?.postDetail
+        (state: any) => state.post?.detail
     );
 
     const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -154,6 +156,10 @@ export const TextView = () => {
         }, 50);
     };
 
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
+    if (!data) return <></>;
     return (
         <Layout>
             <Top></Top>
@@ -162,17 +168,17 @@ export const TextView = () => {
                     <UserInfo>
                         <Link
                             to={{
-                                pathname: `${routes.userInfo}${data?.writer}`,
+                                pathname: `${routes.userInfo}${data?.email}`,
                             }}
                         >
                             <Icon size={"40px"} src={data?.profileImage} />
                         </Link>
                         <Text
-                            text={`${data?.writer}`}
+                            text={`${data?.nickName}`}
                             cssObj={{ fontSize: "15px", fontWeight: 600 }}
                         />
                         <FlexLayout>
-                            <Text text={`${data?.createdAt}`} tag={"span"} />
+                            <Text text={getDate(data?.creatAt)} tag={"span"} />
                             <Text text={"시간"} tag={"span"} />
                         </FlexLayout>
                         <SeeMoreLayout>
@@ -197,7 +203,7 @@ export const TextView = () => {
                 </OptionView>
             </Middle>
             <Bottom>
-                <CommentList />
+                {postId && <CommentList postId={postId} />}
                 <CommentInput
                     id={`${data.id}_comment`}
                     image={data?.profileImage}

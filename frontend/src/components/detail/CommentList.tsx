@@ -20,19 +20,24 @@ const ScollWrapper = styled.div`
     flex-direction: column;
     margin-bottom: 8px;
 `;
+interface Props {
+    postId: string;
+}
+export const CommentList = ({ postId }: Props) => {
+    const { loading, data, error } = useSelector((state: any) => {
+        if (!state.comment[postId])
+            return { loading: false, data: null, error: "" };
+        return state.comment[postId];
+    });
 
-export const CommentList = () => {
-    const { loading, data, error } = useSelector(
-        (state: any) => state?.comment?.commentList
-    );
-
-    const user = useSelector((state: any) => state?.user?.loginInfo);
+    const user = useSelector((state: any) => state?.profile?.simple);
 
     useEffect(() => {}, [loading]);
+    if (!data) return <></>;
     return (
         <Wrapper>
             <ScollWrapper>
-                {data?.map((val: any, idx: number) => {
+                {Object.keys(data)?.map((val: any, idx: number) => {
                     return (
                         <CommentCard
                             key={idx}

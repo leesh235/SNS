@@ -72,7 +72,7 @@ export const ImageView = () => {
     const navigate = useNavigate();
 
     const { loading, data, error } = useSelector(
-        (state: any) => state?.post?.postDetail
+        (state: any) => state.post?.detail
     );
 
     const [select, setSelect] = useState<number>(0);
@@ -95,6 +95,7 @@ export const ImageView = () => {
         console.log(data?.images);
     }, [loading]);
 
+    if (!data) return <></>;
     return (
         <Layout>
             <Top>
@@ -109,7 +110,7 @@ export const ImageView = () => {
                         cssObj={{ fontSize: "20px", fontWeight: 600 }}
                     />
                 </NextPreBtn>
-                <Image src={data?.images[select].url} />
+                {data.images && <Image src={data?.images[select]} />}
                 <NextPreBtn onClick={handleNext}>
                     <Text
                         text={">"}
