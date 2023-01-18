@@ -60,7 +60,7 @@ export const find = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        return { ok: true, data: { ...find, likeStatus: false } };
+        return { ok: true, data: { ...find[0], likeStatus: false } };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
