@@ -9,7 +9,7 @@ export const createPromise = (type: string, pomiseCreator: any) => {
                 pomiseCreator,
                 action.data
             );
-            yield put({ type: SUCCESS, data });
+            yield put({ type: SUCCESS, data, meta: action.data });
         } catch (error) {
             yield put({ type: ERROR, error: true, data: error });
         }
