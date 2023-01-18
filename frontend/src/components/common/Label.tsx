@@ -21,14 +21,10 @@ const Layout = styled.label<Props>`
 interface Props {
     width?: string;
     height?: string;
-    htmlFor?: string;
+    htmlFor: string;
 }
 
-export const Label = ({
-    width = "100%",
-    height = "32px",
-    htmlFor = "comment",
-}: Props) => {
+export const Label = ({ htmlFor, width = "100%", height = "32px" }: Props) => {
     return (
         <Layout width={width} height={height} htmlFor={htmlFor}>
             댓글 달기
