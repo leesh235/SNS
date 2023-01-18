@@ -1,3 +1,10 @@
+import {
+    GetCommentList,
+    WriteComment,
+    ModifyComment,
+    DeleteComment,
+} from "../../types/lib/comment";
+
 export const commentAction = {
     list: "comment/COMMENTLIST",
     write: "comment/WRITE",
@@ -6,25 +13,25 @@ export const commentAction = {
 };
 
 export const commentActionCreator = {
-    list: (data: any) => {
+    list: (data: GetCommentList) => {
         return {
             type: commentAction.list,
             data,
         };
     },
-    write: (data: any) => {
+    write: (data: WriteComment) => {
         return {
             type: commentAction.write,
             data,
         };
     },
-    modify: (data: any) => {
+    modify: (data: ModifyComment) => {
         return {
             type: commentAction.modify,
             data,
         };
     },
-    delete: (data: any) => {
+    delete: (data: DeleteComment) => {
         return {
             type: commentAction.delete,
             data,
