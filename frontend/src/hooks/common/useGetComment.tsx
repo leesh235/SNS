@@ -11,7 +11,7 @@ export const useGetComment = (id: number) => {
     });
 
     useEffect(() => {
-        dispatch(commentActionCreator.list({ postId: id }));
+        dispatch(commentActionCreator.list({ postId: id }, id));
     }, [dispatch]);
 
     return { loading, data, error };
