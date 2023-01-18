@@ -1,6 +1,7 @@
 import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
 import { routes } from "../../../utils/routes";
+import { useUserInfo } from "../../../hooks/common/useUserInfo";
 
 const Wrapper = styled.form<StyleProps>`
     width: ${(props) => props.width};
@@ -39,33 +40,33 @@ interface StyleProps {
 }
 
 interface Props extends StyleProps {
-    writer: string;
-    image: string;
+    label?: string;
     placeholder?: string;
     onSubmit?: any;
     defaultValue?: string;
 }
 
 export const CommentInput = ({
+    label,
     width,
     height,
     placeholder,
-    writer,
-    image,
     onSubmit,
     defaultValue,
 }: Props) => {
+    const { data } = useUserInfo();
     return (
         <Wrapper width={width} height={height} onSubmit={onSubmit}>
             <Link
                 to={{
-                    pathname: `${routes.userInfo}${writer}`,
+                    pathname: `${routes.userInfo}${data.email}`,
                 }}
             >
-                <Icon src={image} />
+                <Icon src={data.profileImage} />
             </Link>
             <Input
-                id="comment"
+                id={label}
+                name="comment"
                 placeholder={placeholder}
                 defaultValue={defaultValue}
             />
