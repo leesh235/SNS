@@ -1,3 +1,4 @@
+import { IsNull } from "typeorm";
 import { dataSource } from "../config/typeorm";
 import { Comment } from "../entity/comment.entity";
 
@@ -11,7 +12,7 @@ export const findAll = async (req: any) => {
 
         const find = await commentRepository.find({
             relations: { post: true, user: true },
-            where: { deletedAt: undefined, post: { id: Number(postId) } },
+            where: { deletedAt: IsNull(), post: { id: Number(postId) } },
             select: {
                 id: true,
                 createdAt: true,
@@ -30,7 +31,18 @@ export const findAll = async (req: any) => {
 
         const result: any = {};
 
-        find.forEach((val) => (result[val.id] = { ...val, ...val.user }));
+        find.forEach(
+            (val) =>
+                (result[val.id] = {
+                    postId: +postId,
+                    contents: val.contents,
+                    createAt: val.createdAt,
+                    userId: val.user.email,
+                    id: val.id,
+                    writer: val.user.nickName,
+                    profileImage: val.user.profileImage,
+                })
+        );
 
         return { ok: true, data: result };
     } catch (error) {
@@ -80,7 +92,7 @@ export const remove = async (req: any) => {
     try {
         const {
             user: { email },
-            body: { id },
+            query: { id },
         } = req;
 
         await commentRepository.softDelete({
