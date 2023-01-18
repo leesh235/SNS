@@ -1,6 +1,5 @@
 import styled from "../../styles/theme-components";
 import { useSelector } from "react-redux";
-import { CommentCard } from "./CommentCard";
 import { useEffect } from "react";
 
 const Wrapper = styled.div`
@@ -38,13 +37,7 @@ export const CommentList = ({ postId }: Props) => {
         <Wrapper>
             <ScollWrapper>
                 {Object.keys(data)?.map((val: any, idx: number) => {
-                    return (
-                        <CommentCard
-                            key={idx}
-                            comment={val}
-                            user={user?.data}
-                        />
-                    );
+                    return <div key={idx}>temp</div>;
                 })}
             </ScollWrapper>
         </Wrapper>
