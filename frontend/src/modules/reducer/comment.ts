@@ -2,7 +2,15 @@ import { commentAction } from "../action/comment";
 import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
-const initialState = {
+interface Props {
+    [key: string]: {
+        loading: boolean;
+        data: any;
+        error: any;
+    };
+}
+
+const initialState: Props = {
     commentList: reducerUtils.initial(null),
     write: reducerUtils.initial(null),
     modify: reducerUtils.initial(null),
@@ -17,7 +25,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(commentAction.list).error:
             return handleAsyncReducer(
                 commentAction.list,
-                `${data.postId || meta.postId}`,
+                `${meta}`,
                 true
             )(state, action);
         case commentAction.write:
@@ -37,13 +45,22 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
         case commentAction.delete:
-        case typeUtils(commentAction.delete).success:
         case typeUtils(commentAction.delete).error:
             return handleAsyncReducer(
                 commentAction.delete,
                 "delete",
                 true
             )(state, action);
+        case typeUtils(commentAction.delete).success:
+            const newState = state[meta];
+            delete newState.data[data.id];
+            console.log(newState);
+            return {
+                ...state,
+                [meta]: {
+                    ...newState,
+                },
+            };
         default:
             return state;
     }
