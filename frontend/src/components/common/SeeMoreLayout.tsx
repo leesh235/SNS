@@ -36,7 +36,7 @@ interface Props {
 }
 
 export const SeeMoreLayout = ({ children, width }: Props) => {
-    const { modal, handleModal } = useModal();
+    const { modal, handleModal } = useModal(true);
 
     return (
         <Layout onClick={handleModal}>

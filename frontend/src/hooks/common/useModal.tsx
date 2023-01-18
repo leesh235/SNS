@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export const useModal = () => {
+export const useModal = (global: boolean = false) => {
     const [modal, setModal] = useState<boolean>(false);
 
     const handleModal: React.MouseEventHandler = (e) => {
@@ -12,7 +12,7 @@ export const useModal = () => {
     };
 
     useEffect(() => {
-        if (!modal) return;
+        if (!modal || !global) return;
 
         window.addEventListener("click", ListenerModal);
         return () => {
