@@ -12,8 +12,8 @@ export const getDate = (timeStamp: any) => {
             date.getMonth() + 1
         }월 ${date.getDay()}일`;
     else if (subtraction >= ONE_HOUR)
-        return `${subtraction / 1000 / 60 / 60}시간 전`;
+        return `${Math.floor(subtraction / 1000 / 60 / 60)}시간 전`;
     else if (subtraction >= ONE_MINUTE)
-        return `${subtraction / 1000 / 60}분 전`;
+        return `${Math.floor(subtraction / 1000 / 60)}분 전`;
     else return "방금";
 };
