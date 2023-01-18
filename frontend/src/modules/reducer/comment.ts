@@ -10,14 +10,14 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action: any) => {
-    const { type } = action;
+    const { type, data, meta } = action;
     switch (type) {
         case commentAction.list:
         case typeUtils(commentAction.list).success:
         case typeUtils(commentAction.list).error:
             return handleAsyncReducer(
                 commentAction.list,
-                "commentList",
+                `${data.postId || meta.postId}`,
                 true
             )(state, action);
         case commentAction.write:
