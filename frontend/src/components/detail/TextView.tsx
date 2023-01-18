@@ -205,9 +205,7 @@ export const TextView = ({ postId }: { postId?: string }) => {
             <Bottom>
                 {postId && <CommentList postId={postId} />}
                 <CommentInput
-                    id={`${data.id}_comment`}
-                    image={data?.profileImage}
-                    writer={data?.writer}
+                    label={`${data.id}_comment`}
                     onSubmit={handleOnSubmit}
                 />
             </Bottom>
