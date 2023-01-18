@@ -143,7 +143,9 @@ export const CommentCard = ({ comment, user }: Props) => {
 
     const handleDelete = (id: number) => {
         if (window.confirm("댓글을 삭제하시겠습니까?")) {
-            dispatch(commentActionCreator.delete({ id }));
+            dispatch(
+                commentActionCreator.delete({ postId: Number(postId), id })
+            );
             dispatch(commentActionCreator.list({ postId: Number(postId) }));
         }
     };
