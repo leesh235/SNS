@@ -35,7 +35,7 @@ export const handleAsyncReducer = (
                 return {
                     ...state,
                     [key]: reducerUtils.loading(
-                        keepData ? state[key].data : null
+                        keepData ? state[key]?.data : null
                     ),
                 };
             case SUCCESS:
