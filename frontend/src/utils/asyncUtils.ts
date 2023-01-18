@@ -5,11 +5,12 @@ export const createPromise = (type: string, pomiseCreator: any) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
     return function* saga(action: any) {
         try {
+            const meta = action.meta;
             const { data }: AxiosResponse = yield call(
                 pomiseCreator,
                 action.data
             );
-            yield put({ type: SUCCESS, data, meta: action.data });
+            yield put({ type: SUCCESS, data, meta });
         } catch (error) {
             yield put({ type: ERROR, error: true, data: error });
         }

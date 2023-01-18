@@ -13,28 +13,32 @@ export const commentAction = {
 };
 
 export const commentActionCreator = {
-    list: (data: GetCommentList) => {
+    list: (data: GetCommentList, meta?: any) => {
         return {
             type: commentAction.list,
             data,
+            meta,
         };
     },
-    write: (data: WriteComment) => {
+    write: (data: WriteComment, meta?: any) => {
         return {
             type: commentAction.write,
             data,
+            meta,
         };
     },
-    modify: (data: ModifyComment) => {
+    modify: (data: ModifyComment, meta?: any) => {
         return {
             type: commentAction.modify,
             data,
+            meta,
         };
     },
-    delete: (data: DeleteComment) => {
+    delete: (data: DeleteComment, meta?: any) => {
         return {
             type: commentAction.delete,
             data,
+            meta,
         };
     },
 };
