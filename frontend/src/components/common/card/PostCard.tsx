@@ -19,6 +19,7 @@ import { CommentInput } from "../input/CommentInput";
 import { ModalLayout } from "../styles/ModalLayout";
 import { ImageLayout } from "../Image/ImageLayout";
 import { SeeMoreLayout } from "../SeeMoreLayout";
+import { CommentList } from "../../main/CommentList";
 
 const Layout = styled.article`
     width: 100%;
@@ -92,19 +93,6 @@ const Icon = styled.img<{ size: string; margin?: string }>`
     cursor: pointer;
 `;
 
-const Hover = styled.div`
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    :hover {
-        background-color: ${(props) => props.theme.color.gray1};
-    }
-    cursor: pointer;
-`;
-
 interface Props {
     postId: number;
     endView?: RefObject<HTMLDivElement> | undefined;
@@ -170,10 +158,12 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                             <HoverButton
                                 text={"게시물 수정"}
                                 onClick={modifyModal.handleModal}
+                                cssObj={{ textAlign: "left" }}
                             />
                             <HoverButton
                                 text={"게시물 삭제"}
                                 onClick={handleDelete}
+                                cssObj={{ textAlign: "left" }}
                             />
                         </SeeMoreLayout>
                     )}
@@ -224,13 +214,14 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                             fontColor: post?.likeStatus && theme.color.seaBule,
                         }}
                     />
-                    <Label />
+                    <Label htmlFor={`${post.id}_comment`} />
                     <HoverButton text={"공유하기"} />
                 </ButtonLayout>
 
+                <CommentList postId={post.id} />
+
                 <CommentInput
-                    image={user?.profileImage}
-                    writer={user?.email}
+                    label={`${post.id}_comment`}
                     onSubmit={handleOnSubmit}
                     width={"calc(100% - 20px)"}
                 />

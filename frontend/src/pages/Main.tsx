@@ -1,5 +1,4 @@
 import styled from "../styles/theme-components";
-import { useEffect, useState } from "react";
 import { SideMenu } from "../components/side/SideMenu";
 import { PostList } from "../components/main/PostList";
 import { ChattingList } from "../components/main/ChattingList";
@@ -9,7 +8,10 @@ const Wrapper = styled.main`
     width: 100%;
     min-height: calc(100vh - 56px);
     display: grid;
-    grid-template-columns: minmax(auto, 360px) auto minmax(auto, 360px);
+    grid-template-columns: minmax(auto, 360px) minmax(540px, auto) minmax(
+            auto,
+            360px
+        );
     padding-top: 56px;
     > :nth-child(2) {
         justify-items: center;
@@ -18,8 +20,6 @@ const Wrapper = styled.main`
 `;
 
 const Main = () => {
-    useEffect(() => {}, []);
-
     return (
         <Wrapper>
             <SideMenu />
