@@ -54,7 +54,7 @@ export const findAll = async (req: any) => {
 export const save = async (req: any) => {
     try {
         const {
-            user: { email },
+            user: { email, nickName, profileImage },
             body: { postId, contents },
         } = req;
 
@@ -65,7 +65,17 @@ export const save = async (req: any) => {
 
         const saveComment = await commentRepository.save(comment);
 
-        return { ok: true, data: saveComment };
+        const result = {
+            contents: saveComment.contents,
+            createAt: saveComment.createdAt,
+            postId: +saveComment.post,
+            id: saveComment.id,
+            writer: nickName,
+            userId: saveComment.user,
+            profileImage: profileImage,
+        };
+
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
