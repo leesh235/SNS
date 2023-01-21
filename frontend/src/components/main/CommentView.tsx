@@ -10,6 +10,7 @@ import { Text } from "../common/Text";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
 import { HoverButton } from "../common/button/HoverButton";
 import { CommentInput } from "./CommentInput";
+import { MoreSmallIcon } from "../../assets/icon/MoreSmallIcon";
 
 const CommentLayout = styled.article`
     width: 100%;
@@ -19,8 +20,10 @@ const CommentLayout = styled.article`
     flex-direction: column;
 `;
 
-const CommentInfo = styled.span`
+const CommentInfo = styled.div`
     display: flex;
+    justify-content: start;
+    width: 100%;
     margin-bottom: 3px;
     > :nth-child(3) {
         align-self: center;
@@ -30,6 +33,8 @@ const CommentInfo = styled.span`
 const CommentContents = styled.span`
     display: flex;
     flex-direction: column;
+    max-width: calc(100% - 122px);
+    margin: 0 10px;
     border-radius: 15px;
     padding: 8px 12px;
     background-color: ${(props) => props.theme.color.gray};
@@ -109,7 +114,7 @@ const Component = ({ value, user }: Props) => {
     return (
         <CommentLayout>
             <CommentInfo>
-                <Avatar src={value.profileImage || ""} margin={"0 10px 0 0"} />
+                <Avatar src={value.profileImage || ""} />
                 <CommentContents>
                     <Text
                         text={value.writer}
@@ -118,12 +123,13 @@ const Component = ({ value, user }: Props) => {
                     />
                     <Text
                         text={value.contents}
-                        tag={"span"}
+                        tag={"p"}
                         cssObj={{ fontSize: "15px" }}
                     />
                 </CommentContents>
                 {user.email === value.userId && (
                     <SeeMoreLayout>
+                        <MoreSmallIcon />
                         <HoverButton
                             text={"수정"}
                             onClick={handleModal}

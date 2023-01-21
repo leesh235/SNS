@@ -1,18 +1,14 @@
 import styled from "../../styles/theme-components";
+import React from "react";
 import { useModal } from "../../hooks/common/useModal";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 
-const Layout = styled.div`
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
+const Layout = styled.span`
+    width: auto;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    :hover {
-        background-color: ${(props) => props.theme.color.gray1};
-    }
-    cursor: pointer;
     position: relative;
 `;
 
@@ -40,8 +36,14 @@ export const SeeMoreLayout = ({ children, width }: Props) => {
 
     return (
         <Layout onClick={handleModal}>
-            <MoreIcon />
-            {modal && <SeeMore width={width}>{children}</SeeMore>}
+            {React.Children.toArray(children)[0]}
+            {modal && (
+                <SeeMore width={width}>
+                    {React.Children.toArray(children).map((child, idx) => {
+                        if (idx > 0) return child;
+                    })}
+                </SeeMore>
+            )}
         </Layout>
     );
 };

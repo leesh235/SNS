@@ -20,6 +20,7 @@ import { ModalLayout } from "../common/styles/ModalLayout";
 import { ImageLayout } from "../common/Image/ImageLayout";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
 import { CommentList } from "./CommentList";
+import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Layout = styled.article`
     width: 100%;
@@ -137,6 +138,7 @@ const Component = ({ postId, endView = undefined }: Props) => {
                     />
                     {post?.userId === user?.email && (
                         <SeeMoreLayout>
+                            <MoreIcon />
                             <HoverButton
                                 text={"게시물 수정"}
                                 onClick={modifyModal.handleModal}
