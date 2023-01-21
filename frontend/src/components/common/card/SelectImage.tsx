@@ -5,22 +5,7 @@ import theme from "../../../styles/theme";
 //components
 import { Text } from "../Text";
 
-const Layout = styled.main`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 900;
-`;
-
-const Box = styled.section`
+const Layout = styled.section`
     width: 548px;
     height: 600px;
     border-radius: 6px;
@@ -91,51 +76,45 @@ export const SelectImage = ({ closeFunc }: Props) => {
     useEffect(() => {}, []);
 
     return (
-        <Layout onClick={closeFunc}>
-            <Box>
-                <Top>
+        <Layout>
+            <Top>
+                <Text
+                    text={"사진 선택"}
+                    tag={"span"}
+                    cssObj={{
+                        fontSize: "20px",
+                        fontWeight: 700,
+                    }}
+                />
+                <CloseBtn onClick={closeFunc}>X</CloseBtn>
+            </Top>
+            <MenuLayout>
+                <Menu
+                    onClick={() => handleMenu(true)}
+                    color={clicked ? theme.color.seaBule : theme.color.white}
+                >
                     <Text
-                        text={"사진 선택"}
-                        tag={"span"}
+                        text={"최근 사진"}
                         cssObj={{
-                            fontSize: "20px",
-                            fontWeight: 700,
+                            fontSize: "15px",
+                            fontWeight: 500,
                         }}
                     />
-                    <CloseBtn onClick={closeFunc}>X</CloseBtn>
-                </Top>
-                <MenuLayout>
-                    <Menu
-                        onClick={() => handleMenu(true)}
-                        color={
-                            clicked ? theme.color.seaBule : theme.color.white
-                        }
-                    >
-                        <Text
-                            text={"최근 사진"}
-                            cssObj={{
-                                fontSize: "15px",
-                                fontWeight: 500,
-                            }}
-                        />
-                    </Menu>
-                    <Menu
-                        onClick={() => handleMenu(false)}
-                        color={
-                            !clicked ? theme.color.seaBule : theme.color.white
-                        }
-                    >
-                        <Text
-                            text={"사진첩"}
-                            cssObj={{
-                                fontSize: "15px",
-                                fontWeight: 500,
-                            }}
-                        />
-                    </Menu>
-                </MenuLayout>
-                <ImageLayout></ImageLayout>
-            </Box>
+                </Menu>
+                <Menu
+                    onClick={() => handleMenu(false)}
+                    color={!clicked ? theme.color.seaBule : theme.color.white}
+                >
+                    <Text
+                        text={"사진첩"}
+                        cssObj={{
+                            fontSize: "15px",
+                            fontWeight: 500,
+                        }}
+                    />
+                </Menu>
+            </MenuLayout>
+            <ImageLayout></ImageLayout>
         </Layout>
     );
 };
