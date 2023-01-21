@@ -30,7 +30,7 @@ export const routes = {
     },
     profile: {
         simple: "/simple",
-        profile: "/profile",
+        profile: "/",
         coverimage: "/coverimage",
         profileimage: "/profileimage",
         introduce: "/introduce",
