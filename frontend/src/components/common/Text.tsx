@@ -10,12 +10,14 @@ interface StyleProps {
 }
 
 const Wrapper = styled.div<StyleProps>`
-    width: ${(props) => props.width || "100%"};
+    width: 100%;
+    max-width: ${(props) => props.width || "100%"};
     margin: ${(props) => props.margin || "0"};
     padding: ${(props) => props.padding || "0"};
     font-size: ${(props) => props.fontSize || "12px"};
     font-weight: ${(props) => props.fontWeight || 400};
     color: ${(props) => props.fontColor};
+    word-break: break-all;
 `;
 
 interface Props {
