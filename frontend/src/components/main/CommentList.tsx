@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { getDate } from "../../utils/dateUtil";
 import { useModal } from "../../hooks/common/useModal";
 import { useCommentFunc } from "../../hooks/post/useCommentFunc";
-import { useGetComment } from "../../hooks/common/useGetComment";
+import { useGetComment } from "../../hooks/post/useGetComment";
 //components
 import { Avatar } from "../common/Image/Avatar";
 import { Text } from "../common/Text";
