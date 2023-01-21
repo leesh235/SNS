@@ -10,7 +10,7 @@ import { getDate } from "../../utils/dateUtil";
 //components
 import { Text } from "../common/Text";
 import { HoverButton } from "../common/button/HoverButton";
-import { CommentInput } from "../common/input/CommentInput";
+import { CommentInput } from "../main/CommentInput";
 import { Label } from "../common/Label";
 import { CommentList } from "./CommentList";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
@@ -204,10 +204,7 @@ export const TextView = ({ postId }: { postId?: string }) => {
             </Middle>
             <Bottom>
                 {postId && <CommentList postId={postId} />}
-                <CommentInput
-                    label={`${data.id}_comment`}
-                    onSubmit={handleOnSubmit}
-                />
+                <CommentInput label={data.id} onSubmit={handleOnSubmit} />
             </Bottom>
         </Layout>
     );
