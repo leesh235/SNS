@@ -19,17 +19,17 @@ const Layout = styled.main`
 interface Props {
     children: React.ReactNode;
     id?: string;
-    onClosClick: any;
+    onCloseClick: any;
 }
 
 export const ModalLayout = ({
     id = "_modal",
     children,
-    onClosClick,
+    onCloseClick,
 }: Props) => {
     const handleClick: React.MouseEventHandler = (e) => {
         if (e.target !== e.currentTarget) return;
-        onClosClick();
+        onCloseClick();
     };
 
     return (

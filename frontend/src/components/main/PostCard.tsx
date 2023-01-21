@@ -211,7 +211,7 @@ const Component = ({ postId, endView = undefined }: Props) => {
                 />
             </Layout>
             {modifyModal.modal && (
-                <ModalLayout onClosClick={modifyModal.handleModal}>
+                <ModalLayout onCloseClick={modifyModal.handleModal}>
                     <WritePost
                         closeFunc={modifyModal.handleModal}
                         post={post}
