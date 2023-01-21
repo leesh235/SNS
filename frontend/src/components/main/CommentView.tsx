@@ -82,16 +82,24 @@ interface Props {
 }
 
 export const CommentView = ({ value, user }: Props) => {
-    const { modal, handleModal } = useModal();
+    const { modal, handleModal, CloseModal } = useModal();
     const { handleModify, handleDelete } = useCommentFunc(
         value.postId,
         value.id
     );
 
+    const handleSubmit = (formData: any) => {
+        handleModify(formData);
+        CloseModal();
+    };
+
     if (modal)
         return (
             <InputLayout>
-                <CommentInput onSubmit={handleModify} />
+                <CommentInput
+                    defaultValue={value.contents}
+                    onSubmit={handleSubmit}
+                />
                 <CloseButton type="button" onClick={handleModal}>
                     취소
                 </CloseButton>

@@ -6,7 +6,7 @@ export const useCommentFunc = (postId: number, id?: number) => {
     const dispatch = useDispatch();
 
     const handleWrite = (formData: any) => {
-        dispatch(commentActionCreator.write({ postId, ...formData }));
+        dispatch(commentActionCreator.write({ postId, ...formData }, postId));
     };
 
     const handleModify: React.MouseEventHandler = useCallback(

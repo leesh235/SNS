@@ -29,21 +29,45 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
         case commentAction.write:
-        case typeUtils(commentAction.write).success:
         case typeUtils(commentAction.write).error:
             return handleAsyncReducer(
                 commentAction.write,
                 "write",
                 true
             )(state, action);
+        case typeUtils(commentAction.write).success:
+            const newData = {
+                ...state[meta],
+                data: {
+                    ...state[meta].data,
+                    [action.data.id]: action.data,
+                },
+            };
+            return {
+                ...state,
+                [meta]: newData,
+            };
         case commentAction.modify:
-        case typeUtils(commentAction.modify).success:
         case typeUtils(commentAction.modify).error:
             return handleAsyncReducer(
                 commentAction.modify,
                 "modify",
                 true
             )(state, action);
+        case typeUtils(commentAction.modify).success:
+            return {
+                ...state,
+                [meta]: {
+                    ...state[meta],
+                    data: {
+                        ...state[meta].data,
+                        [data.id]: {
+                            ...state[meta].data[data.id],
+                            contents: action.data.contents,
+                        },
+                    },
+                },
+            };
         case commentAction.delete:
         case typeUtils(commentAction.delete).error:
             return handleAsyncReducer(
@@ -52,13 +76,15 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
         case typeUtils(commentAction.delete).success:
-            const newState = state[meta];
-            delete newState.data[data.id];
-            console.log(newState);
+            const newState = state[meta].data;
+            delete newState[data.id];
             return {
                 ...state,
                 [meta]: {
-                    ...newState,
+                    ...state[meta],
+                    data: {
+                        ...newState,
+                    },
                 },
             };
         default:

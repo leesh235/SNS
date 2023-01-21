@@ -4,6 +4,7 @@ import { routes } from "../../utils/routes";
 import { useUserInfo } from "../../hooks/common/useUserInfo";
 import { useForm } from "../../hooks/common/useForm";
 import { writeCommentValidate } from "../../utils/validate";
+import { useEffect } from "react";
 
 const Wrapper = styled.form<StyleProps>`
     width: ${(props) => props.width};
@@ -45,7 +46,7 @@ interface Props extends StyleProps {
     label?: string;
     placeholder?: string;
     onSubmit?: any;
-    defaultValue?: string;
+    defaultValue?: string | undefined;
 }
 
 export const CommentInput = ({
@@ -59,7 +60,7 @@ export const CommentInput = ({
     const { data } = useUserInfo();
 
     const { errors, setOption, handleSubmit } = useForm({
-        initValues: "",
+        initValues: { contents: defaultValue },
         validate: writeCommentValidate,
         onSubmit: (formData: any) => {
             if (!data) {
@@ -80,6 +81,7 @@ export const CommentInput = ({
                 <Icon src={data.profileImage} />
             </Link>
             <Input
+                defaultValue={defaultValue}
                 id={`${label}_comment`}
                 {...setOption("contents")}
                 placeholder={placeholder}

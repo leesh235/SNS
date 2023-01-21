@@ -3,6 +3,12 @@ import React, { useState, useEffect } from "react";
 export const useModal = (global: boolean = false) => {
     const [modal, setModal] = useState<boolean>(false);
 
+    const CloseModal = () => {
+        setTimeout(() => {
+            setModal(false);
+        }, 1000);
+    };
+
     const handleModal: React.MouseEventHandler = (e) => {
         setModal(!modal);
     };
@@ -20,5 +26,5 @@ export const useModal = (global: boolean = false) => {
         };
     }, [modal]);
 
-    return { modal, handleModal, ListenerModal };
+    return { modal, handleModal, ListenerModal, CloseModal };
 };
