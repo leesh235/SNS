@@ -8,7 +8,7 @@ import { Avatar } from "../common/Image/Avatar";
 import { Text } from "../common/Text";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
 import { HoverButton } from "../common/button/HoverButton";
-import { CommentInput } from "../common/input/CommentInput";
+import { CommentInput } from "./CommentInput";
 
 const CommentLayout = styled.article`
     width: 100%;
@@ -91,7 +91,7 @@ export const CommentView = ({ value, user }: Props) => {
     if (modal)
         return (
             <InputLayout>
-                <CommentInput />
+                <CommentInput onSubmit={handleModify} />
                 <CloseButton type="button" onClick={handleModal}>
                     취소
                 </CloseButton>

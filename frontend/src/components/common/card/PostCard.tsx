@@ -2,20 +2,20 @@ import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
 import { RefObject } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 //functions
 import { routes } from "../../../utils/routes";
-import { commentActionCreator } from "../../../modules/action/comment";
 import { useGetDetail } from "../../../hooks/common/useGetDetail";
 import { useModal } from "../../../hooks/common/useModal";
 import { usePostFunc } from "../../../hooks/post/usePostFunc";
 import { getDate } from "../../../utils/dateUtil";
+import { useCommentFunc } from "../../../hooks/post/useCommentFunc";
 //components
 import { WritePost } from "./WritePost";
 import { Text } from "../Text";
 import { HoverButton } from "../button/HoverButton";
 import { Label } from "../Label";
-import { CommentInput } from "../input/CommentInput";
+import { CommentInput } from "../../main/CommentInput";
 import { ModalLayout } from "../styles/ModalLayout";
 import { ImageLayout } from "../Image/ImageLayout";
 import { SeeMoreLayout } from "../SeeMoreLayout";
@@ -99,8 +99,6 @@ interface Props {
 }
 
 export const PostCard = ({ postId, endView = undefined }: Props) => {
-    const dispatch = useDispatch();
-
     const user = useSelector((state: any) => state?.profile?.simple?.data);
 
     const { post } = useGetDetail("allPosts", postId);
@@ -109,23 +107,7 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
 
     const { handleLike, handleDelete } = usePostFunc(postId);
 
-    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
-        e
-    ) => {
-        e.preventDefault();
-        console.log(e.currentTarget?.comment?.value);
-
-        dispatch(
-            commentActionCreator.write({
-                postId: postId,
-                contents: e.currentTarget.comment.value,
-            })
-        );
-        // setTimeout(() => {
-        //     dispatch(setCommentList({ postId: Number(postId) }));
-        // }, 500);
-        e.currentTarget.comment.value = "";
-    };
+    const { handleWrite } = useCommentFunc(postId);
 
     return (
         <>
@@ -221,8 +203,8 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
                 <CommentList postId={post.id} />
 
                 <CommentInput
-                    label={`${post.id}_comment`}
-                    onSubmit={handleOnSubmit}
+                    label={post.id}
+                    onSubmit={handleWrite}
                     width={"calc(100% - 20px)"}
                 />
             </Layout>
