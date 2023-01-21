@@ -1,4 +1,5 @@
 import styled from "../../styles/theme-components";
+import React from "react";
 //functions
 import { getDate } from "../../utils/dateUtil";
 import { useCommentFunc } from "../../hooks/post/useCommentFunc";
@@ -81,7 +82,7 @@ interface Props {
     };
 }
 
-export const CommentView = ({ value, user }: Props) => {
+const Component = ({ value, user }: Props) => {
     const { modal, handleModal, CloseModal } = useModal();
     const { handleModify, handleDelete } = useCommentFunc(
         value.postId,
@@ -140,3 +141,5 @@ export const CommentView = ({ value, user }: Props) => {
         </CommentLayout>
     );
 };
+
+export const CommentView = React.memo(Component);

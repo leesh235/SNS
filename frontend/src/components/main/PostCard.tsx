@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import theme from "../../styles/theme";
-import { RefObject } from "react";
+import React, { RefObject } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 //functions
@@ -98,7 +98,7 @@ interface Props {
     endView?: RefObject<HTMLDivElement> | undefined;
 }
 
-export const PostCard = ({ postId, endView = undefined }: Props) => {
+const Component = ({ postId, endView = undefined }: Props) => {
     const user = useSelector((state: any) => state?.profile?.simple?.data);
 
     const { post } = useGetDetail("allPosts", postId);
@@ -219,3 +219,5 @@ export const PostCard = ({ postId, endView = undefined }: Props) => {
         </>
     );
 };
+
+export const PostCard = React.memo(Component);
