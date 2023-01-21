@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useInfiniteScroll } from "../../../hooks/common/useInfiniteScroll";
-import { PostCard } from "../../common/card/PostCard";
+import { PostCard } from "../../main/PostCard";
 import { postsActionCreator } from "../../../modules/action/posts";
 
 const Wrapper = styled.article`
