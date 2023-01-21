@@ -39,3 +39,11 @@ export const modifyPasswordValidate = ({ password }: ModifyPwErrorType) => {
 
     return errors;
 };
+
+export const writeCommentValidate = ({ contents }: { contents: string }) => {
+    const errors: { contents?: String } = {};
+
+    if (!contents) errors.contents = "requierd";
+
+    return errors;
+};
