@@ -36,8 +36,8 @@ interface Props {
 }
 
 export const ProfileImage = ({ data }: Props) => {
-    const { modal, handleModal } = useModal();
     const { file, setOptions, handleRemoveFile } = useFileFunc();
+    const { modal, handleModal } = useModal(false, handleRemoveFile);
 
     return (
         <>

@@ -8,23 +8,9 @@ import theme from "../../../styles/theme";
 import { Text } from "../../common/Text";
 import { AvatarEditor } from "../../common/AvatarEditor";
 import { imageActionCreator } from "../../../modules/action/image";
+import { BagicButton } from "../../common/button/BagicButton";
 
-const Layout = styled.main`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 900;
-`;
-
-const Box = styled.section`
+const Layout = styled.section`
     width: 700px;
     height: 600px;
     border-radius: 6px;
@@ -50,9 +36,10 @@ const Top = styled.article`
     }
 `;
 
-const Bottom = styled.form`
-    width: 100%;
+const Bottom = styled.article`
+    width: calc(100% - 60px);
     height: 68px;
+    padding: 0 30px;
     border-top: 1px solid ${(props) => props.theme.color.gray};
     margin-top: 15px;
     display: flex;
@@ -69,31 +56,6 @@ const CloseBtn = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-`;
-
-const SubmitBtn = styled.button`
-    width: 110px;
-    height: 36px;
-    background-color: ${(props) => props.theme.color.seaBule};
-    border-radius: 6px;
-    cursor: pointer;
-    margin-right: 30px;
-    outline: none;
-    border: 0px;
-`;
-
-const CancleBtn = styled.button`
-    width: 110px;
-    height: 36px;
-    background-color: ${(props) => props.theme.color.white};
-    border-radius: 6px;
-    cursor: pointer;
-    outline: none;
-    border: 0px;
-    margin-right: 10px;
-    :hover {
-        background-color: ${(props) => props.theme.color.gray};
-    }
 `;
 
 interface Props {
@@ -121,42 +83,43 @@ export const EditImage = ({ onCloseClick, image }: Props) => {
 
     return (
         <Layout>
-            <Box>
-                <Top>
-                    <Text
-                        text={"프로필 사진 업로드"}
-                        tag={"span"}
-                        cssObj={{
-                            fontSize: "20px",
-                            fontWeight: 700,
-                        }}
-                    />
-                    <CloseBtn onClick={onCloseClick}>X</CloseBtn>
-                </Top>
-                <AvatarEditor image={image} editorRef={editorRef} />
-                <Bottom onSubmit={saveImage}>
-                    <CancleBtn type="button" onClick={onCloseClick}>
-                        <Text
-                            text={"취소"}
-                            cssObj={{
-                                fontSize: "15px",
-                                fontWeight: 600,
-                                fontColor: theme.color.seaBule,
-                            }}
-                        />
-                    </CancleBtn>
-                    <SubmitBtn type="button" onClick={saveImage}>
-                        <Text
-                            text={"저장"}
-                            cssObj={{
-                                fontSize: "15px",
-                                fontWeight: 600,
-                                fontColor: theme.color.white,
-                            }}
-                        />
-                    </SubmitBtn>
-                </Bottom>
-            </Box>
+            <Top>
+                <Text
+                    text={"프로필 사진 업로드"}
+                    tag={"span"}
+                    cssObj={{
+                        fontSize: "20px",
+                        fontWeight: 700,
+                    }}
+                />
+                <CloseBtn onClick={onCloseClick}>X</CloseBtn>
+            </Top>
+            <AvatarEditor image={image} editorRef={editorRef} />
+            <Bottom>
+                <BagicButton
+                    text="취소"
+                    onClick={onCloseClick}
+                    cssObj={{
+                        fontSize: "15px",
+                        fontWeight: 600,
+                        fontColor: theme.color.seaBule,
+                        backgroundColor: theme.color.white,
+                        width: "110px",
+                        height: "36px",
+                    }}
+                />
+                <BagicButton
+                    text="저장"
+                    onClick={saveImage}
+                    cssObj={{
+                        fontSize: "15px",
+                        fontWeight: 600,
+                        fontColor: theme.color.white,
+                        width: "110px",
+                        height: "36px",
+                    }}
+                />
+            </Bottom>
         </Layout>
     );
 };

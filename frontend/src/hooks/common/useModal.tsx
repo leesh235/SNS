@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export const useModal = (global: boolean = false) => {
+export const useModal = (global: boolean = false, reset: any = null) => {
     const [modal, setModal] = useState<boolean>(false);
 
     const CloseModal = () => {
@@ -11,10 +11,14 @@ export const useModal = (global: boolean = false) => {
 
     const handleModal: React.MouseEventHandler = (e) => {
         setModal(!modal);
+        if (reset) reset();
     };
 
     const ListenerModal = (e: MouseEvent) => {
-        if (modal) setModal(false);
+        if (modal) {
+            setModal(false);
+            if (reset) reset();
+        }
     };
 
     useEffect(() => {
