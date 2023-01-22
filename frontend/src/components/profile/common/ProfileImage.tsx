@@ -41,7 +41,7 @@ export const ProfileImage = ({ data }: Props) => {
 
     return (
         <>
-            <SeeMoreLayout>
+            <SeeMoreLayout top="100px" right="-270px">
                 <Layout>
                     <Image src={data?.profileImage}></Image>
                 </Layout>
