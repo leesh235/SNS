@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { base64ToImage } from "../../../utils/base64Func";
 import theme from "../../../styles/theme";
 //components
-import { Text } from "../Text";
-import { AvatarEditor } from "../AvatarEditor";
+import { Text } from "../../common/Text";
+import { AvatarEditor } from "../../common/AvatarEditor";
 import { imageActionCreator } from "../../../modules/action/image";
 
 const Layout = styled.main`
@@ -97,12 +97,11 @@ const CancleBtn = styled.button`
 `;
 
 interface Props {
-    closeFunc: () => void;
-    onClick?: () => void;
-    image?: any;
+    onCloseClick: any;
+    image: any;
 }
 
-export const CustomImage = ({ closeFunc, onClick, image }: Props) => {
+export const EditImage = ({ onCloseClick, image }: Props) => {
     const editorRef = useRef() as any;
     const dispatch = useDispatch();
 
@@ -117,8 +116,9 @@ export const CustomImage = ({ closeFunc, onClick, image }: Props) => {
         formData.append("image", file);
 
         dispatch(imageActionCreator.single({ image: file }));
-        closeFunc();
+        onCloseClick();
     };
+
     return (
         <Layout>
             <Box>
@@ -131,11 +131,11 @@ export const CustomImage = ({ closeFunc, onClick, image }: Props) => {
                             fontWeight: 700,
                         }}
                     />
-                    <CloseBtn onClick={closeFunc}>X</CloseBtn>
+                    <CloseBtn onClick={onCloseClick}>X</CloseBtn>
                 </Top>
                 <AvatarEditor image={image} editorRef={editorRef} />
                 <Bottom onSubmit={saveImage}>
-                    <CancleBtn type="button" onClick={closeFunc}>
+                    <CancleBtn type="button" onClick={onCloseClick}>
                         <Text
                             text={"취소"}
                             cssObj={{

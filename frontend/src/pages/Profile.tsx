@@ -13,7 +13,7 @@ import { IconButton } from "../components/common/button/IconButton";
 import { ProfilePost } from "../components/profile/post/ProfilePost";
 import { ProfileInfo } from "../components/profile/info/ProfileInfo";
 import { ProfileImage } from "../components/profile/image/ProfileImage";
-import { ProfileTop } from "../components/profile/ProfileTop";
+import { ProfileTop } from "../components/profile/common/ProfileTop";
 import { ProfileFriend } from "../components/profile/friend/ProfileFriend";
 import { ProfileVideo } from "../components/profile/video/ProfileVideo";
 import { ProfileCheckIn } from "../components/profile/ProfileCheckIn";
@@ -78,7 +78,6 @@ const menuUrl = [
 ];
 
 const Profile = () => {
-    const { email } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { ref, check } = useObserver({ height: 450 });
@@ -92,9 +91,7 @@ const Profile = () => {
 
     useEffect(() => {
         dispatch(profileActionCreator.profile());
-        if (email)
-            dispatch(friendsActionCreator.isFriend({ friendEmail: email }));
-    }, [email]);
+    }, [dispatch]);
 
     useEffect(() => {}, [check]);
 
@@ -155,12 +152,12 @@ const Profile = () => {
                     })}
                 </MenuLayout>
             </Center>
-            <div ref={ref} className={check ? "divH" : ""}></div>
-            {click === 0 && (
+            {/* <div ref={ref} className={check ? "divH" : ""}></div> */}
+            {/* {click === 0 && (
                 <ProfilePost handleUrl={handleOnClick} check={check} />
-            )}
-            {click === 1 && <ProfileInfo />}
-            {click === 2 && <ProfileImage />}
+            )} */}
+            {/* {click === 1 && <ProfileInfo />}
+            {click === 2 && <ProfileImage />} */}
             {/* {click === 3 && <ProfileFriend />} */}
             {/* {click === 4 && <ProfileVideo />}
             {click === 5 && <ProfileCheckIn />} */}
