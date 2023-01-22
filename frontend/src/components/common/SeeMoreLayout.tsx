@@ -1,7 +1,6 @@
 import styled from "../../styles/theme-components";
 import React from "react";
 import { useModal } from "../../hooks/common/useModal";
-import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Layout = styled.span`
     width: auto;
@@ -29,15 +28,16 @@ const SeeMore = styled.span<{ width?: string }>`
 interface Props {
     children: React.ReactNode;
     width?: string;
+    flag?: boolean;
 }
 
-export const SeeMoreLayout = ({ children, width }: Props) => {
+export const SeeMoreLayout = ({ children, width, flag = false }: Props) => {
     const { modal, handleModal } = useModal(true);
 
     return (
         <Layout onClick={handleModal}>
             {React.Children.toArray(children)[0]}
-            {modal && (
+            {modal && !flag && (
                 <SeeMore width={width}>
                     {React.Children.toArray(children).map((child, idx) => {
                         if (idx > 0) return child;
