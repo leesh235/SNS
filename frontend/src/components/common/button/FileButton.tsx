@@ -18,26 +18,19 @@ const Label = styled.label`
     cursor: pointer;
 `;
 
-const Input = styled.input`
-    width: 0;
-    height: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    position: fixed;
-    top: -50px;
-`;
-
 interface Props {
-    id: string;
-    onChange: React.ChangeEventHandler;
+    htmlFor: string;
 }
 
-export const FileButton = ({ id, onChange }: Props) => {
+export const FileButton = ({ htmlFor }: Props) => {
     return (
-        <>
-            <Label htmlFor={id}>사진 업로드</Label>
-            <Input type="file" id={id} onChange={onChange} />
-        </>
+        <Label
+            htmlFor={htmlFor}
+            onClick={(e) => {
+                e.stopPropagation();
+            }}
+        >
+            사진 업로드
+        </Label>
     );
 };
