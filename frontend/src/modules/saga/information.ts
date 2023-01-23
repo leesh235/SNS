@@ -29,7 +29,7 @@ const removeUniversity = createPromise(
     informationApi.removeUniversity
 );
 
-export function* userSaga() {
+export function* informationSaga() {
     yield takeEvery(informationAction.getInfo, getInfo);
     yield takeEvery(informationAction.addJob, addJob);
     yield takeEvery(informationAction.addSchool, addSchool);
