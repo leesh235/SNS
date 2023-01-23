@@ -8,8 +8,8 @@ import { IconButton } from "../../common/button/IconButton";
 import { Text } from "../../common/Text";
 import { ListIcon, ListIconC } from "../../../assets/icon/ListIcon";
 import { GridIcon, GridIconC } from "../../../assets/icon/GridIcon";
-import { PostGridCard } from "./PostGridCard";
-import { PostFlexCard } from "./PostFlexCard";
+import { PostGridList } from "./PostGridList";
+import { PostList } from "../../main/PostList";
 
 const GridLayout = styled.div`
     display: grid;
@@ -36,7 +36,7 @@ const menuList = ["리스트 보기", "그리드 보기"];
 
 interface Props {}
 
-export const PostListCard = ({}: Props) => {
+export const PostSection = ({}: Props) => {
     const [menu, setMenu] = useState<number>(0);
 
     const handleOnClick = (id: number) => {
@@ -120,7 +120,7 @@ export const PostListCard = ({}: Props) => {
                     })}
                 </GridLayout>
             </BoxShadow>
-            {menu === 0 ? <PostFlexCard /> : <PostGridCard />}
+            {menu === 0 ? <PostList /> : <PostGridList />}
         </>
     );
 };

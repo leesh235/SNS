@@ -10,7 +10,7 @@ import { useObserver } from "../hooks/common/useObserver";
 //components
 import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
-import { ProfilePost } from "../components/profile/post/ProfilePost";
+import { PostPage } from "../components/profile/post/PostPage";
 import { ProfileInfo } from "../components/profile/info/ProfileInfo";
 import { ProfileImage } from "../components/profile/image/ProfileImage";
 import { ProfileTop } from "../components/profile/common/ProfileTop";
@@ -153,9 +153,9 @@ const Profile = () => {
                 </MenuLayout>
             </Center>
             {/* <div ref={ref} className={check ? "divH" : ""}></div> */}
-            {/* {click === 0 && (
-                <ProfilePost handleUrl={handleOnClick} check={check} />
-            )} */}
+            {click === 0 && (
+                <PostPage handleUrl={handleOnClick} check={check} />
+            )}
             {/* {click === 1 && <ProfileInfo />}
             {click === 2 && <ProfileImage />} */}
             {/* {click === 3 && <ProfileFriend />} */}

@@ -2,25 +2,31 @@ import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
 import { useEffect, RefObject } from "react";
 import { useSelector } from "react-redux";
-import { Avatar } from "../Image/Avatar";
-import { Text } from "../Text";
+import { Avatar } from "../../common/Image/Avatar";
+import { Text } from "../../common/Text";
 import { routes } from "../../../utils/routes";
+import { useGetDetail } from "../../../hooks/common/useGetDetail";
+import { getDate } from "../../../utils/dateUtil";
 
-const Wrapper = styled.div`
-    width: 210px;
+const Layout = styled.div`
+    width: 240px;
     height: 210px;
     border-radius: 10px;
     background-color: ${(props) => props.theme.color.white};
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 4px 8px rgb(0 0 0 / 10%);
 `;
 
-const TopWrapper = styled.div`
+const ImageLayout = styled.div<{ image: string }>`
     width: 100%;
     height: 154px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: ${(props) => props.theme.color.lightGray};
+    background-image: ${(props) => `url(${props.image})`};
     cursor: pointer;
 `;
 
-const BottomWrapper = styled.div`
+const ContentsLayout = styled.div`
     width: calc(100% - 16px);
     height: 40px;
     display: flex;
@@ -29,7 +35,7 @@ const BottomWrapper = styled.div`
     padding: 8px;
 `;
 
-const InfoWrapper = styled.div`
+const Contents = styled.div`
     width: calc(100% - 40px);
     height: 100%;
     margin-left: 10px;
@@ -45,30 +51,25 @@ interface Props {
 }
 
 export const GridCard = ({ postId, endView }: Props) => {
-    const user = useSelector((state: any) => state?.user?.loginInfo?.data);
-    const post = useSelector(
-        (state: any) => state?.post?.postDetails?.data?.[`${postId}`]
-    );
-
-    useEffect(() => {}, []);
+    const { post } = useGetDetail({ type: "myPosts", id: postId });
 
     return (
-        <Wrapper ref={endView}>
-            <TopWrapper></TopWrapper>
-            <BottomWrapper>
+        <Layout ref={endView}>
+            <ImageLayout image={post.images[0]}></ImageLayout>
+            <ContentsLayout>
                 <Link
                     to={{
                         pathname: `${routes.userInfo}${post?.userId}`,
                     }}
                     state={post?.userId}
                 >
-                    <Avatar radius={40} src={user?.profileImage} />
+                    <Avatar radius={40} src={post?.profileImage} />
                 </Link>
-                <InfoWrapper>
+                <Contents>
                     <Text text={`${post?.contents?.slice(0, 43)}...`} />
-                    <Text text={post?.createdAt} />
-                </InfoWrapper>
-            </BottomWrapper>
-        </Wrapper>
+                    <Text text={getDate(post?.createAt)} />
+                </Contents>
+            </ContentsLayout>
+        </Layout>
     );
 };
