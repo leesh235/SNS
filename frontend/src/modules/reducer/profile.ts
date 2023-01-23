@@ -8,6 +8,8 @@ const initialState = {
     introduce: reducerUtils.initial(null),
     profileImage: reducerUtils.initial(null),
     coverImage: reducerUtils.initial(null),
+    latestImage: reducerUtils.initial(null),
+    allImage: reducerUtils.initial(null),
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -50,13 +52,23 @@ const reducer = (state = initialState, action: any) => {
             )(state, action);
 
         case profileAction.introduce:
-        case typeUtils(profileAction.introduce).success:
         case typeUtils(profileAction.introduce).error:
             return handleAsyncReducer(
                 profileAction.introduce,
-                "introduce",
+                "profile",
                 true
             )(state, action);
+        case typeUtils(profileAction.introduce).success:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    data: {
+                        ...state.profile.data,
+                        ...action.data,
+                    },
+                },
+            };
 
         case profileAction.coverImage:
         case typeUtils(profileAction.coverImage).success:
