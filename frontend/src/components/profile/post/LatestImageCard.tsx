@@ -4,9 +4,11 @@ import { useSelector } from "react-redux";
 //functions
 import theme from "../../../styles/theme";
 import { routes } from "../../../utils/routes";
+import { useGetImage } from "../../../hooks/profile/useGetImage";
 //components
 import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
+import { HoverButton } from "../../common/button/HoverButton";
 
 const Layout = styled.article`
     width: calc(100% - 20px);
@@ -41,27 +43,13 @@ const Image = styled.img`
     border-radius: 6px;
 `;
 
-const UrlBtn = styled.div`
-    width: 130px;
-    height: 30px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    :hover {
-        background-color: ${(props) => props.theme.color.lightGray};
-    }
-    cursor: pointer;
-`;
-
 interface Props {
     handleUrl: any;
 }
 
 export const LatestImageCard = ({ handleUrl }: Props) => {
-    const { loading, data, error } = useSelector(
-        (state: any) => state?.image?.latestImage
-    );
+    const { loading, data, error } = useGetImage();
+
     return (
         <BoxShadow tag={"article"}>
             <Layout>
@@ -70,24 +58,24 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
                         text={"사진"}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "20px",
                             fontWeight: 700,
                         }}
                     />
-                    <UrlBtn
+                    <HoverButton
+                        text="사진 모두 보기"
+                        cssObj={{
+                            fontColor: theme.color.seaBule,
+                            width: "150px",
+                            height: "30px",
+                            fontWeight: 400,
+                            fontSize: "17px",
+                        }}
                         onClick={() => {
                             handleUrl({ id: 2 });
                         }}
-                    >
-                        <Text
-                            text={"사진 모두 보기"}
-                            tag={"span"}
-                            cssObj={{
-                                fontSize: "17px",
-                                fontColor: theme.color.seaBule,
-                            }}
-                        />
-                    </UrlBtn>
+                    />
                 </FlexLayout>
                 <ImageLayout>
                     {data?.map((val: any, idx: number) => {
