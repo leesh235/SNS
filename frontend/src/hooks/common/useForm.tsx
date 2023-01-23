@@ -12,7 +12,9 @@ export const useForm = ({ initValues, onSubmit, validate = null }: Props) => {
     const [isLoaing, setIsLoading] = useState<boolean>(false);
 
     const setOption = (name: string) => {
-        const onChange: React.FormEventHandler<HTMLInputElement> = (e) => {
+        const onChange: React.FormEventHandler<
+            HTMLInputElement | HTMLTextAreaElement
+        > = (e) => {
             setValues({ ...values, [name]: e.currentTarget.value });
         };
         return { name, onChange };
