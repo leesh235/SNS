@@ -7,11 +7,11 @@ import { useGetList } from "../../hooks/common/useGetList";
 import { PostCard } from "./PostCard";
 
 const Wrapper = styled.section`
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, auto);
     row-gap: 20px;
-    align-items: center;
-    padding: 0 20px;
+    align-content: center;
     margin: 16px 0;
 `;
 
