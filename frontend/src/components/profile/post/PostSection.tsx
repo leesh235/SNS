@@ -80,6 +80,7 @@ export const PostSection = ({}: Props) => {
                                             text={val}
                                             tag={"span"}
                                             cssObj={{
+                                                width: "auto",
                                                 fontSize: "15px",
                                                 fontWeight: 600,
                                                 fontColor: theme.color.seaBule,
@@ -107,6 +108,7 @@ export const PostSection = ({}: Props) => {
                                             text={val}
                                             tag={"span"}
                                             cssObj={{
+                                                width: "auto",
                                                 fontSize: "15px",
                                                 fontWeight: 600,
                                                 fontColor:
