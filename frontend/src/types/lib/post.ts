@@ -24,3 +24,6 @@ export interface Like {
 export interface Take {
     take?: number;
 }
+export interface ListType {
+    type?: "allPosts" | "myPosts" | "likePosts" | "friendsPosts";
+}
