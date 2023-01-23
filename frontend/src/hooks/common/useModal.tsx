@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 export const useModal = (global: boolean = false, reset: any = null) => {
     const [modal, setModal] = useState<boolean>(false);
 
-    const CloseModal = () => {
+    const CloseModal = (time: number = 1000) => {
         setTimeout(() => {
             setModal(false);
-        }, 1000);
+        }, time);
     };
 
     const handleModal: React.MouseEventHandler = (e) => {
