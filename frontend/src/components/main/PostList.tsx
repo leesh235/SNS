@@ -18,7 +18,7 @@ const Wrapper = styled.section`
 export const PostList = () => {
     const target = useRef<HTMLDivElement>(null);
 
-    const { loading, data, error } = useGetList();
+    const { loading, data, error } = useGetList({});
 
     const { count } = useInfiniteScroll({
         target: target,
@@ -27,7 +27,6 @@ export const PostList = () => {
         pageSize: 4,
     });
 
-    if (loading) return <div>loading...</div>;
     if (!data) return <div>게시글이 없습니다</div>;
     return (
         <Wrapper>

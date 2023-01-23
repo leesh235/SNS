@@ -23,7 +23,7 @@ import { CommentList } from "./CommentList";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Layout = styled.article`
-    width: calc(100% - 20px);
+    width: calc(100% -20px);
     max-width: 590px;
     height: auto;
     padding: 10px;
@@ -102,7 +102,7 @@ interface Props {
 const Component = ({ postId, endView = undefined }: Props) => {
     const user = useSelector((state: any) => state?.profile?.simple?.data);
 
-    const { post } = useGetDetail("allPosts", postId);
+    const { post } = useGetDetail({ id: postId });
 
     const modifyModal = useModal();
 
