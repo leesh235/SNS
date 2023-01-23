@@ -10,8 +10,7 @@ interface StyleProps {
 }
 
 const Wrapper = styled.div<StyleProps>`
-    width: 100%;
-    max-width: ${(props) => props.width || "100%"};
+    width: ${(props) => props.width || "100%"};
     margin: ${(props) => props.margin || "0"};
     padding: ${(props) => props.padding || "0"};
     font-size: ${(props) => props.fontSize || "12px"};
