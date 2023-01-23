@@ -11,7 +11,7 @@ const profile = async () => {
 };
 
 const modifyIntroduce = async (data: Introduce) => {
-    return await backend.post(api.profile.introduce, data);
+    return await backend.patch(api.profile.introduce, data);
 };
 
 const getLatestImage = async () => {
