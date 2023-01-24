@@ -45,9 +45,10 @@ interface Props extends StyleProps {
     name?: string;
     title?: string;
     defaultValue?: string;
+    onChange?: any;
 }
 
-export const Input4 = ({ name, title, defaultValue }: Props) => {
+export const Input4 = ({ name, title, defaultValue, onChange }: Props) => {
     const [focus, setFocus] = useState<boolean>(false);
 
     const handleOnFocus = () => {
@@ -66,6 +67,7 @@ export const Input4 = ({ name, title, defaultValue }: Props) => {
                 defaultValue={defaultValue}
                 onFocus={handleOnFocus}
                 onBlur={handleOnBlur}
+                onChange={onChange}
                 placeholder={!focus ? title : ""}
             />
         </Wrapper>
