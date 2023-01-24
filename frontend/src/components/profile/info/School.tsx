@@ -9,7 +9,7 @@ import { abilityValidate } from "../../../utils/validate";
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { HoverButton } from "../../common/button/HoverButton";
-import { Input4 } from "../../common/input/Input4";
+import { HoverInput } from "../../common/input/HoverInput";
 import { AddButton } from "./AddButton";
 import { AddForm } from "./AddForm";
 import { SeeMoreLayout } from "../../common/SeeMoreLayout";
@@ -106,7 +106,7 @@ export const School = ({ data }: Props) => {
             )}
             {modal && (
                 <AddForm onSubmit={handleSubmit} onClose={handleModal}>
-                    <Input4
+                    <HoverInput
                         {...setOption("name")}
                         title={"학교"}
                         defaultValue={data?.school}

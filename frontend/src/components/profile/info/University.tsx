@@ -1,9 +1,6 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 //functions
-import { informationActionCreator } from "../../../modules/action/information";
 import { useModal } from "../../../hooks/common/useModal";
 import { useInfoFunc } from "../../../hooks/profile/useInfoFunc";
 import { useForm } from "../../../hooks/common/useForm";
@@ -12,42 +9,10 @@ import { abilityValidate } from "../../../utils/validate";
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
 import { HoverButton } from "../../common/button/HoverButton";
-import { Input4 } from "../../common/input/Input4";
+import { HoverInput } from "../../common/input/HoverInput";
 import { AddButton } from "./AddButton";
 import { AddForm } from "./AddForm";
 import { SeeMoreLayout } from "../../common/SeeMoreLayout";
-
-const AddButtonLayout = styled.div`
-    width: 100%;
-    height: 36px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: ${(props) => props.theme.color.seaBule};
-    cursor: pointer;
-    :hover {
-        text-decoration: underline;
-    }
-`;
-
-const AddIcon = styled.div`
-    width: 24px;
-    height: 24px;
-    border-radius: 12px;
-    border: 1px solid ${(props) => props.theme.color.seaBule};
-    color: ${(props) => props.theme.color.seaBule};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
-const AddText = styled.div`
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 20px;
-    color: ${(props) => props.theme.color.seaBule};
-    margin-left: 12px;
-`;
 
 const Layout = styled.div`
     width: 100%;
@@ -79,57 +44,6 @@ const Icon = styled.div`
     justify-content: center;
 `;
 
-const SettingIcon = styled.div`
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
-    background-color: ${(props) => props.theme.color.gray};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    :hover {
-        background-color: ${(props) => props.theme.color.lightGray};
-    }
-    position: relative;
-`;
-
-const ButtonLayout = styled.div`
-    width: auto;
-    height: auto;
-    padding: 6px;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 4px 8px rgb(0 0 0 / 10%);
-    border-radius: 6px;
-    position: absolute;
-    top: 50px;
-    right: 2px;
-`;
-
-const FormLayout = styled.form`
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    > :nth-child(n + 2) {
-        margin-top: 8px;
-    }
-`;
-
-const ButtonFlexLayout = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    padding-top: 10px;
-    border-top: 1px solid ${(props) => props.theme.color.gray};
-    > :nth-last-child(1) {
-        width: auto;
-        > :nth-child(1) {
-            margin-right: 5px;
-        }
-    }
-`;
 interface Props {
     data?: any;
 }
@@ -196,17 +110,17 @@ export const University = ({ data }: Props) => {
             )}
             {modal && (
                 <AddForm onSubmit={handleSubmit} onClose={handleModal}>
-                    <Input4
+                    <HoverInput
                         {...setOption("name")}
                         title={"학교"}
                         defaultValue={data?.university}
                     />
-                    <Input4
+                    <HoverInput
                         {...setOption("major")}
                         title={"전공"}
                         defaultValue={data?.major}
                     />
-                    <Input4
+                    <HoverInput
                         {...setOption("degree")}
                         title={"학위"}
                         defaultValue={data?.degree}

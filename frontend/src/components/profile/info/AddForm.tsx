@@ -1,6 +1,6 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
-import { Input4 } from "../../common/input/Input4";
+import { HoverInput } from "../../common/input/HoverInput";
 import { HoverButton } from "../../common/button/HoverButton";
 
 const Layout = styled.form`

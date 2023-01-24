@@ -48,7 +48,7 @@ interface Props extends StyleProps {
     onChange?: any;
 }
 
-export const Input4 = ({ name, title, defaultValue, onChange }: Props) => {
+export const HoverInput = ({ name, title, defaultValue, onChange }: Props) => {
     const [focus, setFocus] = useState<boolean>(false);
 
     const handleOnFocus = () => {
@@ -73,5 +73,3 @@ export const Input4 = ({ name, title, defaultValue, onChange }: Props) => {
         </Wrapper>
     );
 };
-
-Input4.defaultProps = {};

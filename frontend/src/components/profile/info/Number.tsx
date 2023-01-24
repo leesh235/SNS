@@ -7,7 +7,7 @@ import { abilityValidate } from "../../../utils/validate";
 //components
 import { Text } from "../../common/Text";
 import { MoreIcon } from "../../../assets/icon/MoreIcon";
-import { Input4 } from "../../common/input/Input4";
+import { HoverInput } from "../../common/input/HoverInput";
 import { AddButton } from "./AddButton";
 import { AddForm } from "./AddForm";
 import { SeeMoreLayout } from "../../common/SeeMoreLayout";
@@ -77,7 +77,7 @@ export const Number = ({ data }: Props) => {
             )}
             {modal && (
                 <AddForm onSubmit={handleSubmit} onClose={handleModal}>
-                    <Input4
+                    <HoverInput
                         {...setOption("number")}
                         title={"전화번호"}
                         defaultValue={data}
