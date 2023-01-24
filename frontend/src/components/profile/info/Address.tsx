@@ -2,7 +2,6 @@ import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
 //functions
 import { useModal } from "../../../hooks/common/useModal";
-import { useInfoFunc } from "../../../hooks/profile/useInfoFunc";
 import { useForm } from "../../../hooks/common/useForm";
 import { abilityValidate } from "../../../utils/validate";
 //components
@@ -48,59 +47,39 @@ interface Props {
     data?: any;
 }
 
-export const Ability = ({ data }: Props) => {
+export const Address = ({ data }: Props) => {
     const { modal, handleModal } = useModal();
 
-    const { handleWrite, handleDelete } = useInfoFunc({ id: data?.id });
+    const handleDelete = () => {};
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: {},
-        validate: abilityValidate,
-        onSubmit: (formData: any) => {
-            handleWrite({ formData });
-        },
+        validate: (errors: any) => {},
+        onSubmit: (formData: any) => {},
     });
 
     return (
         <>
             <Text
-                text={"직장"}
+                text={"주소"}
                 cssObj={{ fontSize: "17px", fontWeight: 600 }}
             />
             {!modal && data === null && (
-                <AddButton text="직장 추가" onClick={handleModal} />
+                <AddButton text="주소 추가" onClick={handleModal} />
             )}
             {!modal && data !== null && (
                 <Layout>
                     <Icon />
-                    <div>
-                        <div>
-                            <Text
-                                text={data?.job}
-                                tag={"span"}
-                                cssObj={{ fontSize: "13px", fontWeight: 600 }}
-                            />
-                            <Text
-                                text={data?.position}
-                                tag={"span"}
-                                cssObj={{ fontSize: "13px" }}
-                            />
-                        </div>
-                        <Text
-                            text={`${data?.start}-${data?.end}`}
-                            cssObj={{ fontSize: "13px" }}
-                        />
-                    </div>
-
+                    <Text text={data?.address} cssObj={{ fontSize: "15px" }} />
                     <SeeMoreLayout width="200px">
                         <MoreIcon backgroundColor={theme.color.gray} />
                         <HoverButton
-                            text={"직장 수정"}
+                            text={"주소 수정"}
                             cssObj={{ textAlign: "left" }}
                             onClick={handleModal}
                         />
                         <HoverButton
-                            text={"직장 삭제"}
+                            text={"주소 삭제"}
                             cssObj={{ textAlign: "left" }}
                             onClick={handleDelete}
                         />
@@ -110,19 +89,9 @@ export const Ability = ({ data }: Props) => {
             {modal && (
                 <AddForm onSubmit={handleSubmit} onClose={handleModal}>
                     <Input4
-                        {...setOption("name")}
-                        title={"회사"}
-                        defaultValue={data?.job || ""}
-                    />
-                    <Input4
-                        {...setOption("position")}
-                        title={"직위"}
-                        defaultValue={data?.position || ""}
-                    />
-                    <Input4
-                        {...setOption("name")}
-                        title={"도서/지역"}
-                        defaultValue={data?.address || ""}
+                        {...setOption("address")}
+                        title={"주소"}
+                        defaultValue={data}
                     />
                 </AddForm>
             )}

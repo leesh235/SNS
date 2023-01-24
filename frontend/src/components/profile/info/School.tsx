@@ -48,10 +48,13 @@ interface Props {
     data?: any;
 }
 
-export const Ability = ({ data }: Props) => {
+export const School = ({ data }: Props) => {
     const { modal, handleModal } = useModal();
 
-    const { handleWrite, handleDelete } = useInfoFunc({ id: data?.id });
+    const { handleWrite, handleDelete } = useInfoFunc({
+        id: data?.id,
+        type: "school",
+    });
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: {},
@@ -64,11 +67,11 @@ export const Ability = ({ data }: Props) => {
     return (
         <>
             <Text
-                text={"직장"}
+                text={"고등학교"}
                 cssObj={{ fontSize: "17px", fontWeight: 600 }}
             />
             {!modal && data === null && (
-                <AddButton text="직장 추가" onClick={handleModal} />
+                <AddButton text="고등학교 추가" onClick={handleModal} />
             )}
             {!modal && data !== null && (
                 <Layout>
@@ -76,14 +79,8 @@ export const Ability = ({ data }: Props) => {
                     <div>
                         <div>
                             <Text
-                                text={data?.job}
-                                tag={"span"}
-                                cssObj={{ fontSize: "13px", fontWeight: 600 }}
-                            />
-                            <Text
-                                text={data?.position}
-                                tag={"span"}
-                                cssObj={{ fontSize: "13px" }}
+                                text={data?.school}
+                                cssObj={{ fontSize: "15px" }}
                             />
                         </div>
                         <Text
@@ -95,12 +92,12 @@ export const Ability = ({ data }: Props) => {
                     <SeeMoreLayout width="200px">
                         <MoreIcon backgroundColor={theme.color.gray} />
                         <HoverButton
-                            text={"직장 수정"}
+                            text={"학교 수정"}
                             cssObj={{ textAlign: "left" }}
                             onClick={handleModal}
                         />
                         <HoverButton
-                            text={"직장 삭제"}
+                            text={"학교 삭제"}
                             cssObj={{ textAlign: "left" }}
                             onClick={handleDelete}
                         />
@@ -111,18 +108,8 @@ export const Ability = ({ data }: Props) => {
                 <AddForm onSubmit={handleSubmit} onClose={handleModal}>
                     <Input4
                         {...setOption("name")}
-                        title={"회사"}
-                        defaultValue={data?.job || ""}
-                    />
-                    <Input4
-                        {...setOption("position")}
-                        title={"직위"}
-                        defaultValue={data?.position || ""}
-                    />
-                    <Input4
-                        {...setOption("name")}
-                        title={"도서/지역"}
-                        defaultValue={data?.address || ""}
+                        title={"학교"}
+                        defaultValue={data?.school}
                     />
                 </AddForm>
             )}

@@ -156,11 +156,11 @@ const Profile = () => {
             {click === 0 && (
                 <PostPage handleUrl={handleOnClick} check={check} />
             )}
-            {/* {click === 1 && <ProfileInfo />}
-            {click === 2 && <ProfileImage />} */}
-            {/* {click === 3 && <ProfileFriend />} */}
-            {/* {click === 4 && <ProfileVideo />}
-            {click === 5 && <ProfileCheckIn />} */}
+            {click === 1 && <ProfileInfo />}
+            {/* {click === 2 && <ProfileImage />} */}
+            {/* {click === 3 && <ProfileFriend />}  */}
+            {/* {click === 4 && <ProfileVideo />} */}
+            {/* {click === 5 && <ProfileCheckIn />} */}
         </Layout>
     );
 };

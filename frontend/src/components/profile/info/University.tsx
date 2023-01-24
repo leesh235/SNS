@@ -1,6 +1,9 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 //functions
+import { informationActionCreator } from "../../../modules/action/information";
 import { useModal } from "../../../hooks/common/useModal";
 import { useInfoFunc } from "../../../hooks/profile/useInfoFunc";
 import { useForm } from "../../../hooks/common/useForm";
@@ -13,6 +16,38 @@ import { Input4 } from "../../common/input/Input4";
 import { AddButton } from "./AddButton";
 import { AddForm } from "./AddForm";
 import { SeeMoreLayout } from "../../common/SeeMoreLayout";
+
+const AddButtonLayout = styled.div`
+    width: 100%;
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: ${(props) => props.theme.color.seaBule};
+    cursor: pointer;
+    :hover {
+        text-decoration: underline;
+    }
+`;
+
+const AddIcon = styled.div`
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    border: 1px solid ${(props) => props.theme.color.seaBule};
+    color: ${(props) => props.theme.color.seaBule};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const AddText = styled.div`
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+    color: ${(props) => props.theme.color.seaBule};
+    margin-left: 12px;
+`;
 
 const Layout = styled.div`
     width: 100%;
@@ -44,14 +79,68 @@ const Icon = styled.div`
     justify-content: center;
 `;
 
+const SettingIcon = styled.div`
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    background-color: ${(props) => props.theme.color.gray};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    :hover {
+        background-color: ${(props) => props.theme.color.lightGray};
+    }
+    position: relative;
+`;
+
+const ButtonLayout = styled.div`
+    width: auto;
+    height: auto;
+    padding: 6px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 4px 8px rgb(0 0 0 / 10%);
+    border-radius: 6px;
+    position: absolute;
+    top: 50px;
+    right: 2px;
+`;
+
+const FormLayout = styled.form`
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    > :nth-child(n + 2) {
+        margin-top: 8px;
+    }
+`;
+
+const ButtonFlexLayout = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px solid ${(props) => props.theme.color.gray};
+    > :nth-last-child(1) {
+        width: auto;
+        > :nth-child(1) {
+            margin-right: 5px;
+        }
+    }
+`;
 interface Props {
     data?: any;
 }
 
-export const Ability = ({ data }: Props) => {
+export const University = ({ data }: Props) => {
     const { modal, handleModal } = useModal();
 
-    const { handleWrite, handleDelete } = useInfoFunc({ id: data?.id });
+    const { handleWrite, handleDelete } = useInfoFunc({
+        id: data?.id,
+        type: "university",
+    });
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: {},
@@ -64,11 +153,11 @@ export const Ability = ({ data }: Props) => {
     return (
         <>
             <Text
-                text={"직장"}
+                text={"대학"}
                 cssObj={{ fontSize: "17px", fontWeight: 600 }}
             />
             {!modal && data === null && (
-                <AddButton text="직장 추가" onClick={handleModal} />
+                <AddButton text="대학 추가" onClick={handleModal} />
             )}
             {!modal && data !== null && (
                 <Layout>
@@ -76,18 +165,16 @@ export const Ability = ({ data }: Props) => {
                     <div>
                         <div>
                             <Text
-                                text={data?.job}
-                                tag={"span"}
+                                text={data?.university}
                                 cssObj={{ fontSize: "13px", fontWeight: 600 }}
                             />
                             <Text
-                                text={data?.position}
-                                tag={"span"}
+                                text={data?.major}
                                 cssObj={{ fontSize: "13px" }}
                             />
                         </div>
                         <Text
-                            text={`${data?.start}-${data?.end}`}
+                            text={`${data?.degree}/${data?.start}-${data?.end}`}
                             cssObj={{ fontSize: "13px" }}
                         />
                     </div>
@@ -95,12 +182,12 @@ export const Ability = ({ data }: Props) => {
                     <SeeMoreLayout width="200px">
                         <MoreIcon backgroundColor={theme.color.gray} />
                         <HoverButton
-                            text={"직장 수정"}
+                            text={"대학 수정"}
                             cssObj={{ textAlign: "left" }}
                             onClick={handleModal}
                         />
                         <HoverButton
-                            text={"직장 삭제"}
+                            text={"대학 삭제"}
                             cssObj={{ textAlign: "left" }}
                             onClick={handleDelete}
                         />
@@ -111,18 +198,18 @@ export const Ability = ({ data }: Props) => {
                 <AddForm onSubmit={handleSubmit} onClose={handleModal}>
                     <Input4
                         {...setOption("name")}
-                        title={"회사"}
-                        defaultValue={data?.job || ""}
+                        title={"학교"}
+                        defaultValue={data?.university}
                     />
                     <Input4
-                        {...setOption("position")}
-                        title={"직위"}
-                        defaultValue={data?.position || ""}
+                        {...setOption("major")}
+                        title={"전공"}
+                        defaultValue={data?.major}
                     />
                     <Input4
-                        {...setOption("name")}
-                        title={"도서/지역"}
-                        defaultValue={data?.address || ""}
+                        {...setOption("degree")}
+                        title={"학위"}
+                        defaultValue={data?.degree}
                     />
                 </AddForm>
             )}
