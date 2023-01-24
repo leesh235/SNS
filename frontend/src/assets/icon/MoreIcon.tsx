@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 
-const Layout = styled.span`
+const Layout = styled.span<Props>`
     width: 36px;
     height: 36px;
     border-radius: 18px;
@@ -8,14 +8,19 @@ const Layout = styled.span`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background-color: ${(props) => props.backgroundColor || ""};
     :hover {
         background-color: ${(props) => props.theme.color.lightGray};
     }
 `;
 
-export const MoreIcon = () => {
+interface Props {
+    backgroundColor?: string;
+}
+
+export const MoreIcon = ({ backgroundColor }: Props) => {
     return (
-        <Layout>
+        <Layout backgroundColor={backgroundColor}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
