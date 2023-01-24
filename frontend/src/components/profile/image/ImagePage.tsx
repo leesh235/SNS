@@ -13,12 +13,12 @@ const Wrapper = styled.section`
 
 interface Props {}
 
-export const ProfileImage = ({}: Props) => {
+export const ImagePage = ({}: Props) => {
     const { email } = useParams();
     const dispatch = useDispatch();
 
     const { loading, data, error } = useSelector(
-        (state: any) => state?.user?.profile
+        (state: any) => state?.profile?.profile
     );
 
     useEffect(() => {

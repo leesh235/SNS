@@ -12,7 +12,7 @@ import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
 import { PostPage } from "../components/profile/post/PostPage";
 import { ProfileInfo } from "../components/profile/info/ProfileInfo";
-import { ProfileImage } from "../components/profile/image/ProfileImage";
+import { ImagePage } from "../components/profile/image/ImagePage";
 import { ProfileTop } from "../components/profile/common/ProfileTop";
 import { ProfileFriend } from "../components/profile/friend/ProfileFriend";
 import { ProfileVideo } from "../components/profile/video/ProfileVideo";
@@ -157,7 +157,7 @@ const Profile = () => {
                 <PostPage handleUrl={handleOnClick} check={check} />
             )}
             {click === 1 && <ProfileInfo />}
-            {/* {click === 2 && <ProfileImage />} */}
+            {click === 2 && <ImagePage />}
             {/* {click === 3 && <ProfileFriend />}  */}
             {/* {click === 4 && <ProfileVideo />} */}
             {/* {click === 5 && <ProfileCheckIn />} */}

@@ -69,7 +69,7 @@ const menuList = ["내 사진", "사진첩"];
 
 export const ImageCard = () => {
     const { loading, data, error } = useSelector(
-        (state: any) => state?.image?.allImages
+        (state: any) => state?.profile?.allImage
     );
 
     const [menu, setMenu] = useState<number>(0);
