@@ -4,7 +4,12 @@ import {
     VerifyCodeNumberType,
     ModifyPwErrorType,
 } from "../types/validate";
-import { Introduce } from "../types/lib/profile";
+import {
+    Introduce,
+    AbilityType,
+    SchoolType,
+    UniversityType,
+} from "../types/lib/profile";
 
 export const loginValidate = ({ email, password }: LoginErrorType) => {
     const errors: LoginErrorType = {};
@@ -57,6 +62,21 @@ export const modifyInroduceValidate = ({
     const errors: { introduce?: string } = {};
 
     if (!introduce) errors.introduce = "requierd";
+
+    return errors;
+};
+
+export const abilityValidate = ({
+    name,
+    position,
+    address,
+    start,
+    end,
+    id,
+}: AbilityType) => {
+    const errors: any = {};
+
+    if (!name) errors.name = "requierd";
 
     return errors;
 };
