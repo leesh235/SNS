@@ -8,6 +8,7 @@ import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 import { InputButton } from "../../common/button/InputButton";
 import { WritePost } from "../../common/card/WritePost";
+import { ModalLayout } from "../../common/styles/ModalLayout";
 
 const FlexLayout = styled.div`
     width: calc(100% - 32px);
@@ -92,7 +93,11 @@ export const WritePostCard = () => {
                     </ButtonLayout>
                 </FlexLayout>
             </BoxShadow>
-            {open && <WritePost closeFunc={handleClose} setClose={setOpen} />}
+            {open && (
+                <ModalLayout onCloseClick={handleClose}>
+                    <WritePost closeFunc={handleClose} setClose={setOpen} />
+                </ModalLayout>
+            )}
         </>
     );
 };
