@@ -29,31 +29,63 @@ const reducer = (state = initialState, action: any) => {
             )(state, action);
 
         case postAction.write:
-        case typeUtils(postAction.write).success:
         case typeUtils(postAction.write).error:
             return handleAsyncReducer(
                 postAction.write,
                 "write",
                 true
             )(state, action);
+        case typeUtils(postAction.write).success:
+            return {
+                ...state,
+                myPosts: {
+                    ...state.myPosts,
+                    data: {
+                        ...state.myPosts.data,
+                        [data.id]: data,
+                    },
+                },
+            };
 
         case postAction.modify:
-        case typeUtils(postAction.modify).success:
         case typeUtils(postAction.modify).error:
             return handleAsyncReducer(
                 postAction.modify,
                 "modify",
                 true
             )(state, action);
+        case typeUtils(postAction.modify).success:
+            return {
+                ...state,
+                myPosts: {
+                    ...state.myPosts,
+                    data: {
+                        ...state.myPosts.data,
+                        [data.id]: {
+                            ...state.myPosts.data[data.id],
+                            ...data,
+                        },
+                    },
+                },
+            };
 
         case postAction.delete:
-        case typeUtils(postAction.delete).success:
         case typeUtils(postAction.delete).error:
             return handleAsyncReducer(
                 postAction.delete,
                 "delete",
                 true
             )(state, action);
+        case typeUtils(postAction.delete).success:
+            const newMyPosts = state.myPosts.data;
+            delete newMyPosts[data.id];
+            return {
+                ...state,
+                myPosts: {
+                    ...state.myPosts,
+                    data: { ...newMyPosts },
+                },
+            };
 
         case postAction.like:
         case typeUtils(postAction.like).success:
