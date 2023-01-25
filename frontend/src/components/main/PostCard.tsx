@@ -130,7 +130,7 @@ const Component = ({ postId, endView = undefined }: Props) => {
                         }}
                     />
                     <Text
-                        text={getDate(post.createAt)}
+                        text={getDate(post?.createAt)}
                         tag={"span"}
                         cssObj={{
                             fontSize: "12px",
@@ -198,14 +198,14 @@ const Component = ({ postId, endView = undefined }: Props) => {
                             fontColor: post?.likeStatus && theme.color.seaBule,
                         }}
                     />
-                    <Label htmlFor={`${post.id}_comment`} />
+                    <Label htmlFor={`${post?.id}_comment`} />
                     <HoverButton text={"공유하기"} />
                 </ButtonLayout>
 
-                <CommentList postId={post.id} />
+                <CommentList postId={post?.id} />
 
                 <CommentInput
-                    label={post.id}
+                    label={post?.id}
                     onSubmit={commentFunc.handleWrite}
                     width={"calc(100% - 20px)"}
                 />
