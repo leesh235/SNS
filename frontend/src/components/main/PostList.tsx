@@ -3,6 +3,7 @@ import { useRef } from "react";
 //functions
 import { useInfiniteScroll } from "../../hooks/common/useInfiniteScroll";
 import { useGetList } from "../../hooks/common/useGetList";
+import { ListType } from "../../types/lib/post";
 //components
 import { PostCard } from "./PostCard";
 
@@ -15,10 +16,10 @@ const Wrapper = styled.section`
     margin: 16px 0;
 `;
 
-export const PostList = () => {
+export const PostList = ({ type = "allPosts" }: ListType) => {
     const target = useRef<HTMLDivElement>(null);
 
-    const { loading, data, error } = useGetList({});
+    const { loading, data, error } = useGetList({ type });
 
     const { count } = useInfiniteScroll({
         target: target,

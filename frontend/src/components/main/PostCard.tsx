@@ -106,9 +106,9 @@ const Component = ({ postId, endView = undefined }: Props) => {
 
     const modifyModal = useModal();
 
-    const { handleLike, handleDelete } = usePostFunc(postId);
+    const { handleLike, handleDelete, handleWrite } = usePostFunc(postId);
 
-    const { handleWrite } = useCommentFunc(postId);
+    const commentFunc = useCommentFunc(postId);
 
     return (
         <>
@@ -206,7 +206,7 @@ const Component = ({ postId, endView = undefined }: Props) => {
 
                 <CommentInput
                     label={post.id}
-                    onSubmit={handleWrite}
+                    onSubmit={commentFunc.handleWrite}
                     width={"calc(100% - 20px)"}
                 />
             </Layout>
@@ -214,6 +214,7 @@ const Component = ({ postId, endView = undefined }: Props) => {
                 <ModalLayout onCloseClick={modifyModal.handleModal}>
                     <WritePost
                         closeFunc={modifyModal.handleModal}
+                        onWriteSubmit={handleWrite}
                         post={post}
                     />
                 </ModalLayout>

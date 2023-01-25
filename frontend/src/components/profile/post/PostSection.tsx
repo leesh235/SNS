@@ -122,7 +122,7 @@ export const PostSection = ({}: Props) => {
                     })}
                 </GridLayout>
             </BoxShadow>
-            {menu === 0 ? <PostList /> : <PostGridList />}
+            {menu === 0 ? <PostList type="myPosts" /> : <PostGridList />}
         </>
     );
 };
