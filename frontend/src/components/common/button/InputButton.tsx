@@ -1,3 +1,4 @@
+import React from "react";
 import theme from "../../../styles/theme";
 import styled from "../../../styles/theme-components";
 import { Text } from "../Text";
@@ -24,7 +25,7 @@ interface StyleProps {
 
 interface Props extends StyleProps {
     text: string;
-    onClick?: () => void;
+    onClick?: React.MouseEventHandler;
 }
 
 export const InputButton = ({

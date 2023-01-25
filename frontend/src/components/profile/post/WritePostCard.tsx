@@ -2,6 +2,7 @@ import styled from "../../../styles/theme-components";
 import { useState } from "react";
 //functions
 import theme from "../../../styles/theme";
+import { useModal } from "../../../hooks/common/useModal";
 //components
 import { IconButton } from "../../common/button/IconButton";
 import { BoxShadow } from "../../common/styles/BoxShadow";
@@ -35,16 +36,7 @@ const ButtonLayout = styled.div`
 `;
 
 export const WritePostCard = () => {
-    const [open, setOpen] = useState<boolean>(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose: React.MouseEventHandler = (e) => {
-        if (e.target !== e.currentTarget) return;
-        if (open) setOpen(false);
-    };
+    const { modal, handleModal } = useModal();
 
     return (
         <>
@@ -53,7 +45,7 @@ export const WritePostCard = () => {
                     <TopInpout>
                         <InputButton
                             text={"무슨 생각을 하고 계신가요?"}
-                            onClick={handleOpen}
+                            onClick={handleModal}
                         />
                     </TopInpout>
                     <ButtonLayout>
@@ -93,9 +85,9 @@ export const WritePostCard = () => {
                     </ButtonLayout>
                 </FlexLayout>
             </BoxShadow>
-            {open && (
-                <ModalLayout onCloseClick={handleClose}>
-                    <WritePost closeFunc={handleClose} setClose={setOpen} />
+            {modal && (
+                <ModalLayout onCloseClick={handleModal}>
+                    <WritePost closeFunc={handleModal} />
                 </ModalLayout>
             )}
         </>
