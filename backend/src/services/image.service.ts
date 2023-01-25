@@ -15,7 +15,11 @@ export const fileUpload = async (req: any) => {
         fileObj.fileName = file.filename;
         fileObj.originamName = file.originalname;
         fileObj.destination = file.destination;
-        fileObj.imageUrl = `${process.env.BE_URL}/${file.destination}/${file.filename}`;
+        const filePath = file.destination.replace(
+            `${process.env.FILE_PATH}/`,
+            ""
+        );
+        fileObj.imageUrl = `${process.env.BE_URL}/${filePath}/${file.filename}`;
 
         const result = await fileRepository.save(fileObj);
 
@@ -28,14 +32,18 @@ export const fileUpload = async (req: any) => {
 export const fileArrayUpload = async (req: any) => {
     try {
         const { files } = req;
-
+        console.log(files);
         const newFIles: Files[] = [];
         for (let file of files) {
             const fileObj = new Files();
             fileObj.fileName = file.filename;
             fileObj.originamName = file.originalname;
             fileObj.destination = file.destination;
-            fileObj.imageUrl = `${process.env.BE_URL}/${file.destination}/${file.filename}`;
+            const filePath = file.destination.replace(
+                `${process.env.FILE_PATH}/`,
+                ""
+            );
+            fileObj.imageUrl = `${process.env.BE_URL}/${filePath}/${file.filename}`;
             newFIles.push(fileObj);
         }
 
