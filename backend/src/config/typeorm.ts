@@ -9,8 +9,9 @@ export const dataSource = new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    synchronize: true,
-    logging: true,
+    charset: "utf8mb4", //schema character set
+    synchronize: false, //테이블 생성여부 확인(처음 한번 생성 후 false로 해야한다.)
+    logging: true, // 로깅 여부
     entities: [`${entities}`],
     migrations: [],
     subscribers: [],
