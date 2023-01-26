@@ -7,13 +7,13 @@ export const imageAction = {
 };
 
 export const imageActionCreator = {
-    single: (data: SingleImage) => {
+    single: (data: any) => {
         return {
             type: imageAction.single,
             data,
         };
     },
-    array: (data: ArrayImage) => {
+    array: (data: any) => {
         return {
             type: imageAction.array,
             data,
