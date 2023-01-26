@@ -80,3 +80,11 @@ export const abilityValidate = ({
 
     return errors;
 };
+
+export const writePostValidate = ({ contents }: { contents?: string }) => {
+    const errors: any = {};
+
+    if (!contents) errors.contents = "requierd";
+
+    return errors;
+};
