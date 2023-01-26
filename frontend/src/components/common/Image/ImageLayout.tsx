@@ -36,7 +36,7 @@ const Shadow = styled.div`
 interface Props {
     post: {
         postId: number;
-        images: Array<string>;
+        images: Array<{ id: number; url: string }>;
     };
 }
 

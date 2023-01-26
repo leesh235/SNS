@@ -163,7 +163,7 @@ const Component = ({ postId, type, endView = undefined }: Props) => {
                             margin: "0 16px",
                         }}
                     />
-                    {post?.images && (
+                    {post.images?.length !== 0 && (
                         <ImageLayout
                             post={{ postId: post.postId, images: post.images }}
                         />
