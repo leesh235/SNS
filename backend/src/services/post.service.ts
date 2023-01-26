@@ -6,15 +6,14 @@ import { Comment } from "../entity/comment.entity";
 import { In } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
-const likesRepository = dataSource.getRepository(Likes);
 const fileRepository = dataSource.getRepository(Files);
+const likesRepository = dataSource.getRepository(Likes);
 const commentRepository = dataSource.getRepository(Comment);
 
 export const find = async (req: any) => {
     try {
         const {
             query: { postId },
-            // user: { email },
         } = req;
 
         const likeQb = likesRepository
@@ -80,17 +79,16 @@ export const save = async (req: any) => {
 
         const postSave = await postRepository.save(post);
 
-        const files: number[] = [];
-        const urls: string[] = [];
-        for (let image of images) {
-            files.push(image.id);
-            urls.push(image.url);
+        if (images?.length !== 0) {
+            const ids: number[] = [];
+            for (let image of images) {
+                ids.push(image.id);
+            }
+            await fileRepository.update(
+                { id: In(ids) },
+                { post: { id: postSave.id } }
+            );
         }
-
-        await fileRepository.update(
-            { id: In(files) },
-            { post: { id: postSave.id } }
-        );
 
         const result: any = {
             id: postSave.id,
@@ -98,14 +96,15 @@ export const save = async (req: any) => {
             writer: nickName,
             profileImage,
             contents,
-            createdAt: postSave.createdAt,
-            images: urls,
+            createAt: postSave.createdAt,
+            images,
             likequantity: 0,
             commentquantity: 0,
             likeStatus: false,
         };
         return { ok: true, data: result };
     } catch (error) {
+        console.log(error);
         return { ok: false, data: error };
     }
 };
