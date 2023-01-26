@@ -128,7 +128,7 @@ interface Props {
     closeFunc: any;
     deleteFunc: any;
     fileList: Array<any>;
-    handleUrl: any;
+    handleUrl?: any;
 }
 
 export const ModifyPost = ({

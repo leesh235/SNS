@@ -20,7 +20,7 @@ export const PostList = ({ type = "allPosts" }: ListType) => {
     const target = useRef<HTMLDivElement>(null);
 
     const { loading, data, error } = useGetList({ type });
-
+    console.log(data);
     const { count } = useInfiniteScroll({
         target: target,
         targetArray: data || [],

@@ -8,6 +8,9 @@ import { postActionCreator } from "../../../modules/action/post";
 import { postsActionCreator } from "../../../modules/action/posts";
 import { useForm } from "../../../hooks/common/useForm";
 import { useModal } from "../../../hooks/common/useModal";
+import { useImageFunc } from "../../../hooks/common/useImageFunc";
+import { usePostFunc } from "../../../hooks/post/usePostFunc";
+import { writePostValidate } from "../../../utils/validate";
 //components
 import { Text } from "../Text";
 import { ModifyPost } from "./ModifyPost";
@@ -149,7 +152,6 @@ const SelectImage = styled.img`
 
 interface Props {
     closeFunc: any;
-    setClose?: any;
     onWriteSubmit?: any;
     post?: {
         postId: number;
@@ -157,109 +159,36 @@ interface Props {
         writer: string;
         contents: string;
         createdAt: string;
-        images?: Array<{ id: number; url: string }>;
-        profileImage?: string;
-        files?: string;
+        images: Array<{ id: number; url: string }>;
+        profileImage: string;
+        files: string;
     };
 }
 
-export const WritePost = ({ closeFunc, setClose, post }: Props) => {
-    const dispatch = useDispatch();
-
+export const WritePost = ({ closeFunc, post }: Props) => {
     const imageModal = useModal();
     const modifyModal = useModal();
 
-    const [fileList, setFileList] = useState<{ id: number; url: any }[]>(
-        post?.images || []
-    );
-    const [deleteFileList, setDeleteFileList] = useState<
-        { id: number; url: any }[]
-    >([]);
+    const { data, uploadImage, deleteImage } = useImageFunc({
+        type: "array",
+        initList: post?.images,
+    });
 
-    const handleImageOnChange: React.ChangeEventHandler = (e) => {
-        const { files } = e?.target as HTMLInputElement;
-        if (files) {
-            const arr = Array.from(files).map((val, idx) => {
-                return { id: fileList.length + idx + 1, url: val };
-            });
-            setFileList((state) => state.concat(arr));
-        }
-    };
+    const { handleWrite } = usePostFunc();
 
-    const handleDelete = (id: number, list: any[]) => {
-        if (fileList !== []) {
-            const arr = fileList.filter((val, idx) => {
-                return val.id !== id;
-            });
-            setFileList(arr);
-        }
-        if (post?.images) {
-            const arr = fileList.filter((val, idx) => {
-                return val.id === id;
-            });
-            setDeleteFileList((prev) => prev.concat(arr));
-        }
-        console.log(fileList);
-    };
-
-    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
-        e
-    ) => {
-        e.preventDefault();
-        const {
-            contents,
-            images: { files },
-        } = e.currentTarget;
-
-        const formData = new FormData();
-        formData.append("contents", contents.value);
-        if (files) {
-            formData.append(
-                "date",
-                !post?.files ? `${Date.now()}` : post?.files
-            );
-            Array.from(files).forEach((val: any) => {
-                formData.append("images", val);
-            });
-        }
-
-        if (post?.files) {
-            formData.append("postId", `${post?.postId}`);
-            formData.append("images", JSON.stringify(deleteFileList));
-            dispatch(
-                postActionCreator.modify({
-                    postId: post?.postId,
-                    contents: contents.value,
-                })
-            );
-        } else {
-            dispatch(postActionCreator.write({ contents: contents.value }));
-        }
-        setTimeout(() => {
-            dispatch(postsActionCreator.myPosts({}));
-        }, 100);
-
-        closeFunc();
-    };
-
-    const handleUrl = (url: any) => {
-        if (typeof url === "string") return url;
-        else return obToUrl(url);
-    };
-
-    useEffect(() => {
-        document.body.style.cssText = `
-            overflow: hidden;
-            padding-right: 17px;
-        `;
-        return () => {
-            document.body.style.cssText = ``;
-        };
-    }, [fileList]);
+    const { errors, setOption, handleSubmit } = useForm({
+        initValues: {},
+        validate: writePostValidate,
+        onSubmit: (formData: any) => {
+            console.log(formData);
+            handleWrite({ ...formData, images: data });
+            closeFunc();
+        },
+    });
 
     return (
         <>
-            <Layout onSubmit={handleOnSubmit}>
+            <Layout onSubmit={handleSubmit}>
                 <TitleLayout>
                     <Text
                         text={post ? "게시글 수정" : "게시글 만들기"}
@@ -286,8 +215,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                 </UserLayout>
 
                 <TextContents
-                    name="contents"
-                    required
+                    {...setOption("contents")}
                     defaultValue={post?.contents}
                     placeholder="무슨 생각을 하고 계신가요?"
                 />
@@ -299,7 +227,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                             radius={14}
                             color={theme.color.white}
                         />
-                        {fileList.length === 0 ? (
+                        {!data || post?.images.length === 0 ? (
                             <ImageBtn htmlFor="imgOrvedio">
                                 <Text
                                     text={"사진/동영상 추가"}
@@ -329,11 +257,11 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                                     <FileButton2 htmlFor="images" />
                                 </ButtonLayout>
 
-                                {fileList.map((file, idx) => {
+                                {data?.map((file: any, idx: number) => {
                                     return (
                                         <SelectImage
-                                            key={idx}
-                                            src={handleUrl(file.url)}
+                                            key={file.id}
+                                            src={file.url}
                                         ></SelectImage>
                                     );
                                 })}
@@ -345,7 +273,7 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
                     type="file"
                     id="imgOrvedio"
                     name="images"
-                    onChange={handleImageOnChange}
+                    onChange={uploadImage}
                     multiple
                 />
                 <ImageContents onClick={imageModal.handleModal}>
@@ -363,10 +291,9 @@ export const WritePost = ({ closeFunc, setClose, post }: Props) => {
             </Layout>
             {modifyModal.modal && (
                 <ModifyPost
-                    fileList={fileList}
+                    fileList={data}
                     closeFunc={modifyModal.handleModal}
-                    deleteFunc={handleDelete}
-                    handleUrl={handleUrl}
+                    deleteFunc={deleteImage}
                 />
             )}
         </>
