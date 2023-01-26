@@ -97,8 +97,10 @@ const Profile = () => {
 
     return (
         <Layout>
-            {!check ? <ProfileTop /> : ""}
-            <Center className={check ? "fix" : ""}>
+            {/* {!check ? <ProfileTop /> : ""}
+            <Center className={check ? "fix" : ""}> */}
+            <ProfileTop />
+            <Center className={""}>
                 <MenuLayout>
                     {menuList.map((val, idx) => {
                         if (click === idx) {

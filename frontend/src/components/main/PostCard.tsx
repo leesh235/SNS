@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import theme from "../../styles/theme";
-import React, { RefObject } from "react";
+import React, { RefObject, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 //functions
@@ -10,6 +10,7 @@ import { useModal } from "../../hooks/common/useModal";
 import { usePostFunc } from "../../hooks/post/usePostFunc";
 import { getDate } from "../../utils/dateUtil";
 import { useCommentFunc } from "../../hooks/post/useCommentFunc";
+import { ListType } from "../../types/lib/post";
 //components
 import { WritePost } from "../common/card/WritePost";
 import { Text } from "../common/Text";
@@ -94,15 +95,15 @@ const Icon = styled.img<{ size: string; margin?: string }>`
     cursor: pointer;
 `;
 
-interface Props {
+interface Props extends ListType {
     postId: number;
     endView?: RefObject<HTMLDivElement> | undefined;
 }
 
-const Component = ({ postId, endView = undefined }: Props) => {
+const Component = ({ postId, type, endView = undefined }: Props) => {
     const user = useSelector((state: any) => state?.profile?.simple?.data);
 
-    const { post } = useGetDetail({ id: postId });
+    const { post } = useGetDetail({ type, id: postId });
 
     const modifyModal = useModal();
 
