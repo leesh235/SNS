@@ -51,7 +51,7 @@ export const useImageFunc = ({ type = "single", initList = [] }: Props) => {
     };
 
     useEffect(() => {
-        setFileList(data);
+        setFileList(data || []);
     }, [data]);
 
     return { data: fileList, uploadImage, removeImage, deleteImage };

@@ -20,7 +20,7 @@ export const PostList = ({ type = "allPosts" }: ListType) => {
     const target = useRef<HTMLDivElement>(null);
 
     const { loading, data, error } = useGetList({ type });
-    console.log(data);
+
     const { count } = useInfiniteScroll({
         target: target,
         targetArray: data || [],
@@ -33,7 +33,12 @@ export const PostList = ({ type = "allPosts" }: ListType) => {
         <Wrapper>
             {Object.keys(data)?.map((val: any, idx: number) => {
                 return idx === data.length - 1 ? (
-                    <PostCard key={idx} endView={target} postId={val} />
+                    <PostCard
+                        key={idx}
+                        endView={target}
+                        postId={val}
+                        type={type}
+                    />
                 ) : (
                     <PostCard key={idx} postId={val} />
                 );

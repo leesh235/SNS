@@ -227,7 +227,7 @@ export const WritePost = ({ closeFunc, post }: Props) => {
                             radius={14}
                             color={theme.color.white}
                         />
-                        {!data || post?.images.length === 0 ? (
+                        {post?.images.length === 0 || data?.length === 0 ? (
                             <ImageBtn htmlFor="imgOrvedio">
                                 <Text
                                     text={"사진/동영상 추가"}
