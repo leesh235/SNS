@@ -1,4 +1,4 @@
-import styled from "../../../styles/theme-components";
+import styled, { css } from "../../../styles/theme-components";
 //functions
 //components
 import { IntroduceCard } from "./IntroduceCard";
@@ -22,13 +22,20 @@ const Layout = styled.section`
     }
 `;
 
-const LeftLayout = styled.section`
+const LeftLayout = styled.section<{ check: boolean }>`
     width: 360px;
     display: flex;
     flex-direction: column;
     > :nth-child(n) {
         margin-bottom: 15px;
     }
+    ${(props) =>
+        props.check &&
+        css`
+            position: fixed;
+            top: 129px;
+            z-index: 0;
+        `}
 `;
 
 const RightLayout = styled.section`
@@ -58,7 +65,7 @@ export const PostPage = ({ handleUrl, check }: Props) => {
     return (
         <>
             <Layout>
-                <LeftLayout className={check ? "fix" : ""}>
+                <LeftLayout check={check}>
                     <IntroduceCard handleUrl={handleUrl} />
                     <LatestImageCard handleUrl={handleUrl} />
                     <BoxShadow>

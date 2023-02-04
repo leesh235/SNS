@@ -1,5 +1,5 @@
 import styled from "../styles/theme-components";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 //functions
@@ -35,27 +35,55 @@ const Layout = styled.main`
     }
 `;
 
-const Center = styled.section`
+const MenuLayout = styled.section`
     background-color: ${(props) => props.theme.color.white};
     width: 100%;
     height: 60px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    background-color: ${(props) => props.theme.color.white};
+    align-items: center;
 `;
 
-const MenuLayout = styled.ul`
+const LineObserver = styled.div`
+    max-width: 908px;
+    width: 100%;
+    border-top: 1px solid ${(props) => props.theme.color.lightGray};
+`;
+
+const MenuList = styled.ul`
     max-width: 908px;
     width: 100%;
     display: flex;
     flex-direction: row;
     padding-top: 3px;
-    border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
 const Menu = styled.li<{ color: string }>`
     border-bottom: 3px solid ${(props) => props.color};
+`;
+
+const ScrollLayout = styled.div`
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    top: 55px;
+    z-index: 9;
+    background-color: ${(props) => props.theme.color.white};
+`;
+
+const TopLayout = styled.div`
+    margin: 0 auto;
+    max-width: 908px;
+    width: 100%;
+    height: 100%;
+`;
+
+const TopButton = styled.button`
+    padding: 0;
+    margin: 0;
+    width: 150px;
+    height: 100%;
 `;
 
 const menuList = [
@@ -83,10 +111,15 @@ const Profile = () => {
     const { ref, check } = useObserver({ height: 450 });
 
     const [click, setClick] = useState<number>(0);
+
     const handleOnClick = ({ id }: { id: number }) => {
         setClick(id);
         navigate(`${menuUrl[id]}`, { replace: true });
         window.scrollTo({ top: 0 });
+    };
+
+    const handleTop: MouseEventHandler = (e) => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     useEffect(() => {
@@ -97,62 +130,58 @@ const Profile = () => {
 
     return (
         <Layout>
-            {!check ? <ProfileTop /> : ""}
-            <Center className={check ? "fix" : ""}>
-                <MenuLayout>
+            <ProfileTop />
+
+            {check && (
+                <ScrollLayout>
+                    <TopLayout>
+                        <TopButton type="button" onClick={handleTop}>
+                            top
+                        </TopButton>
+                    </TopLayout>
+                </ScrollLayout>
+            )}
+
+            <MenuLayout>
+                <LineObserver ref={ref} className={check ? "divH" : ""} />
+                <MenuList>
                     {menuList.map((val, idx) => {
-                        if (click === idx) {
-                            return (
-                                <Menu
-                                    id={val}
-                                    onClick={() => {
-                                        handleOnClick({ id: idx });
-                                    }}
-                                    key={idx}
-                                    color={theme.color.seaBule}
+                        return (
+                            <Menu
+                                id={val}
+                                onClick={() => {
+                                    handleOnClick({ id: idx });
+                                }}
+                                key={idx}
+                                color={
+                                    click === idx
+                                        ? theme.color.seaBule
+                                        : theme.color.white
+                                }
+                            >
+                                <IconButton
+                                    width={"auto"}
+                                    hover={!(click === idx)}
                                 >
-                                    <IconButton width={"auto"} hover={false}>
-                                        <Text
-                                            text={val}
-                                            tag={"span"}
-                                            cssObj={{
-                                                fontSize: "15px",
-                                                fontWeight: 600,
-                                                fontColor: theme.color.seaBule,
-                                            }}
-                                        />
-                                    </IconButton>
-                                </Menu>
-                            );
-                        } else {
-                            return (
-                                <Menu
-                                    id={val}
-                                    onClick={() => {
-                                        handleOnClick({ id: idx });
-                                    }}
-                                    key={idx}
-                                    color={theme.color.white}
-                                >
-                                    <IconButton width={"auto"}>
-                                        <Text
-                                            text={val}
-                                            tag={"span"}
-                                            cssObj={{
-                                                fontSize: "15px",
-                                                fontWeight: 600,
-                                                fontColor:
-                                                    theme.color.lightBlack,
-                                            }}
-                                        />
-                                    </IconButton>
-                                </Menu>
-                            );
-                        }
+                                    <Text
+                                        text={val}
+                                        tag={"span"}
+                                        cssObj={{
+                                            fontSize: "15px",
+                                            fontWeight: 600,
+                                            fontColor:
+                                                click === idx
+                                                    ? theme.color.seaBule
+                                                    : theme.color.lightBlack,
+                                        }}
+                                    />
+                                </IconButton>
+                            </Menu>
+                        );
                     })}
-                </MenuLayout>
-            </Center>
-            {/* <div ref={ref} className={check ? "divH" : ""}></div> */}
+                </MenuList>
+            </MenuLayout>
+
             {click === 0 && (
                 <PostPage handleUrl={handleOnClick} check={check} />
             )}
