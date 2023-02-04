@@ -1,15 +1,49 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/post.entity";
+import { Likes } from "../entity/likes.entity";
+import { Comment } from "../entity/comment.entity";
 
 const postRepository = dataSource.getRepository(Post);
+const likesRepository = dataSource.getRepository(Likes);
+const commentRepository = dataSource.getRepository(Comment);
 
 export const findAll = async (req: any) => {
     try {
+        const { user } = req;
+
+        const likeQb = likesRepository
+            .createQueryBuilder("likes")
+            .subQuery()
+            .select([
+                "likes.post_id AS postId",
+                "COUNT(likes.post_id) AS likeQuantity",
+            ])
+            .from(Likes, "likes")
+            .groupBy("likes.post_id")
+            .getQuery();
+
+        const commentQb = commentRepository
+            .createQueryBuilder("comment")
+            .subQuery()
+            .select([
+                "comment.post_id AS postId",
+                "COUNT(comment.post_id) AS commentQuantity",
+            ])
+            .from(Comment, "comment")
+            .groupBy("comment.post_id")
+            .getQuery();
+
         const findList = await postRepository
             .createQueryBuilder("post")
             .leftJoinAndSelect("post.user", "user")
-            .leftJoinAndSelect("post.comment", "comment")
-            .leftJoinAndSelect("post.likes", "likes")
+            .leftJoinAndSelect(
+                "post.likes",
+                "likes",
+                "likes.user_id = :email and likes.post_id = post.id",
+                { email: user.email }
+            )
+            .leftJoinAndSelect(commentQb, "comment", "post.id = comment.postId")
+            .leftJoinAndSelect(likeQb, "like", "post.id = like.postId")
             .select([
                 "post.id AS id",
                 "post.contents AS contents",
@@ -17,10 +51,10 @@ export const findAll = async (req: any) => {
                 "user.email AS userId",
                 "user.nickName AS writer",
                 "user.profileImage AS profileImage",
-                "count(comment.post_id) AS commentQuantity",
-                "count(likes.post_id) AS likeQuantity",
+                "IFNULL(comment.commentQuantity, 0) AS commentQuantity",
+                "IFNULL(like.likeQuantity, 0) AS likeQuantity",
+                "CASE WHEN likes.id IS NULL THEN false ELSE true END AS likeStatus",
             ])
-            .groupBy("comment.post_id, post.id, likes.post_id")
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 

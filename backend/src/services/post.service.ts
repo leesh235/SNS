@@ -1,7 +1,7 @@
 import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/post.entity";
-import { Likes } from "../entity/likes.entity";
 import { Files } from "../entity/files.entity";
+import { Likes } from "../entity/likes.entity";
 import { Comment } from "../entity/comment.entity";
 import { In } from "typeorm";
 
@@ -13,6 +13,7 @@ const commentRepository = dataSource.getRepository(Comment);
 export const find = async (req: any) => {
     try {
         const {
+            user,
             query: { postId },
         } = req;
 
@@ -28,7 +29,7 @@ export const find = async (req: any) => {
             .getQuery();
 
         const commentQb = commentRepository
-            .createQueryBuilder()
+            .createQueryBuilder("comment")
             .subQuery()
             .select([
                 "comment.post_id AS postId",
@@ -41,6 +42,12 @@ export const find = async (req: any) => {
         const find = await postRepository
             .createQueryBuilder("post")
             .leftJoinAndSelect("post.user", "user")
+            .leftJoinAndSelect(
+                "post.likes",
+                "likes",
+                "likes.user_id = :email and likes.post_id = post.id",
+                { email: user.email }
+            )
             .leftJoinAndSelect(commentQb, "comment", "post.id = comment.postId")
             .leftJoinAndSelect(likeQb, "like", "post.id = like.postId")
             .select([
@@ -52,14 +59,15 @@ export const find = async (req: any) => {
                 "user.profileImage AS profileImage",
                 "IFNULL(comment.commentQuantity, 0) AS commentQuantity",
                 "IFNULL(like.likeQuantity, 0) AS likeQuantity",
+                "CASE WHEN likes.id IS NULL THEN false ELSE true END AS likeStatus",
             ])
             .where("post.id = :postId ", {
                 postId: Number(postId),
             })
             .orderBy("post.create_date", "DESC")
-            .getRawMany();
+            .getRawOne();
 
-        return { ok: true, data: { ...find[0], likeStatus: false } };
+        return { ok: true, data: find };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
