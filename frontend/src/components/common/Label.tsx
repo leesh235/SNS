@@ -1,7 +1,7 @@
 import styled from "../../styles/theme-components";
 
 const Layout = styled.label<Props>`
-    width: ${(props) => `calc(${props.width} - 32px)`};
+    width: ${(props) => props.width};
     height: ${(props) => props.height};
     padding: 0 16px;
     border: none;

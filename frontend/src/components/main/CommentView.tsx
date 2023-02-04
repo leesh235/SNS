@@ -33,7 +33,7 @@ const CommentInfo = styled.div`
 const CommentContents = styled.span`
     display: flex;
     flex-direction: column;
-    max-width: calc(100% - 122px);
+    max-width: 100%;
     margin: 0 10px;
     border-radius: 15px;
     padding: 8px 12px;

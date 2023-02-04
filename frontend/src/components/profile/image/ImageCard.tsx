@@ -10,7 +10,7 @@ import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 
 const Layout = styled.div`
-    width: calc(100%-16px);
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -32,7 +32,7 @@ const MenuLayout = styled.ul`
 
 const Menu = styled.li<{ click: boolean }>`
     width: 82px;
-    height: calc(100%-3px);
+    height: 100%;
     display: flex;
     align-items: center;
     cursor: pointer;

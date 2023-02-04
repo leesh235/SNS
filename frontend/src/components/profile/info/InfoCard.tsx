@@ -23,7 +23,7 @@ const FlexLayout = styled.div`
 `;
 
 const LeftLayout = styled.div`
-    width: calc(100% - 12px);
+    width: 100%;
     height: auto;
     border-right: 1px solid ${(props) => props.theme.color.lightGray};
     padding: 16px 6px;
@@ -33,7 +33,7 @@ const LeftLayout = styled.div`
 `;
 
 const RightLayout = styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     height: auto;
     padding: 16px;
     > :nth-child(n) {

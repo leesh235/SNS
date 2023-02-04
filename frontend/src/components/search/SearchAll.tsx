@@ -4,7 +4,7 @@ import { Post } from "./Post";
 import { People } from "./People";
 
 const Wrapper = styled.section`
-    width: calc(100% - 64px);
+    width: 100%;
     height: auto;
     padding: 32px;
     display: flex;

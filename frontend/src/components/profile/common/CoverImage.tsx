@@ -26,7 +26,7 @@ const Layout = styled.article<{ cImg?: string }>`
 
 const ImageShadow = styled.div`
     max-width: 950px;
-    width: calc(100% - 60px);
+    width: 100%;
     padding: 0 30px;
     height: 68px;
     border-bottom-left-radius: 6px;
@@ -41,7 +41,7 @@ const ImageShadow = styled.div`
 `;
 
 const ImageHeader = styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     height: 60px;
     position: fixed;
     top: 56px;

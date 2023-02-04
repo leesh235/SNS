@@ -26,7 +26,7 @@ const Layout = styled.form`
 `;
 
 const FlexLayout = styled.div`
-    width: calc(100% - 32px);
+    width: c 100%;
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -37,7 +37,7 @@ const ButtonLayout = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: end;
-    width: calc(100% - 32px);
+    width: 100%;
     height: 36px;
     padding: 16px;
     margin-top: 16px;
@@ -71,7 +71,7 @@ export const CodeNumberForm = ({ onStepClick }: Props) => {
             <Text
                 text={"인증 번호 확인"}
                 cssObj={{
-                    width: "calc(100% - 32px)",
+                    width: " 100%",
                     padding: "18px 16px",
                     fontSize: "20px",
                     fontWeight: 600,
@@ -91,7 +91,7 @@ export const CodeNumberForm = ({ onStepClick }: Props) => {
 
                 <FocusInput
                     {...setOption("codeNumber")}
-                    cssObj={{ width: "calc(100% - 32px)" }}
+                    cssObj={{ width: " 100%" }}
                     placeholder={"인증 번호"}
                     error={errors.codeNumber}
                 />

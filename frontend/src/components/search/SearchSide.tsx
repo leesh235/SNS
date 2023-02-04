@@ -24,7 +24,7 @@ const Menu = styled.li<{ hover: boolean }>`
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: calc(100% - 16px);
+    width: 100%;
     height: 52px;
     border-radius: 6px;
     padding: 0 8px;

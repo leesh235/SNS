@@ -30,7 +30,7 @@ const FlexLayout = styled.article`
 `;
 
 const UserLayout = styled.div`
-    width: calc(100% - 194px);
+    width: 100%;
     height: 100%;
     margin-left: 194px;
     display: flex;

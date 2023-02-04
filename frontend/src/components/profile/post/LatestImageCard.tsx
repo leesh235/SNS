@@ -11,8 +11,7 @@ import { Text } from "../../common/Text";
 import { HoverButton } from "../../common/button/HoverButton";
 
 const Layout = styled.article`
-    width: calc(100% - 20px);
-    height: calc(auto - 20px);
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -208,7 +208,7 @@ const Component = ({ postId, type, endView = undefined }: Props) => {
                 <CommentInput
                     label={post?.id}
                     onSubmit={commentFunc.handleWrite}
-                    width={"calc(100% - 20px)"}
+                    width={"100%"}
                 />
             </Layout>
             {modifyModal.modal && (

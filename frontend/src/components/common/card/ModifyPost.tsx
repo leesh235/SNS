@@ -37,7 +37,7 @@ const Top = styled.div`
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: calc(100% - 60px) 60px;
+    grid-template-columns: 100% 60px;
     align-items: center;
     > :nth-child(1) {
         padding-left: 60px;
@@ -57,7 +57,7 @@ const CloseBtn = styled.div`
 `;
 
 const Middle = styled.div`
-    width: calc(100% - 16px);
+    width: 100%;
     min-width: 470px;
     height: auto;
     max-height: 674px;
@@ -112,7 +112,7 @@ const Bottom = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(100% - 32px);
+    width: 100%;
     height: 36px;
     margin: 0 16px;
     border-radius: 6px;

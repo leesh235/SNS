@@ -26,7 +26,7 @@ const Layout = styled.form`
 `;
 
 const FlexLayout = styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -37,7 +37,7 @@ const ButtonLayout = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: end;
-    width: calc(100% - 32px);
+    width: 100%;
     height: 36px;
     padding: 16px;
     margin-top: 16px;
@@ -74,7 +74,7 @@ export const ModifyPwForm = ({ onStepClick }: Props) => {
             <Text
                 text={"비밀번호 변경"}
                 cssObj={{
-                    width: "calc(100% - 32px)",
+                    width: "100%",
                     padding: "18px 16px",
                     fontSize: "20px",
                     fontWeight: 600,
@@ -93,7 +93,7 @@ export const ModifyPwForm = ({ onStepClick }: Props) => {
                 />
                 <FocusInput
                     {...setOption("password")}
-                    cssObj={{ width: "calc(100% - 32px)" }}
+                    cssObj={{ width: "100%" }}
                     placeholder={"새 비밀번호"}
                     error={errors.password}
                 />

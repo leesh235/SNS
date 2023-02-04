@@ -40,7 +40,7 @@ const Middle = styled.article`
 `;
 
 const Bottom = styled.article`
-    width: calc(100% - 32px);
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -51,7 +51,7 @@ const Bottom = styled.article`
 
 const PostView = styled.div`
     padding: 16px 16px 12px 16px;
-    width: calc(100% - 32px);
+    width: 100%;
     min-height: 101px;
     height: auto;
     display: flex;

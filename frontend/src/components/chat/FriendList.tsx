@@ -6,7 +6,7 @@ import { Avatar } from "../common/Image/Avatar";
 import { Text } from "../common/Text";
 
 const Layout = styled.div`
-    width: calc(100% - 20px);
+    width: 100%;
     min-height: 157px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -16,7 +16,7 @@ const Layout = styled.div`
 `;
 
 const List = styled.div`
-    width: calc(100% - 10px);
+    width: 100%;
     height: 38px;
     display: flex;
     flex-direction: row;

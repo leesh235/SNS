@@ -18,7 +18,7 @@ const Layout = styled.article`
 `;
 
 const Title = styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     height: 48px;
     padding: 16px;
     border-bottom: 1px solid ${(props) => props.theme.color.gray};
@@ -36,7 +36,7 @@ const UserImage = styled.img`
 `;
 
 const Contents = styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     padding: 16px;
 `;
 

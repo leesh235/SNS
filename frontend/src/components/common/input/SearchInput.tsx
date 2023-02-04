@@ -25,8 +25,7 @@ const Icon = styled.div`
 `;
 
 const Input = styled.input<StyleProps>`
-    width: ${(props) =>
-        props.focus ? " calc(100% - 28px);" : " calc(100% - 40px);"};
+    width: 100%;
     height: 100%;
     border: 0;
     border-top-right-radius: 50px;

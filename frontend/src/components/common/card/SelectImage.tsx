@@ -17,7 +17,7 @@ const Layout = styled.section`
 `;
 
 const Top = styled.article`
-    width: calc(100% - 60px);
+    width: 100%;
     height: 59px;
     border-bottom: 1px solid ${(props) => props.theme.color.gray};
     padding: 0 0 0 60px;
@@ -50,7 +50,7 @@ const MenuLayout = styled.div`
 
 const Menu = styled.div<{ color?: string }>`
     width: 258px;
-    height: calc(100% - 4px);
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

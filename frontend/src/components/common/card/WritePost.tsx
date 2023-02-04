@@ -49,7 +49,7 @@ const TitleLayout = styled.article`
 `;
 
 const UserLayout = styled.article`
-    width: calc(100% - 32px);
+    width: 100%;
     height: 40px;
     padding: 16px 0;
     margin: 0 16px;
@@ -59,7 +59,7 @@ const UserLayout = styled.article`
 `;
 
 const TextContents = styled.textarea`
-    width: calc(100% - 32px);
+    width: 100%;
     height: 154px;
     padding: 0 16px;
     border: 0;
@@ -73,7 +73,7 @@ const TextContents = styled.textarea`
 `;
 
 const ImageContents = styled.div`
-    width: calc(100% - 48px);
+    width: 100%;
     height: 40px;
     margin: 16px;
     padding: 8px;
@@ -283,7 +283,7 @@ export const WritePost = ({ closeFunc, post }: Props) => {
                     text={post ? "저장" : "게시"}
                     type="submit"
                     cssObj={{
-                        width: "calc(100% - 32px)",
+                        width: "100%",
                         fontSize: "15px",
                         height: "36px",
                     }}

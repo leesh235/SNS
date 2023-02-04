@@ -19,8 +19,8 @@ const Wrapper = styled.main`
 `;
 
 const FlexWrapper = styled.section`
-    width: calc(100% - 72px);
-    min-height: calc(100% - 60px);
+    width: 100%;
+    min-height: 100%;
     padding: 40px 36px 20px 36px;
 `;
 

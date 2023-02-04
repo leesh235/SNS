@@ -1,8 +1,8 @@
 import styled from "../../../styles/theme-components";
 
 const Input = styled.input<StyleProps>`
-    width: ${(props) => `calc(${props.width} - 24px)`};
-    height: ${(props) => `calc(${props.height} - 16px)`};
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
     padding: 8px 12px;
     border: 0;
     border-radius: 50px;

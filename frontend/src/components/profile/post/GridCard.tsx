@@ -27,7 +27,7 @@ const ImageLayout = styled.div<{ image: string }>`
 `;
 
 const ContentsLayout = styled.div`
-    width: calc(100% - 16px);
+    width: 100%;
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -36,7 +36,7 @@ const ContentsLayout = styled.div`
 `;
 
 const Contents = styled.div`
-    width: calc(100% - 40px);
+    width: 100%;
     height: 100%;
     margin-left: 10px;
     display: flex;

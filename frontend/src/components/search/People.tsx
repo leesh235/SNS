@@ -9,7 +9,7 @@ import { Text } from "../common/Text";
 
 const Layout = styled.article`
     max-width: 648px;
-    width: calc(100% - 32px);
+    width: 100%;
     height: auto;
     padding: 16px;
     display: flex;

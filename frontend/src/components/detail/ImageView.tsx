@@ -13,7 +13,7 @@ const Layout = styled.section`
 `;
 
 const Top = styled.div`
-    width: calc(100% - 40px);
+    width: 100%;
     height: 56px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30px, auto));
@@ -25,8 +25,8 @@ const Top = styled.div`
 `;
 
 const Contents = styled.article`
-    width: calc(100% - 40px);
-    height: calc(100% - 112px);
+    width: 100%;
+    height: 100%;
     padding: 0 20px 56px 20px;
     display: flex;
     align-items: center;

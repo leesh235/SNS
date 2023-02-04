@@ -130,7 +130,7 @@ const ButtonLayout = styled.div<{ color: string }>`
 `;
 
 const SeeMoreLayout = styled.div`
-    width: calc(200px - 30px);
+    width: 100%;
     height: auto;
     padding: 15px;
     border-radius: 8px;

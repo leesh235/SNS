@@ -8,7 +8,7 @@ import { authActionCreator } from "../../../modules/action/auth";
 import { HoverButton } from "../button/HoverButton";
 
 const Wrapper = styled.div`
-    width: calc(200px - 30px);
+    width: 200px;
     height: auto;
     padding: 15px;
     border-radius: 8px;

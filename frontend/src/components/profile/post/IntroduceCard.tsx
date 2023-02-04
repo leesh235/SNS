@@ -40,7 +40,7 @@ const FlexLayout = styled.div`
 `;
 
 const IntroduceInput = styled.textarea`
-    width: calc(100% - 24px);
+    width: 100%;
     height: 60px;
     padding: 8px 12px;
     border: 1px solid ${(props) => props.theme.color.lightGray};

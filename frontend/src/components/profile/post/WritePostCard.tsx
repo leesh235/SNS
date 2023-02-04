@@ -12,7 +12,7 @@ import { WritePost } from "../../common/card/WritePost";
 import { ModalLayout } from "../../common/styles/ModalLayout";
 
 const FlexLayout = styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     height: auto;
     padding: 12px 16px 10px 16px;
 `;

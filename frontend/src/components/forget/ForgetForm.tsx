@@ -26,7 +26,7 @@ const Layout = styled.form`
 `;
 
 const FlexLayout = styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -37,7 +37,7 @@ const ButtonLayout = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: end;
-    width: calc(100% - 32px);
+    width: 100%;
     height: 36px;
     padding: 16px;
     margin-top: 16px;
@@ -68,7 +68,7 @@ export const ForgetForm = ({ onStepClick }: Props) => {
             <Text
                 text={"내 계정 찾기"}
                 cssObj={{
-                    width: "calc(100% - 32px)",
+                    width: "100%",
                     padding: "18px 16px",
                     fontSize: "20px",
                     fontWeight: 600,
@@ -87,7 +87,7 @@ export const ForgetForm = ({ onStepClick }: Props) => {
                 />
                 <FocusInput
                     {...setOption("email")}
-                    cssObj={{ width: "calc(100% - 32px)" }}
+                    cssObj={{ width: "100%" }}
                     placeholder={"이메일 또는 전화번호"}
                     error={errors.email}
                 />

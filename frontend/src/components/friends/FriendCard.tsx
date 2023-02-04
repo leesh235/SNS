@@ -31,8 +31,8 @@ const ImageLayout = styled.img`
 const UserInfo = styled.div`
     min-width: 166px;
     max-height: 128px;
-    width: calc(100% - 24px);
-    height: calc(100% - 24px);
+    width: 100%;
+    height: 100%;
     border-radius: 8px;
     padding: 12px;
     display: flex;
