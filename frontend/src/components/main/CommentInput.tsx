@@ -23,8 +23,8 @@ const Icon = styled.img`
 `;
 
 const Input = styled.input`
-    width: calc(100% - 24px);
-    height: calc(100% - 16px);
+    width: 100%;
+    height: 100%;
     padding: 8px 12px;
     border: 0;
     border-radius: 50px;

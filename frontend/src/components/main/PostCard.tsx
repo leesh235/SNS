@@ -23,7 +23,7 @@ import { CommentList } from "./CommentList";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Layout = styled.article`
-    width: calc(100% -20px);
+    width: 100%;
     max-width: 590px;
     height: auto;
     padding: 10px;

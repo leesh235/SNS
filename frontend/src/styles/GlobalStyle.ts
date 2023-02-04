@@ -4,11 +4,11 @@ import reset from "styled-reset";
 const GlobalStyle = createGlobalStyle`
     ${reset}
     * {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;  
     }
     body {
-        box-sizing: border-box;
         background-color: white;
     }
     main{
