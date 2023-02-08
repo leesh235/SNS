@@ -2,6 +2,7 @@ import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/post.entity";
 import { Likes } from "../entity/likes.entity";
 import { Comment } from "../entity/comment.entity";
+import { Not } from "typeorm";
 
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
@@ -58,12 +59,23 @@ export const findAll = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
+        const imageList = await postRepository.find({
+            relations: { files: true },
+            where: { deletedAt: undefined, files: { post: Not(undefined) } },
+            select: {
+                id: true,
+                files: { id: true, imageUrl: true },
+            },
+        });
+
         const result: any = {};
 
-        findList.forEach(
-            (val) =>
-                (result[val.id] = { ...val, likeStatus: false, images: [] })
-        );
+        findList.forEach((val) => {
+            let images: any[] = [];
+            if (imageList)
+                images = imageList.filter((img) => img.id === val.id);
+            return (result[val.id] = { ...val, images });
+        });
 
         return { ok: true, data: result };
     } catch (error) {
@@ -126,7 +138,25 @@ export const findMy = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        return { ok: true, data: findList };
+        const imageList = await postRepository.find({
+            relations: { files: true },
+            where: { deletedAt: undefined, files: { post: Not(undefined) } },
+            select: {
+                id: true,
+                files: { id: true, imageUrl: true },
+            },
+        });
+
+        const result: any = {};
+
+        findList.forEach((val) => {
+            let images: any[] = [];
+            if (imageList)
+                images = imageList.filter((img) => img.id === val.id);
+            return (result[val.id] = { ...val, images });
+        });
+
+        return { ok: true, data: result };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
