@@ -78,34 +78,55 @@ export const findMy = async (req: any) => {
             user: { email },
         } = req;
 
+        const likeQb = likesRepository
+            .createQueryBuilder("likes")
+            .subQuery()
+            .select([
+                "likes.post_id AS postId",
+                "COUNT(likes.post_id) AS likeQuantity",
+            ])
+            .from(Likes, "likes")
+            .groupBy("likes.post_id")
+            .getQuery();
+
+        const commentQb = commentRepository
+            .createQueryBuilder("comment")
+            .subQuery()
+            .select([
+                "comment.post_id AS postId",
+                "COUNT(comment.post_id) AS commentQuantity",
+            ])
+            .from(Comment, "comment")
+            .groupBy("comment.post_id")
+            .getQuery();
+
         const findList = await postRepository
             .createQueryBuilder("post")
             .leftJoinAndSelect("post.user", "user")
-            .leftJoinAndSelect("post.comment", "comment")
-            .leftJoinAndSelect("post.likes", "likes")
+            .leftJoinAndSelect(
+                "post.likes",
+                "likes",
+                "likes.user_id = :email and likes.post_id = post.id",
+                { email }
+            )
+            .leftJoinAndSelect(commentQb, "comment", "post.id = comment.postId")
+            .leftJoinAndSelect(likeQb, "like", "post.id = like.postId")
             .select([
                 "post.id AS id",
                 "post.contents AS contents",
                 "post.create_date AS createAt",
-                "user.email AS email",
-                "user.nickName AS nickName",
+                "user.email AS userId",
+                "user.nickName AS writer",
                 "user.profileImage AS profileImage",
-                "count(comment.post_id) AS commentQuantity",
-                "count(likes.post_id) AS likeQuantity",
+                "IFNULL(comment.commentQuantity, 0) AS commentQuantity",
+                "IFNULL(like.likeQuantity, 0) AS likeQuantity",
+                "CASE WHEN likes.id IS NULL THEN false ELSE true END AS likeStatus",
             ])
             .where("post.writer = :email", { email })
-            .groupBy("comment.post_id, post.id, likes.post_id")
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        const result: any = {};
-
-        findList.forEach(
-            (val) =>
-                (result[val.id] = { ...val, likeStatus: false, images: [] })
-        );
-
-        return { ok: true, data: result };
+        return { ok: true, data: findList };
     } catch (error) {
         console.log(error);
         return { ok: false, data: error };
