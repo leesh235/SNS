@@ -1,13 +1,22 @@
-import { createPromise } from "../../utils/asyncUtils";
+import {
+    createPromise,
+    createMultiPromise,
+    createMetaPromise,
+} from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
 import { postApi } from "../../lib/index";
 import { postAction } from "../action/post";
+import { postsApi } from "../../lib/index";
 
 const detail = createPromise(postAction.detail, postApi.post);
-const write = createPromise(postAction.write, postApi.write);
-const modify = createPromise(postAction.modify, postApi.modify);
-const delete_ = createPromise(postAction.delete, postApi.remove);
-const like = createPromise(postAction.like, postApi.like);
+const write = createMultiPromise(
+    postAction.write,
+    postApi.write,
+    postsApi.myPosts
+);
+const modify = createMetaPromise(postAction.modify, postApi.modify);
+const delete_ = createMetaPromise(postAction.delete, postApi.remove);
+const like = createMetaPromise(postAction.like, postApi.like);
 
 export function* postSaga() {
     yield takeEvery(postAction.detail, detail);

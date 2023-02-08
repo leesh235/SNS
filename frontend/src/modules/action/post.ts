@@ -27,16 +27,18 @@ export const postActionCreator = {
             data,
         };
     },
-    modify: (data: MpdifyPost) => {
+    modify: (data: MpdifyPost, meta: { id: number }) => {
         return {
             type: postAction.modify,
             data,
+            meta,
         };
     },
-    delete: (data: DeletePost) => {
+    delete: (data: DeletePost, meta: { id: number }) => {
         return {
             type: postAction.delete,
             data,
+            meta,
         };
     },
     like: (data: Like) => {
