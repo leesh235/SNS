@@ -16,7 +16,7 @@ export const usePostFunc = (postId?: number) => {
                 "휴지통으로 보내시겠습니까?(30일 후에 영구 삭제됩니다.)"
             )
         )
-            dispatch(postActionCreator.delete({ postId }));
+            dispatch(postActionCreator.delete({ postId }, { id: postId }));
     }, [dispatch]);
 
     const handleWrite = useCallback(

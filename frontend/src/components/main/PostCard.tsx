@@ -100,10 +100,13 @@ interface Props extends ListType {
     endView?: RefObject<HTMLDivElement> | undefined;
 }
 
-const Component = ({ postId, type, endView = undefined }: Props) => {
+const Component = ({
+    postId,
+    type = "allPosts",
+    endView = undefined,
+}: Props) => {
     const user = useSelector((state: any) => state?.profile?.simple?.data);
-
-    const { post } = useGetDetail({ type, id: postId });
+    const post = useSelector((state: any) => state.post[type][postId]);
 
     const modifyModal = useModal();
 
@@ -163,11 +166,11 @@ const Component = ({ postId, type, endView = undefined }: Props) => {
                             margin: "0 16px",
                         }}
                     />
-                    {post.images?.length !== 0 && (
+                    {/* {post.images?.length !== 0 && (
                         <ImageLayout
-                            post={{ postId: post.postId, images: post.images }}
+                            post={{ postId: postId, images: post.images }}
                         />
-                    )}
+                    )} */}
                 </Contents>
 
                 <Quantity>
@@ -203,10 +206,10 @@ const Component = ({ postId, type, endView = undefined }: Props) => {
                     <HoverButton text={"공유하기"} />
                 </ButtonLayout>
 
-                <CommentList postId={post?.id} />
+                <CommentList postId={postId} />
 
                 <CommentInput
-                    label={post?.id}
+                    label={`${postId}`}
                     onSubmit={commentFunc.handleWrite}
                     width={"100%"}
                 />

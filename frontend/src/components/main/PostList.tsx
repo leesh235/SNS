@@ -1,5 +1,6 @@
 import styled from "../../styles/theme-components";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 //functions
 import { useInfiniteScroll } from "../../hooks/common/useInfiniteScroll";
 import { useGetList } from "../../hooks/common/useGetList";
@@ -28,6 +29,8 @@ export const PostList = ({ type = "allPosts" }: ListType) => {
         pageSize: 4,
     });
 
+    useEffect(() => {}, []);
+
     if (!data) return <div>게시글이 없습니다</div>;
     return (
         <Wrapper>
@@ -40,7 +43,7 @@ export const PostList = ({ type = "allPosts" }: ListType) => {
                         type={type}
                     />
                 ) : (
-                    <PostCard key={idx} postId={val} />
+                    <PostCard key={idx} postId={val} type={type} />
                 );
             })}
         </Wrapper>

@@ -6,9 +6,13 @@ import { ListType } from "../../types/lib/post";
 export const useGetList = ({ type = "allPosts" }: ListType) => {
     const dispatch = useDispatch();
 
-    const { loading, data, error } = useSelector(
-        (state: any) => state.post[type]
-    );
+    const { loading, data, error } = useSelector((state: any) => {
+        return {
+            loading: state.post.loading,
+            data: state.post[type],
+            error: state.post.error,
+        };
+    });
 
     useEffect(() => {
         if (type === "myPosts") dispatch(postsActionCreator.myPosts({}));
