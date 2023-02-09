@@ -15,11 +15,8 @@ export const useGetList = ({ type = "allPosts" }: ListType) => {
     });
 
     useEffect(() => {
-        if (type === "myPosts") dispatch(postsActionCreator.myPosts({}));
-        if (type === "likePosts") dispatch(postsActionCreator.likePosts({}));
-        if (type === "friendsPosts")
-            dispatch(postsActionCreator.friendsPosts({}));
-        else dispatch(postsActionCreator.allPosts({}));
+        if (!type) return;
+        dispatch(postsActionCreator[type]({}));
     }, [dispatch]);
 
     return { loading, data, error };

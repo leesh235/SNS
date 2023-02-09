@@ -1,10 +1,7 @@
 import styled from "../../styles/theme-components";
-import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 //functions
-import { useInfiniteScroll } from "../../hooks/common/useInfiniteScroll";
-import { useGetList } from "../../hooks/common/useGetList";
 import { ListType } from "../../types/lib/post";
+import { useGetPosts } from "../../hooks/post/useGetPosts";
 //components
 import { PostCard } from "./PostCard";
 
@@ -18,34 +15,16 @@ const Wrapper = styled.section`
 `;
 
 export const PostList = ({ type = "allPosts" }: ListType) => {
-    const target = useRef<HTMLDivElement>(null);
+    const { target, data } = useGetPosts({ type });
 
-    const { loading, data, error } = useGetList({ type });
-
-    const { count } = useInfiniteScroll({
-        target: target,
-        targetArray: data || [],
-        threshold: 1,
-        pageSize: 4,
-    });
-
-    useEffect(() => {}, []);
-
-    if (!data) return <div>게시글이 없습니다</div>;
+    if (Object.keys(data).length === 0)
+        return <div ref={target}>게시글이 없습니다</div>;
     return (
         <Wrapper>
-            {Object.keys(data)?.map((val: any, idx: number) => {
-                return idx === data.length - 1 ? (
-                    <PostCard
-                        key={idx}
-                        endView={target}
-                        postId={val}
-                        type={type}
-                    />
-                ) : (
-                    <PostCard key={idx} postId={val} type={type} />
-                );
-            })}
+            {Object.keys(data)?.map((val: any, idx: number) => (
+                <PostCard key={idx} postId={val} type={type} />
+            ))}
+            <div ref={target}></div>
         </Wrapper>
     );
 };
