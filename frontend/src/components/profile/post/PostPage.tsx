@@ -9,42 +9,72 @@ import { Text } from "../../common/Text";
 import { LatestImageCard } from "./LatestImageCard";
 
 const Layout = styled.section`
-    width: 908px;
+    width: 100%;
     padding: 0 16px;
     margin-top: 16px;
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    column-gap: 16px;
-    .fix {
-        position: fixed;
-        top: 142px;
-        z-index: 1;
-    }
+    ${(props) =>
+        props.theme.media.desktop(`
+        max-width: 908px;
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        column-gap: 16px;
+    `)}
+    ${(props) =>
+        props.theme.media.mobile(`
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+    `)}
 `;
 
-const LeftLayout = styled.section<{ check: boolean }>`
-    width: 360px;
+const FixLayout = styled.span<{ check: boolean }>`
+    width: 100%;
     display: flex;
     flex-direction: column;
     > :nth-child(n) {
         margin-bottom: 15px;
     }
     ${(props) =>
-        props.check &&
-        css`
-            position: fixed;
-            top: 129px;
-            z-index: 0;
-        `}
+        props.theme.media.desktop(`
+        ${
+            props.check &&
+            css`
+                width: 360px;
+                position: fixed;
+                top: 129px;
+                z-index: 0;
+            `
+        }
+    `)}
+`;
+
+const LeftLayout = styled.section`
+    ${(props) =>
+        props.theme.media.desktop(`
+        width: 360px;
+    `)}
+    ${(props) =>
+        props.theme.media.mobile(`
+        width: 80vw;
+        display: flex;
+        flex-direction: column;
+    `)}
 `;
 
 const RightLayout = styled.section`
-    width: 500px;
     display: flex;
     flex-direction: column;
     > :nth-child(1) {
         margin-bottom: 15px;
     }
+    ${(props) =>
+        props.theme.media.desktop(`
+        width: 500px;
+    `)}
+    ${(props) =>
+        props.theme.media.mobile(`
+        width: 80vw;
+    `)}
 `;
 
 const FlexLayout = styled.div`
@@ -65,23 +95,24 @@ export const PostPage = ({ handleUrl, check }: Props) => {
     return (
         <>
             <Layout>
-                <LeftLayout check={check}>
-                    <IntroduceCard handleUrl={handleUrl} />
-                    <LatestImageCard handleUrl={handleUrl} />
-                    <BoxShadow>
-                        <FlexLayout>
-                            <Text
-                                text={"친구"}
-                                tag={"span"}
-                                cssObj={{
-                                    fontSize: "20px",
-                                    fontWeight: 700,
-                                }}
-                            />
-                        </FlexLayout>
-                    </BoxShadow>
+                <LeftLayout>
+                    <FixLayout check={check}>
+                        <IntroduceCard handleUrl={handleUrl} />
+                        <LatestImageCard handleUrl={handleUrl} />
+                        <BoxShadow>
+                            <FlexLayout>
+                                <Text
+                                    text={"친구"}
+                                    tag={"span"}
+                                    cssObj={{
+                                        fontSize: "20px",
+                                        fontWeight: 700,
+                                    }}
+                                />
+                            </FlexLayout>
+                        </BoxShadow>
+                    </FixLayout>
                 </LeftLayout>
-                {check && <div style={{ width: "360px" }}></div>}
                 <RightLayout>
                     <WritePostCard />
                     <PostSection />

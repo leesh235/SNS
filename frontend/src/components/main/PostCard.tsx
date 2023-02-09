@@ -24,8 +24,6 @@ import { CommentList } from "./CommentList";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Layout = styled.article`
-    width: 100%;
-    max-width: 590px;
     height: auto;
     padding: 10px;
     border-radius: 8px;
@@ -34,6 +32,15 @@ const Layout = styled.article`
     display: flex;
     flex-direction: column;
     align-items: center;
+    ${(props) =>
+        props.theme.media.desktop(`
+        width: 100%;
+        max-width: 590px;
+    `)}
+    ${(props) =>
+        props.theme.media.mobile(`
+        width: 80vw;
+    `)}
 `;
 
 const WriterInfo = styled.div`

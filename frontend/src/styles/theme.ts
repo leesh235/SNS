@@ -6,7 +6,7 @@ import baseStyled, {
 
 const sizes: { [key: string]: number } = {
     mobile: 480,
-    desktop: 1024,
+    desktop: 930,
 };
 
 type BackQuoteArgs = string[];
@@ -32,7 +32,7 @@ Object.keys(sizes).reduce((acc: Media, label: string) => {
             break;
         case "mobile":
             acc.mobile = (...args: BackQuoteArgs) => css`
-                @media only screen and (max-width: ${sizes.desktop}) {
+                @media only screen and (max-width: ${sizes.desktop - 1}px) {
                     ${args}
                 }
             `;
