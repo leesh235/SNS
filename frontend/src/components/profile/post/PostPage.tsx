@@ -13,14 +13,14 @@ const Layout = styled.section`
     padding: 0 16px;
     margin-top: 16px;
     ${(props) =>
-        props.theme.media.desktop(`
+        props.theme.media.mobileU(`
         max-width: 908px;
         display: grid;
         grid-template-columns: repeat(2, auto);
         column-gap: 16px;
     `)}
     ${(props) =>
-        props.theme.media.mobile(`
+        props.theme.media.mobileD(`
         display: flex;
         flex-direction: column;
         align-items:center;
@@ -35,7 +35,7 @@ const FixLayout = styled.span<{ check: boolean }>`
         margin-bottom: 15px;
     }
     ${(props) =>
-        props.theme.media.desktop(`
+        props.theme.media.mobileU(`
         ${
             props.check &&
             css`
@@ -50,11 +50,11 @@ const FixLayout = styled.span<{ check: boolean }>`
 
 const LeftLayout = styled.section`
     ${(props) =>
-        props.theme.media.desktop(`
+        props.theme.media.mobileU(`
         width: 360px;
     `)}
     ${(props) =>
-        props.theme.media.mobile(`
+        props.theme.media.mobileD(`
         width: 80vw;
         display: flex;
         flex-direction: column;
@@ -68,11 +68,11 @@ const RightLayout = styled.section`
         margin-bottom: 15px;
     }
     ${(props) =>
-        props.theme.media.desktop(`
+        props.theme.media.mobileU(`
         width: 500px;
     `)}
     ${(props) =>
-        props.theme.media.mobile(`
+        props.theme.media.mobileD(`
         width: 80vw;
     `)}
 `;

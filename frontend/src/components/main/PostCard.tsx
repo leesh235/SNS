@@ -33,12 +33,12 @@ const Layout = styled.article`
     flex-direction: column;
     align-items: center;
     ${(props) =>
-        props.theme.media.desktop(`
+        props.theme.media.mobileU(`
         width: 100%;
         max-width: 590px;
     `)}
     ${(props) =>
-        props.theme.media.mobile(`
+        props.theme.media.mobileD(`
         width: 80vw;
     `)}
 `;

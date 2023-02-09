@@ -17,11 +17,11 @@ const Layout = styled.div`
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     padding: 10px;
     ${(props) =>
-        props.theme.media.desktop(`
+        props.theme.media.mobileU(`
             width: 100%;
     `)}
     ${(props) =>
-        props.theme.media.mobile(`
+        props.theme.media.mobileD(`
             width: 90vw;         
         `)}
 `;
