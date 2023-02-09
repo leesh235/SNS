@@ -148,4 +148,4 @@ const Component = ({ value, user }: Props) => {
     );
 };
 
-export const CommentView = React.memo(Component);
+export const Comment = React.memo(Component);

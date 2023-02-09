@@ -34,9 +34,6 @@ const Layout = styled.article`
     display: flex;
     flex-direction: column;
     align-items: center;
-    > :nth-last-child(1) {
-        margin: 10px 0;
-    }
 `;
 
 const WriterInfo = styled.div`
@@ -72,7 +69,7 @@ const ButtonLayout = styled.div`
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
     justify-items: center;
-    margin: 0 10px;
+    margin: 10px;
     border-top: 1px solid ${(props) => props.theme.color.lightGray};
     border-bottom: 1px solid ${(props) => props.theme.color.lightGray};
 `;

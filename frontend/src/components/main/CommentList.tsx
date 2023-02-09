@@ -1,56 +1,32 @@
 import styled from "../../styles/theme-components";
 import { useSelector } from "react-redux";
 //functions
-import { getDate } from "../../utils/dateUtil";
-import { useModal } from "../../hooks/common/useModal";
-import { useCommentFunc } from "../../hooks/post/useCommentFunc";
 import { useGetComment } from "../../hooks/post/useGetComment";
+import { useModal } from "../../hooks/common/useModal";
 //components
-import { Avatar } from "../common/Image/Avatar";
-import { Text } from "../common/Text";
-import { SeeMoreLayout } from "../common/SeeMoreLayout";
-import { HoverButton } from "../common/button/HoverButton";
-import { CommentView } from "./CommentView";
+import { Comment } from "./Comment";
 
-const Layout = styled.section<{ display: string }>`
+const Layout = styled.section`
     width: 100%;
     height: auto;
-    padding: 10px 0;
-    display: ${(props) => props.display};
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 `;
 
-const CommentLayout = styled.article`
+const CommentView = styled.ul`
     width: 100%;
-    min-height: 70px;
     height: auto;
     display: flex;
     flex-direction: column;
 `;
 
-const CommentInfo = styled.span`
-    display: flex;
-    margin-bottom: 3px;
-    > :nth-child(3) {
-        align-self: center;
-    }
-`;
-
-const CommentContents = styled.span`
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    padding: 8px 12px;
-    background-color: ${(props) => props.theme.color.gray};
-    > :nth-child(1) {
-        margin-bottom: 5px;
-    }
-`;
-
-const CommentFunc = styled.span`
-    padding: 0 0 0 42px;
+const CommentButton = styled.span`
     width: auto;
-    color: ${(props) => props.theme.color.lightBlack};
-    font-size: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
 `;
 
 interface Props {
@@ -60,14 +36,24 @@ interface Props {
 export const CommentList = ({ postId }: Props) => {
     const user = useSelector((state: any) => state.profile.simple?.data);
 
+    const { modal, handleModal } = useModal();
+
     const { loading, data, error } = useGetComment(postId);
 
-    if (!data) return <></>;
+    if (Object.keys(data).length === 0) return <></>;
     return (
-        <Layout display={Object.keys(data).length === 0 ? "none" : "block"}>
-            {Object.keys(data)?.map((val: any) => (
-                <CommentView key={val} value={data[val]} user={user} />
-            ))}
+        <Layout>
+            {!modal ? (
+                <CommentButton onClick={handleModal}>답글보기</CommentButton>
+            ) : (
+                <>
+                    <CommentView>
+                        {Object.keys(data)?.map((val: any) => (
+                            <Comment key={val} value={data[val]} user={user} />
+                        ))}
+                    </CommentView>
+                </>
+            )}
         </Layout>
     );
 };
