@@ -10,7 +10,10 @@ const commentRepository = dataSource.getRepository(Comment);
 
 export const findAll = async (req: any) => {
     try {
-        const { user } = req;
+        const {
+            user,
+            query: { take },
+        } = req;
 
         const likeQb = likesRepository
             .createQueryBuilder("likes")
@@ -56,6 +59,7 @@ export const findAll = async (req: any) => {
                 "IFNULL(like.likeQuantity, 0) AS likeQuantity",
                 "CASE WHEN likes.id IS NULL THEN false ELSE true END AS likeStatus",
             ])
+            .limit(Number(take))
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
@@ -88,6 +92,7 @@ export const findMy = async (req: any) => {
     try {
         const {
             user: { email },
+            query: { take },
         } = req;
 
         const likeQb = likesRepository
@@ -135,6 +140,7 @@ export const findMy = async (req: any) => {
                 "CASE WHEN likes.id IS NULL THEN false ELSE true END AS likeStatus",
             ])
             .where("post.writer = :email", { email })
+            .limit(Number(take))
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
