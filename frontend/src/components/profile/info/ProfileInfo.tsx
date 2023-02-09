@@ -4,11 +4,11 @@ import { QuestionCard } from "./QuestionCard";
 import { LikeCard } from "./LikeCard";
 
 const Wrapper = styled.section`
-    width: 908px;
-    height: 100vh;
+    width: 90%;
     margin-top: 16px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     > :nth-child(n) {
         margin-bottom: 15px;
     }

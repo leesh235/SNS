@@ -6,7 +6,6 @@ import theme from "../../../styles/theme";
 import { useGetInformation } from "../../../hooks/profile/useGetInfo";
 import { useGetProfile } from "../../../hooks/profile/useGetProfile";
 //functions
-import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 import { IconButton } from "../../common/button/IconButton";
 import { Ability } from "./Ability";
@@ -15,21 +14,43 @@ import { University } from "./University";
 import { Address } from "./Address";
 import { Number } from "./Number";
 
-const FlexLayout = styled.div`
-    width: 100%;
-    height: auto;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+const Layout = styled.div`
+    border-radius: 8px;
+    background-color: ${(props) => props.theme.color.white};
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    padding: 8px;
+    ${(props) =>
+        props.theme.media.desktop(`
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1px 2fr;
+    `)}
+    ${(props) =>
+        props.theme.media.mobile(`
+            width: 90vw;
+            display: column;
+           
+        `)}
 `;
 
 const LeftLayout = styled.div`
     width: 100%;
     height: auto;
-    border-right: 1px solid ${(props) => props.theme.color.lightGray};
     padding: 16px 6px;
     > :nth-child(n + 1) {
         margin-bottom: 10px;
     }
+`;
+
+const Line = styled.div`
+    ${(props) =>
+        props.theme.media.desktop(`
+            border-right: 1px solid ${props.theme.color.lightGray};
+    `)}
+    ${(props) =>
+        props.theme.media.mobile(`
+            border-bottom: 1px solid ${props.theme.color.lightGray}; 
+        `)}
 `;
 
 const RightLayout = styled.div`
@@ -66,67 +87,66 @@ export const InfoCard = () => {
     useEffect(() => {}, [location]);
 
     return (
-        <BoxShadow tag={"article"} padding={"0"}>
-            <FlexLayout>
-                <LeftLayout>
-                    <Text
-                        text={"정보"}
-                        tag={"span"}
-                        cssObj={{
-                            fontSize: "20px",
-                            fontWeight: 700,
-                            margin: "0 10px 20px 10px",
-                        }}
-                    />
-                    {menuList.map((val, idx) => {
-                        return (
-                            <IconButton
-                                width={"100%"}
-                                height={"35px"}
-                                key={idx}
-                                onClick={() => {
-                                    handleOnClick(idx);
+        <Layout>
+            <LeftLayout>
+                <Text
+                    text={"정보"}
+                    tag={"span"}
+                    cssObj={{
+                        fontSize: "20px",
+                        fontWeight: 700,
+                        margin: "0 10px 20px 10px",
+                    }}
+                />
+                {menuList.map((val, idx) => {
+                    return (
+                        <IconButton
+                            width={"100%"}
+                            height={"35px"}
+                            key={idx}
+                            onClick={() => {
+                                handleOnClick(idx);
+                            }}
+                            color={
+                                idx === select
+                                    ? "rgb(231, 243, 255)"
+                                    : theme.color.white
+                            }
+                            hover={idx !== select}
+                        >
+                            <Text
+                                text={val}
+                                cssObj={{
+                                    fontSize: "15px",
+                                    fontWeight: 600,
+                                    fontColor:
+                                        idx === select
+                                            ? theme.color.seaBule
+                                            : theme.color.lightBlack,
                                 }}
-                                color={
-                                    idx === select
-                                        ? "rgb(231, 243, 255)"
-                                        : theme.color.white
-                                }
-                                hover={idx !== select}
-                            >
-                                <Text
-                                    text={val}
-                                    cssObj={{
-                                        fontSize: "15px",
-                                        fontWeight: 600,
-                                        fontColor:
-                                            idx === select
-                                                ? theme.color.seaBule
-                                                : theme.color.lightBlack,
-                                    }}
-                                />
-                            </IconButton>
-                        );
-                    })}
-                </LeftLayout>
-                <RightLayout>
-                    {(select === 0 || select === 1) && (
-                        <Ability data={data?.ability} />
-                    )}
+                            />
+                        </IconButton>
+                    );
+                })}
+            </LeftLayout>
+            <Line />
+            <RightLayout>
+                {(select === 0 || select === 1) && (
+                    <Ability data={data?.ability} />
+                )}
 
-                    {(select === 0 || select === 1) && (
-                        <University data={data?.university} />
-                    )}
+                {(select === 0 || select === 1) && (
+                    <University data={data?.university} />
+                )}
 
-                    {(select === 0 || select === 1) && (
-                        <School data={data?.school} />
-                    )}
+                {(select === 0 || select === 1) && (
+                    <School data={data?.school} />
+                )}
 
-                    {(select === 0 || select === 2) && <Number data={null} />}
+                {(select === 0 || select === 2) && <Number data={null} />}
 
-                    {(select === 0 || select === 2) && <Address data={null} />}
-                </RightLayout>
-            </FlexLayout>
-        </BoxShadow>
+                {(select === 0 || select === 2) && <Address data={null} />}
+            </RightLayout>
+        </Layout>
     );
 };

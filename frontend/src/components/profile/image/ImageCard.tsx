@@ -6,15 +6,24 @@ import { useState, useEffect } from "react";
 import theme from "../../../styles/theme";
 import { routes } from "../../../utils/routes";
 //components
-import { BoxShadow } from "../../common/styles/BoxShadow";
 import { Text } from "../../common/Text";
 
 const Layout = styled.div`
-    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
+    border-radius: 8px;
+    background-color: ${(props) => props.theme.color.white};
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     padding: 10px;
+    ${(props) =>
+        props.theme.media.desktop(`
+            width: 100%;
+    `)}
+    ${(props) =>
+        props.theme.media.mobile(`
+            width: 90vw;         
+        `)}
 `;
 
 const FlexLayout = styled.div`
@@ -81,76 +90,54 @@ export const ImageCard = () => {
     useEffect(() => {}, [loading]);
 
     return (
-        <BoxShadow tag={"article"}>
-            <Layout>
-                <FlexLayout>
-                    <Text
-                        text={"사진"}
-                        tag={"span"}
-                        cssObj={{
-                            fontSize: "20px",
-                            fontWeight: 700,
+        <Layout>
+            <FlexLayout>
+                <Text
+                    text={"사진"}
+                    tag={"span"}
+                    cssObj={{
+                        fontSize: "20px",
+                        fontWeight: 700,
+                    }}
+                />
+            </FlexLayout>
+            <MenuLayout>
+                {menuList.map((val, idx) => (
+                    <Menu
+                        click={idx === menu}
+                        key={idx}
+                        onClick={() => {
+                            handleMenu(idx);
                         }}
-                    />
-                </FlexLayout>
-                <MenuLayout>
-                    {menuList.map((val, idx) => {
-                        if (idx === menu) {
-                            return (
-                                <Menu
-                                    click={true}
-                                    key={idx}
-                                    onClick={() => {
-                                        handleMenu(idx);
-                                    }}
-                                >
-                                    <Text
-                                        text={val}
-                                        cssObj={{
-                                            fontSize: "15px",
-                                            fontWeight: 600,
-                                            fontColor: theme.color.seaBule,
-                                        }}
-                                    />
-                                </Menu>
-                            );
-                        } else {
-                            return (
-                                <Menu
-                                    click={false}
-                                    key={idx}
-                                    onClick={() => {
-                                        handleMenu(idx);
-                                    }}
-                                >
-                                    <Text
-                                        text={val}
-                                        cssObj={{
-                                            fontSize: "15px",
-                                            fontWeight: 600,
-                                            fontColor: theme.color.lightBlack,
-                                        }}
-                                    />
-                                </Menu>
-                            );
-                        }
-                    })}
-                </MenuLayout>
-                <ImageLayout>
-                    {data?.map((val: any, idx: number) => {
-                        return (
-                            <Link
-                                key={val.id}
-                                to={{
-                                    pathname: `${routes.detail}${val.postId}`,
-                                }}
-                            >
-                                <Image src={val.url} />
-                            </Link>
-                        );
-                    })}
-                </ImageLayout>
-            </Layout>
-        </BoxShadow>
+                    >
+                        <Text
+                            text={val}
+                            cssObj={{
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                fontColor:
+                                    idx === menu
+                                        ? theme.color.seaBule
+                                        : theme.color.lightBlack,
+                            }}
+                        />
+                    </Menu>
+                ))}
+            </MenuLayout>
+            <ImageLayout>
+                {data?.map((val: any, idx: number) => {
+                    return (
+                        <Link
+                            key={val.id}
+                            to={{
+                                pathname: `${routes.detail}${val.postId}`,
+                            }}
+                        >
+                            <Image src={val.url} />
+                        </Link>
+                    );
+                })}
+            </ImageLayout>
+        </Layout>
     );
 };

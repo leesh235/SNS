@@ -6,7 +6,7 @@ import { profileActionCreator } from "../../../modules/action/profile";
 import { useParams } from "react-router-dom";
 
 const Wrapper = styled.section`
-    width: 908px;
+    width: 90%;
     height: 100vh;
     margin-top: 16px;
 `;
