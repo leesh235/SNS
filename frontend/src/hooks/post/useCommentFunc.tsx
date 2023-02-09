@@ -6,13 +6,17 @@ export const useCommentFunc = (postId: number, id?: number) => {
     const dispatch = useDispatch();
 
     const handleWrite = (formData: any) => {
-        dispatch(commentActionCreator.write({ postId, ...formData }, postId));
+        dispatch(
+            commentActionCreator.write({ postId, ...formData }, { postId })
+        );
     };
 
     const handleModify: React.MouseEventHandler = useCallback(
         (formData: any) => {
             if (!id) return;
-            dispatch(commentActionCreator.modify({ id, ...formData }, postId));
+            dispatch(
+                commentActionCreator.modify({ id, ...formData }, { postId, id })
+            );
         },
         [dispatch]
     );
@@ -20,7 +24,7 @@ export const useCommentFunc = (postId: number, id?: number) => {
     const handleDelete: React.MouseEventHandler = useCallback(() => {
         if (!id) return;
         if (window.confirm("댓글을 삭제하시겠습니끼?"))
-            dispatch(commentActionCreator.delete({ id }, postId));
+            dispatch(commentActionCreator.delete({ id }, { postId, id }));
     }, [dispatch]);
 
     useEffect(() => {}, [dispatch]);

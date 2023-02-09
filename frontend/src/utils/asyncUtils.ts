@@ -26,10 +26,11 @@ export const createMultiPromise = (
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
     return function* saga(action: any) {
         try {
+            const meta = action.meta;
             const res1: AxiosResponse = yield call(pomiseCreator, action.data);
             yield setTimeout(() => {}, 1000);
             const res2: AxiosResponse = yield call(pomiseCreator2);
-            yield put({ type: SUCCESS, data: res2.data });
+            yield put({ type: SUCCESS, data: res2.data, meta });
         } catch (error) {
             yield put({ type: ERROR, error: true, data: error });
         }

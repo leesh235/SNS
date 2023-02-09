@@ -67,13 +67,49 @@ export const defaultReducer = (
                     ...state,
                     loading: true,
                     error: "",
-                    [key]: keepData ? state[key] : null,
+                    [key]: keepData && state[key] ? state[key] : null,
                 };
             case SUCCESS:
                 return {
                     ...state,
                     loading: false,
                     [key]: action.data,
+                };
+            case ERROR:
+                return {
+                    ...state,
+                    loading: false,
+                    error: action.data,
+                };
+            default:
+                return state;
+        }
+    };
+};
+
+export const addReducer = (
+    type: string,
+    key: string,
+    keepData: boolean = false
+) => {
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+    return (state: any, action: any) => {
+        switch (action.type) {
+            case type:
+                return {
+                    ...state,
+                    loading: true,
+                    error: "",
+                    [key]: keepData && state[key] ? state[key] : null,
+                };
+            case SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    [key]: {
+                        ...state[key],
+                        [action.data.id]: { ...action.data },
+                    },
                 };
             case ERROR:
                 return {
@@ -108,7 +144,10 @@ export const modifyReducer = (
                     loading: false,
                     [key]: {
                         ...state[key],
-                        ...action.data,
+                        [action.meta.id]: {
+                            ...state[key][action.meta.id],
+                            ...action.data,
+                        },
                     },
                 };
             case ERROR:

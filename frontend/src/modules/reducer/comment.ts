@@ -1,20 +1,19 @@
 import { commentAction } from "../action/comment";
-import { handleAsyncReducer, reducerUtils } from "../../utils/reducerUtils";
+import {
+    addReducer,
+    defaultReducer,
+    modifyReducer,
+    removeReducer,
+} from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
 
 interface Props {
-    [key: string]: {
-        loading: boolean;
-        data: any;
-        error: any;
-    };
+    [key: string]: {} | null | "";
 }
 
 const initialState: Props = {
-    commentList: reducerUtils.initial(null),
-    write: reducerUtils.initial(null),
-    modify: reducerUtils.initial(null),
-    delete: reducerUtils.initial(null),
+    loading: false,
+    error: "",
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -23,70 +22,41 @@ const reducer = (state = initialState, action: any) => {
         case commentAction.list:
         case typeUtils(commentAction.list).success:
         case typeUtils(commentAction.list).error:
-            return handleAsyncReducer(
+            return defaultReducer(
                 commentAction.list,
-                `${meta}`,
+                `${meta.postId}`,
                 true
             )(state, action);
+
         case commentAction.write:
-        case typeUtils(commentAction.write).error:
-            return handleAsyncReducer(
-                commentAction.write,
-                "write",
-                true
-            )(state, action);
         case typeUtils(commentAction.write).success:
-            const newData = {
-                ...state[meta],
-                data: {
-                    ...state[meta].data,
-                    [action.data.id]: action.data,
-                },
-            };
-            return {
-                ...state,
-                [meta]: newData,
-            };
+        case typeUtils(commentAction.write).error:
+            console.log(action);
+            return addReducer(
+                commentAction.write,
+                `${meta.postId}`,
+                true
+            )(state, action);
+
         case commentAction.modify:
-        case typeUtils(commentAction.modify).error:
-            return handleAsyncReducer(
-                commentAction.modify,
-                "modify",
-                true
-            )(state, action);
         case typeUtils(commentAction.modify).success:
-            return {
-                ...state,
-                [meta]: {
-                    ...state[meta],
-                    data: {
-                        ...state[meta].data,
-                        [data.id]: {
-                            ...state[meta].data[data.id],
-                            contents: action.data.contents,
-                        },
-                    },
-                },
-            };
-        case commentAction.delete:
-        case typeUtils(commentAction.delete).error:
-            return handleAsyncReducer(
-                commentAction.delete,
-                "delete",
+        case typeUtils(commentAction.modify).error:
+            return modifyReducer(
+                commentAction.modify,
+                `${meta.postId}`,
                 true
             )(state, action);
+
+        case commentAction.delete:
         case typeUtils(commentAction.delete).success:
-            const newState = state[meta].data;
-            delete newState[data.id];
-            return {
-                ...state,
-                [meta]: {
-                    ...state[meta],
-                    data: {
-                        ...newState,
-                    },
-                },
-            };
+        case typeUtils(commentAction.delete).error:
+            console.log(action);
+            return removeReducer(
+                commentAction.delete,
+                `${meta.postId}`,
+                true
+            )(state, action);
+
         default:
             return state;
     }

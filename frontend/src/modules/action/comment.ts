@@ -13,28 +13,28 @@ export const commentAction = {
 };
 
 export const commentActionCreator = {
-    list: (data: GetCommentList, meta?: any) => {
+    list: (data: GetCommentList, meta?: { postId: number }) => {
         return {
             type: commentAction.list,
             data,
             meta,
         };
     },
-    write: (data: WriteComment, meta?: any) => {
+    write: (data: WriteComment, meta?: { postId: number }) => {
         return {
             type: commentAction.write,
             data,
             meta,
         };
     },
-    modify: (data: ModifyComment, meta?: any) => {
+    modify: (data: ModifyComment, meta?: { postId: number; id: number }) => {
         return {
             type: commentAction.modify,
             data,
             meta,
         };
     },
-    delete: (data: DeleteComment, meta?: any) => {
+    delete: (data: DeleteComment, meta?: { postId: number; id: number }) => {
         return {
             type: commentAction.delete,
             data,
