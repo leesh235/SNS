@@ -62,6 +62,7 @@ export const Welcome = () => {
                 text={"이성호님, Facebook에 오신 것을 환영합니다!"}
                 tag={"span"}
                 cssObj={{
+                    width: "auto",
                     fontSize: "24px",
                     fontWeight: 700,
                     margin: "28px 0 32px 0",
