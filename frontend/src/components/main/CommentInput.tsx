@@ -75,10 +75,10 @@ export const CommentInput = ({
         <Wrapper width={width} height={height} onSubmit={handleSubmit}>
             <Link
                 to={{
-                    pathname: `${routes.userInfo}${data.email}`,
+                    pathname: `${routes.userInfo}${data?.email}`,
                 }}
             >
-                <Icon src={data.profileImage} />
+                <Icon src={data?.profileImage} />
             </Link>
             <Input
                 defaultValue={defaultValue}
