@@ -12,7 +12,11 @@ export const useMenuFunc = ({ defaultValue = "" }: Props) => {
         setSelected(id);
     };
 
+    const ininMenu = (data: string | number) => {
+        setSelected(data);
+    };
+
     useEffect(() => {}, []);
 
-    return { selected, handleMenuClick };
+    return { selected, handleMenuClick, ininMenu };
 };

@@ -1,5 +1,7 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
+import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 //functions
 import { routes } from "../../../utils/routes";
 import { useModal } from "../../../hooks/common/useModal";
@@ -14,7 +16,6 @@ import { GroubIcon } from "../../../assets/icon/GroubIcon";
 import { HomeIcon } from "../../../assets/icon/HomeIcon";
 import { MessageIcon } from "../../../assets/icon/MessageIcon";
 import { SearchInput } from "../input/SearchInput";
-import { Link } from "react-router-dom";
 import { SeeMore } from "./SeeMore";
 
 const Layout = styled.header`
@@ -137,8 +138,18 @@ const rightMenuList = [
 ];
 
 export const Header = () => {
+    const location = useLocation();
+
     const userModal = useModal();
-    const { selected, handleMenuClick } = useMenuFunc({ defaultValue: 0 });
+    const { selected, handleMenuClick, ininMenu } = useMenuFunc({
+        defaultValue: 0,
+    });
+
+    useEffect(() => {
+        if (location.pathname === routes.home) ininMenu(0);
+        if (location.pathname === routes.friends) ininMenu(1);
+        if (location.pathname === routes.home) ininMenu(0);
+    }, [location.pathname]);
 
     return (
         <Layout>
