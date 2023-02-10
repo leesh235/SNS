@@ -17,6 +17,7 @@ import { HomeIcon } from "../../../assets/icon/HomeIcon";
 import { MessageIcon } from "../../../assets/icon/MessageIcon";
 import { SearchInput } from "../input/SearchInput";
 import { SeeMore } from "./SeeMore";
+import { ListIcon } from "../../../assets/icon/ListIcon";
 
 const Layout = styled.header`
     width: 100vw;
@@ -127,7 +128,7 @@ const centerMenuList = [
     <HomeIcon />,
     <FriendIcon />,
     <GroubIcon />,
-    <div>menu</div>,
+    <ListIcon />,
 ];
 
 const rightMenuList = [
