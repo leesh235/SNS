@@ -62,7 +62,7 @@ Object.keys(sizes).reduce((acc: Media, label: string) => {
             break;
         case "tablet":
             acc.tablet = (...args: BackQuoteArgs) => css`
-                @media only screen and (min-width: ${sizes.desktopU}px) and (max-width: ${sizes.mobileU}px) {
+                @media only screen and (max-width: ${sizes.desktopD}px) and (min-width: ${sizes.mobileU}px) {
                     ${args}
                 }
             `;

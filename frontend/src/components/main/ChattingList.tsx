@@ -9,10 +9,6 @@ import { Text } from "../common/Text";
 import { CreateChatRoom } from "../chat/CreateChatRoom";
 
 const Layout = styled.section`
-    position: fixed;
-    top: 56px;
-    right: 0;
-    max-width: 360px;
     width: 100%;
     height: calc(100vh - 72px);
     display: flex;

@@ -9,11 +9,6 @@ import { routes } from "../../utils/routes";
 import { Text } from "../common/Text";
 
 const Layout = styled.ul`
-    position: fixed;
-    top: 56px;
-    left: 0;
-    max-width: 360px;
-    width: 100%;
     height: calc(100vh - 72px);
     display: flex;
     margin-top: 16px;

@@ -5,8 +5,8 @@ import { useGetPosts } from "../../hooks/post/useGetPosts";
 //components
 import { PostCard } from "./PostCard";
 
-const Wrapper = styled.section`
-    width: 100%;
+const Wrapper = styled.span`
+    width: auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, auto);
     row-gap: 20px;
