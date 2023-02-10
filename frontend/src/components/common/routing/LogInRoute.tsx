@@ -8,6 +8,7 @@ import Profile from "../../../pages/Profile";
 import Detail from "../../../pages/Detail";
 import Friends from "../../../pages/Friends";
 import Search from "../../../pages/Search";
+import Bookmark from "../../../pages/Bookmark";
 
 export const LogInRoute = () => {
     return (
@@ -15,6 +16,7 @@ export const LogInRoute = () => {
             <Header />
             <Routes>
                 <Route path={`${routes.home}`} element={<Main />} />
+                <Route path={`${routes.bookmark}`} element={<Bookmark />} />
                 <Route path={`${routes.welcome}`} element={<Start />} />
                 <Route path={`${routes.detail}:postId`} element={<Detail />} />
                 <Route path={`${routes.profile}`} element={<Profile />} />

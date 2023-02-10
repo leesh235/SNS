@@ -11,6 +11,7 @@ export const routes = {
     search: "/search",
     like: "/like",
     latest: "/latest",
+    bookmark: "/bookmark",
 };
 
 export const api = {
