@@ -1,7 +1,10 @@
 import styled from "../styles/theme-components";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { batch, useDispatch } from "react-redux";
+//fucntions
 import { friendsActionCreator } from "../modules/action/friends";
+import { useMenuFunc } from "../hooks/common/useMenuFunc";
+//components
 import { FriendsSide } from "../components/friends/FriendsSide";
 import { FriendsHome } from "../components/friends/FriendsHome";
 import { Request } from "../components/friends/Request";
@@ -25,12 +28,9 @@ const FlexWrapper = styled.section`
 `;
 
 const Friends = () => {
-    const dispatch = useDispatch();
-    const [menu, setMenu] = useState<number>(0);
+    const { selected, handleMenuClick } = useMenuFunc({ defaultValue: 0 });
 
-    const handleMenu = (id: number) => {
-        setMenu(id);
-    };
+    const dispatch = useDispatch();
 
     useEffect(() => {
         batch(() => {
@@ -39,17 +39,19 @@ const Friends = () => {
             dispatch(friendsActionCreator.responseList());
             dispatch(friendsActionCreator.friendList());
         });
-    }, [menu]);
+    }, [selected]);
 
     return (
         <Wrapper>
-            <FriendsSide menu={menu} handleMenu={handleMenu} />
+            <FriendsSide menu={+selected} handleMenu={handleMenuClick} />
             <FlexWrapper>
-                {menu === 0 && <FriendsHome handleMenu={handleMenu} />}
-                {menu === 1 && <Request />}
-                {menu === 2 && <Response />}
-                {menu === 3 && <FriendList />}
-                {menu === 4 && <BithdayList />}
+                {+selected === 0 && (
+                    <FriendsHome handleMenu={handleMenuClick} />
+                )}
+                {+selected === 1 && <Request />}
+                {+selected === 2 && <Response />}
+                {+selected === 3 && <FriendList />}
+                {+selected === 4 && <BithdayList />}
             </FlexWrapper>
         </Wrapper>
     );

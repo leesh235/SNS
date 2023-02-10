@@ -45,7 +45,7 @@ const Icon = styled.div<{ hover: boolean }>`
 `;
 
 interface Props {
-    menu: number;
+    menu: number | string;
     handleMenu: any;
 }
 
@@ -62,49 +62,25 @@ export const FriendsSide = ({ menu, handleMenu }: Props) => {
                 />
             </TitleLayout>
             <MenuLayout>
-                {menuList.map((val, idx) => {
-                    if (menu === idx) {
-                        return (
-                            <Menu
-                                hover={true}
-                                key={idx}
-                                onClick={() => {
-                                    handleMenu(idx);
-                                }}
-                            >
-                                <Icon hover={true} />
-                                <Text
-                                    text={val}
-                                    tag={"span"}
-                                    cssObj={{
-                                        fontSize: "17px",
-                                        fontWeight: 500,
-                                    }}
-                                />
-                            </Menu>
-                        );
-                    } else {
-                        return (
-                            <Menu
-                                hover={false}
-                                key={idx}
-                                onClick={() => {
-                                    handleMenu(idx);
-                                }}
-                            >
-                                <Icon hover={false} />
-                                <Text
-                                    text={val}
-                                    tag={"span"}
-                                    cssObj={{
-                                        fontSize: "17px",
-                                        fontWeight: 500,
-                                    }}
-                                />
-                            </Menu>
-                        );
-                    }
-                })}
+                {menuList.map((val, idx: any) => (
+                    <Menu
+                        hover={menu === idx}
+                        key={idx}
+                        id={idx}
+                        onClick={handleMenu}
+                    >
+                        <Icon hover={menu === idx} />
+                        <Text
+                            text={val}
+                            tag={"span"}
+                            cssObj={{
+                                width: "auto",
+                                fontSize: "17px",
+                                fontWeight: 500,
+                            }}
+                        />
+                    </Menu>
+                ))}
             </MenuLayout>
         </Layout>
     );

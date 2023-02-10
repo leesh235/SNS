@@ -60,15 +60,12 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                         text={"친구 요청"}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "20px",
                             fontWeight: 700,
                         }}
                     />
-                    <EventLayout
-                        onClick={() => {
-                            handleMenu(1);
-                        }}
-                    >
+                    <EventLayout id="1" onClick={handleMenu}>
                         모두 보기
                     </EventLayout>
                 </FlexLayout>
@@ -84,15 +81,12 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                         text={"친구 대기"}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "20px",
                             fontWeight: 700,
                         }}
                     />
-                    <EventLayout
-                        onClick={() => {
-                            handleMenu(2);
-                        }}
-                    >
+                    <EventLayout id="2" onClick={handleMenu}>
                         모두 보기
                     </EventLayout>
                 </FlexLayout>
@@ -108,15 +102,12 @@ export const FriendsHome = ({ handleMenu }: Props) => {
                         text={"모든 친구"}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "20px",
                             fontWeight: 700,
                         }}
                     />
-                    <EventLayout
-                        onClick={() => {
-                            handleMenu(3);
-                        }}
-                    >
+                    <EventLayout id="3" onClick={handleMenu}>
                         모두 보기
                     </EventLayout>
                 </FlexLayout>
