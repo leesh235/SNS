@@ -99,6 +99,7 @@ export const SideMenu = ({}: Props) => {
                         text={data?.nickName}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "15px",
                             fontWeight: 500,
                         }}
@@ -120,6 +121,7 @@ export const SideMenu = ({}: Props) => {
                                 text={val.name}
                                 tag={"span"}
                                 cssObj={{
+                                    width: "auto",
                                     fontSize: "15px",
                                     fontWeight: 500,
                                 }}

@@ -17,6 +17,7 @@ const Layout = styled.section`
     justify-content: start;
     overflow-x: hidden;
     overflow-y: hidden;
+    padding: 16px 10px 0;
     &:hover {
         overflow-y: auto;
     }
@@ -125,6 +126,7 @@ export const ChattingList = () => {
                         text={"새 그룹 만들기"}
                         tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontSize: "15px",
                             fontWeight: 500,
                         }}
