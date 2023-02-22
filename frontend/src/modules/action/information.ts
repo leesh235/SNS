@@ -16,9 +16,10 @@ export const informationAction = {
 };
 
 export const informationActionCreator = {
-    getInfo: () => {
+    getInfo: (data: any) => {
         return {
             type: informationAction.getInfo,
+            data,
         };
     },
     addJob: (data: Job) => {

@@ -1,7 +1,7 @@
 import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 //functions
 import theme from "../../../styles/theme";
 import { routes } from "../../../utils/routes";
@@ -77,17 +77,15 @@ const Image = styled.img`
 const menuList = ["내 사진", "사진첩"];
 
 export const ImageCard = () => {
+    const [menu, setMenu] = useState<number>(0);
+
     const { loading, data, error } = useSelector(
         (state: any) => state?.profile?.allImage
     );
 
-    const [menu, setMenu] = useState<number>(0);
-
     const handleMenu = (id: number) => {
         setMenu(id);
     };
-
-    useEffect(() => {}, [loading]);
 
     return (
         <Layout>
@@ -101,42 +99,20 @@ export const ImageCard = () => {
                     }}
                 />
             </FlexLayout>
-            <MenuLayout>
-                {menuList.map((val, idx) => (
-                    <Menu
-                        click={idx === menu}
-                        key={idx}
-                        onClick={() => {
-                            handleMenu(idx);
-                        }}
-                    >
-                        <Text
-                            text={val}
-                            cssObj={{
-                                fontSize: "15px",
-                                fontWeight: 600,
-                                fontColor:
-                                    idx === menu
-                                        ? theme.color.seaBule
-                                        : theme.color.lightBlack,
-                            }}
-                        />
-                    </Menu>
-                ))}
-            </MenuLayout>
             <ImageLayout>
-                {data?.map((val: any, idx: number) => {
-                    return (
-                        <Link
-                            key={val.id}
-                            to={{
-                                pathname: `${routes.detail}${val.postId}`,
-                            }}
-                        >
-                            <Image src={val.url} />
-                        </Link>
-                    );
-                })}
+                {data.length !== 0 &&
+                    data?.map((val: any, idx: number) => {
+                        return (
+                            <Link
+                                key={val.id}
+                                to={{
+                                    pathname: `${routes.detail}${val.postId}`,
+                                }}
+                            >
+                                <Image src={val.url} />
+                            </Link>
+                        );
+                    })}
             </ImageLayout>
         </Layout>
     );

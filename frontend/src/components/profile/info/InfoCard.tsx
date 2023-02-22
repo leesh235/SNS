@@ -1,6 +1,6 @@
 import styled from "../../../styles/theme-components";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 //functions
 import theme from "../../../styles/theme";
 import { useGetInformation } from "../../../hooks/profile/useGetInfo";
@@ -71,10 +71,12 @@ const dataUrl = [
 ];
 
 export const InfoCard = () => {
+    const { email } = useParams();
+
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { loading, data, error } = useGetInformation();
+    const { loading, data, error } = useGetInformation({ email });
     const store_profile = useGetProfile();
 
     const [select, setSelect] = useState<number>(0);
@@ -86,6 +88,12 @@ export const InfoCard = () => {
 
     useEffect(() => {}, [location]);
 
+    if (loading || !data)
+        return (
+            <Layout>
+                <LeftLayout></LeftLayout>
+            </Layout>
+        );
     return (
         <Layout>
             <LeftLayout>

@@ -7,19 +7,21 @@ const logInInfo = async () => {
 };
 
 const profile = async (data: any) => {
-    return await backend.get(`${api.profile.profile}/${data.email}`);
+    return await backend.get(`${api.profile.profile}${data.email}`);
 };
 
 const modifyIntroduce = async (data: Introduce) => {
     return await backend.patch(api.profile.introduce, data);
 };
 
-const getLatestImage = async () => {
-    return await backend.get(api.profile.introduce);
+const getLatestImage = async (data: any) => {
+    return await backend.get(`${api.profile.latest}${data.email}`);
 };
 
-const getAllImage = async (data: Take) => {
-    return await backend.get(api.profile.introduce, { params: data });
+const getAllImage = async (data: any) => {
+    return await backend.get(`${api.profile.all}${data.email}`, {
+        params: { take: data.take },
+    });
 };
 
 const modifyCoverimage = async (data: UserImage) => {

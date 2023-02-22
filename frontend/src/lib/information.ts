@@ -2,8 +2,8 @@ import { backend } from "./axios";
 import { api } from "../utils/routes";
 import { Job, School, University, DeleteInfo } from "../types/lib/information";
 
-const getInfo = async () => {
-    return await backend.get(api.info.get);
+const getInfo = async (data: any) => {
+    return await backend.get(`${api.info.get}${data.email}`);
 };
 
 const addJob = async (data: Job) => {

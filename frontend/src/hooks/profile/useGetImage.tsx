@@ -3,21 +3,28 @@ import { useEffect } from "react";
 import { profileActionCreator } from "../../modules/action/profile";
 
 const imageList = {
-    all: "latestImage",
-    latest: "coverImage",
+    all: "allImage",
+    latest: "latestImage",
 };
 
-export const useGetImage = (type: "all" | "latest" = "latest") => {
+export const useGetImage = (
+    type: "all" | "latest" = "latest",
+    email?: string
+) => {
     const dispatch = useDispatch();
 
-    const { loading, data, error } = useSelector(
-        (state: any) => state.profile?.[imageList[type]]
-    );
+    const { loading, data, error } = useSelector((state: any) => {
+        if (!email) return { loading: false, data: [], error: "" };
+
+        return state.profile?.[imageList[type]];
+    });
 
     useEffect(() => {
-        if (type === "latest") dispatch(profileActionCreator.getLatestImage());
-        else dispatch(profileActionCreator.getAllImage({}));
-    }, [dispatch]);
+        if (!email) return;
+        if (type === "latest")
+            dispatch(profileActionCreator.getLatestImage({ email }));
+        else dispatch(profileActionCreator.getAllImage({ email, take: 6 }));
+    }, [dispatch, email]);
 
     return { loading, data, error };
 };

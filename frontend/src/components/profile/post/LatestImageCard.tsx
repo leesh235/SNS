@@ -1,6 +1,6 @@
 import styled from "../../../styles/theme-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 //functions
 import theme from "../../../styles/theme";
 import { routes } from "../../../utils/routes";
@@ -47,7 +47,8 @@ interface Props {
 }
 
 export const LatestImageCard = ({ handleUrl }: Props) => {
-    const { loading, data, error } = useGetImage();
+    const { email } = useParams();
+    const { loading, data, error } = useGetImage("latest", email);
 
     return (
         <BoxShadow tag={"article"}>

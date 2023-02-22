@@ -28,14 +28,15 @@ export const profileActionCreator = {
             data,
         };
     },
-    getLatestImage: () => {
+    getLatestImage: (data: any) => {
         return {
-            type: profileAction.introduce,
+            type: profileAction.latestImage,
+            data,
         };
     },
-    getAllImage: (data: Take) => {
+    getAllImage: (data: any) => {
         return {
-            type: profileAction.introduce,
+            type: profileAction.allImage,
             data,
         };
     },
