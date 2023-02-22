@@ -5,6 +5,8 @@ import theme from "../../styles/theme";
 import { authActionCreator } from "../../modules/action/auth";
 import { useForm } from "../../hooks/common/useForm";
 import { calendarUtil } from "../../utils/calendar";
+import { joinValidate } from "../../utils/validate";
+import { useJoin } from "../../hooks/auth/useJoin";
 //components
 import { BagicButton } from "../common/button/BagicButton";
 import { FocusInput } from "../common/input/FocusInput";
@@ -14,7 +16,7 @@ import { Select } from "../common/input/Select";
 
 const Layout = styled.div`
     width: 432px;
-    height: 512px;
+
     margin: 20px;
     background-color: ${(props) => props.theme.color.white};
     border-radius: 8px;
@@ -70,7 +72,7 @@ interface Props {
 }
 
 export const JoinForm = ({ onClose }: Props) => {
-    const dispatch = useDispatch();
+    const { handleJoinClick } = useJoin();
 
     const { years, months, days, year, month, day } = calendarUtil();
 
@@ -80,23 +82,14 @@ export const JoinForm = ({ onClose }: Props) => {
             firstName: "",
             email: "",
             password: "",
-            year,
-            month,
-            day,
+            year: `${year}`,
+            month: `${month}`,
+            day: `${day}`,
             gender: "",
         },
-        validate: "",
+        validate: joinValidate,
         onSubmit: (formData: any) => {
-            dispatch(
-                authActionCreator.join({
-                    firstName: formData.value,
-                    secondName: formData.value,
-                    email: formData.value,
-                    password: formData.value,
-                    birth: formData.value + formData.value + formData.value,
-                    gender: formData.value,
-                })
-            );
+            handleJoinClick(formData);
             onClose();
         },
     });
@@ -129,43 +122,47 @@ export const JoinForm = ({ onClose }: Props) => {
                         placeholder={"성()"}
                         {...setOption("secondName")}
                         cssObj={{
-                            width: "174px",
-                            height: "16px",
+                            width: "196px",
+                            height: "38px",
                             padding: "11px",
                             borderRadius: "5px",
                         }}
+                        error={errors.secondName}
                     />
                     <FocusInput
                         placeholder={"이름(성은 제외)"}
                         {...setOption("firstName")}
                         cssObj={{
-                            width: "170px",
-                            height: "16px",
+                            width: "192px",
+                            height: "38px",
                             padding: "11px",
                             borderRadius: "5px",
                         }}
+                        error={errors.firstName}
                     />
                 </FlexLayout>
                 <FocusInput
-                    placeholder={"휴대폰 번호 또는 이메일"}
+                    placeholder={"이메일"}
                     {...setOption("email")}
                     cssObj={{
-                        width: "375px",
-                        height: "16px",
+                        width: "397px",
+                        height: "38",
                         padding: "11px",
                         borderRadius: "5px",
                     }}
+                    error={errors.email}
                 />
                 <FocusInput
                     placeholder={"새 비밀번호"}
                     type={"password"}
                     {...setOption("password")}
                     cssObj={{
-                        width: "375px",
-                        height: "16px",
+                        width: "397px",
+                        height: "38",
                         padding: "11px",
                         borderRadius: "5px",
                     }}
+                    error={errors.password}
                 />
                 <ColumnLayout>
                     <Text
@@ -180,16 +177,19 @@ export const JoinForm = ({ onClose }: Props) => {
                             list={years}
                             defaultValue={year}
                             {...setOption("year")}
+                            error={errors.year}
                         />
                         <Select
                             list={months}
                             defaultValue={month}
                             {...setOption("month")}
+                            error={errors.month}
                         />
                         <Select
                             list={days}
                             defaultValue={day}
                             {...setOption("day")}
+                            error={errors.day}
                         />
                     </BirthLayout>
                 </ColumnLayout>
@@ -207,18 +207,21 @@ export const JoinForm = ({ onClose }: Props) => {
                             id={"female"}
                             value={"female"}
                             {...setOption("gender")}
+                            error={errors.gender}
                         />
                         <RadioInput
                             text={"남자"}
                             id={"male"}
                             value={"male"}
                             {...setOption("gender")}
+                            error={errors.gender}
                         />
                         <RadioInput
                             text={"개인 지정"}
                             id={"all"}
                             value={""}
                             {...setOption("gender")}
+                            error={errors.gender}
                         />
                     </GenderLayout>
                 </ColumnLayout>

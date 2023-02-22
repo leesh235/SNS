@@ -1,4 +1,4 @@
-import styled from "../../../styles/theme-components";
+import styled, { css } from "../../../styles/theme-components";
 
 interface StyleProps {
     width?: string;
@@ -7,27 +7,13 @@ interface StyleProps {
     error?: string;
 }
 
-const Layout = styled.div<StyleProps>`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: ${(props) => props.width || "105px"};
-    height: ${(props) => props.height || "34px"};
-    border-radius: ${(props) => props.borderRadius || "6px"};
-    padding: 0 10px;
-    border: 1px solid ${(props) => props.theme.color.lightGray};
-    cursor: pointer;
-`;
-
 const Labal = styled.label<StyleProps>`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: ${(props) => props.width || "105px"};
+    max-width: ${(props) => props.width || "125px"};
     height: ${(props) => props.height || "34px"};
     border-radius: ${(props) => props.borderRadius || "6px"};
     padding: 0 10px;
@@ -35,6 +21,15 @@ const Labal = styled.label<StyleProps>`
     font-size: 15px;
     line-height: ${(props) => props.height || "34px"};
     cursor: pointer;
+    ${(props) =>
+        props.error &&
+        css`
+            border: solid 1px ${props.theme.color.red};
+            caret-color: ${props.theme.color.red};
+            :focus {
+                border: solid 1px ${props.theme.color.lightGray};
+            }
+        `}
 `;
 
 const Input = styled.input``;
@@ -63,7 +58,6 @@ export const RadioInput = ({
     cssObj,
 }: Props) => {
     return (
-        // <Layout error={error} {...cssObj}>
         <Labal htmlFor={id} error={error} {...cssObj}>
             {text}
             <Input
@@ -74,6 +68,5 @@ export const RadioInput = ({
                 onChange={onChange}
             ></Input>
         </Labal>
-        // </Layout>
     );
 };
