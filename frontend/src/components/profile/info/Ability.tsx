@@ -13,6 +13,8 @@ import { HoverInput } from "../../common/input/HoverInput";
 import { AddButton } from "./AddButton";
 import { AddForm } from "./AddForm";
 import { SeeMoreLayout } from "../../common/SeeMoreLayout";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Layout = styled.div`
     width: 100%;
@@ -30,6 +32,9 @@ const Layout = styled.div`
             width: 100%;
             display: flex;
             flex-direction: row;
+            > :nth-child(1) {
+                margin-right: 5px;
+            }
         }
     }
 `;
@@ -49,7 +54,7 @@ interface Props {
 }
 
 export const Ability = ({ data }: Props) => {
-    const { modal, handleModal } = useModal();
+    const { modal, handleModal, CloseModal } = useModal();
 
     const { handleWrite, handleDelete } = useInfoFunc({ id: data?.id });
 
@@ -57,9 +62,13 @@ export const Ability = ({ data }: Props) => {
         initValues: {},
         validate: abilityValidate,
         onSubmit: (formData: any) => {
+            console.log(formData);
             handleWrite({ formData });
+            CloseModal(0);
         },
     });
+
+    useEffect(() => {}, [data]);
 
     return (
         <>
@@ -67,10 +76,10 @@ export const Ability = ({ data }: Props) => {
                 text={"직장"}
                 cssObj={{ fontSize: "17px", fontWeight: 600 }}
             />
-            {!modal && data === null && (
+            {!modal && !data && (
                 <AddButton text="직장 추가" onClick={handleModal} />
             )}
-            {!modal && data !== null && (
+            {!modal && data && (
                 <Layout>
                     <Icon />
                     <div>
@@ -78,18 +87,18 @@ export const Ability = ({ data }: Props) => {
                             <Text
                                 text={data?.name}
                                 tag={"span"}
-                                cssObj={{ fontSize: "13px", fontWeight: 600 }}
+                                cssObj={{
+                                    fontSize: "13px",
+                                    width: "auto",
+                                    fontWeight: 600,
+                                }}
                             />
                             <Text
                                 text={data?.position}
                                 tag={"span"}
-                                cssObj={{ fontSize: "13px" }}
+                                cssObj={{ fontSize: "13px", width: "auto" }}
                             />
                         </div>
-                        <Text
-                            text={`${data?.start}-${data?.end}`}
-                            cssObj={{ fontSize: "13px" }}
-                        />
                     </div>
 
                     <SeeMoreLayout width="200px">
@@ -112,7 +121,7 @@ export const Ability = ({ data }: Props) => {
                     <HoverInput
                         {...setOption("name")}
                         title={"회사"}
-                        defaultValue={data?.job || ""}
+                        defaultValue={data?.name || ""}
                     />
                     <HoverInput
                         {...setOption("position")}

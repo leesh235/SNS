@@ -1,5 +1,6 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
+import { useEffect } from "react";
 //functions
 import { useModal } from "../../../hooks/common/useModal";
 import { useInfoFunc } from "../../../hooks/profile/useInfoFunc";
@@ -30,6 +31,9 @@ const Layout = styled.div`
             width: 100%;
             display: flex;
             flex-direction: row;
+            > :nth-child(1) {
+                margin-right: 5px;
+            }
         }
     }
 `;
@@ -49,7 +53,7 @@ interface Props {
 }
 
 export const University = ({ data }: Props) => {
-    const { modal, handleModal } = useModal();
+    const { modal, handleModal, CloseModal } = useModal();
 
     const { handleWrite, handleDelete } = useInfoFunc({
         id: data?.id,
@@ -61,8 +65,11 @@ export const University = ({ data }: Props) => {
         validate: abilityValidate,
         onSubmit: (formData: any) => {
             handleWrite({ formData });
+            CloseModal(0);
         },
     });
+
+    useEffect(() => {}, [data]);
 
     return (
         <>
@@ -70,27 +77,27 @@ export const University = ({ data }: Props) => {
                 text={"대학"}
                 cssObj={{ fontSize: "17px", fontWeight: 600 }}
             />
-            {!modal && data === null && (
+            {!modal && !data && (
                 <AddButton text="대학 추가" onClick={handleModal} />
             )}
-            {!modal && data !== null && (
+            {!modal && data && (
                 <Layout>
                     <Icon />
                     <div>
                         <div>
                             <Text
                                 text={data?.name}
-                                cssObj={{ fontSize: "13px", fontWeight: 600 }}
+                                cssObj={{
+                                    fontSize: "13px",
+                                    width: "auto",
+                                    fontWeight: 600,
+                                }}
                             />
                             <Text
                                 text={data?.major}
-                                cssObj={{ fontSize: "13px" }}
+                                cssObj={{ fontSize: "13px", width: "auto" }}
                             />
                         </div>
-                        <Text
-                            text={`${data?.degree}/${data?.start}-${data?.end}`}
-                            cssObj={{ fontSize: "13px" }}
-                        />
                     </div>
 
                     <SeeMoreLayout width="200px">
@@ -113,7 +120,7 @@ export const University = ({ data }: Props) => {
                     <HoverInput
                         {...setOption("name")}
                         title={"학교"}
-                        defaultValue={data?.university}
+                        defaultValue={data?.name}
                     />
                     <HoverInput
                         {...setOption("major")}

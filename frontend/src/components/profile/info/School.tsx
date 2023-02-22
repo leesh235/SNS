@@ -1,5 +1,6 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
+import { useEffect } from "react";
 //functions
 import { useModal } from "../../../hooks/common/useModal";
 import { useInfoFunc } from "../../../hooks/profile/useInfoFunc";
@@ -30,6 +31,9 @@ const Layout = styled.div`
             width: 100%;
             display: flex;
             flex-direction: row;
+            > :nth-child(1) {
+                margin-right: 5px;
+            }
         }
     }
 `;
@@ -49,7 +53,7 @@ interface Props {
 }
 
 export const School = ({ data }: Props) => {
-    const { modal, handleModal } = useModal();
+    const { modal, handleModal, CloseModal } = useModal();
 
     const { handleWrite, handleDelete } = useInfoFunc({
         id: data?.id,
@@ -61,8 +65,11 @@ export const School = ({ data }: Props) => {
         validate: abilityValidate,
         onSubmit: (formData: any) => {
             handleWrite({ formData });
+            CloseModal(0);
         },
     });
+
+    useEffect(() => {}, [data]);
 
     return (
         <>
@@ -70,10 +77,10 @@ export const School = ({ data }: Props) => {
                 text={"고등학교"}
                 cssObj={{ fontSize: "17px", fontWeight: 600 }}
             />
-            {!modal && data === null && (
+            {!modal && !data && (
                 <AddButton text="고등학교 추가" onClick={handleModal} />
             )}
-            {!modal && data !== null && (
+            {!modal && data && (
                 <Layout>
                     <Icon />
                     <div>
@@ -83,10 +90,6 @@ export const School = ({ data }: Props) => {
                                 cssObj={{ fontSize: "15px" }}
                             />
                         </div>
-                        <Text
-                            text={`${data?.start}-${data?.end}`}
-                            cssObj={{ fontSize: "13px" }}
-                        />
                     </div>
 
                     <SeeMoreLayout width="200px">

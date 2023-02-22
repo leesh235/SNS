@@ -29,7 +29,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(informationAction.addJob).error:
             return handleAsyncReducer(
                 informationAction.addJob,
-                "addJob",
+                "getInfo",
                 true
             )(state, action);
 
@@ -38,7 +38,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(informationAction.addSchool).error:
             return handleAsyncReducer(
                 informationAction.addSchool,
-                "addSchool",
+                "getInfo",
                 true
             )(state, action);
 
@@ -47,7 +47,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(informationAction.addUniversity).error:
             return handleAsyncReducer(
                 informationAction.addUniversity,
-                "addUniversity",
+                "getInfo",
                 true
             )(state, action);
 
@@ -56,7 +56,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(informationAction.removeJob).error:
             return handleAsyncReducer(
                 informationAction.removeJob,
-                "removeJob",
+                "getInfo",
                 true
             )(state, action);
 
@@ -65,7 +65,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(informationAction.removeSchool).error:
             return handleAsyncReducer(
                 informationAction.removeSchool,
-                "removeSchool",
+                "getInfo",
                 true
             )(state, action);
 
@@ -74,7 +74,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(informationAction.removeUniversity).error:
             return handleAsyncReducer(
                 informationAction.removeUniversity,
-                "removeUniversity",
+                "getInfo",
                 true
             )(state, action);
 

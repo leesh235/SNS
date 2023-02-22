@@ -1,4 +1,4 @@
-import { createPromise } from "../../utils/asyncUtils";
+import { createPromise, createMultiPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
 import { informationApi } from "../../lib";
 import { informationAction } from "../action/information";
@@ -7,26 +7,35 @@ const getInfo = createPromise(
     informationAction.getInfo,
     informationApi.getInfo
 );
-const addJob = createPromise(informationAction.addJob, informationApi.addJob);
-const addSchool = createPromise(
+const addJob = createMultiPromise(
+    informationAction.addJob,
+    informationApi.addJob,
+    informationApi.getInfo
+);
+const addSchool = createMultiPromise(
     informationAction.addSchool,
-    informationApi.addSchool
+    informationApi.addSchool,
+    informationApi.getInfo
 );
-const addUniversity = createPromise(
+const addUniversity = createMultiPromise(
     informationAction.addUniversity,
-    informationApi.addUniversity
+    informationApi.addUniversity,
+    informationApi.getInfo
 );
-const removeJob = createPromise(
+const removeJob = createMultiPromise(
     informationAction.removeJob,
-    informationApi.removeJob
+    informationApi.removeJob,
+    informationApi.getInfo
 );
-const removeSchool = createPromise(
+const removeSchool = createMultiPromise(
     informationAction.removeSchool,
-    informationApi.removeSchool
+    informationApi.removeSchool,
+    informationApi.getInfo
 );
-const removeUniversity = createPromise(
+const removeUniversity = createMultiPromise(
     informationAction.removeUniversity,
-    informationApi.removeUniversity
+    informationApi.removeUniversity,
+    informationApi.getInfo
 );
 
 export function* informationSaga() {

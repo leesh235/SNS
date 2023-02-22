@@ -101,6 +101,7 @@ export const ProfileInfo = ({ isYou = false }: { isYou: boolean }) => {
     useEffect(() => {
         console.log(data);
     }, [location]);
+
     return (
         <Wrapper>
             <Layout>

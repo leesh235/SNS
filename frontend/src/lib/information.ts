@@ -3,7 +3,7 @@ import { api } from "../utils/routes";
 import { Job, School, University, DeleteInfo } from "../types/lib/information";
 
 const getInfo = async (data: any) => {
-    return await backend.get(`${api.info.get}${data.email}`);
+    return await backend.get(`${api.info.get}`, { params: data });
 };
 
 const addJob = async (data: Job) => {
