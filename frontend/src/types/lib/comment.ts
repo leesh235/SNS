@@ -1,5 +1,6 @@
 export interface GetCommentList {
     postId: number;
+    take?: number;
 }
 
 export interface WriteComment {

@@ -22,38 +22,33 @@ const CommentView = styled.ul`
     flex-direction: column;
 `;
 
-const CommentButton = styled.span`
-    width: auto;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
+const CommentLayout = styled.section`
+    width: 100%;
+    height: auto;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 `;
 
 interface Props {
     postId: number;
+    take: number;
 }
 
-export const CommentList = ({ postId }: Props) => {
+export const CommentList = ({ postId, take }: Props) => {
     const user = useSelector((state: any) => state.profile.simple?.data);
 
-    const { modal, handleModal } = useModal();
+    const { loading, data, error } = useGetComment(postId, take);
 
-    const { loading, data, error } = useGetComment(postId);
-
-    if (Object.keys(data).length === 0) return <></>;
+    if (loading && take === 6) return <CommentLayout></CommentLayout>;
     return (
-        <Layout>
-            {!modal ? (
-                <CommentButton onClick={handleModal}>답글보기</CommentButton>
-            ) : (
-                <>
-                    <CommentView>
-                        {Object.keys(data)?.map((val: any) => (
-                            <Comment key={val} value={data[val]} user={user} />
-                        ))}
-                    </CommentView>
-                </>
-            )}
-        </Layout>
+        <CommentLayout>
+            <CommentView>
+                {Object.keys(data)?.map((val: any) => (
+                    <Comment key={val} value={data[val]} user={user} />
+                ))}
+            </CommentView>
+        </CommentLayout>
     );
 };

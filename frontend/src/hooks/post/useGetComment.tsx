@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { commentActionCreator } from "../../modules/action/comment";
 
-export const useGetComment = (id: number) => {
+export const useGetComment = (id: number, take: number) => {
     const dispatch = useDispatch();
     const { loading, data, error } = useSelector((state: any) => {
         if (!state.comment[id]) return { loading: false, data: {}, error: "" };
@@ -14,8 +14,10 @@ export const useGetComment = (id: number) => {
     });
 
     useEffect(() => {
-        dispatch(commentActionCreator.list({ postId: id }, { postId: id }));
-    }, [dispatch]);
+        dispatch(
+            commentActionCreator.list({ postId: id, take }, { postId: id })
+        );
+    }, [dispatch, take]);
 
     return { loading, data, error };
 };

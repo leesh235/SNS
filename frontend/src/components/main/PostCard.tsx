@@ -20,7 +20,7 @@ import { CommentInput } from "./CommentInput";
 import { ModalLayout } from "../common/styles/ModalLayout";
 import { ImageLayout } from "../common/Image/ImageLayout";
 import { SeeMoreLayout } from "../common/SeeMoreLayout";
-import { CommentList } from "./CommentList";
+import { CommentController } from "./CommentController";
 import { MoreIcon } from "../../assets/icon/MoreIcon";
 
 const Layout = styled.article`
@@ -64,6 +64,7 @@ const WriterInfo = styled.div`
 
 const Contents = styled.div`
     width: 100%;
+    min-height: 35px;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -99,6 +100,22 @@ const Icon = styled.img<{ size: string; margin?: string }>`
     cursor: pointer;
 `;
 
+const CommentLayout = styled.section`
+    width: 100%;
+    height: auto;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+`;
+
+const CommentButton = styled.span`
+    width: auto;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+`;
+
 interface Props extends ListType {
     postId: number;
     endView?: RefObject<HTMLDivElement> | undefined;
@@ -116,7 +133,7 @@ const Component = ({
 
     const { handleLike, handleDelete, handleWrite } = usePostFunc(postId);
 
-    const commentFunc = useCommentFunc(postId);
+    const commentFunc = useCommentFunc(postId).handleWrite;
 
     return (
         <>
@@ -124,17 +141,19 @@ const Component = ({
                 <WriterInfo>
                     <Link
                         to={{
-                            pathname: `${routes.userInfo}${post?.id}`,
+                            pathname: `${routes.userInfo}${post?.userId}`,
                         }}
                         state={post?.userId}
                     >
                         <Icon size={"40px"} src={post?.profileImage} />
                     </Link>
                     <Text
+                        tag="span"
                         text={`${post?.writer}`}
                         cssObj={{
                             fontSize: "15px",
                             fontWeight: 600,
+                            // width: "auto",
                         }}
                     />
                     <Text
@@ -144,7 +163,7 @@ const Component = ({
                             fontSize: "12px",
                         }}
                     />
-                    {post?.userId === user?.email && (
+                    {post?.userId === user?.email ? (
                         <SeeMoreLayout>
                             <MoreIcon />
                             <HoverButton
@@ -158,6 +177,8 @@ const Component = ({
                                 cssObj={{ textAlign: "left" }}
                             />
                         </SeeMoreLayout>
+                    ) : (
+                        <div></div>
                     )}
                 </WriterInfo>
 
@@ -210,11 +231,14 @@ const Component = ({
                     <HoverButton text={"공유하기"} />
                 </ButtonLayout>
 
-                <CommentList postId={postId} />
+                <CommentController
+                    postId={postId}
+                    commentQuantity={+post?.commentQuantity}
+                />
 
                 <CommentInput
                     label={`${postId}`}
-                    onSubmit={commentFunc.handleWrite}
+                    onSubmit={commentFunc}
                     width={"100%"}
                 />
             </Layout>

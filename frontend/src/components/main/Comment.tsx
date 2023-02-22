@@ -23,8 +23,12 @@ const CommentLayout = styled.article`
 const CommentInfo = styled.div`
     display: flex;
     justify-content: start;
+    column-gap: 10px;
     width: 100%;
     margin-bottom: 3px;
+    > :nth-child(2) {
+        max-width: 80%;
+    }
     > :nth-child(3) {
         align-self: center;
     }
@@ -34,7 +38,6 @@ const CommentContents = styled.span`
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    margin: 0 10px;
     border-radius: 15px;
     padding: 8px 12px;
     background-color: ${(props) => props.theme.color.gray};
