@@ -1,9 +1,48 @@
 import { dataSource } from "../config/typeorm";
 import { Files } from "../entity/files.entity";
 import { User } from "../entity/user.entity";
+import { ProfileReqDto, ProfileResDto } from "../dto/profile.dto";
 
 const userRepository = dataSource.getRepository(User);
 const fileRepository = dataSource.getRepository(Files);
+
+export const findUser = async (profileDto: ProfileReqDto) => {
+    try {
+        const profileEnity = profileDto.toEntity();
+
+        const findOne = await userRepository.findOne({
+            where: { email: profileEnity.email },
+            select: {
+                email: true,
+                nickName: true,
+                gender: true,
+                birth: true,
+                createdAt: true,
+                introduce: true,
+                coverImage: true,
+                profileImage: true,
+            },
+        });
+
+        if (!findOne) return { message: "존재하지 않는 유저입니다." };
+
+        const profileResDto = new ProfileResDto(
+            findOne.email,
+            findOne.nickName,
+            findOne.gender,
+            findOne.birth,
+            `${findOne.createdAt}`,
+            findOne.introduce,
+            findOne.coverImage,
+            findOne.profileImage
+        );
+
+        return profileResDto;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+};
 
 export const saveCoverImage = async (req: any) => {
     try {

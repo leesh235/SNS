@@ -11,7 +11,7 @@ export const dataSource = new DataSource({
     database: process.env.DB_NAME,
     charset: "utf8mb4", //schema character set
     synchronize: false, //테이블 생성여부 확인(처음 한번 생성 후 false로 해야한다.)
-    logging: true, // 로깅 여부
+    logging: false, // 로깅 여부
     entities: [`${entities}`],
     migrations: [],
     subscribers: [],

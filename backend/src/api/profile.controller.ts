@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { routes } from "../config/route";
 import {
     saveCoverImage,
@@ -6,14 +6,21 @@ import {
     saveIntroduce,
     getAllImage,
     getLatestImage,
+    findUser,
 } from "../services/profile.service";
+import { validateUtil } from "../utils/dtoValidate";
+import { ProfileReqDto } from "../dto/profile.dto";
 
 const router = express.Router();
 
 //유저 프로필
-router.get(routes.profile.profile, async (req, res) => {
+router.get(routes.profile.profile, async (req: Request, res: Response) => {
     try {
-        return res.status(200).send(req.user);
+        const profileDto = new ProfileReqDto(req.params.email);
+        validateUtil(profileDto);
+        const result = await findUser(profileDto);
+
+        return res.status(200).send(result);
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
