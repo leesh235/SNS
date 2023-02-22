@@ -58,7 +58,6 @@ export const LogInBox = () => {
                         }}
                     />
                 </BoxLayout>
-                <TextLink to={routes.forget} text={"페이지 만들기."} fw={600} />
             </Layout>
             {modal && (
                 <ModalLayout>

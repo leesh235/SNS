@@ -8,7 +8,7 @@ import { ModifyPwForm } from "../components/forget/ModifyPwForm";
 
 const Wrapper = styled.main`
     width: 100%;
-    height: 276px;
+    height: calc(100vh - 226px);
     display: flex;
     flex-direction: column;
     justify-content: center;

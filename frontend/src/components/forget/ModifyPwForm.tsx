@@ -29,7 +29,7 @@ const FlexLayout = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 16px 16px 32px 16px;
     border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
@@ -38,9 +38,8 @@ const ButtonLayout = styled.div`
     flex-direction: row;
     justify-content: end;
     width: 100%;
-    height: 36px;
-    padding: 16px;
-    margin-top: 16px;
+    height: 62px;
+    padding: 14px 16px;
     border-top: solid 1px ${(props) => props.theme.color.lightGray};
 `;
 
@@ -93,7 +92,7 @@ export const ModifyPwForm = ({ onStepClick }: Props) => {
                 />
                 <FocusInput
                     {...setOption("password")}
-                    cssObj={{ width: "100%" }}
+                    cssObj={{ width: "100%", height: "48px" }}
                     placeholder={"새 비밀번호"}
                     error={errors.password}
                 />
