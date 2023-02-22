@@ -9,10 +9,21 @@ export const calendarUtil = () => {
     const day = now.getDate();
 
     const years = new Array(120).fill(0).map((_, idx) => year - idx);
-    const months = monthArray;
-    const days = new Array(lastDayArray[month - 1])
-        .fill(0)
-        .map((_, idx) => idx);
+    const months = monthArray.map((val, idx) => {
+        if (idx < 9) return `0${val}`;
+        else return `${val}`;
+    });
+    const days = new Array(lastDayArray[month - 1]).fill(0).map((_, idx) => {
+        if (idx < 9) return `0${idx + 1}`;
+        else return `${idx + 1}`;
+    });
 
-    return { year, month, day, years, months, days };
+    return {
+        year,
+        month: month < 10 ? `0${month}` : `${month}`,
+        day: day < 10 ? `0${day}` : `${day}`,
+        years,
+        months,
+        days,
+    };
 };
