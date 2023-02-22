@@ -1,4 +1,6 @@
 import styled from "../../styles/theme-components";
+import { Link } from "react-router-dom";
+import { routes } from "../../utils/routes";
 
 const Wrapper = styled.div<Props>`
     font-size: ${(props) => props.fs};
@@ -14,7 +16,7 @@ interface Props {
 export const Logo = ({ fs, fw }: Props) => {
     return (
         <Wrapper fs={fs} fw={fw}>
-            facebook
+            <Link to={routes.home}>facebook</Link>
         </Wrapper>
     );
 };
