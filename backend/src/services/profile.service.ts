@@ -1,17 +1,18 @@
 import { dataSource } from "../config/typeorm";
 import { Files } from "../entity/files.entity";
 import { User } from "../entity/user.entity";
-import { ProfileReqDto, ProfileResDto } from "../dto/profile.dto";
+import { EmaileReqDto } from "../dto/common/email.dto";
+import { ProfileResDto, ImgResDto, AllImgReqDto } from "../dto/profile.dto";
 
 const userRepository = dataSource.getRepository(User);
 const fileRepository = dataSource.getRepository(Files);
 
-export const findUser = async (profileDto: ProfileReqDto) => {
+export const findUser = async (dto: EmaileReqDto) => {
     try {
-        const profileEnity = profileDto.toEntity();
+        const user = dto.toEntity();
 
         const findOne = await userRepository.findOne({
-            where: { email: profileEnity.email },
+            where: { email: user.email },
             select: {
                 email: true,
                 nickName: true,
@@ -107,12 +108,17 @@ export const saveIntroduce = async (req: any) => {
     }
 };
 
-export const getLatestImage = async (req: any) => {
+export const getLatestImage = async (dto: EmaileReqDto) => {
     try {
-        const { user } = req;
+        const user = dto.toEntity();
 
         const latestImgArr = await fileRepository.find({
-            where: { post: { user: user.email, deletedAt: undefined } },
+            where: {
+                post: {
+                    user: { email: user.email, deletedAt: undefined },
+                    deletedAt: undefined,
+                },
+            },
             select: {
                 id: true,
                 imageUrl: true,
@@ -127,21 +133,26 @@ export const getLatestImage = async (req: any) => {
             return { id: val.id, postId: val.post.id, url: val.imageUrl };
         });
 
-        return { ok: true, data: returnValue };
+        const resultDto = new ImgResDto(returnValue);
+
+        return resultDto.imgList;
     } catch (error) {
-        return { ok: false, data: error };
+        console.log(error);
+        return error;
     }
 };
 
-export const getAllImage = async (req: any) => {
+export const getAllImage = async (dto: AllImgReqDto) => {
     try {
-        const {
-            user,
-            query: { take },
-        } = req;
+        const user = dto.toEntity();
 
         const allImgArr = await fileRepository.find({
-            where: { post: { user: user.email, deletedAt: undefined } },
+            where: {
+                post: {
+                    user: { email: user.email, deletedAt: undefined },
+                    deletedAt: undefined,
+                },
+            },
             select: {
                 id: true,
                 imageUrl: true,
@@ -149,15 +160,18 @@ export const getAllImage = async (req: any) => {
                     id: true,
                 },
             },
-            take: take || 6,
+            take: dto.take,
         });
 
         const returnValue: any[] = allImgArr.map((val) => {
             return { id: val.id, postId: val.post.id, url: val.imageUrl };
         });
 
-        return { ok: true, data: returnValue };
+        const resultDto = new ImgResDto(returnValue);
+
+        return resultDto.imgList;
     } catch (error) {
-        return { ok: false, data: error };
+        console.log(error);
+        return error;
     }
 };

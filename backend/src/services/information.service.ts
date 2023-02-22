@@ -2,41 +2,43 @@ import { dataSource } from "../config/typeorm";
 import { Ability } from "../entity/ability.entity";
 import { School } from "../entity/school.entity";
 import { University } from "../entity/university.entity";
+import { EmaileReqDto } from "../dto/common/email.dto";
 
 const abilityRepository = dataSource.getRepository(Ability);
 const schoolRepository = dataSource.getRepository(School);
 const universityRepository = dataSource.getRepository(University);
 
-export const find = async (req: any) => {
+export const findInfo = async (dto: EmaileReqDto) => {
     try {
-        const {
-            user: { email },
-        } = req;
+        const user = dto.toEntity();
+
         const ability = await abilityRepository.findOne({
             relations: { user: true },
             where: {
-                user: { email },
+                user: {
+                    email: user.email,
+                },
             },
         });
 
         const school = await schoolRepository.findOne({
             relations: { user: true },
             where: {
-                user: { email },
+                user: { email: user.email },
             },
         });
 
         const university = await universityRepository.findOne({
             relations: { user: true },
             where: {
-                user: { email },
+                user: { email: user.email },
             },
         });
 
-        return { ok: true, data: { ability, school, university } };
+        return { ability, school, university };
     } catch (error) {
         console.log(error);
-        return { ok: false, data: error };
+        return error;
     }
 };
 

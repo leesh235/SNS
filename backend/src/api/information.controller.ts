@@ -1,7 +1,7 @@
 import express from "express";
 import { routes } from "../config/route";
 import {
-    find,
+    findInfo,
     saveAbility,
     removeAbility,
     saveSchool,
@@ -9,16 +9,18 @@ import {
     removeSchool,
     removeUniversity,
 } from "../services/information.service";
+import { validateUtil } from "../utils/dtoValidate";
+import { EmaileReqDto } from "../dto/common/email.dto";
 
 const router = express.Router();
 
 //프로필 정보 가져오기
 router.get(routes.information.get, async (req, res) => {
     try {
-        const result = await find(req);
+        const emaileReqDto = new EmaileReqDto(req.params.email);
+        validateUtil(emaileReqDto);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        return res.status(200).send(await findInfo(emaileReqDto));
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
