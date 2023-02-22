@@ -6,6 +6,7 @@ import theme from "../../../styles/theme";
 import { obToUrl } from "../../../utils/objToUrl";
 import { postActionCreator } from "../../../modules/action/post";
 import { postsActionCreator } from "../../../modules/action/posts";
+import { useUserInfo } from "../../../hooks/common/useUserInfo";
 import { useForm } from "../../../hooks/common/useForm";
 import { useModal } from "../../../hooks/common/useModal";
 import { useImageFunc } from "../../../hooks/common/useImageFunc";
@@ -49,9 +50,8 @@ const TitleLayout = styled.article`
 `;
 
 const UserLayout = styled.article`
-    width: 100%;
+    width: 95%;
     height: 40px;
-    padding: 16px 0;
     margin: 0 16px;
     display: flex;
     flex-direction: row;
@@ -59,7 +59,7 @@ const UserLayout = styled.article`
 `;
 
 const TextContents = styled.textarea`
-    width: 100%;
+    width: 95%;
     height: 154px;
     padding: 0 16px;
     border: 0;
@@ -76,7 +76,6 @@ const ImageContents = styled.div`
     width: 100%;
     height: 40px;
     margin: 16px;
-    padding: 8px;
     border: 1px solid ${(props) => props.theme.color.gray};
     border-radius: 6px;
     font-size: 15px;
@@ -154,7 +153,7 @@ interface Props {
     closeFunc: any;
     onWriteSubmit?: any;
     post?: {
-        postId: number;
+        id: number;
         userId: string;
         writer: string;
         contents: string;
@@ -169,12 +168,14 @@ export const WritePost = ({ closeFunc, post }: Props) => {
     const imageModal = useModal();
     const modifyModal = useModal();
 
+    const login = useUserInfo();
+
     const { data, uploadImage, deleteImage } = useImageFunc({
         type: "array",
         initList: post?.images,
     });
 
-    const { handleWrite } = usePostFunc();
+    const { handleWrite } = usePostFunc(post?.id);
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: {},
@@ -204,7 +205,7 @@ export const WritePost = ({ closeFunc, post }: Props) => {
                 <UserLayout>
                     <Image src={post?.profileImage} />
                     <Text
-                        text={post?.writer || ""}
+                        text={login.data?.nickName}
                         cssObj={{
                             width: "auto",
                             fontSize: "15px",

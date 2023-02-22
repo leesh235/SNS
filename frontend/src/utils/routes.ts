@@ -56,7 +56,7 @@ export const api = {
     post: {
         get: "/post/",
         write: "/post/",
-        modify: "/post/moify",
+        modify: "/post/",
         delete: "/post/",
         like: "/post/like",
     },

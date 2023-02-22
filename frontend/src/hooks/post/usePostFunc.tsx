@@ -21,7 +21,14 @@ export const usePostFunc = (postId?: number) => {
 
     const handleWrite = useCallback(
         (formData: any) => {
-            dispatch(postActionCreator.write(formData));
+            if (!postId) dispatch(postActionCreator.write(formData));
+            else
+                dispatch(
+                    postActionCreator.modify(
+                        { postId, ...formData },
+                        { id: postId }
+                    )
+                );
         },
         [dispatch]
     );
