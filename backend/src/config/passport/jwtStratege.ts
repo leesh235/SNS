@@ -10,8 +10,9 @@ const jwtStrategyOptions = {
 };
 
 const jwtVerify = async (payload: any, done: any) => {
+    const user = new User();
     try {
-        const user = await userRepository.findOne({
+        const findMy = await userRepository.findOne({
             where: [
                 {
                     email: payload.email,
@@ -33,13 +34,14 @@ const jwtVerify = async (payload: any, done: any) => {
             },
         });
 
-        if (!user) {
-            return done(null, false);
+        if (!findMy) {
+            return done(null, user);
         } else {
+            user.email = findMy?.email;
             return done(null, user);
         }
     } catch (error) {
-        return done(error);
+        return done(error, user);
     }
 };
 
