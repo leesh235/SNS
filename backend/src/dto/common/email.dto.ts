@@ -15,4 +15,8 @@ export class EmaileReqDto {
         user.email = this.email;
         return user;
     }
+
+    getEmail() {
+        return this.email;
+    }
 }

@@ -8,16 +8,21 @@ const abilityRepository = dataSource.getRepository(Ability);
 const schoolRepository = dataSource.getRepository(School);
 const universityRepository = dataSource.getRepository(University);
 
-export const findInfo = async (dto: EmaileReqDto) => {
+export const findInfo = async (req: any) => {
     try {
-        const user = dto.toEntity();
+        const { user, query } = req;
+
+        const email = query?.email ? query.email : user.email;
 
         const ability = await abilityRepository.findOne({
             relations: { user: true },
             where: {
                 user: {
-                    email: user.email,
+                    email,
                 },
+            },
+            select: {
+                user: {},
             },
         });
 
@@ -26,12 +31,18 @@ export const findInfo = async (dto: EmaileReqDto) => {
             where: {
                 user: { email: user.email },
             },
+            select: {
+                user: {},
+            },
         });
 
         const university = await universityRepository.findOne({
             relations: { user: true },
             where: {
                 user: { email: user.email },
+            },
+            select: {
+                user: {},
             },
         });
 
@@ -53,17 +64,25 @@ export const saveAbility = async (req: any) => {
         abilityObj.name = body.name;
         abilityObj.address = body.address;
         abilityObj.position = body.position;
-        abilityObj.start = body.start;
-        abilityObj.end = body.end;
-        abilityObj.user = email;
-        if (body.id) abilityObj.id = body.id;
 
-        const ability = await abilityRepository.save(abilityObj);
+        let ability: any;
+        const findOne = await abilityRepository.findOne({
+            relations: { user: true },
+            where: { user: { email: email } },
+        });
+        if (findOne) {
+            ability = await abilityRepository.update(
+                { user: email },
+                abilityObj
+            );
+        } else {
+            abilityObj.user = email;
+            ability = await abilityRepository.save(abilityObj);
+        }
 
-        return { ok: true, data: ability };
+        return true;
     } catch (error) {
-        console.log(error);
-        return { ok: false, data: error };
+        return false;
     }
 };
 
@@ -76,12 +95,11 @@ export const removeAbility = async (req: any) => {
 
         await abilityRepository.delete({ id, user: { email } });
 
-        return { ok: true, data: { id } };
+        return true;
     } catch (error) {
-        return { ok: false, data: error };
+        return false;
     }
 };
-
 export const saveSchool = async (req: any) => {
     try {
         const {
@@ -89,23 +107,28 @@ export const saveSchool = async (req: any) => {
             body,
         } = req;
 
-        const find = await schoolRepository.findOne({
-            where: { user: { email } },
-        });
-
         const schollObj = new School();
         schollObj.name = body.name;
         schollObj.start = body.start;
         schollObj.end = body.end;
         schollObj.status = body.status;
         schollObj.user = email;
-        if (body.id) schollObj.id = body.id;
 
-        const school = await schoolRepository.save(schollObj);
+        let school: any;
+        const findOne = await schoolRepository.findOne({
+            relations: { user: true },
+            where: { user: { email: email } },
+        });
+        if (findOne)
+            school = await schoolRepository.update({ user: email }, schollObj);
+        else {
+            schollObj.user = email;
+            school = await schoolRepository.save(schollObj);
+        }
 
-        return { ok: true, data: school };
+        return true;
     } catch (error) {
-        return { ok: false, data: error };
+        return false;
     }
 };
 
@@ -118,9 +141,9 @@ export const removeSchool = async (req: any) => {
 
         await schoolRepository.delete({ id, user: { email } });
 
-        return { ok: true, data: { id } };
+        return true;
     } catch (error) {
-        return { ok: false, data: error };
+        return false;
     }
 };
 
@@ -131,10 +154,6 @@ export const saveUniversity = async (req: any) => {
             body,
         } = req;
 
-        const find = await universityRepository.findOne({
-            where: { user: { email } },
-        });
-
         const universityObj = new University();
         universityObj.name = body.name;
         universityObj.major = body.major;
@@ -143,13 +162,25 @@ export const saveUniversity = async (req: any) => {
         universityObj.end = body.end;
         universityObj.user = email;
         universityObj.status = body.status;
-        if (body.id) universityObj.id = body.id;
 
-        const university = await universityRepository.save(universityObj);
+        let university: any;
+        const findOne = await universityRepository.findOne({
+            relations: { user: true },
+            where: { user: { email: email } },
+        });
+        if (findOne)
+            university = await universityRepository.update(
+                { user: email },
+                universityObj
+            );
+        else {
+            universityObj.user = email;
+            university = await universityRepository.save(universityObj);
+        }
 
-        return { ok: true, data: university };
+        return true;
     } catch (error) {
-        return { ok: false, data: error };
+        return false;
     }
 };
 
@@ -162,8 +193,8 @@ export const removeUniversity = async (req: any) => {
 
         await universityRepository.delete({ id, user: { email } });
 
-        return { ok: true, data: { id } };
+        return true;
     } catch (error) {
-        return { ok: false, data: error };
+        return false;
     }
 };

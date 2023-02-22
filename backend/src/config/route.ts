@@ -38,7 +38,7 @@ export const routes = {
         all: "/image/all/:email",
     },
     information: {
-        get: "/detail/:email",
+        get: "/detail",
         ability: "/ability",
         university: "/university",
         school: "/school",

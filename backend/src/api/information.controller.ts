@@ -17,10 +17,7 @@ const router = express.Router();
 //프로필 정보 가져오기
 router.get(routes.information.get, async (req, res) => {
     try {
-        const emaileReqDto = new EmaileReqDto(req.params.email);
-        validateUtil(emaileReqDto);
-
-        return res.status(200).send(await findInfo(emaileReqDto));
+        return res.status(200).send(await findInfo(req));
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -31,8 +28,8 @@ router.post(routes.information.ability, async (req, res) => {
     try {
         const result = await saveAbility(req);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        if (result) return res.status(200).send(result);
+        return res.status(500).send();
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -43,8 +40,8 @@ router.delete(routes.information.ability, async (req, res) => {
     try {
         const result = await removeAbility(req);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        if (result) return res.status(200).send(result);
+        return res.status(500).send();
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -55,8 +52,8 @@ router.post(routes.information.school, async (req, res) => {
     try {
         const result = await saveSchool(req);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        if (result) return res.status(200).send(result);
+        return res.status(500).send();
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -66,8 +63,8 @@ router.delete(routes.information.school, async (req, res) => {
     try {
         const result = await removeSchool(req);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        if (result) return res.status(200).send(result);
+        return res.status(500).send();
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -78,8 +75,8 @@ router.post(routes.information.university, async (req, res) => {
     try {
         const result = await saveUniversity(req);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        if (result) return res.status(200).send(result);
+        return res.status(500).send();
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
@@ -89,8 +86,8 @@ router.delete(routes.information.university, async (req, res) => {
     try {
         const result = await removeUniversity(req);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        if (result) return res.status(200).send(result);
+        return res.status(500).send();
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }
