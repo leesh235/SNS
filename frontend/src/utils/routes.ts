@@ -32,7 +32,7 @@ export const api = {
     },
     profile: {
         simple: "/profile/simple",
-        profile: "/profile",
+        profile: "/profile/info",
         coverimage: "/profile/coverimage",
         profileimage: "/profile/profileimage",
         introduce: "/profile/introduce",

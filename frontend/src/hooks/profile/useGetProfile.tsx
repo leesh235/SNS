@@ -10,7 +10,7 @@ export const useGetProfile = () => {
     );
 
     useEffect(() => {
-        dispatch(profileActionCreator.profile());
+        dispatch(profileActionCreator.profile({}));
     }, [dispatch]);
 
     return { loading, data, error };

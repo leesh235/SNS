@@ -6,8 +6,8 @@ const logInInfo = async () => {
     return await backend.get(api.profile.simple);
 };
 
-const profile = async () => {
-    return await backend.get(api.profile.profile);
+const profile = async (data: any) => {
+    return await backend.get(`${api.profile.profile}/${data.email}`);
 };
 
 const modifyIntroduce = async (data: Introduce) => {

@@ -106,6 +106,7 @@ const menuUrl = [
 ];
 
 const Profile = () => {
+    const { email } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { ref, check } = useObserver({ height: 450 });
@@ -123,7 +124,7 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        dispatch(profileActionCreator.profile());
+        dispatch(profileActionCreator.profile({ email }));
     }, [dispatch]);
 
     useEffect(() => {}, [check]);

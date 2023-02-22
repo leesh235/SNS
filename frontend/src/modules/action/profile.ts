@@ -11,9 +11,10 @@ export const profileAction = {
 };
 
 export const profileActionCreator = {
-    profile: () => {
+    profile: (data: any) => {
         return {
             type: profileAction.profile,
+            data,
         };
     },
     simple: () => {
