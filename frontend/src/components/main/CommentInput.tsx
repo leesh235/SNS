@@ -1,10 +1,9 @@
 import styled from "../../styles/theme-components";
 import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
-import { useUserInfo } from "../../hooks/common/useUserInfo";
 import { useForm } from "../../hooks/common/useForm";
 import { writeCommentValidate } from "../../utils/validate";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.form<StyleProps>`
     width: ${(props) => props.width};
@@ -57,13 +56,13 @@ export const CommentInput = ({
     onSubmit,
     defaultValue,
 }: Props) => {
-    const { data } = useUserInfo();
+    const { simple } = useSelector((state: any) => state.profile.simple);
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: { contents: defaultValue },
         validate: writeCommentValidate,
         onSubmit: (formData: any) => {
-            if (!data) {
+            if (!simple) {
                 alert("로그인 후 이용해주세요");
                 return;
             }
@@ -75,10 +74,10 @@ export const CommentInput = ({
         <Wrapper width={width} height={height} onSubmit={handleSubmit}>
             <Link
                 to={{
-                    pathname: `${routes.userInfo}${data?.email}`,
+                    pathname: `${routes.userInfo}${simple?.email}`,
                 }}
             >
-                <Icon src={data?.profileImage} />
+                <Icon src={simple?.profileImage} />
             </Link>
             <Input
                 defaultValue={defaultValue}

@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { routes } from "../../../utils/routes";
 import { useModal } from "../../../hooks/common/useModal";
 import { useMenuFunc } from "../../../hooks/common/useMenuFunc";
+import { useUserInfo } from "../../../hooks/common/useUserInfo";
 //components
 import { LogoIcon } from "../../../assets/icon/LogoIcon";
 import { AppIcon } from "../../../assets/icon/AppIcon";
@@ -140,6 +141,8 @@ const rightMenuList = [
 
 export const Header = () => {
     const location = useLocation();
+
+    const { data } = useUserInfo();
 
     const userModal = useModal();
     const { selected, handleMenuClick, ininMenu } = useMenuFunc({
