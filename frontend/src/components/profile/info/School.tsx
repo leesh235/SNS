@@ -79,7 +79,7 @@ export const School = ({ data }: Props) => {
                     <div>
                         <div>
                             <Text
-                                text={data?.school}
+                                text={data?.name}
                                 cssObj={{ fontSize: "15px" }}
                             />
                         </div>

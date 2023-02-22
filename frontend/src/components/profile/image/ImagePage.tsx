@@ -1,16 +1,14 @@
 import styled from "../../../styles/theme-components";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ImageCard } from "./ImageCard";
-import { profileActionCreator } from "../../../modules/action/profile";
 import { useParams } from "react-router-dom";
 import { Text } from "../../common/Text";
 import { routes } from "../../../utils/routes";
 import { useGetImage } from "../../../hooks/profile/useGetImage";
 
 const Wrapper = styled.section`
-    width: 90%;
+    max-width: 950px;
+    width: 100%;
     height: 100vh;
     margin-top: 16px;
 `;
@@ -83,7 +81,7 @@ const Image = styled.img`
 
 interface Props {}
 
-export const ImagePage = ({}: Props) => {
+export const ImagePage = ({ isYou = false }: { isYou: boolean }) => {
     const { email } = useParams();
 
     const { loading, data, error } = useGetImage("all", email);

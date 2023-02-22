@@ -76,7 +76,7 @@ export const Ability = ({ data }: Props) => {
                     <div>
                         <div>
                             <Text
-                                text={data?.job}
+                                text={data?.name}
                                 tag={"span"}
                                 cssObj={{ fontSize: "13px", fontWeight: 600 }}
                             />
@@ -120,7 +120,7 @@ export const Ability = ({ data }: Props) => {
                         defaultValue={data?.position || ""}
                     />
                     <HoverInput
-                        {...setOption("name")}
+                        {...setOption("address")}
                         title={"도서/지역"}
                         defaultValue={data?.address || ""}
                     />

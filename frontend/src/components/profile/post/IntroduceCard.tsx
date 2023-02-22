@@ -1,5 +1,5 @@
 import styled from "../../../styles/theme-components";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 //functions
 import theme from "../../../styles/theme";
 import { useModal } from "../../../hooks/common/useModal";
@@ -79,11 +79,14 @@ interface Props {
 }
 
 export const IntroduceCard = ({ handleUrl }: Props) => {
+    const login = useSelector((state: any) => state?.profile?.simple);
+    const { loading, data, error } = useSelector(
+        (state: any) => state?.profile?.profile
+    );
+
     const { modal, handleModal, CloseModal } = useModal();
 
     const { modifyIntroduce } = useProfileFunc();
-
-    const { loading, data, error } = useGetProfile();
 
     const { errors, setOption, handleSubmit } = useForm({
         initValues: { introduce: data?.introduce },
@@ -94,6 +97,31 @@ export const IntroduceCard = ({ handleUrl }: Props) => {
         },
     });
 
+    if (data?.email !== login.data?.email)
+        return (
+            <BoxShadow tag={"article"}>
+                <Layout>
+                    <Text
+                        text={"소개"}
+                        cssObj={{
+                            width: "95%",
+                            fontSize: "20px",
+                            fontWeight: 700,
+                            margin: "10px",
+                        }}
+                    />
+                    <Text
+                        text={data?.introduce}
+                        tag={"span"}
+                        cssObj={{
+                            fontSize: "15px",
+                            margin: "8px 0",
+                            width: "auto",
+                        }}
+                    />
+                </Layout>
+            </BoxShadow>
+        );
     return (
         <BoxShadow tag={"article"}>
             <Layout>

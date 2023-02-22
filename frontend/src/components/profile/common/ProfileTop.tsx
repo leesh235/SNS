@@ -54,18 +54,24 @@ export const ProfileTop = () => {
     const { loading, data, error } = useSelector(
         (state: any) => state?.profile?.profile
     );
+    const login = useSelector((state: any) => state?.profile?.simple);
     const isFriend = useSelector((state: any) => state?.friends?.isFriend);
-    const loginInfo = useSelector((state: any) => state?.profile?.simple);
 
     useEffect(() => {}, [loading]);
 
     return (
         <>
             <Layout>
-                <CoverImage data={data} />
+                <CoverImage
+                    data={data}
+                    isYou={data?.email === login.data?.email}
+                />
 
                 <FlexLayout>
-                    <ProfileImage data={data} />
+                    <ProfileImage
+                        data={data}
+                        isYou={data?.email === login.data?.email}
+                    />
 
                     <UserLayout>
                         <Text

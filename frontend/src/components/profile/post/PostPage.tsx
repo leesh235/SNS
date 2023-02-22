@@ -10,6 +10,7 @@ import { LatestImageCard } from "./LatestImageCard";
 
 const Layout = styled.section`
     width: 100%;
+    min-height: calc(100vh - 556px);
     padding: 0 16px;
     margin-top: 16px;
     ${(props) =>
@@ -89,9 +90,10 @@ const FlexLayout = styled.div`
 interface Props {
     handleUrl: any;
     check: boolean;
+    isYou: boolean;
 }
 
-export const PostPage = ({ handleUrl, check }: Props) => {
+export const PostPage = ({ handleUrl, check, isYou }: Props) => {
     return (
         <>
             <Layout>
@@ -114,7 +116,7 @@ export const PostPage = ({ handleUrl, check }: Props) => {
                     </FixLayout>
                 </LeftLayout>
                 <RightLayout>
-                    <WritePostCard />
+                    {isYou && <WritePostCard />}
                     <PostSection />
                 </RightLayout>
             </Layout>

@@ -57,9 +57,10 @@ const ImageHeader = styled.div`
 
 interface Props {
     data: any;
+    isYou: boolean;
 }
 
-export const CoverImage = ({ data }: Props) => {
+export const CoverImage = ({ data, isYou }: Props) => {
     const { modal, handleModal } = useModal();
 
     const { file, handleRemoveFile, setOptions } = useFileFunc();
@@ -97,22 +98,24 @@ export const CoverImage = ({ data }: Props) => {
                         />
                     </ImageHeader>
                 )}
-                <ImageShadow>
-                    <SeeMoreLayout flag={file && true}>
-                        <HoverButton
-                            text={"커버 사진 추가"}
-                            cssObj={{
-                                width: "144px",
-                            }}
-                        />
-                        <HoverButton
-                            text={"사진 선택"}
-                            onClick={handleModal}
-                            cssObj={{ textAlign: "left" }}
-                        />
-                        <FileButton htmlFor="coverimage" />
-                    </SeeMoreLayout>
-                </ImageShadow>
+                {isYou && (
+                    <ImageShadow>
+                        <SeeMoreLayout flag={file && true}>
+                            <HoverButton
+                                text={"커버 사진 추가"}
+                                cssObj={{
+                                    width: "144px",
+                                }}
+                            />
+                            <HoverButton
+                                text={"사진 선택"}
+                                onClick={handleModal}
+                                cssObj={{ textAlign: "left" }}
+                            />
+                            <FileButton htmlFor="coverimage" />
+                        </SeeMoreLayout>
+                    </ImageShadow>
+                )}
             </Layout>
             {modal && (
                 <ModalLayout onCloseClick={handleModal}>

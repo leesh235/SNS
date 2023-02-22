@@ -23,6 +23,13 @@ const Layout = styled.div`
     z-index: 1;
 `;
 
+const ProfileImgLayout = styled.span`
+    width: auto;
+    height: auto;
+    display: inline-block;
+    position: relative;
+`;
+
 const Image = styled.img`
     width: 168px;
     height: 168px;
@@ -33,20 +40,29 @@ const Image = styled.img`
 
 interface Props {
     data: any;
+    isYou: boolean;
 }
 
-export const ProfileImage = ({ data }: Props) => {
+export const ProfileImage = ({ data, isYou }: Props) => {
     const { file, setOptions, handleRemoveFile } = useFileFunc();
     const { modal, handleModal } = useModal(false, handleRemoveFile);
 
     return (
         <>
-            <SeeMoreLayout top="100px" right="-270px">
-                <Layout>
-                    <Image src={data?.profileImage}></Image>
-                </Layout>
-                <HoverButton text={"사진 추가"} onClick={handleModal} />
-            </SeeMoreLayout>
+            {isYou ? (
+                <SeeMoreLayout top="100px" right="-270px">
+                    <Layout>
+                        <Image src={data?.profileImage}></Image>
+                    </Layout>
+                    <HoverButton text={"사진 추가"} onClick={handleModal} />
+                </SeeMoreLayout>
+            ) : (
+                <ProfileImgLayout>
+                    <Layout>
+                        <Image src={data?.profileImage}></Image>
+                    </Layout>
+                </ProfileImgLayout>
+            )}
             {modal && (
                 <ModalLayout onCloseClick={handleModal}>
                     {!file ? (

@@ -2,11 +2,13 @@ import styled from "../styles/theme-components";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 //functions
 import theme from "../styles/theme";
 import { profileActionCreator } from "../modules/action/profile";
 import { friendsActionCreator } from "../modules/action/friends";
 import { useObserver } from "../hooks/common/useObserver";
+import { useGetProfile } from "../hooks/profile/useGetProfile";
 //components
 import { Text } from "../components/common/Text";
 import { IconButton } from "../components/common/button/IconButton";
@@ -111,6 +113,9 @@ const Profile = () => {
     const navigate = useNavigate();
     const { ref, check } = useObserver({ height: 450 });
 
+    const { loading, data, error } = useGetProfile({ email });
+    const login = useSelector((state: any) => state?.profile?.simple);
+
     const [click, setClick] = useState<number>(0);
 
     const handleOnClick = ({ id }: { id: number }) => {
@@ -184,10 +189,18 @@ const Profile = () => {
             </MenuLayout>
 
             {click === 0 && (
-                <PostPage handleUrl={handleOnClick} check={check} />
+                <PostPage
+                    handleUrl={handleOnClick}
+                    check={check}
+                    isYou={data?.email === login.data?.email}
+                />
             )}
-            {click === 1 && <ProfileInfo />}
-            {click === 2 && <ImagePage />}
+            {click === 1 && (
+                <ProfileInfo isYou={data?.email === login.data?.email} />
+            )}
+            {click === 2 && (
+                <ImagePage isYou={data?.email === login.data?.email} />
+            )}
             {/* {click === 3 && <ProfileFriend />}  */}
             {/* {click === 4 && <ProfileVideo />} */}
             {/* {click === 5 && <ProfileCheckIn />} */}
