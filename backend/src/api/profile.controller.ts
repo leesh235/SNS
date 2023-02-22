@@ -81,8 +81,8 @@ router.get(routes.profile.all, async (req: Request, res: Response) => {
             req.params.email,
             req.query.take ? +req.query.take : 6
         );
-        validateUtil(allImgReqDto);
 
+        validateUtil(allImgReqDto);
         return res.status(200).send(await getAllImage(allImgReqDto));
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
