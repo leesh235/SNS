@@ -7,7 +7,7 @@ const commentRepository = dataSource.getRepository(Comment);
 export const findAll = async (req: any) => {
     try {
         const {
-            query: { postId },
+            query: { postId, take },
         } = req;
 
         const find = await commentRepository.find({
@@ -24,6 +24,7 @@ export const findAll = async (req: any) => {
                 },
                 post: {},
             },
+            take,
             order: {
                 createdAt: "desc",
             },
