@@ -46,6 +46,7 @@ export const LoginForm = () => {
             <FocusInput
                 {...setOption("email")}
                 placeholder={"이메일 또는 전화번호"}
+                cssObj={{ height: "48px" }}
                 error={errors.email}
             />
             {errors.email === "required" && (
@@ -54,6 +55,7 @@ export const LoginForm = () => {
             <FocusInput
                 {...setOption("password")}
                 placeholder={"비밀번호"}
+                cssObj={{ height: "48px" }}
                 type={"password"}
                 error={errors.password}
             />
