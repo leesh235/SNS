@@ -304,36 +304,81 @@ export const findBookmark = async (req: any) => {
 export const findUserList = async (req: any) => {
     try {
         const {
-            query: { email },
+            user: { email },
+            query: { take, userId },
         } = req;
+        const limit: number = take ? +take : 6;
+        const likeQb = likesRepository
+            .createQueryBuilder("likes")
+            .subQuery()
+            .select([
+                "likes.post_id AS postId",
+                "COUNT(likes.post_id) AS likeQuantity",
+            ])
+            .from(Likes, "likes")
+            .groupBy("likes.post_id")
+            .getQuery();
+
+        const commentQb = commentRepository
+            .createQueryBuilder("comment")
+            .subQuery()
+            .select([
+                "comment.post_id AS postId",
+                "COUNT(comment.post_id) AS commentQuantity",
+            ])
+            .from(Comment, "comment")
+            .groupBy("comment.post_id")
+            .getQuery();
 
         const findList = await postRepository
             .createQueryBuilder("post")
             .leftJoinAndSelect("post.user", "user")
-            .leftJoinAndSelect("post.comment", "comment")
-            .leftJoinAndSelect("post.likes", "likes")
+            .leftJoinAndSelect(
+                "post.likes",
+                "likes",
+                "likes.user_id = :email and likes.post_id = post.id",
+                { email }
+            )
+            .leftJoinAndSelect(commentQb, "comment", "post.id = comment.postId")
+            .leftJoinAndSelect(likeQb, "like", "post.id = like.postId")
             .select([
                 "post.id AS id",
                 "post.contents AS contents",
                 "post.create_date AS createAt",
-                "user.email AS email",
-                "user.nickName AS nickName",
+                "user.email AS userId",
+                "user.nickName AS writer",
                 "user.profileImage AS profileImage",
-                "count(comment.post_id) AS commentQuantity",
-                "count(likes.post_id) AS likeQuantity",
+                "IFNULL(comment.commentQuantity, 0) AS commentQuantity",
+                "IFNULL(like.likeQuantity, 0) AS likeQuantity",
+                "CASE WHEN likes.id IS NULL THEN false ELSE true END AS likeStatus",
             ])
-            .where("post.writer = :email", { email })
-            .groupBy("comment.post_id, post.id, likes.post_id")
+            .where("post.writer = :email", { email: userId })
+            .limit(limit)
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        const result: any = {};
+        const imageList = await fileRepository.find({
+            relations: { post: true, user: true },
+            where: { post: { id: Not(IsNull()), deletedAt: undefined } },
+            select: {
+                id: true,
+                imageUrl: true,
+                post: {
+                    id: true,
+                },
+            },
+        });
 
-        findList.forEach(
-            (val) =>
-                (result[val.id] = { ...val, likeStatus: false, images: [] })
-        );
+        const result: any = [];
 
+        findList.forEach((val) => {
+            const images: any[] = imageList.filter(
+                (img) => img.post.id === val.id
+            );
+            return result.push({ ...val, images });
+        });
+        console.log(userId);
+        console.log(result);
         return { ok: true, data: result };
     } catch (error) {
         console.log(error);
