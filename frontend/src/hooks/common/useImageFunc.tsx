@@ -33,6 +33,7 @@ export const useImageFunc = ({ type = "single", initList = [] }: Props) => {
                 formData.append("image", files[0]);
                 dispatch(imageActionCreator.single(formData));
             }
+            dispatch(imageActionCreator.init());
         },
         [dispatch]
     );

@@ -139,7 +139,7 @@ const Component = ({
     const { handleLike, handleDelete, handleWrite } = usePostFunc(post.id);
 
     const commentFunc = useCommentFunc(post.id).handleWrite;
-
+    console.log(post);
     return (
         <>
             <Layout ref={endView}>
