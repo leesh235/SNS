@@ -72,13 +72,13 @@ export const findAll = async (req: any) => {
             },
         });
 
-        const result: any = {};
+        const result: any = [];
 
         findList.forEach((val) => {
             let images: any[] = [];
             if (imageList)
                 images = imageList.filter((img) => img.id === val.id);
-            return (result[val.id] = { ...val, images });
+            return result.push({ ...val, images });
         });
 
         return { ok: true, data: result };
@@ -94,7 +94,7 @@ export const findMy = async (req: any) => {
             user: { email },
             query: { take },
         } = req;
-
+        const limit: number = take ? +take : 6;
         const likeQb = likesRepository
             .createQueryBuilder("likes")
             .subQuery()
@@ -140,7 +140,7 @@ export const findMy = async (req: any) => {
                 "CASE WHEN likes.id IS NULL THEN false ELSE true END AS likeStatus",
             ])
             .where("post.writer = :email", { email })
-            .limit(Number(take))
+            .limit(limit)
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
@@ -153,13 +153,13 @@ export const findMy = async (req: any) => {
             },
         });
 
-        const result: any = {};
+        const result: any = [];
 
         findList.forEach((val) => {
             let images: any[] = [];
             if (imageList)
                 images = imageList.filter((img) => img.id === val.id);
-            return (result[val.id] = { ...val, images });
+            return result.push({ ...val, images });
         });
 
         return { ok: true, data: result };
