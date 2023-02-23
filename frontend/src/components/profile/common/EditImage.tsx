@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 //functions
 import { base64ToImage } from "../../../utils/base64Func";
 import theme from "../../../styles/theme";
+import { profileActionCreator } from "../../../modules/action/profile";
 //components
 import { Text } from "../../common/Text";
 import { AvatarEditor } from "../../common/AvatarEditor";
@@ -61,23 +62,26 @@ const CloseBtn = styled.div`
 interface Props {
     onCloseClick: any;
     image: any;
+    onSaveClick: any;
 }
 
-export const EditImage = ({ onCloseClick, image }: Props) => {
+export const EditImage = ({ onCloseClick, image, onSaveClick }: Props) => {
     const editorRef = useRef() as any;
     const dispatch = useDispatch();
 
     // const saveImage: React.FormEventHandler<HTMLFormElement> = () => {
     const saveImage = () => {
-        const file = base64ToImage(
-            editorRef.current.getImageScaledToCanvas().toDataURL("image/png"),
-            image.name
-        );
-        const formData = new FormData();
-        formData.append("mode", "profile");
-        formData.append("image", file);
+        // const file = base64ToImage(
+        //     editorRef.current.getImageScaledToCanvas().toDataURL("image/png"),
+        //     image.name
+        // );
+        // const formData = new FormData();
+        // formData.append("mode", "profile");
+        // formData.append("image", file);
 
-        dispatch(imageActionCreator.single({ image: file }));
+        // dispatch(profileActionCreator.modifyProfileimage({ id: image.id }));
+        // dispatch(imageActionCreator.init());
+        onSaveClick();
         onCloseClick();
     };
 
@@ -94,7 +98,7 @@ export const EditImage = ({ onCloseClick, image }: Props) => {
                 />
                 <CloseBtn onClick={onCloseClick}>X</CloseBtn>
             </Top>
-            <AvatarEditor image={image} editorRef={editorRef} />
+            <AvatarEditor image={image.url} editorRef={editorRef} />
             <Bottom>
                 <BagicButton
                     text="취소"

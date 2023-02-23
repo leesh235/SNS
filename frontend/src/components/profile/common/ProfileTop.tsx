@@ -69,7 +69,7 @@ export const ProfileTop = () => {
 
                 <FlexLayout>
                     <ProfileImage
-                        data={data}
+                        profile={data}
                         isYou={data?.email === login.data?.email}
                     />
 

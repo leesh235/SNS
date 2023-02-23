@@ -71,22 +71,42 @@ const reducer = (state = initialState, action: any) => {
             };
 
         case profileAction.coverImage:
-        case typeUtils(profileAction.coverImage).success:
         case typeUtils(profileAction.coverImage).error:
             return handleAsyncReducer(
                 profileAction.coverImage,
                 "coverImage",
                 true
             )(state, action);
+        case typeUtils(profileAction.coverImage).success:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    data: {
+                        ...state.profile.data,
+                        ...action.data,
+                    },
+                },
+            };
 
         case profileAction.profileImage:
-        case typeUtils(profileAction.profileImage).success:
         case typeUtils(profileAction.profileImage).error:
             return handleAsyncReducer(
                 profileAction.profileImage,
                 "profileImage",
                 true
             )(state, action);
+        case typeUtils(profileAction.profileImage).success:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    data: {
+                        ...state.profile.data,
+                        ...action.data,
+                    },
+                },
+            };
 
         default:
             return state;

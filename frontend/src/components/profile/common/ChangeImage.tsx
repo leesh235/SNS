@@ -49,10 +49,10 @@ const CloseBtn = styled.div`
 
 interface Props {
     onCloseClick: any;
-    inputAtt: any;
+    onUploadImg: React.ChangeEventHandler;
 }
 
-export const ChangeImage = ({ onCloseClick, inputAtt }: Props) => {
+export const ChangeImage = ({ onCloseClick, onUploadImg }: Props) => {
     return (
         <Layout>
             <TitleLayout>
@@ -67,8 +67,8 @@ export const ChangeImage = ({ onCloseClick, inputAtt }: Props) => {
                 <CloseBtn onClick={onCloseClick}>X</CloseBtn>
             </TitleLayout>
             <ContentsLayout>
-                <FileInput {...inputAtt("userimage")} />
-                <FileButton htmlFor="userimage" />
+                <FileInput id="proflieImg" onChange={onUploadImg} />
+                <FileButton htmlFor="proflieImg" />
             </ContentsLayout>
         </Layout>
     );

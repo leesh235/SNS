@@ -1,7 +1,7 @@
 import styled from "../../../styles/theme-components";
 //functions
 import { useModal } from "../../../hooks/common/useModal";
-import { useFileFunc } from "../../../hooks/common/useFileFunc";
+import { useProfileImg } from "../../../hooks/profile/useProfileImg";
 //components
 import { SeeMoreLayout } from "../../common/SeeMoreLayout";
 import { HoverButton } from "../../common/button/HoverButton";
@@ -39,41 +39,43 @@ const Image = styled.img`
 `;
 
 interface Props {
-    data: any;
+    profile: any;
     isYou: boolean;
 }
 
-export const ProfileImage = ({ data, isYou }: Props) => {
-    const { file, setOptions, handleRemoveFile } = useFileFunc();
-    const { modal, handleModal } = useModal(false, handleRemoveFile);
+export const ProfileImage = ({ profile, isYou }: Props) => {
+    const { modal, handleModal, CloseModal } = useModal(false);
+
+    const { data, handleUploadImg, handleSubmit } = useProfileImg();
 
     return (
         <>
             {isYou ? (
                 <SeeMoreLayout top="100px" right="-270px">
                     <Layout>
-                        <Image src={data?.profileImage}></Image>
+                        <Image src={profile?.profileImage}></Image>
                     </Layout>
                     <HoverButton text={"사진 추가"} onClick={handleModal} />
                 </SeeMoreLayout>
             ) : (
                 <ProfileImgLayout>
                     <Layout>
-                        <Image src={data?.profileImage}></Image>
+                        <Image src={profile?.profileImage}></Image>
                     </Layout>
                 </ProfileImgLayout>
             )}
             {modal && (
                 <ModalLayout onCloseClick={handleModal}>
-                    {!file ? (
+                    {!data ? (
                         <ChangeImage
                             onCloseClick={handleModal}
-                            inputAtt={setOptions}
+                            onUploadImg={handleUploadImg}
                         />
                     ) : (
                         <EditImage
-                            image={file}
-                            onCloseClick={handleRemoveFile}
+                            image={data}
+                            onCloseClick={handleModal}
+                            onSaveClick={handleSubmit}
                         />
                     )}
                 </ModalLayout>

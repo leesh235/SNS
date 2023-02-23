@@ -24,4 +24,9 @@ export const imageActionCreator = {
             type: imageAction.remove,
         };
     },
+    init: () => {
+        return {
+            type: "init",
+        };
+    },
 };

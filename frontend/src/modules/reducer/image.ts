@@ -35,6 +35,13 @@ const reducer = (state = initialState, action: any) => {
                 "remove",
                 true
             )(state, action);
+
+        case "init":
+            return {
+                single: reducerUtils.initial(null),
+                array: reducerUtils.initial(null),
+                remove: reducerUtils.initial(null),
+            };
         default:
             return state;
     }
