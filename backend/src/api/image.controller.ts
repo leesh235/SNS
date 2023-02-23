@@ -9,7 +9,8 @@ const router = express.Router();
 router.post(routes.image.single, uploads.single("image"), async (req, res) => {
     try {
         const result = await fileUpload(req);
-        res.status(200).send(result);
+        if (result) res.status(200).send(result);
+        else res.status(500).send(result);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
@@ -19,7 +20,8 @@ router.post(routes.image.single, uploads.single("image"), async (req, res) => {
 router.post(routes.image.array, uploads.array("images"), async (req, res) => {
     try {
         const result = await fileArrayUpload(req);
-        res.status(200).send(result);
+        if (result) res.status(200).send(result);
+        else res.status(500).send(result);
     } catch (error) {
         res.status(500).send({ message: `${error}` });
     }
