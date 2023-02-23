@@ -9,6 +9,7 @@ import Detail from "../../../pages/Detail";
 import Friends from "../../../pages/Friends";
 import Search from "../../../pages/Search";
 import Bookmark from "../../../pages/Bookmark";
+import LikePage from "../../../pages/Like";
 
 export const LogInRoute = () => {
     return (
@@ -16,6 +17,7 @@ export const LogInRoute = () => {
             <Header />
             <Routes>
                 <Route path={`${routes.home}`} element={<Main />} />
+                <Route path={`${routes.like}`} element={<LikePage />} />
                 <Route path={`${routes.bookmark}`} element={<Bookmark />} />
                 <Route path={`${routes.welcome}`} element={<Start />} />
                 <Route path={`${routes.detail}:postId`} element={<Detail />} />

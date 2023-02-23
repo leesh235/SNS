@@ -90,12 +90,13 @@ const FixRightLayout = styled.div`
     `)}
 `;
 
-const Main = () => {
+const LikePage = () => {
+    console.log("LikePage");
     return (
         <>
             <Layout>
                 <Gap1></Gap1>
-                <PostList />
+                <PostList type="likePosts" />
                 <Gap2></Gap2>
             </Layout>
             <FixLeftLayout>
@@ -108,4 +109,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export default LikePage;
