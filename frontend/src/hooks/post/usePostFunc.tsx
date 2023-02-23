@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { imageActionCreator } from "../../modules/action/image";
 import { postActionCreator } from "../../modules/action/post";
 
 export const usePostFunc = (postId?: number) => {
@@ -30,6 +31,7 @@ export const usePostFunc = (postId?: number) => {
                         { id: postId }
                     )
                 );
+            dispatch(imageActionCreator.init());
         },
         [dispatch]
     );
