@@ -9,8 +9,8 @@ router.get(routes.post.get, async (req, res) => {
     try {
         const result = await find(req);
 
-        if (result.ok) return res.status(200).send(result.data);
-        return res.status(500).send(result.data);
+        if (result) return res.status(200).send(result);
+        return res.status(500).send(result);
     } catch (error) {
         return res.status(500).send({ message: `${error}` });
     }

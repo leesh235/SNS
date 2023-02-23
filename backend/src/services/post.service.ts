@@ -69,10 +69,22 @@ export const find = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawOne();
 
-        return { ok: true, data: find };
+        const images = await fileRepository.find({
+            relations: { post: true },
+            where: { post: { id: find.id, deletedAt: undefined } },
+            select: {
+                id: true,
+                imageUrl: true,
+                post: {
+                    id: true,
+                },
+            },
+        });
+
+        return { ...find, images };
     } catch (error) {
         console.log(error);
-        return { ok: false, data: error };
+        return false;
     }
 };
 
