@@ -23,7 +23,7 @@ export const fileUpload = async (req: any) => {
 
         const result = await fileRepository.save(fileObj);
 
-        return { id: result.id, url: fileObj.imageUrl };
+        return { id: result.id, imageUrl: fileObj.imageUrl };
     } catch (error) {
         return false;
     }
@@ -51,7 +51,7 @@ export const fileArrayUpload = async (req: any) => {
 
         let returnValue: any[] = [];
         for (let val of result)
-            returnValue.push({ id: val.id, url: val.imageUrl });
+            returnValue.push({ id: val.id, imageUrl: val.imageUrl });
 
         return returnValue;
     } catch (error) {
