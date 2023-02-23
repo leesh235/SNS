@@ -4,6 +4,7 @@ export const postsAction = {
     myPosts: "posts/MYPOSTS",
     likePosts: "posts/LIKEPOSTS",
     friendsPosts: "posts/FRIENDSPOSTS",
+    reset: "posts/RESET",
 };
 
 export const postsActionCreator = {
@@ -35,6 +36,11 @@ export const postsActionCreator = {
         return {
             type: postsAction.friendsPosts,
             data,
+        };
+    },
+    reset: () => {
+        return {
+            type: postsAction.reset,
         };
     },
 };

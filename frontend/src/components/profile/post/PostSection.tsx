@@ -128,7 +128,7 @@ export const PostSection = ({ user, isYou = false }: Props) => {
             {menu === 0 ? (
                 <PostList
                     type={isYou ? "myPosts" : "userPosts"}
-                    userId={user.email}
+                    userId={user?.email}
                 />
             ) : (
                 <PostGridList />

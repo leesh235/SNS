@@ -99,6 +99,12 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
 
+        case postsAction.reset:
+            return {
+                ...state,
+                posts: [],
+            };
+
         default:
             return state;
     }

@@ -4,8 +4,9 @@ import { ListType } from "../../types/lib/post";
 import { useGetPosts } from "../../hooks/post/useGetPosts";
 //components
 import { PostCard } from "./PostCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { postsActionCreator } from "../../modules/action/posts";
 
 const Wrapper = styled.span`
     width: auto;
@@ -21,8 +22,15 @@ interface Props extends ListType {
 }
 
 export const PostList = ({ type = "allPosts", userId }: Props) => {
+    const dispatch = useDispatch();
+
     const { loading, target, data } = useGetPosts({ type, userId });
 
+    useEffect(() => {
+        return () => {
+            dispatch(postsActionCreator.reset());
+        };
+    }, []);
     return (
         <Wrapper>
             {data?.length === 0 ? (
