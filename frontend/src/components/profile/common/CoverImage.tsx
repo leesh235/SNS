@@ -3,6 +3,7 @@ import styled from "../../../styles/theme-components";
 import { useModal } from "../../../hooks/common/useModal";
 import { useFileFunc } from "../../../hooks/common/useFileFunc";
 import { obToUrl } from "../../../utils/objToUrl";
+import { useProfileImg } from "../../../hooks/profile/useProfileImg";
 //components
 import { SelectImage } from "../../common/card/SelectImage";
 import { HoverButton } from "../../common/button/HoverButton";
@@ -56,39 +57,25 @@ const ImageHeader = styled.div`
 `;
 
 interface Props {
-    data: any;
+    profile: any;
     isYou: boolean;
 }
 
-export const CoverImage = ({ data, isYou }: Props) => {
+export const CoverImage = ({ profile, isYou }: Props) => {
     const { modal, handleModal } = useModal();
 
-    const { file, handleRemoveFile, setOptions } = useFileFunc();
-
-    const saveImage = () => {
-        if (file) {
-            const formData = new FormData();
-
-            formData.append("mode", "cover");
-            formData.append("streamfile", file);
-
-            // dispatch(profileActionCreator.modifyCoverimage({id}));
-            handleRemoveFile();
-        }
-    };
+    const { data, handleSubmit, handleUploadImg, handleRemove } =
+        useProfileImg("coverImg");
 
     return (
         <>
-            <Layout cImg={!file ? data?.coverImage : obToUrl(file)}>
-                {file && (
+            <Layout cImg={!data ? profile?.coverImage : data.url}>
+                {data && (
                     <ImageHeader>
-                        <InvisibleButton
-                            text="취소"
-                            onClick={handleRemoveFile}
-                        />
+                        <InvisibleButton text="취소" onClick={handleRemove} />
                         <BagicButton
                             text="변경 내용 저장"
-                            onClick={saveImage}
+                            onClick={handleSubmit}
                             cssObj={{
                                 width: "178px",
                                 height: "36px",
@@ -100,7 +87,7 @@ export const CoverImage = ({ data, isYou }: Props) => {
                 )}
                 {isYou && (
                     <ImageShadow>
-                        <SeeMoreLayout flag={file && true}>
+                        <SeeMoreLayout flag={data && true}>
                             <HoverButton
                                 text={"커버 사진 추가"}
                                 cssObj={{
@@ -122,7 +109,7 @@ export const CoverImage = ({ data, isYou }: Props) => {
                     <SelectImage closeFunc={handleModal} />
                 </ModalLayout>
             )}
-            <FileInput {...setOptions("coverimage")} />
+            <FileInput id="coverimage" onChange={handleUploadImg} />
         </>
     );
 };

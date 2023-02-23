@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { imageActionCreator } from "../../modules/action/image";
 import { profileActionCreator } from "../../modules/action/profile";
 
-export const useProfileImg = () => {
+export const useProfileImg = (
+    type: "profileImg" | "coverImg" = "profileImg"
+) => {
     const dispatch = useDispatch();
 
     const { loading, data, error } = useSelector(
@@ -25,10 +27,21 @@ export const useProfileImg = () => {
 
     const handleSubmit = useCallback(() => {
         if (data) {
-            dispatch(profileActionCreator.modifyProfileimage({ id: data.id }));
+            if (type === "profileImg")
+                dispatch(
+                    profileActionCreator.modifyProfileimage({ id: data.id })
+                );
+            else
+                dispatch(
+                    profileActionCreator.modifyCoverimage({ id: data.id })
+                );
             dispatch(imageActionCreator.init());
         }
     }, [dispatch, data]);
 
-    return { data, handleUploadImg, handleSubmit };
+    const handleRemove = useCallback(() => {
+        dispatch(imageActionCreator.init());
+    }, [dispatch]);
+
+    return { data, handleUploadImg, handleSubmit, handleRemove };
 };

@@ -63,7 +63,7 @@ export const ProfileTop = () => {
         <>
             <Layout>
                 <CoverImage
-                    data={data}
+                    profile={data}
                     isYou={data?.email === login.data?.email}
                 />
 
