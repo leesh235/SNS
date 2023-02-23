@@ -1,6 +1,6 @@
 import styled from "../../styles/theme-components";
 import theme from "../../styles/theme";
-import React, { RefObject, useEffect } from "react";
+import React, { RefObject, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 //functions
@@ -117,7 +117,7 @@ const CommentButton = styled.span`
 `;
 
 interface Props extends ListType {
-    postId: number;
+    postId: any;
     endView?: RefObject<HTMLDivElement> | undefined;
 }
 
@@ -127,13 +127,13 @@ const Component = ({
     endView = undefined,
 }: Props) => {
     const user = useSelector((state: any) => state?.profile?.simple?.data);
-    const post = useSelector((state: any) => state.post[type][postId]);
-
+    // const post = useSelector((state: any) => state.post[type][postId]);
+    const post = postId;
     const modifyModal = useModal();
 
-    const { handleLike, handleDelete, handleWrite } = usePostFunc(postId);
+    const { handleLike, handleDelete, handleWrite } = usePostFunc(post.id);
 
-    const commentFunc = useCommentFunc(postId).handleWrite;
+    const commentFunc = useCommentFunc(post.id).handleWrite;
 
     return (
         <>
@@ -191,11 +191,11 @@ const Component = ({
                             margin: "0 16px",
                         }}
                     />
-                    {/* {post.images?.length !== 0 && (
+                    {post.images?.length !== 0 && (
                         <ImageLayout
-                            post={{ postId: postId, images: post.images }}
+                            post={{ postId: post.id, images: post.images }}
                         />
-                    )} */}
+                    )}
                 </Contents>
 
                 <Quantity>
@@ -232,12 +232,12 @@ const Component = ({
                 </ButtonLayout>
 
                 <CommentController
-                    postId={postId}
+                    postId={post.id}
                     commentQuantity={+post?.commentQuantity}
                 />
 
                 <CommentInput
-                    label={`${postId}`}
+                    label={`${post.id}`}
                     onSubmit={commentFunc}
                     width={"100%"}
                 />

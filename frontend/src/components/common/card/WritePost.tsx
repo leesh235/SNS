@@ -73,7 +73,7 @@ const TextContents = styled.textarea`
 `;
 
 const ImageContents = styled.div`
-    width: 100%;
+    width: 90%;
     height: 40px;
     margin: 16px;
     border: 1px solid ${(props) => props.theme.color.gray};
@@ -99,10 +99,8 @@ const ImageLayout = styled.div`
 `;
 
 const ImageBtn = styled.label`
-    width: 450px;
-    height: auto;
-    min-height: 221px;
-    max-height: 400px;
+    width: 430px;
+    height: 220px;
     background-color: ${(props) => props.theme.color.gray1};
     cursor: pointer;
     display: flex;
@@ -284,7 +282,7 @@ export const WritePost = ({ closeFunc, post }: Props) => {
                     text={post ? "저장" : "게시"}
                     type="submit"
                     cssObj={{
-                        width: "100%",
+                        width: "90%",
                         fontSize: "15px",
                         height: "36px",
                     }}

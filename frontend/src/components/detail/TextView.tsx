@@ -150,7 +150,12 @@ export const TextView = ({ postId }: { postId?: string }) => {
     };
 
     const handleLike = () => {
-        dispatch(postActionCreator.like({ postId: Number(postId) }));
+        dispatch(
+            postActionCreator.like(
+                { postId: Number(postId) },
+                { id: Number(postId) }
+            )
+        );
         setTimeout(() => {
             dispatch(postActionCreator.detail({ postId: Number(postId) }));
         }, 50);

@@ -103,14 +103,21 @@ export const addReducer = (
                     [key]: keepData && state[key] ? state[key] : null,
                 };
             case SUCCESS:
+                const newState = state[key];
+                newState.unshift(action.data);
                 return {
                     ...state,
                     loading: false,
-                    [key]: {
-                        ...state[key],
-                        [action.data.id]: { ...action.data },
-                    },
+                    [key]: newState,
                 };
+            // return {
+            //     ...state,
+            //     loading: false,
+            //     [key]: {
+            //         ...state[key],
+            //         [action.data.id]: { ...action.data },
+            //     },
+            // };
             case ERROR:
                 return {
                     ...state,
@@ -139,16 +146,18 @@ export const modifyReducer = (
                     [key]: keepData ? state[key] : null,
                 };
             case SUCCESS:
+                const newState = state[key];
+                newState.forEach((val: any, idx: number) => {
+                    if (val.id === action.meta.id) {
+                        newState[idx] = { ...newState[idx], ...action.data };
+                        console.log(action.data);
+                    }
+                });
+                console.log(newState);
                 return {
                     ...state,
                     loading: false,
-                    [key]: {
-                        ...state[key],
-                        [action.meta.id]: {
-                            ...state[key][action.meta.id],
-                            ...action.data,
-                        },
-                    },
+                    [key]: newState,
                 };
             case ERROR:
                 return {
@@ -178,12 +187,14 @@ export const removeReducer = (
                     [key]: keepData ? state[key] : null,
                 };
             case SUCCESS:
-                const newState = state[key];
-                delete newState[action.meta.id];
+                const newState: any[] = state[key];
+                const result: any[] = newState.filter(
+                    (val) => val.id !== action.meta.id
+                );
                 return {
                     ...state,
                     loading: false,
-                    [key]: newState,
+                    [key]: result,
                 };
             case ERROR:
                 return {

@@ -9,11 +9,7 @@ import { postAction } from "../action/post";
 import { postsApi } from "../../lib/index";
 
 const detail = createPromise(postAction.detail, postApi.post);
-const write = createMultiPromise(
-    postAction.write,
-    postApi.write,
-    postsApi.myPosts
-);
+const write = createPromise(postAction.write, postApi.write);
 const modify = createMetaPromise(postAction.modify, postApi.modify);
 const delete_ = createMetaPromise(postAction.delete, postApi.remove);
 const like = createMetaPromise(postAction.like, postApi.like);

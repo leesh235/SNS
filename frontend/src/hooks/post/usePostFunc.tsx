@@ -6,7 +6,8 @@ export const usePostFunc = (postId?: number) => {
     const dispatch = useDispatch();
 
     const handleLike: React.MouseEventHandler = useCallback(() => {
-        if (postId) dispatch(postActionCreator.like({ postId }));
+        if (postId)
+            dispatch(postActionCreator.like({ postId }, { id: postId }));
     }, [dispatch]);
 
     const handleDelete = useCallback(() => {

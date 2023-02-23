@@ -22,13 +22,7 @@ export const useGetPosts = ({
 
     const [count, setCount] = useState<number>(0);
 
-    const { loading, data, error } = useSelector((state: any) => {
-        return {
-            loading: state.post.loading,
-            data: state.post[type],
-            error: state.post.error,
-        };
-    });
+    const { loading, posts, error } = useSelector((state: any) => state.post);
 
     const observer = useMemo(() => {
         return new IntersectionObserver(
@@ -49,18 +43,19 @@ export const useGetPosts = ({
     useEffect(() => {
         if (target?.current === null) return;
 
-        if (count <= Object.keys(data).length) observer.observe(target.current);
+        if (count <= posts?.length) observer.observe(target.current);
 
         return () => {
             if (target.current !== null && observer) {
                 observer.unobserve(target.current);
             }
         };
-    }, [data]);
+    }, [posts]);
 
     useEffect(() => {
         dispatch(postsActionCreator[type]({ take: count }));
+        console.log(posts);
     }, [count]);
 
-    return { target, loading, data, error };
+    return { target, loading, data: count === 0 ? [] : posts, error };
 };

@@ -41,10 +41,11 @@ export const postActionCreator = {
             meta,
         };
     },
-    like: (data: Like) => {
+    like: (data: Like, meta: any) => {
         return {
             type: postAction.like,
             data,
+            meta,
         };
     },
 };

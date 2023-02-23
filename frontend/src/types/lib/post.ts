@@ -27,3 +27,16 @@ export interface Take {
 export interface ListType {
     type?: "allPosts" | "myPosts" | "likePosts" | "friendsPosts";
 }
+
+export interface PostDetail {
+    commentQuantity?: number | string;
+    contents: string;
+    createAt?: string;
+    id: number;
+    images?: [];
+    likeQuantity?: number | string;
+    likeStatus?: 0 | 1;
+    profileImage?: string;
+    userId?: string;
+    writer?: string;
+}

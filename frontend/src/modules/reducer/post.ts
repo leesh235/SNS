@@ -4,17 +4,24 @@ import {
     defaultReducer,
     modifyReducer,
     removeReducer,
+    addReducer,
 } from "../../utils/reducerUtils";
 import { typeUtils } from "../../utils/actionUtils";
+import { PostDetail } from "../../types/lib/post";
 
-const initialState = {
+const initialState: {
+    loading: boolean;
+    error?: string;
+
+    posts: PostDetail[];
+
+    detail: any;
+    like: any;
+} = {
     loading: false,
     error: "",
 
-    allPosts: {},
-    myPosts: {},
-    likePosts: {},
-    friendsPosts: {},
+    posts: [],
 
     detail: null,
     like: null,
@@ -35,18 +42,14 @@ const reducer = (state = initialState, action: any) => {
         case postAction.write:
         case typeUtils(postAction.write).success:
         case typeUtils(postAction.write).error:
-            return defaultReducer(
-                postAction.write,
-                "myPosts",
-                true
-            )(state, action);
+            return addReducer(postAction.write, "posts", true)(state, action);
 
         case postAction.modify:
         case typeUtils(postAction.modify).success:
         case typeUtils(postAction.modify).error:
             return modifyReducer(
                 postAction.modify,
-                "myPosts",
+                "posts",
                 true
             )(state, action);
 
@@ -55,7 +58,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(postAction.delete).error:
             return removeReducer(
                 postAction.delete,
-                "myPosts",
+                "posts",
                 true
             )(state, action);
 
@@ -64,21 +67,21 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(postsAction.myPosts).error:
             return defaultReducer(
                 postsAction.myPosts,
-                "myPosts",
+                "posts",
                 true
             )(state, action);
 
         case postAction.like:
         case typeUtils(postAction.like).success:
         case typeUtils(postAction.like).error:
-            return defaultReducer(postAction.like, "like", true)(state, action);
+            return modifyReducer(postAction.like, "posts", true)(state, action);
 
         case postsAction.allPosts:
         case typeUtils(postsAction.allPosts).success:
         case typeUtils(postsAction.allPosts).error:
             return defaultReducer(
                 postsAction.allPosts,
-                "allPosts",
+                "posts",
                 true
             )(state, action);
 
@@ -87,7 +90,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(postsAction.likePosts).error:
             return defaultReducer(
                 postsAction.likePosts,
-                "likePosts",
+                "posts",
                 true
             )(state, action);
 
@@ -96,7 +99,7 @@ const reducer = (state = initialState, action: any) => {
         case typeUtils(postsAction.friendsPosts).error:
             return defaultReducer(
                 postsAction.friendsPosts,
-                "friendsPosts",
+                "posts",
                 true
             )(state, action);
 
