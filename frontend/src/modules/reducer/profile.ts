@@ -8,8 +8,8 @@ const initialState = {
     introduce: reducerUtils.initial(null),
     profileImage: reducerUtils.initial(null),
     coverImage: reducerUtils.initial(null),
-    latestImage: reducerUtils.initial(null),
-    allImage: reducerUtils.initial(null),
+    latestImage: reducerUtils.initial([]),
+    allImage: reducerUtils.initial([]),
 };
 
 const reducer = (state = initialState, action: any) => {

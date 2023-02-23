@@ -49,7 +49,7 @@ interface Props {
 export const LatestImageCard = ({ handleUrl }: Props) => {
     const { email } = useParams();
     const { loading, data, error } = useGetImage("latest", email);
-
+    console.log(data);
     return (
         <BoxShadow tag={"article"}>
             <Layout>
@@ -86,7 +86,7 @@ export const LatestImageCard = ({ handleUrl }: Props) => {
                                 }}
                                 key={val.id}
                             >
-                                <Image src={val.url} />
+                                <Image src={val.imageUrl} />
                             </Link>
                         );
                     })}

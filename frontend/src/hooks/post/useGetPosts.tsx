@@ -54,7 +54,6 @@ export const useGetPosts = ({
 
     useEffect(() => {
         dispatch(postsActionCreator[type]({ take: count }));
-        console.log(posts);
     }, [count]);
 
     return { target, loading, data: count === 0 ? [] : posts, error };

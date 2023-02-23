@@ -34,17 +34,17 @@ const Shadow = styled.div`
 `;
 
 interface Props {
-    post: {
-        postId: number;
-        images: Array<{ id: number; url: string }>;
-    };
+    postId: number;
+    images: Array<{ id: number; imageUrl: string }>;
 }
 
-export const ImageLayout = ({ post }: Props) => {
+export const ImageLayout = ({ postId, images }: Props) => {
+    console.log(postId);
+    console.log(images);
     return (
         <Link
             to={{
-                pathname: `${routes.detail}${post?.postId}`,
+                pathname: `${routes.detail}${postId}`,
             }}
             style={{
                 width: "100%",
@@ -52,25 +52,21 @@ export const ImageLayout = ({ post }: Props) => {
                 maxHeight: "590px",
             }}
         >
-            <Layout cnt={post?.images.length}>
-                {post?.images.map((val: any, idx: number) => {
+            <Layout cnt={images.length}>
+                {images.map((val: any, idx: number) => {
                     if (idx < 4)
                         return (
                             <Image
                                 key={val.id}
-                                cnt={
-                                    post?.images && post?.images?.length > 1
-                                        ? 2
-                                        : 1
-                                }
-                                src={`${val.url}`}
+                                cnt={images && images?.length > 1 ? 2 : 1}
+                                src={`${val.imageUrl}`}
                             />
                         );
                 })}
-                {post?.images.length > 4 && (
+                {images.length > 4 && (
                     <Shadow>
                         <Text
-                            text={`+${post?.images.length - 4}장`}
+                            text={`+${images.length - 4}장`}
                             tag={"span"}
                             cssObj={{
                                 fontWeight: 550,

@@ -63,11 +63,16 @@ const WriterInfo = styled.div`
 `;
 
 const Contents = styled.div`
+    display: flex;
+    flex-direction: column;
     width: 100%;
     min-height: 35px;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
+    > :nth-child(1) {
+        padding: 0 8px;
+    }
 `;
 
 const ButtonLayout = styled.div`
@@ -185,16 +190,15 @@ const Component = ({
                 <Contents>
                     <Text
                         text={`${post?.contents}`}
+                        tag={"span"}
                         cssObj={{
+                            width: "auto",
                             fontWeight: 600,
                             fontSize: "15px",
-                            margin: "0 16px",
                         }}
                     />
                     {post.images?.length !== 0 && (
-                        <ImageLayout
-                            post={{ postId: post.id, images: post.images }}
-                        />
+                        <ImageLayout postId={post.id} images={post.images} />
                     )}
                 </Contents>
 
