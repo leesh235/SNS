@@ -3,7 +3,7 @@ import { Post } from "../entity/post.entity";
 import { Likes } from "../entity/likes.entity";
 import { Comment } from "../entity/comment.entity";
 import { Files } from "../entity/files.entity";
-import { Not } from "typeorm";
+import { IsNull, Not } from "typeorm";
 
 const fileRepository = dataSource.getRepository(Files);
 const postRepository = dataSource.getRepository(Post);
@@ -67,7 +67,7 @@ export const findAll = async (req: any) => {
 
         const imageList = await fileRepository.find({
             relations: { post: true },
-            where: { post: Not(null) },
+            where: { post: { id: Not(IsNull()), deletedAt: undefined } },
             select: {
                 id: true,
                 imageUrl: true,
@@ -76,12 +76,11 @@ export const findAll = async (req: any) => {
                 },
             },
         });
-
         const result: any = [];
 
         findList.forEach((val) => {
             const images: any[] = imageList.filter(
-                (img) => img.post.id === val.id
+                (img) => img.post?.id === val.id
             );
             return result.push({ ...val, images });
         });
@@ -151,7 +150,7 @@ export const findMy = async (req: any) => {
 
         const imageList = await fileRepository.find({
             relations: { post: true, user: true },
-            where: { post: Not(null), user: { email } },
+            where: { post: { id: Not(IsNull()), deletedAt: undefined } },
             select: {
                 id: true,
                 imageUrl: true,

@@ -3,7 +3,7 @@ import { Files } from "../entity/files.entity";
 import { User } from "../entity/user.entity";
 import { EmaileReqDto } from "../dto/common/email.dto";
 import { ProfileResDto, ImgResDto, AllImgReqDto } from "../dto/profile.dto";
-import { Not } from "typeorm";
+import { IsNull, Not } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
 const fileRepository = dataSource.getRepository(Files);
@@ -76,15 +76,20 @@ export const saveProfileImage = async (req: any) => {
         } = req;
 
         const file = await fileRepository.findOne({
-            where: { id },
+            relations: { user: true, post: true },
+            where: { user: { email }, post: { id: undefined } },
             select: { id: true, imageUrl: true },
         });
 
-        if (!file) return { ok: false, data: { profileImage: "" } };
+        if (file) await fileRepository.delete({ id: file.id });
+
+        const findFile = await fileRepository.findOne({ where: { id } });
+
+        await fileRepository.update({ id }, { user: { email } });
 
         await userRepository.update(
             { email },
-            { profileImage: file?.imageUrl }
+            { profileImage: findFile?.imageUrl }
         );
 
         return { ok: true, data: { profileImage: file?.imageUrl } };
@@ -120,7 +125,7 @@ export const getLatestImage = async (dto: EmaileReqDto) => {
             },
             where: {
                 user: { email: user.email, deletedAt: undefined },
-                post: Not(null),
+                post: Not(IsNull()),
             },
             select: {
                 id: true,
@@ -155,7 +160,7 @@ export const getAllImage = async (dto: AllImgReqDto) => {
             },
             where: {
                 user: { email: user.email, deletedAt: undefined },
-                post: Not(null),
+                post: Not(IsNull()),
             },
             select: {
                 id: true,
