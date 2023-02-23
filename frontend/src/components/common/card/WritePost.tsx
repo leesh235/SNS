@@ -178,9 +178,8 @@ export const WritePost = ({ closeFunc, post }: Props) => {
         initValues: {},
         validate: writePostValidate,
         onSubmit: (formData: any) => {
-            console.log(data);
-            // handleWrite({ ...formData, images: data });
-            // closeFunc();
+            handleWrite({ ...formData, images: data });
+            closeFunc();
         },
     });
 
