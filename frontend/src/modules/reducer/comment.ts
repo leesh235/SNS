@@ -31,7 +31,6 @@ const reducer = (state = initialState, action: any) => {
         case commentAction.write:
         case typeUtils(commentAction.write).success:
         case typeUtils(commentAction.write).error:
-            console.log(action);
             return addReducer(
                 commentAction.write,
                 `${meta.postId}`,

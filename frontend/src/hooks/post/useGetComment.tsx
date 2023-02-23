@@ -14,10 +14,11 @@ export const useGetComment = (id: number, take: number) => {
     });
 
     useEffect(() => {
+        if (!id) return;
         dispatch(
             commentActionCreator.list({ postId: id, take }, { postId: id })
         );
-    }, [dispatch, take]);
+    }, [dispatch, id, take]);
 
     return { loading, data, error };
 };

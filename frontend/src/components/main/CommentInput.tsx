@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { routes } from "../../utils/routes";
 import { useForm } from "../../hooks/common/useForm";
 import { writeCommentValidate } from "../../utils/validate";
-import { useSelector } from "react-redux";
+import { useUserInfo } from "../../hooks/common/useUserInfo";
 
 const Wrapper = styled.form<StyleProps>`
     width: ${(props) => props.width};
@@ -56,13 +56,13 @@ export const CommentInput = ({
     onSubmit,
     defaultValue,
 }: Props) => {
-    const { simple } = useSelector((state: any) => state.profile.simple);
+    const { data } = useUserInfo();
 
-    const { errors, setOption, handleSubmit } = useForm({
+    const { errors, setOption, handleSubmit, setValue } = useForm({
         initValues: { contents: defaultValue },
         validate: writeCommentValidate,
         onSubmit: (formData: any) => {
-            if (!simple) {
+            if (!data) {
                 alert("로그인 후 이용해주세요");
                 return;
             }
@@ -74,10 +74,10 @@ export const CommentInput = ({
         <Wrapper width={width} height={height} onSubmit={handleSubmit}>
             <Link
                 to={{
-                    pathname: `${routes.userInfo}${simple?.email}`,
+                    pathname: `${routes.userInfo}${data?.email}`,
                 }}
             >
-                <Icon src={simple?.profileImage} />
+                <Icon src={data?.profileImage} />
             </Link>
             <Input
                 defaultValue={defaultValue}

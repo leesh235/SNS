@@ -1,20 +1,20 @@
-import styled from "../../styles/theme-components";
-import { useParams, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import styled, { css } from "../../styles/theme-components";
+import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { useSelector } from "react-redux";
 //functions
 import { routes } from "../../utils/routes";
-import { commentActionCreator } from "../../modules/action/comment";
-import { postActionCreator } from "../../modules/action/post";
 import theme from "../../styles/theme";
 import { getDate } from "../../utils/dateUtil";
+import { useCommentFunc } from "../../hooks/post/useCommentFunc";
+import { usePostFunc } from "../../hooks/post/usePostFunc";
+import { useResizeEl } from "../../hooks/common/useResizeEl";
 //components
 import { Text } from "../common/Text";
 import { HoverButton } from "../common/button/HoverButton";
 import { CommentInput } from "../main/CommentInput";
 import { Label } from "../common/Label";
-import { CommentList } from "./CommentList";
-import { SeeMoreLayout } from "../common/SeeMoreLayout";
-import { useEffect } from "react";
+import { CommentController } from "../main/CommentController";
 
 const Layout = styled.section`
     width: 100%;
@@ -22,13 +22,37 @@ const Layout = styled.section`
     background-color: ${(props) => props.theme.color.white};
     display: flex;
     flex-direction: column;
+    position: relative;
+    ${(props) =>
+        props.theme.media.mobileU(`
+        height: 100vh;
+    `)}
+    ${(props) =>
+        props.theme.media.mobileD(`
+        min-height: 40vh;
+    `)}
 `;
 
-const Top = styled.article`
+const TargetLayout = styled.section<{ isResize: boolean }>`
     width: 100%;
-    height: 57px;
+    background-color: ${(props) => props.theme.color.white};
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: ${(prosp) => prosp.theme.color.lightGray};
+        border-radius: 3px;
+    }
+    ::-webkit-scrollbar-track {
+    }
+    ${(props) =>
+        props.isResize &&
+        css`
+            margin-bottom: 60px;
+        `}
 `;
 
 const Middle = styled.article`
@@ -36,7 +60,10 @@ const Middle = styled.article`
     height: auto;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid ${(props) => props.theme.color.lightGray};
+    ${(props) =>
+        props.theme.media.mobileU(`
+        margin-top: 57px;
+    `)}
 `;
 
 const Bottom = styled.article`
@@ -44,8 +71,8 @@ const Bottom = styled.article`
     height: auto;
     display: flex;
     flex-direction: column;
-    margin: 0 16px 8px 16px;
-    padding-top: 8px;
+
+    padding: 8px 5px 0 5px;
     border-top: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
@@ -61,6 +88,7 @@ const PostView = styled.div`
 const UserInfo = styled.div`
     width: 100%;
     height: 40px;
+    margin-bottom: 15px;
     display: grid;
     grid-template-columns: 40px auto 36px;
     grid-template-rows: repeat(2, 20px);
@@ -74,7 +102,6 @@ const UserInfo = styled.div`
         grid-column: 3 / span 1;
         grid-row: 1 / span 2;
     }
-    position: relative;
 `;
 
 const Contents = styled.div`
@@ -96,10 +123,14 @@ const OptionView = styled.div`
     justify-items: center;
 `;
 
-const FlexLayout = styled.div`
+const Quantity = styled.div`
+    width: 100%;
+    height: 22px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
 `;
 
 const Icon = styled.img<{ size: string; margin?: string }>`
@@ -110,107 +141,121 @@ const Icon = styled.img<{ size: string; margin?: string }>`
     cursor: pointer;
 `;
 
-const Hover = styled.div`
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
+const CommentLayout = styled.div<{ isResize: boolean }>`
+    padding: 0 5px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    :hover {
-        background-color: ${(props) => props.theme.color.lightGray};
-    }
-    cursor: pointer;
+    width: 100%;
+    height: 60px;
+    ${(props) =>
+        props.isResize
+            ? css`
+                  background-color: ${props.theme.color.white};
+                  position: fixed;
+                  bottom: 0;
+                  right: 0;
+                  ${props.theme.media.mobileU(`width:360px;`)}
+                  ${props.theme.media.mobileD(`width:100vw`)}
+              `
+            : css`
+                  width: 100%;
+              `}
 `;
 
-export const TextView = ({ postId }: { postId?: string }) => {
-    // const { postId } = useParams<{ postId: string }>();
-    const dispatch = useDispatch();
+export const TextView = ({ post }: { post: any }) => {
+    const targetRef = useRef(null);
 
-    const { loading, data, error } = useSelector(
-        (state: any) => state.post?.detail
-    );
+    const { isResize } = useResizeEl({ target: targetRef });
 
-    const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async (
-        e
-    ) => {
-        e.preventDefault();
-        console.log(e.currentTarget?.comment?.value);
+    const { loading, detail, error } = useSelector((state: any) => state.post);
 
-        dispatch(
-            commentActionCreator.write({
-                postId: data.id,
-                contents: e.currentTarget.comment.value,
-            })
-        );
-        setTimeout(() => {
-            dispatch(commentActionCreator.list({ postId: Number(postId) }));
-        }, 50);
-        e.currentTarget.comment.value = "";
-    };
+    const { handleLike } = usePostFunc(post.id);
+    const commentWrite = useCommentFunc(post.id).handleWrite;
 
-    const handleLike = () => {
-        dispatch(
-            postActionCreator.like(
-                { postId: Number(postId) },
-                { id: Number(postId) }
-            )
-        );
-        setTimeout(() => {
-            dispatch(postActionCreator.detail({ postId: Number(postId) }));
-        }, 50);
-    };
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-    if (!data) return <></>;
+    if (!detail) return <></>;
     return (
         <Layout>
-            <Top></Top>
-            <Middle>
-                <PostView>
-                    <UserInfo>
-                        <Link
-                            to={{
-                                pathname: `${routes.userInfo}${data?.email}`,
-                            }}
-                        >
-                            <Icon size={"40px"} src={data?.profileImage} />
-                        </Link>
+            <TargetLayout ref={targetRef} isResize={isResize}>
+                <Middle>
+                    <PostView>
+                        <UserInfo>
+                            <Link
+                                to={{
+                                    pathname: `${routes.userInfo}${detail?.email}`,
+                                }}
+                            >
+                                <Icon
+                                    size={"40px"}
+                                    src={detail?.profileImage}
+                                />
+                            </Link>
+                            <Text
+                                tag="span"
+                                text={`${detail?.nickName}`}
+                                cssObj={{ fontSize: "15px", fontWeight: 600 }}
+                            />
+                            <Text
+                                text={getDate(detail?.creatAt)}
+                                tag={"span"}
+                            />
+                            <div></div>
+                        </UserInfo>
+                        <Contents>
+                            <Text text={detail?.contents} tag={"span"} />
+                        </Contents>
+                    </PostView>
+                    <Quantity>
                         <Text
-                            text={`${data?.nickName}`}
-                            cssObj={{ fontSize: "15px", fontWeight: 600 }}
+                            text={`좋아요 ${post?.likeQuantity}개`}
+                            tag={"span"}
+                            cssObj={{
+                                width: "auto",
+                                fontSize: "15px",
+                                margin: "0 16px",
+                            }}
                         />
-                        <FlexLayout>
-                            <Text text={getDate(data?.creatAt)} tag={"span"} />
-                            <Text text={"시간"} tag={"span"} />
-                        </FlexLayout>
-                        <SeeMoreLayout>
-                            <HoverButton text={"게시물 수정"} />
-                            <HoverButton text={"게시물 삭제"} />
-                        </SeeMoreLayout>
-                    </UserInfo>
-                    <Contents>
-                        <Text text={data?.contents} tag={"span"} />
-                    </Contents>
-                </PostView>
-                <OptionView>
-                    <HoverButton
-                        text={"좋아요"}
-                        cssObj={{
-                            fontColor: data?.likeStatus && theme.color.seaBule,
-                        }}
-                        onClick={handleLike}
-                    />
-                    <Label width={"90%"} htmlFor={`${data.id}_comment`} />
-                    <HoverButton text={"공유하기"} />
-                </OptionView>
-            </Middle>
-            <Bottom>
-                {postId && <CommentList postId={postId} />}
-                <CommentInput label={data.id} onSubmit={handleOnSubmit} />
-            </Bottom>
+                        <Text
+                            text={`댓글 ${post?.commentQuantity}개`}
+                            tag={"span"}
+                            cssObj={{
+                                width: "auto",
+                                fontSize: "15px",
+                                margin: "0 16px",
+                            }}
+                        />
+                    </Quantity>
+                    <OptionView>
+                        <HoverButton
+                            text={"좋아요"}
+                            cssObj={{
+                                width: "auto",
+                                fontColor:
+                                    detail?.likeStatus && theme.color.seaBule,
+                            }}
+                            onClick={handleLike}
+                        />
+                        <Label
+                            width={"auto"}
+                            htmlFor={`${detail.id}_comment`}
+                        />
+                        <HoverButton
+                            text={"공유하기"}
+                            cssObj={{ width: "auto" }}
+                        />
+                    </OptionView>
+                </Middle>
+                <Bottom>
+                    {post && (
+                        <CommentController
+                            postId={detail.id}
+                            commentQuantity={detail.commentQuantity}
+                        />
+                    )}
+                </Bottom>
+            </TargetLayout>
+            <CommentLayout isResize={isResize}>
+                <CommentInput label={detail.id} onSubmit={commentWrite} />
+            </CommentLayout>
         </Layout>
     );
 };
