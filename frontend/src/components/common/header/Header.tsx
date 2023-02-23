@@ -1,24 +1,19 @@
 import styled from "../../../styles/theme-components";
 import theme from "../../../styles/theme";
 import { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 //functions
 import { routes } from "../../../utils/routes";
-import { useModal } from "../../../hooks/common/useModal";
 import { useMenuFunc } from "../../../hooks/common/useMenuFunc";
 import { useUserInfo } from "../../../hooks/common/useUserInfo";
 //components
 import { LogoIcon } from "../../../assets/icon/LogoIcon";
-import { AppIcon } from "../../../assets/icon/AppIcon";
-import { ArrowDIcon } from "../../../assets/icon/ArrowDIcon";
-import { BellIcon } from "../../../assets/icon/BellIcon";
 import { FriendIcon } from "../../../assets/icon/FriendIcon";
 import { GroubIcon } from "../../../assets/icon/GroubIcon";
 import { HomeIcon } from "../../../assets/icon/HomeIcon";
-import { MessageIcon } from "../../../assets/icon/MessageIcon";
 import { SearchInput } from "../input/SearchInput";
-import { SeeMore } from "./SeeMore";
 import { ListIcon } from "../../../assets/icon/ListIcon";
+import { OptionMenu } from "./OptionMenu";
 
 const Layout = styled.header`
     width: 100vw;
@@ -132,19 +127,11 @@ const centerMenuList = [
     <ListIcon />,
 ];
 
-const rightMenuList = [
-    <AppIcon />,
-    <MessageIcon />,
-    <BellIcon />,
-    <ArrowDIcon />,
-];
-
 export const Header = () => {
     const location = useLocation();
 
     const { data } = useUserInfo();
 
-    const userModal = useModal();
     const { selected, handleMenuClick, ininMenu } = useMenuFunc({
         defaultValue: 0,
     });
@@ -179,23 +166,7 @@ export const Header = () => {
                     </BorderStyle>
                 ))}
             </CenterLayout>
-            <RightLayout>
-                {rightMenuList.map((val, idx) => {
-                    if (idx === 3)
-                        return (
-                            <IconLayout
-                                key={idx}
-                                onClick={userModal.handleModal}
-                            >
-                                {val}
-                            </IconLayout>
-                        );
-                    else return <IconLayout key={idx}>{val}</IconLayout>;
-                })}
-                {userModal.modal && (
-                    <SeeMore closeFunc={userModal.handleModal} />
-                )}
-            </RightLayout>
+            <OptionMenu />
         </Layout>
     );
 };
