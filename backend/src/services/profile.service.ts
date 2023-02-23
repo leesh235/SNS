@@ -125,7 +125,7 @@ export const getLatestImage = async (dto: EmaileReqDto) => {
             },
             where: {
                 user: { email: user.email, deletedAt: undefined },
-                post: Not(IsNull()),
+                post: { id: Not(IsNull()) },
             },
             select: {
                 id: true,
@@ -160,7 +160,7 @@ export const getAllImage = async (dto: AllImgReqDto) => {
             },
             where: {
                 user: { email: user.email, deletedAt: undefined },
-                post: Not(IsNull()),
+                post: { id: Not(IsNull()) },
             },
             select: {
                 id: true,

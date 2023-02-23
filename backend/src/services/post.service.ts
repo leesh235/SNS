@@ -3,8 +3,10 @@ import { Post } from "../entity/post.entity";
 import { Files } from "../entity/files.entity";
 import { Likes } from "../entity/likes.entity";
 import { Comment } from "../entity/comment.entity";
+import { User } from "../entity/user.entity";
 import { In } from "typeorm";
 
+const userRepository = dataSource.getRepository(User);
 const postRepository = dataSource.getRepository(Post);
 const fileRepository = dataSource.getRepository(Files);
 const likesRepository = dataSource.getRepository(Likes);
@@ -85,6 +87,10 @@ export const save = async (req: any) => {
         post.contents = contents;
         post.user = email;
 
+        const findUser = await userRepository.findOne({
+            where: { email },
+            select: { email: true, profileImage: true },
+        });
         const postSave = await postRepository.save(post);
 
         if (images?.length !== 0) {
@@ -98,14 +104,22 @@ export const save = async (req: any) => {
             );
         }
 
+        const imageList = await fileRepository.find({
+            where: { post: { id: postSave.id } },
+            select: {
+                id: true,
+                imageUrl: true,
+            },
+        });
+
         const result: any = {
             id: postSave.id,
             email: email,
             writer: nickName,
-            profileImage,
+            profileImage: findUser?.profileImage,
             contents,
             createAt: postSave.createdAt,
-            images,
+            images: imageList,
             likeQuantity: 0,
             commentQuantity: 0,
             likeStatus: false,
