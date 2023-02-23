@@ -57,7 +57,9 @@ export const OptionMenu = () => {
                     );
                 else return <IconLayout key={idx}>{val}</IconLayout>;
             })}
-            {userModal.modal && <SeeMore closeFunc={userModal.handleModal} />}
+            {userModal.modal && (
+                <SeeMore closeFunc={userModal.handleModal} user={data} />
+            )}
         </Layout>
     );
 };
