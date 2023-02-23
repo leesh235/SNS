@@ -34,9 +34,12 @@ const ButtonLayout = styled.div<{ color: string }>`
 
 const menuList = ["리스트 보기", "그리드 보기"];
 
-interface Props {}
+interface Props {
+    isYou: boolean;
+    user: any;
+}
 
-export const PostSection = ({}: Props) => {
+export const PostSection = ({ user, isYou = false }: Props) => {
     const [menu, setMenu] = useState<number>(0);
 
     const handleOnClick = (id: number) => {
@@ -122,7 +125,14 @@ export const PostSection = ({}: Props) => {
                     })}
                 </GridLayout>
             </BoxShadow>
-            {menu === 0 ? <PostList type="myPosts" /> : <PostGridList />}
+            {menu === 0 ? (
+                <PostList
+                    type={isYou ? "myPosts" : "userPosts"}
+                    userId={user.email}
+                />
+            ) : (
+                <PostGridList />
+            )}
         </>
     );
 };

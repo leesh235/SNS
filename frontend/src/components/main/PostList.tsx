@@ -16,8 +16,12 @@ const Wrapper = styled.span`
     margin: 16px 0;
 `;
 
-export const PostList = ({ type = "allPosts" }: ListType) => {
-    const { loading, target, data } = useGetPosts({ type });
+interface Props extends ListType {
+    userId?: string;
+}
+
+export const PostList = ({ type = "allPosts", userId }: Props) => {
+    const { loading, target, data } = useGetPosts({ type, userId });
 
     return (
         <Wrapper>

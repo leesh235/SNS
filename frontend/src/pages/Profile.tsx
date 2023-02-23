@@ -193,6 +193,7 @@ const Profile = () => {
                     handleUrl={handleOnClick}
                     check={check}
                     isYou={data?.email === login.data?.email}
+                    user={data}
                 />
             )}
             {click === 1 && (

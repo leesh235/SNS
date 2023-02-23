@@ -10,7 +10,7 @@ const myPosts = async (data: Take) => {
     return await backend.get(api.posts.my, { params: data });
 };
 
-const userPosts = async (data: Take) => {
+const userPosts = async (data: { take: number; userId?: string }) => {
     return await backend.get(api.posts.user, { params: data });
 };
 

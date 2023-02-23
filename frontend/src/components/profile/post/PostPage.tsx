@@ -91,9 +91,10 @@ interface Props {
     handleUrl: any;
     check: boolean;
     isYou: boolean;
+    user: any;
 }
 
-export const PostPage = ({ handleUrl, check, isYou }: Props) => {
+export const PostPage = ({ handleUrl, check, isYou, user }: Props) => {
     return (
         <>
             <Layout>
@@ -117,7 +118,7 @@ export const PostPage = ({ handleUrl, check, isYou }: Props) => {
                 </LeftLayout>
                 <RightLayout>
                     {isYou && <WritePostCard />}
-                    <PostSection />
+                    <PostSection isYou={isYou} user={user} />
                 </RightLayout>
             </Layout>
         </>

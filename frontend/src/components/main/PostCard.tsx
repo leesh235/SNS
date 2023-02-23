@@ -224,7 +224,10 @@ const Component = ({ postId, endView = undefined }: Props) => {
                         text={"좋아요"}
                         onClick={handleLike}
                         cssObj={{
-                            fontColor: post?.likeStatus && theme.color.seaBule,
+                            fontColor:
+                                post?.likeStatus === "1"
+                                    ? theme.color.seaBule
+                                    : theme.color.lightBlack,
                         }}
                     />
                     <Label htmlFor={`${post?.id}_comment`} />

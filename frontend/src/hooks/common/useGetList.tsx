@@ -16,7 +16,7 @@ export const useGetList = ({ type = "allPosts" }: ListType) => {
 
     useEffect(() => {
         if (!type) return;
-        dispatch(postsActionCreator[type]({}));
+        dispatch(postsActionCreator[type]({ take: 6 }));
     }, [dispatch]);
 
     return { loading, data, error };

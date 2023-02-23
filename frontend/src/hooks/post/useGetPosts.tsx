@@ -8,6 +8,7 @@ interface Props extends ListType {
     rootMargin?: string;
     threshold?: number;
     take?: number;
+    userId?: string;
 }
 
 export const useGetPosts = ({
@@ -16,6 +17,7 @@ export const useGetPosts = ({
     threshold = 1,
     type = "allPosts",
     take = 4,
+    userId = "",
 }: Props) => {
     const target = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
@@ -53,8 +55,10 @@ export const useGetPosts = ({
     }, [posts]);
 
     useEffect(() => {
-        dispatch(postsActionCreator[type]({ take: count }));
-    }, [count]);
+        if (userId !== "")
+            dispatch(postsActionCreator[type]({ take: count, userId }));
+        else dispatch(postsActionCreator[type]({ take: count }));
+    }, [count, userId]);
 
     return { target, loading, data: count === 0 ? [] : posts, error };
 };

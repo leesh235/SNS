@@ -31,4 +31,10 @@ export const postsActionCreator = {
             data,
         };
     },
+    userPosts: (data: { take: number; userId?: string }) => {
+        return {
+            type: postsAction.friendsPosts,
+            data,
+        };
+    },
 };
