@@ -33,7 +33,7 @@ const Layout = styled.form`
     padding-bottom: 10px;
     justify-content: space-around;
     align-items: center;
-    > input {
+    input {
         width: 0px;
         height: 0px;
     }
@@ -124,10 +124,9 @@ const ImagePreview = styled.div`
     }
 `;
 
-const ButtonLayout = styled.div`
-    width: auto;
+const ButtonLayout = styled.span`
+    width: 240px;
     display: flex;
-
     position: absolute;
     top: 10px;
     left: 10px;
@@ -179,11 +178,15 @@ export const WritePost = ({ closeFunc, post }: Props) => {
         initValues: {},
         validate: writePostValidate,
         onSubmit: (formData: any) => {
-            handleWrite({ ...formData, images: data });
-            closeFunc();
+            console.log(data);
+            // handleWrite({ ...formData, images: data });
+            // closeFunc();
         },
     });
 
+    useEffect(() => {}, [data]);
+    console.log("data: ", data);
+    console.log("post: ", post);
     return (
         <>
             <Layout onSubmit={handleSubmit}>
@@ -218,14 +221,14 @@ export const WritePost = ({ closeFunc, post }: Props) => {
                     placeholder="무슨 생각을 하고 계신가요?"
                 />
 
-                {imageModal.modal && (
+                {(data?.length !== 0 || imageModal.modal) && (
                     <ImageLayout>
                         <CloseButton
                             onClick={imageModal.handleModal}
                             radius={14}
                             color={theme.color.white}
                         />
-                        {post?.images?.length === 0 || data?.length === 0 ? (
+                        {data?.length === 0 ? (
                             <ImageBtn htmlFor="imgOrvedio">
                                 <Text
                                     text={"사진/동영상 추가"}
@@ -252,14 +255,14 @@ export const WritePost = ({ closeFunc, post }: Props) => {
                                         text="모두 수정"
                                         onClick={modifyModal.handleModal}
                                     />
-                                    <FileButton2 htmlFor="images" />
+                                    <FileButton2 htmlFor="addImg" />
                                 </ButtonLayout>
 
                                 {data?.map((file: any, idx: number) => {
                                     return (
                                         <SelectImage
                                             key={file.id}
-                                            src={file.url}
+                                            src={file.imageUrl}
                                         ></SelectImage>
                                     );
                                 })}
@@ -267,6 +270,14 @@ export const WritePost = ({ closeFunc, post }: Props) => {
                         )}
                     </ImageLayout>
                 )}
+                <input
+                    type="file"
+                    id="addImg"
+                    name="images"
+                    onChange={uploadImage}
+                    multiple
+                />
+
                 <input
                     type="file"
                     id="imgOrvedio"

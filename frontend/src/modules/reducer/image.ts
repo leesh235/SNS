@@ -36,12 +36,26 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
 
-        case "init":
+        case imageAction.init:
             return {
                 single: reducerUtils.initial(null),
                 array: reducerUtils.initial(null),
                 remove: reducerUtils.initial(null),
             };
+
+        case imageAction.modify:
+            const newState = state.array.data;
+            const resultState = newState.filter(
+                (val: any) => val.id !== action.id
+            );
+            return {
+                ...state,
+                array: {
+                    ...state.array,
+                    data: resultState,
+                },
+            };
+
         default:
             return state;
     }

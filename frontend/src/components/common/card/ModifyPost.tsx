@@ -22,8 +22,7 @@ const Layout = styled.main`
 
 const Box = styled.form`
     max-width: 921px;
-    width: auto;
-    max-height: 810px;
+    width: 100%;
     height: auto;
     background-color: ${(props) => props.theme.color.white};
     border-radius: 8px;
@@ -34,15 +33,10 @@ const Box = styled.form`
 `;
 
 const Top = styled.div`
-    width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: 100% 60px;
+    padding: 0 10px;
+    display: flex;
     align-items: center;
-    > :nth-child(1) {
-        padding-left: 60px;
-        justify-self: center;
-    }
 `;
 
 const CloseBtn = styled.div`
@@ -64,7 +58,7 @@ const Middle = styled.div`
     background-color: ${(props) => props.theme.color.gray};
     padding: 8px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, 438px);
+    grid-template-columns: repeat(auto-fill, 440px);
     grid-auto-rows: 350px;
     grid-gap: 5px;
     align-items: center;
@@ -112,15 +106,19 @@ const Bottom = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 150px;
     height: 36px;
     margin: 0 16px;
     border-radius: 6px;
     padding: 0;
     background-color: ${(props) => props.theme.color.seaBule};
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
     :hover {
         background-color: ${(props) => props.theme.color.darkSeaBlue};
     }
+    justify-self: flex-end;
     cursor: pointer;
 `;
 
@@ -128,19 +126,10 @@ interface Props {
     closeFunc: any;
     deleteFunc: any;
     fileList: Array<any>;
-    handleUrl?: any;
 }
 
-export const ModifyPost = ({
-    fileList,
-    closeFunc,
-    handleUrl,
-    deleteFunc,
-}: Props) => {
+export const ModifyPost = ({ fileList, closeFunc, deleteFunc }: Props) => {
     useEffect(() => {
-        if (fileList.length === 0) {
-            closeFunc();
-        }
         document.body.style.cssText = `
             overflow: hidden;
             padding-right: 17px;
@@ -156,10 +145,11 @@ export const ModifyPost = ({
                 <Top>
                     <Text
                         text={"사진/동영상"}
+                        tag={"span"}
                         cssObj={{
                             fontSize: "20px",
                             fontWeight: 700,
-                            fontColor: theme.color.white,
+                            fontColor: theme.color.black,
                         }}
                     />
                     <CloseBtn onClick={closeFunc}>X</CloseBtn>
@@ -175,21 +165,12 @@ export const ModifyPost = ({
                                 >
                                     X
                                 </DeleteBtn>
-                                <Image src={handleUrl(val.url)} />
+                                <Image src={val.imageUrl} />
                             </ImageLayout>
                         );
                     })}
                 </Middle>
-                <Bottom onClick={closeFunc}>
-                    <Text
-                        text={"완료"}
-                        cssObj={{
-                            fontSize: "15px",
-                            fontWeight: 600,
-                            fontColor: theme.color.white,
-                        }}
-                    />
-                </Bottom>
+                <Bottom onClick={closeFunc}>완료</Bottom>
             </Box>
         </Layout>
     );

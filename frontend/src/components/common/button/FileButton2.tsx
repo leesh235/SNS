@@ -2,7 +2,7 @@ import styled from "../../../styles/theme-components";
 
 const Label = styled.label`
     width: 100%;
-    max-width: 178px;
+    max-width: 120px;
     height: 32px;
     border-radius: 6px;
     background-color: ${(props) => props.theme.color.white};

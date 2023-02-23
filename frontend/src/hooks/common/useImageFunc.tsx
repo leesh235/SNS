@@ -20,7 +20,7 @@ export const useImageFunc = ({ type = "single", initList = [] }: Props) => {
     const uploadImage = useCallback(
         (e) => {
             const { files } = e?.target as HTMLInputElement;
-
+            console.log(files);
             if (!files) return;
 
             const formData = new FormData();
@@ -33,7 +33,6 @@ export const useImageFunc = ({ type = "single", initList = [] }: Props) => {
                 formData.append("image", files[0]);
                 dispatch(imageActionCreator.single(formData));
             }
-            dispatch(imageActionCreator.init());
         },
         [dispatch]
     );
@@ -52,8 +51,21 @@ export const useImageFunc = ({ type = "single", initList = [] }: Props) => {
     };
 
     useEffect(() => {
-        setFileList(data || []);
+        setFileList(initList);
+    }, [initList]);
+
+    useEffect(() => {
+        console.log(data);
+        if (!data) return;
+        setFileList((prev) => prev.concat(data));
     }, [data]);
+
+    useEffect(() => {
+        return () => {
+            setFileList([]);
+            dispatch(imageActionCreator.init());
+        };
+    }, []);
 
     return { data: fileList, uploadImage, removeImage, deleteImage };
 };

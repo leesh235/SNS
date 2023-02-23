@@ -126,20 +126,16 @@ interface Props extends ListType {
     endView?: RefObject<HTMLDivElement> | undefined;
 }
 
-const Component = ({
-    postId,
-    type = "allPosts",
-    endView = undefined,
-}: Props) => {
+const Component = ({ postId, endView = undefined }: Props) => {
     const user = useSelector((state: any) => state?.profile?.simple?.data);
-    // const post = useSelector((state: any) => state.post[type][postId]);
+
     const post = postId;
     const modifyModal = useModal();
 
     const { handleLike, handleDelete, handleWrite } = usePostFunc(post.id);
 
     const commentFunc = useCommentFunc(post.id).handleWrite;
-    console.log(post);
+
     return (
         <>
             <Layout ref={endView}>

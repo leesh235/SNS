@@ -4,6 +4,8 @@ export const imageAction = {
     single: "image/SINGLE",
     array: "image/ARRAY",
     remove: "image/REMOVE",
+    init: "image/INIT",
+    modify: "image/MODIFY",
 };
 
 export const imageActionCreator = {
@@ -24,9 +26,14 @@ export const imageActionCreator = {
             type: imageAction.remove,
         };
     },
+    modify: (data: any) => {
+        return {
+            type: imageAction.modify,
+        };
+    },
     init: () => {
         return {
-            type: "init",
+            type: imageAction.init,
         };
     },
 };
