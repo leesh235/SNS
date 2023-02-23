@@ -69,7 +69,7 @@ export const CoverImage = ({ profile, isYou }: Props) => {
 
     return (
         <>
-            <Layout cImg={!data ? profile?.coverImage : data.url}>
+            <Layout cImg={!data ? profile?.coverImage : data.imageUrl}>
                 {data && (
                     <ImageHeader>
                         <InvisibleButton text="취소" onClick={handleRemove} />
