@@ -1,7 +1,9 @@
 import { IsNull } from "typeorm";
 import { dataSource } from "../config/typeorm";
 import { Comment } from "../entity/comment.entity";
+import { User } from "../entity/user.entity";
 
+const userRepository = dataSource.getRepository(User);
 const commentRepository = dataSource.getRepository(Comment);
 
 export const findAll = async (req: any) => {
@@ -9,6 +11,8 @@ export const findAll = async (req: any) => {
         const {
             query: { postId, take },
         } = req;
+
+        const limit: number = take ? take : 6;
 
         const find = await commentRepository.find({
             relations: { post: true, user: true },
@@ -24,25 +28,24 @@ export const findAll = async (req: any) => {
                 },
                 post: {},
             },
-            take,
+            take: limit,
             order: {
                 createdAt: "desc",
             },
         });
 
-        const result: any = {};
+        const result: any[] = [];
 
-        find.forEach(
-            (val) =>
-                (result[val.id] = {
-                    postId: +postId,
-                    contents: val.contents,
-                    createAt: val.createdAt,
-                    userId: val.user.email,
-                    id: val.id,
-                    writer: val.user.nickName,
-                    profileImage: val.user.profileImage,
-                })
+        find.forEach((val) =>
+            result.push({
+                postId: +postId,
+                contents: val.contents,
+                createAt: val.createdAt,
+                userId: val.user.email,
+                id: val.id,
+                writer: val.user.nickName,
+                profileImage: val.user.profileImage,
+            })
         );
 
         return { ok: true, data: result };
@@ -65,15 +68,25 @@ export const save = async (req: any) => {
         comment.contents = contents;
 
         const saveComment = await commentRepository.save(comment);
+        const findUser = await userRepository.findOne({
+            where: {
+                email: saveComment.user.email,
+            },
+            select: {
+                email: true,
+                profileImage: true,
+                nickName: true,
+            },
+        });
 
         const result = {
             contents: saveComment.contents,
             createAt: saveComment.createdAt,
             postId: +saveComment.post,
             id: saveComment.id,
-            writer: nickName,
-            userId: saveComment.user,
-            profileImage: profileImage,
+            writer: findUser?.nickName,
+            userId: findUser?.email,
+            profileImage: findUser?.profileImage,
         };
 
         return { ok: true, data: result };
