@@ -1,14 +1,10 @@
-import {
-    createPromise,
-    createMultiPromise,
-    createMetaPromise,
-} from "../../utils/asyncUtils";
+import { createPromise, createMetaPromise } from "../../utils/asyncUtils";
 import { takeEvery } from "redux-saga/effects";
 import { commentApi } from "../../lib/index";
 import { commentAction } from "../action/comment";
 
 const list = createPromise(commentAction.list, commentApi.list);
-const write = createMetaPromise(commentAction.write, commentApi.write);
+const write = createPromise(commentAction.write, commentApi.write);
 const modify = createMetaPromise(commentAction.modify, commentApi.modify);
 const remove = createMetaPromise(commentAction.delete, commentApi.remove);
 

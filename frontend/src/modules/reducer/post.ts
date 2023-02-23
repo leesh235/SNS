@@ -14,17 +14,13 @@ const initialState: {
     error?: string;
 
     posts: PostDetail[];
-
     detail: any;
-    like: any;
 } = {
     loading: false,
     error: "",
 
     posts: [],
-
-    detail: null,
-    like: null,
+    detail: {},
 };
 
 const reducer = (state = initialState, action: any) => {

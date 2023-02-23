@@ -27,7 +27,7 @@ export const createMultiPromise = (
     return function* saga(action: any) {
         try {
             const meta = action.meta;
-            console.log(meta);
+
             const res1: AxiosResponse = yield call(pomiseCreator, action.data);
             const res2: AxiosResponse = yield call(pomiseCreator2);
             yield put({ type: SUCCESS, data: res2.data, meta });

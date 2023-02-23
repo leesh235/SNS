@@ -110,14 +110,6 @@ export const addReducer = (
                     loading: false,
                     [key]: newState,
                 };
-            // return {
-            //     ...state,
-            //     loading: false,
-            //     [key]: {
-            //         ...state[key],
-            //         [action.data.id]: { ...action.data },
-            //     },
-            // };
             case ERROR:
                 return {
                     ...state,
@@ -153,7 +145,6 @@ export const modifyReducer = (
                         console.log(action.data);
                     }
                 });
-                console.log(newState);
                 return {
                     ...state,
                     loading: false,
