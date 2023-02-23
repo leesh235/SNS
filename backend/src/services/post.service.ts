@@ -106,8 +106,8 @@ export const save = async (req: any) => {
             contents,
             createAt: postSave.createdAt,
             images,
-            likequantity: 0,
-            commentquantity: 0,
+            likeQuantity: 0,
+            commentQuantity: 0,
             likeStatus: false,
         };
         return { ok: true, data: result };
