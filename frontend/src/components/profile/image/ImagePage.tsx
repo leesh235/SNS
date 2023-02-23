@@ -9,14 +9,17 @@ import { useGetImage } from "../../../hooks/profile/useGetImage";
 const Wrapper = styled.section`
     max-width: 950px;
     width: 100%;
-    height: 100vh;
+    min-height: calc(100vh - 556px);
     margin-top: 16px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
 `;
 
-const Layout = styled.div`
-    height: auto;
+const Layout = styled.span`
     display: flex;
     flex-direction: column;
+    height: auto;
     border-radius: 8px;
     background-color: ${(props) => props.theme.color.white};
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
@@ -29,36 +32,10 @@ const Layout = styled.div`
         props.theme.media.mobileD(`
             width: 90vw;         
         `)}
-`;
-
-const FlexLayout = styled.div`
-    width: 100%;
-    height: auto;
-`;
-
-const MenuLayout = styled.ul`
-    width: 100%;
-    height: 60px;
-    margin: 8px 0 16px 0;
-    display: flex;
-    flex-direction: row;
-`;
-
-const Menu = styled.li<{ click: boolean }>`
-    width: 82px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border-radius: ${(props) => (props.click ? "0" : "6")}px;
-    border-bottom: 3px solid
-        ${(props) =>
-            props.click ? props.theme.color.seaBule : props.theme.color.white};
-    :hover {
-        background-color: ${(props) =>
-            !props.click
-                ? props.theme.color.lightGray
-                : props.theme.color.white};
+    >:nth-child(3) {
+        text-align: end;
+        width: auto;
+        cursor: pointer;
     }
 `;
 
@@ -67,13 +44,15 @@ const ImageLayout = styled.div`
     height: auto;
     margin-bottom: 8px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(auto-fill, 178px);
     grid-gap: 10px;
+    > a {
+        width: 178px;
+    }
 `;
 
 const Image = styled.img`
-    width: 100%;
+    width: 178px;
     height: 162px;
     border-radius: 6px;
     cursor: pointer;
@@ -84,21 +63,24 @@ interface Props {}
 export const ImagePage = ({ isYou = false }: { isYou: boolean }) => {
     const { email } = useParams();
 
-    const { loading, data, error } = useGetImage("all", email);
+    const { loading, data, error, handleAllImgClick } = useGetImage(
+        "all",
+        email
+    );
     // const data: any[] = [];
     return (
         <Wrapper>
             <Layout>
-                <FlexLayout>
-                    <Text
-                        text={"사진"}
-                        tag={"span"}
-                        cssObj={{
-                            fontSize: "20px",
-                            fontWeight: 700,
-                        }}
-                    />
-                </FlexLayout>
+                <Text
+                    text={"사진"}
+                    tag={"span"}
+                    cssObj={{
+                        fontSize: "20px",
+                        fontWeight: 700,
+                        margin: "0 0 15px 0",
+                    }}
+                />
+
                 <ImageLayout>
                     {data?.length !== 0 &&
                         data?.map((val: any, idx: number) => {
@@ -109,11 +91,12 @@ export const ImagePage = ({ isYou = false }: { isYou: boolean }) => {
                                         pathname: `${routes.detail}${val.postId}`,
                                     }}
                                 >
-                                    <Image src={val.url} />
+                                    <Image src={val.imageUrl} />
                                 </Link>
                             );
                         })}
                 </ImageLayout>
+                <span onClick={handleAllImgClick}>더 보기</span>
             </Layout>
         </Wrapper>
     );

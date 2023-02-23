@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { profileActionCreator } from "../../modules/action/profile";
 
 const imageList = {
@@ -13,18 +13,25 @@ export const useGetImage = (
 ) => {
     const dispatch = useDispatch();
 
+    const [count, setCount] = useState(6);
+
     const { loading, data, error } = useSelector((state: any) => {
         if (!email) return { loading: false, data: [], error: "" };
 
         return state.profile?.[imageList[type]];
     });
 
+    const handleAllImgClick = () => {
+        if (count > data?.length) return;
+        setCount((prev) => prev + 6);
+    };
+
     useEffect(() => {
         if (!email) return;
         if (type === "latest")
             dispatch(profileActionCreator.getLatestImage({ email }));
-        else dispatch(profileActionCreator.getAllImage({ email, take: 6 }));
-    }, [dispatch, email]);
+        else dispatch(profileActionCreator.getAllImage({ email, take: count }));
+    }, [dispatch, email, count]);
 
-    return { loading, data, error };
+    return { loading, data, error, handleAllImgClick };
 };
