@@ -39,6 +39,7 @@ const jwtVerify = async (payload: any, done: any) => {
         } else {
             user.email = findMy?.email;
             user.nickName = findMy?.nickName;
+            user.profileImage = findMy?.profileImage;
             return done(null, user);
         }
     } catch (error) {
