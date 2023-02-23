@@ -44,7 +44,7 @@ const Icon = styled.div<{ hover: boolean }>`
     margin: 8px 12px 8px 0;
 `;
 
-const menuList = ["모두", "게시글", "사람"];
+const menuList = ["모두"];
 
 interface Props {
     menu: number;
@@ -80,6 +80,7 @@ export const SearchSide = ({ menu, handleMenu }: Props) => {
                                     text={val}
                                     tag={"span"}
                                     cssObj={{
+                                        width: "auto",
                                         fontSize: "17px",
                                         fontWeight: 500,
                                     }}
@@ -100,6 +101,7 @@ export const SearchSide = ({ menu, handleMenu }: Props) => {
                                     text={val}
                                     tag={"span"}
                                     cssObj={{
+                                        width: "auto",
                                         fontSize: "17px",
                                         fontWeight: 500,
                                     }}

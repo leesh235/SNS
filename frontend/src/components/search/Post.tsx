@@ -2,15 +2,17 @@ import styled from "../../styles/theme-components";
 import { Link } from "react-router-dom";
 //functions
 import { routes } from "../../utils/routes";
+import { getDate } from "../../utils/dateUtil";
 //components
 import { Text } from "../common/Text";
 
 const Layout = styled.article`
     max-width: 680px;
     width: 100%;
-    height: auto;
+    height: 140px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     border-radius: 6px;
     background-color: ${(props) => props.theme.color.white};
@@ -19,9 +21,8 @@ const Layout = styled.article`
 
 const Title = styled.div`
     width: 100%;
-    height: 48px;
+    height: 70px;
     padding: 16px;
-    border-bottom: 1px solid ${(props) => props.theme.color.gray};
     display: grid;
     grid-template-columns: 60px auto 48px;
     align-items: center;
@@ -35,9 +36,20 @@ const UserImage = styled.img`
     cursor: pointer;
 `;
 
+const Line = styled.div`
+    width: 100%;
+    height: 1px;
+    background-color: ${(props) => props.theme.color.gray};
+`;
+
 const Contents = styled.div`
     width: 100%;
     padding: 16px;
+    height: 70px;
+    > a {
+        display: block;
+        height: 100%;
+    }
 `;
 
 interface Props {
@@ -62,14 +74,14 @@ export const Post = ({ post }: Props) => {
                         <Title>
                             <Link
                                 to={{
-                                    pathname: `${routes.userInfo}${val.email}`,
+                                    pathname: `${routes.userInfo}${val.user.email}`,
                                 }}
                             >
-                                <UserImage src={val.profileImage} />
+                                <UserImage src={val.user.profileImage} />
                             </Link>
                             <Link
                                 to={{
-                                    pathname: `${routes.userInfo}${val.email}`,
+                                    pathname: `${routes.userInfo}${val.user.email}`,
                                 }}
                             >
                                 <Text
@@ -82,8 +94,15 @@ export const Post = ({ post }: Props) => {
                                 />
                             </Link>
                         </Title>
+                        <Line />
                         <Contents>
-                            {val.createdAt}-{val.contents}
+                            <Link
+                                to={{
+                                    pathname: `${routes.detail}${val.id}`,
+                                }}
+                            >
+                                {getDate(val.createdAt)}-{val.contents}
+                            </Link>
                         </Contents>
                     </Layout>
                 );

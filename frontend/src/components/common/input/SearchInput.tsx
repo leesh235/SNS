@@ -11,6 +11,10 @@ const Wrapper = styled.form<StyleProps>`
     padding: ${(props) => props.padding};
     border-radius: 50px;
     background-color: ${(props) => props.theme.color.gray};
+    ${(props) =>
+        props.theme.media.mobileD(`
+        display: none;
+    `)}
 `;
 
 const Icon = styled.div`
@@ -85,7 +89,7 @@ export const SearchInput = ({
             padding={padding}
             onSubmit={handleSearch}
         >
-            {focus && <Icon>P</Icon>}
+            {focus && <Icon></Icon>}
             <Input
                 type={type}
                 placeholder={placeholder}

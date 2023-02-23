@@ -77,13 +77,15 @@ export const ImageView = () => {
     if (!detail) return <></>;
     return (
         <Layout>
-            <Contents>
-                <NextPreBtn onClick={handlePrev}>{"<"}</NextPreBtn>
-                {detail.images && (
-                    <Image src={detail?.images[select].imageUrl} />
-                )}
-                <NextPreBtn onClick={handleNext}>{">"}</NextPreBtn>
-            </Contents>
+            {detail?.images.length !== 0 && (
+                <Contents>
+                    <NextPreBtn onClick={handlePrev}>{"<"}</NextPreBtn>
+                    {detail.images && (
+                        <Image src={detail?.images[select].imageUrl} />
+                    )}
+                    <NextPreBtn onClick={handleNext}>{">"}</NextPreBtn>
+                </Contents>
+            )}
         </Layout>
     );
 };

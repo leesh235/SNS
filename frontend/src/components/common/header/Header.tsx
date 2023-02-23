@@ -73,33 +73,6 @@ const CenterLayout = styled.ul`
     }
 `;
 
-const RightLayout = styled.span`
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-right: 20px;
-    > :nth-child(n) {
-        margin-right: 8px;
-    }
-    position: relative;
-`;
-
-const IconLayout = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: ${(props) => props.theme.color.gray};
-    margin: 0px;
-    :hover {
-        background-color: ${(props) => props.theme.color.lightGray};
-    }
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
 const BorderStyle = styled.li<{ color?: string }>`
     width: auto;
     height: 100%;

@@ -8,21 +8,11 @@ const Layout = styled.main`
     padding-top: 56px;
 `;
 
-const FixLeftLayout = styled.div`
-    position: fixed;
-    top: 56px;
-    left: 0;
-    width: 25vw;
-`;
-
 const Bookmark = () => {
     return (
-        <>
-            <Layout></Layout>
-            <FixLeftLayout>
-                <SideMenu />
-            </FixLeftLayout>
-        </>
+        <Layout>
+            <SideMenu />
+        </Layout>
     );
 };
 

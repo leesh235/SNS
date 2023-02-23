@@ -34,13 +34,7 @@ const Search = () => {
     };
 
     useEffect(() => {
-        if (menu === 0) {
-            dispatch(searchActionCreator.all({ word: `${query?.word}` }));
-        } else if (menu === 1) {
-            dispatch(searchActionCreator.post({ word: `${query?.word}` }));
-        } else if (menu === 2) {
-            dispatch(searchActionCreator.people({ word: `${query?.word}` }));
-        }
+        dispatch(searchActionCreator.all({ word: `${query?.word}` }));
     }, [menu, query?.word]);
 
     return (
