@@ -41,7 +41,6 @@ export const CommentList = ({ postId, take }: Props) => {
 
     const { loading, data, error } = useGetComment(postId, take);
 
-    if (loading && take === 6) return <CommentLayout></CommentLayout>;
     return (
         <CommentLayout>
             <CommentView>
