@@ -30,6 +30,7 @@ const localVerify: (
                 email: true,
                 nickName: true,
                 password: true,
+                profileImage: true,
             },
         });
 

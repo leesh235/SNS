@@ -94,7 +94,7 @@ export const save = async (req: any) => {
             }
             await fileRepository.update(
                 { id: In(ids) },
-                { post: { id: postSave.id } }
+                { post: { id: postSave.id }, user: { email } }
             );
         }
 

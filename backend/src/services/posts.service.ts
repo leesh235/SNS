@@ -2,8 +2,10 @@ import { dataSource } from "../config/typeorm";
 import { Post } from "../entity/post.entity";
 import { Likes } from "../entity/likes.entity";
 import { Comment } from "../entity/comment.entity";
+import { Files } from "../entity/files.entity";
 import { Not } from "typeorm";
 
+const fileRepository = dataSource.getRepository(Files);
 const postRepository = dataSource.getRepository(Post);
 const likesRepository = dataSource.getRepository(Likes);
 const commentRepository = dataSource.getRepository(Comment);
@@ -63,21 +65,24 @@ export const findAll = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        const imageList = await postRepository.find({
-            relations: { files: true },
-            where: { deletedAt: undefined, files: { post: Not(undefined) } },
+        const imageList = await fileRepository.find({
+            relations: { post: true },
+            where: { post: Not(null) },
             select: {
                 id: true,
-                files: { id: true, imageUrl: true },
+                imageUrl: true,
+                post: {
+                    id: true,
+                },
             },
         });
 
         const result: any = [];
 
         findList.forEach((val) => {
-            let images: any[] = [];
-            if (imageList)
-                images = imageList.filter((img) => img.id === val.id);
+            const images: any[] = imageList.filter(
+                (img) => img.post.id === val.id
+            );
             return result.push({ ...val, images });
         });
 
@@ -144,21 +149,24 @@ export const findMy = async (req: any) => {
             .orderBy("post.create_date", "DESC")
             .getRawMany();
 
-        const imageList = await postRepository.find({
-            relations: { files: true },
-            where: { deletedAt: undefined, files: { post: Not(undefined) } },
+        const imageList = await fileRepository.find({
+            relations: { post: true, user: true },
+            where: { post: Not(null), user: { email } },
             select: {
                 id: true,
-                files: { id: true, imageUrl: true },
+                imageUrl: true,
+                post: {
+                    id: true,
+                },
             },
         });
 
         const result: any = [];
 
         findList.forEach((val) => {
-            let images: any[] = [];
-            if (imageList)
-                images = imageList.filter((img) => img.id === val.id);
+            const images: any[] = imageList.filter(
+                (img) => img.post.id === val.id
+            );
             return result.push({ ...val, images });
         });
 

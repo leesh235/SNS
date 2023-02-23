@@ -3,6 +3,7 @@ import { Files } from "../entity/files.entity";
 import { User } from "../entity/user.entity";
 import { EmaileReqDto } from "../dto/common/email.dto";
 import { ProfileResDto, ImgResDto, AllImgReqDto } from "../dto/profile.dto";
+import { Not } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
 const fileRepository = dataSource.getRepository(Files);
@@ -113,11 +114,13 @@ export const getLatestImage = async (dto: EmaileReqDto) => {
         const user = dto.toEntity();
 
         const latestImgArr = await fileRepository.find({
+            relations: {
+                post: true,
+                user: true,
+            },
             where: {
-                post: {
-                    user: { email: user.email, deletedAt: undefined },
-                    deletedAt: undefined,
-                },
+                user: { email: user.email, deletedAt: undefined },
+                post: Not(null),
             },
             select: {
                 id: true,
@@ -130,11 +133,10 @@ export const getLatestImage = async (dto: EmaileReqDto) => {
         });
 
         const returnValue: any[] = latestImgArr.map((val) => {
-            return { id: val.id, postId: val.post.id, url: val.imageUrl };
+            return { id: val.id, postId: val.post.id, imageUrl: val.imageUrl };
         });
 
         const resultDto = new ImgResDto(returnValue);
-
         return resultDto.imgList;
     } catch (error) {
         console.log(error);
@@ -147,11 +149,13 @@ export const getAllImage = async (dto: AllImgReqDto) => {
         const user = dto.toEntity();
 
         const allImgArr = await fileRepository.find({
+            relations: {
+                post: true,
+                user: true,
+            },
             where: {
-                post: {
-                    user: { email: user.email, deletedAt: undefined },
-                    deletedAt: undefined,
-                },
+                user: { email: user.email, deletedAt: undefined },
+                post: Not(null),
             },
             select: {
                 id: true,
@@ -164,7 +168,7 @@ export const getAllImage = async (dto: AllImgReqDto) => {
         });
 
         const returnValue: any[] = allImgArr.map((val) => {
-            return { id: val.id, postId: val.post.id, url: val.imageUrl };
+            return { id: val.id, postId: val.post.id, imageUrl: val.imageUrl };
         });
 
         const resultDto = new ImgResDto(returnValue);
