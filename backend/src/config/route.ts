@@ -76,13 +76,9 @@ export const routes = {
         friend: "/friend",
     },
     friend: {
-        isFriend: "/isFriend",
-        friendList: "/list",
-        refuse: "/",
-        request: "/request",
-        requestList: "/request/list",
-        response: "/response",
-        responseList: "/response/list",
+        follow: "/request",
+        following: "/following",
+        follower: "/follower",
         all: "/all",
     },
 };

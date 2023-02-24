@@ -21,7 +21,7 @@ export const existUser = async (user: User) => {
             return true;
         }
     } catch (error) {
-        return true;
+        throw error;
     }
 };
 
