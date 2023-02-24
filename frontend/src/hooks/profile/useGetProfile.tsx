@@ -10,7 +10,8 @@ export const useGetProfile = ({ email }: { email?: string }) => {
     );
 
     useEffect(() => {
-        if (email) dispatch(profileActionCreator.profile({ email }));
+        if (email) dispatch(profileActionCreator.userDetail({ email }));
+        else dispatch(profileActionCreator.profile());
     }, [dispatch, email]);
 
     return { loading, data, error };

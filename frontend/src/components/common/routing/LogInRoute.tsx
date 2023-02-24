@@ -10,6 +10,7 @@ import Friends from "../../../pages/Friends";
 import Search from "../../../pages/Search";
 import Bookmark from "../../../pages/Bookmark";
 import LikePage from "../../../pages/Like";
+import UserDetail from "../../../pages/UserDetail";
 
 export const LogInRoute = () => {
     return (
@@ -24,7 +25,7 @@ export const LogInRoute = () => {
                 <Route path={`${routes.profile}`} element={<Profile />} />
                 <Route
                     path={`${routes.userInfo}:email`}
-                    element={<Profile />}
+                    element={<UserDetail />}
                 />
                 <Route path={`${routes.friends}`} element={<Friends />} />
                 <Route path={`${routes.search}`} element={<Search />} />

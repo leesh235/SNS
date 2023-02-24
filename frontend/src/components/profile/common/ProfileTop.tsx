@@ -4,6 +4,7 @@ import { useEffect } from "react";
 //functions
 import theme from "../../../styles/theme";
 import { useModal } from "../../../hooks/common/useModal";
+import { useFriendsFunc } from "../../../hooks/freinds/useFriendsFunc";
 //components
 import { SelectImage } from "../../common/card/SelectImage";
 import { Text } from "../../common/Text";
@@ -55,9 +56,14 @@ export const ProfileTop = () => {
         (state: any) => state?.profile?.profile
     );
     const login = useSelector((state: any) => state?.profile?.simple);
-    const isFriend = useSelector((state: any) => state?.friends?.isFriend);
 
-    useEffect(() => {}, [loading]);
+    const { isFriend, handleFrinedClick } = useFriendsFunc({
+        email: data?.email,
+    });
+
+    useEffect(() => {
+        console.log(isFriend);
+    }, [loading]);
 
     return (
         <>
@@ -80,8 +86,12 @@ export const ProfileTop = () => {
                             cssObj={{
                                 fontSize: " 32px",
                                 fontWeight: 700,
+                                width: "auto",
                             }}
                         />
+                        {data?.email !== login.data?.email && (
+                            <div>{data?.isFriend ? "친구" : "친구 요청"}</div>
+                        )}
                     </UserLayout>
                 </FlexLayout>
             </Layout>

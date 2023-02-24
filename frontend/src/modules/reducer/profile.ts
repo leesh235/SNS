@@ -33,6 +33,15 @@ const reducer = (state = initialState, action: any) => {
                 true
             )(state, action);
 
+        case profileAction.userDetail:
+        case typeUtils(profileAction.userDetail).success:
+        case typeUtils(profileAction.userDetail).error:
+            return handleAsyncReducer(
+                profileAction.userDetail,
+                "profile",
+                true
+            )(state, action);
+
         case profileAction.latestImage:
         case typeUtils(profileAction.latestImage).success:
         case typeUtils(profileAction.latestImage).error:

@@ -89,7 +89,7 @@ export const SideMenu = ({}: Props) => {
         <Layout>
             <Link
                 to={{
-                    pathname: `${routes.userInfo}${data?.email}`,
+                    pathname: `${routes.profile}`,
                 }}
                 state={data?.email}
             >

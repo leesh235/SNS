@@ -107,7 +107,7 @@ const menuUrl = [
     // "",
 ];
 
-const Profile = () => {
+const UserDetail = () => {
     const { email } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -205,4 +205,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default UserDetail;

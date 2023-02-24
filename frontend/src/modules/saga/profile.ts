@@ -4,6 +4,10 @@ import { profileApi } from "../../lib";
 import { profileAction } from "../action/profile";
 
 const profile = createPromise(profileAction.profile, profileApi.profile);
+const userDetail = createPromise(
+    profileAction.userDetail,
+    profileApi.userDetail
+);
 const introduce = createPromise(
     profileAction.introduce,
     profileApi.modifyIntroduce
@@ -25,6 +29,7 @@ const allImage = createPromise(profileAction.allImage, profileApi.getAllImage);
 
 export function* profileSaga() {
     yield takeEvery(profileAction.profile, profile);
+    yield takeEvery(profileAction.userDetail, userDetail);
     yield takeEvery(profileAction.introduce, introduce);
     yield takeEvery(profileAction.profileImage, profileImage);
     yield takeEvery(profileAction.coverImage, coverImage);

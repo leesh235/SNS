@@ -32,7 +32,8 @@ export const api = {
     },
     profile: {
         simple: "/profile/simple",
-        profile: "/profile/info/",
+        profile: "/profile/profile/",
+        userDtail: "/profile/info/",
         coverimage: "/profile/coverimage",
         profileimage: "/profile/profileimage/",
         introduce: "/profile/introduce/",
@@ -80,7 +81,7 @@ export const api = {
         friend: "/search/friend",
     },
     friends: {
-        isFriend: "/friends/",
+        isFriend: "/friends/isFriend",
         friendList: "/friends/list",
         refuse: "/friends/",
         request: "/friends/request",

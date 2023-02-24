@@ -6,8 +6,12 @@ const logInInfo = async () => {
     return await backend.get(api.profile.simple);
 };
 
-const profile = async (data: any) => {
-    return await backend.get(`${api.profile.profile}${data.email}`);
+const profile = async () => {
+    return await backend.get(`${api.profile.profile}`);
+};
+
+const userDetail = async (data: any) => {
+    return await backend.get(`${api.profile.userDtail}${data.email}`);
 };
 
 const modifyIntroduce = async (data: Introduce) => {
@@ -40,4 +44,5 @@ export default {
     modifyProfileimage,
     getLatestImage,
     getAllImage,
+    userDetail,
 };

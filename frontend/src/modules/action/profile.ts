@@ -2,6 +2,7 @@ import { Introduce, UserImage, Take } from "../../types/lib/profile";
 
 export const profileAction = {
     profile: "user/PROFILE",
+    userDetail: "user/USERDETAIL",
     simple: "user/SIMPLE",
     introduce: "user/INTRODUCE",
     profileImage: "user/PROFILEIMAGE",
@@ -11,9 +12,14 @@ export const profileAction = {
 };
 
 export const profileActionCreator = {
-    profile: (data: any) => {
+    profile: () => {
         return {
             type: profileAction.profile,
+        };
+    },
+    userDetail: (data: any) => {
+        return {
+            type: profileAction.userDetail,
             data,
         };
     },
