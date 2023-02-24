@@ -30,7 +30,8 @@ export const routes = {
     },
     profile: {
         simple: "/simple",
-        profile: "/info/:email",
+        userDetail: "/info/:email",
+        profile: "/info/profile",
         coverimage: "/coverimage",
         profileimage: "/profileimage",
         introduce: "/introduce",
@@ -75,7 +76,7 @@ export const routes = {
         friend: "/friend",
     },
     friend: {
-        isFriend: "/",
+        isFriend: "/isFriend",
         friendList: "/list",
         refuse: "/",
         request: "/request",

@@ -1,19 +1,23 @@
 import { dataSource } from "../config/typeorm";
 import { Files } from "../entity/files.entity";
 import { User } from "../entity/user.entity";
+import { Friends } from "../entity/friends.entity";
 import { EmaileReqDto } from "../dto/common/email.dto";
 import { ProfileResDto, ImgResDto, AllImgReqDto } from "../dto/profile.dto";
 import { IsNull, Not } from "typeorm";
 
 const userRepository = dataSource.getRepository(User);
+const friendsRepository = dataSource.getRepository(Friends);
 const fileRepository = dataSource.getRepository(Files);
 
-export const findUser = async (dto: EmaileReqDto) => {
+export const findMy = async (dto: EmaileReqDto, user: any) => {
     try {
-        const user = dto.toEntity();
+        const userEntity = dto.toEntity();
+
+        const isYou = user.email === userEntity.email;
 
         const findOne = await userRepository.findOne({
-            where: { email: user.email },
+            where: { email: userEntity.email },
             select: {
                 email: true,
                 nickName: true,
@@ -28,6 +32,34 @@ export const findUser = async (dto: EmaileReqDto) => {
 
         if (!findOne) return { message: "존재하지 않는 유저입니다." };
 
+        const result = await friendsRepository.findOne({
+            relations: { requestUser: true, responseUser: true },
+            where: [
+                {
+                    requestUser: { email: user.email },
+                    responseUser: { email: userEntity.email },
+                    status: true,
+                },
+                {
+                    requestUser: { email: userEntity.email },
+                    responseUser: { email: user.email },
+                    status: true,
+                },
+            ],
+            select: {
+                id: true,
+                status: true,
+            },
+        });
+
+        let isFriend: boolean = false;
+        let isRequest: boolean = false;
+
+        if (result) {
+            if (result.status) isFriend = true;
+            else isRequest = true;
+        }
+
         const profileResDto = new ProfileResDto(
             findOne.email,
             findOne.nickName,
@@ -39,7 +71,75 @@ export const findUser = async (dto: EmaileReqDto) => {
             findOne.profileImage
         );
 
-        return profileResDto;
+        return { ...profileResDto, isFriend, isRequest, isYou };
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+};
+
+export const findUser = async (dto: EmaileReqDto, user: any) => {
+    try {
+        const userEntity = dto.toEntity();
+
+        const isYou = user.email === userEntity.email;
+
+        const findOne = await userRepository.findOne({
+            where: { email: userEntity.email },
+            select: {
+                email: true,
+                nickName: true,
+                gender: true,
+                birth: true,
+                createdAt: true,
+                introduce: true,
+                coverImage: true,
+                profileImage: true,
+            },
+        });
+
+        if (!findOne) return { message: "존재하지 않는 유저입니다." };
+
+        const result = await friendsRepository.findOne({
+            relations: { requestUser: true, responseUser: true },
+            where: [
+                {
+                    requestUser: { email: user.email },
+                    responseUser: { email: userEntity.email },
+                    status: true,
+                },
+                {
+                    requestUser: { email: userEntity.email },
+                    responseUser: { email: user.email },
+                    status: true,
+                },
+            ],
+            select: {
+                id: true,
+                status: true,
+            },
+        });
+
+        let isFriend: boolean = false;
+        let isRequest: boolean = false;
+
+        if (result) {
+            if (result.status) isFriend = true;
+            else isRequest = true;
+        }
+
+        const profileResDto = new ProfileResDto(
+            findOne.email,
+            findOne.nickName,
+            findOne.gender,
+            findOne.birth,
+            `${findOne.createdAt}`,
+            findOne.introduce,
+            findOne.coverImage,
+            findOne.profileImage
+        );
+
+        return { ...profileResDto, isFriend, isRequest, isYou };
     } catch (error) {
         console.log(error);
         return error;

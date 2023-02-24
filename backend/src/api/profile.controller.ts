@@ -7,6 +7,7 @@ import {
     getAllImage,
     getLatestImage,
     findUser,
+    findMy,
 } from "../services/profile.service";
 import { validateUtil } from "../utils/dtoValidate";
 import { EmaileReqDto } from "../dto/common/email.dto";
@@ -19,7 +20,20 @@ router.get(routes.profile.profile, async (req: Request, res: Response) => {
     try {
         const emailReqDto = new EmaileReqDto(req.params.email);
         validateUtil(emailReqDto);
-        const result = await findUser(emailReqDto);
+        const result = await findMy(emailReqDto, req.user);
+
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.status(500).send({ message: `${error}` });
+    }
+});
+
+//유저 상세정보
+router.get(routes.profile.userDetail, async (req: Request, res: Response) => {
+    try {
+        const emailReqDto = new EmaileReqDto(req.params.email);
+        validateUtil(emailReqDto);
+        const result = await findUser(emailReqDto, req.user);
 
         return res.status(200).send(result);
     } catch (error) {

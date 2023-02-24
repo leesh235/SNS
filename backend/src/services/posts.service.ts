@@ -377,8 +377,7 @@ export const findUserList = async (req: any) => {
             );
             return result.push({ ...val, images });
         });
-        console.log(userId);
-        console.log(result);
+
         return { ok: true, data: result };
     } catch (error) {
         console.log(error);
